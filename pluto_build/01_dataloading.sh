@@ -22,5 +22,6 @@ echo 'Loading datasets from PLUTO GitHub repo...'
 node loader.js install pluto_input_allocated
 node loader.js install pluto_input_geocodes
 node loader.js install pluto_input_tc234
+node loader.js install pluto_input_landuse_bldgclass
 
 
