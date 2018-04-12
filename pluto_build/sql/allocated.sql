@@ -1,5 +1,4 @@
--- Setting the landuse of the lot based on the building class
--- uses the pluto_input_landuse_bldgclass lookup table
+-- Adding on data from allocated input table
 UPDATE pluto a
 SET bldgclass = b.bldg_cl,
 	ownertype = b.owner_code_ipis,
