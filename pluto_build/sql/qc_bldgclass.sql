@@ -1,3 +1,5 @@
+-- get the frequency of the building codes from DOF data and 
+-- flag any building codes that do not appear in pluto_input_landuse_bldgclass
 COPY(
 	SELECT bldg_cl,
 		COUNT(*),
