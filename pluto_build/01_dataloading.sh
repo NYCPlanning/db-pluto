@@ -24,6 +24,4 @@ node loader.js install pluto_input_geocodes
 node loader.js install pluto_input_tc234
 node loader.js install pluto_input_landuse_bldgclass
 node loader.js install pluto_input_bsmtcode
-
-
-
+node loader.js install pluto_input_cama_dof
