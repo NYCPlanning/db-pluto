@@ -21,15 +21,18 @@ echo 'Adding on RPAD data attributes'
 psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/allocated.sql
 psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/geocodes.sql
 
-# populate other fields from misc sources
-echo 'Adding on data attributes from other sources'
-psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/landuse.sql
-psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/lpc.sql
-psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/zoning.sql
-
 # add on CAMA data attributes
 echo 'Adding on CAMA data attributes'
 psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/cama_bsmttype.sql
 psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/cama_lottype.sql
 psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/cama_proxcode.sql
 psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/cama_bldgarea.sql
+
+# populate other fields from misc sources
+echo 'Adding on data attributes from other sources'
+psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/landuse.sql
+psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/lpc.sql
+psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/zoning.sql
+psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/far.sql
+
+psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/ipis.sql
