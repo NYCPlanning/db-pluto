@@ -17,6 +17,7 @@ node loader.js install dcp_zoning_taxlot
 node loader.js install lpc_historic_districts
 node loader.js install lpc_landmarks
 node loader.js install dcas_ipis
+node loader.js install dcp_edesignation
 
 ## Other_datasets - PULLING FROM PLUTO GitHub repo
 echo 'Loading datasets from PLUTO GitHub repo...'

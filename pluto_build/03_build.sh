@@ -34,5 +34,6 @@ psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/landuse.sql
 psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/lpc.sql
 psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/zoning.sql
 psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/far.sql
+psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/edesignation.sql
 
 psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/ipis.sql
