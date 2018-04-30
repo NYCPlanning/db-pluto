@@ -8,7 +8,7 @@ There are two **idiosyncrasies** regarding the tax lot data.
 1. The PLUTO data contain one record per tax lot except for condominiums. PLUTO data contain one record per condominium complex instead of records for each condominium unit tax lot by summarizing DOF's condominium unit tax lot data so that each condominium complex within a tax block is represented by only one record.
 2. Two portions of the City, Marble Hill and Rikers Island, are legally located in one borough but are serviced by another borough. Specifically, Marble Hill is legally located in Manhattan but is serviced by The Bronx, while Rikers Island is legally part of The Bronx but is serviced by Queens.
 
-**Limitations**
+**Limitations**:
 DCP provides PLUTO for informational purposes only. DCP does not warranty and is not liable for the completeness, accuracy, content, or fitness for any particular purpose or use of PLUTO.
 
 Lean more about PLUTO, its idiosyncrasies and limitations in [PLUTO's metadata](https://www1.nyc.gov/assets/planning/download/pdf/data-maps/open-data/plutolayout.pdf?r=17v11a).
