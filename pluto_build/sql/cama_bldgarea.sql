@@ -25,6 +25,15 @@ FROM pluto_input_cama_dof b
 WHERE a.bbl=b.boro||b.block||b.lot
 AND (bldgarea = '0' OR bldgarea IS NULL);
 
+-- calcualte bldgarea by multiplying bldgfront x bldgdepth
+-- set area source to 5
+UPDATE pluto a
+SET bldgarea = a.bldgfront::numeric*a.bldgdepth::numeric,
+areasource = '5'
+WHERE (bldgarea = '0' OR bldgarea IS NULL)
+AND a.bldgfront <> '0'
+AND a.areasource IS NULL;
+
 -- set area source to 4 for vacant lots
 -- for vacant lots and number of buildings is 0 and building floor area is 0
 UPDATE pluto a
@@ -33,3 +42,9 @@ WHERE areasource IS NULL
 	AND landuse = '11'
 	AND numbldgs = '0'
 	AND bldgarea = '0';
+
+-- set area source to 0 where building area is not avialble because it's still 0 or null
+UPDATE pluto a
+SET areasource = '0'
+WHERE a.areasource IS NULL
+AND (bldgarea = '0' OR bldgarea IS NULL);
