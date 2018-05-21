@@ -27,3 +27,7 @@ node loader.js install pluto_input_tc234
 node loader.js install pluto_input_landuse_bldgclass
 node loader.js install pluto_input_bsmtcode
 node loader.js install pluto_input_cama_dof
+node loader.js install dcp_zoning_comm
+node loader.js install dcp_zoning_mnf
+node loader.js install dcp_zoning_res1to5
+node loader.js install dcp_zoning_res6to10
