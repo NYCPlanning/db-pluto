@@ -16,6 +16,39 @@ SET
 FROM dcp_zoning_taxlot
 WHERE borocode||lpad(block, 5, '0')||lpad(lot, 4, '0') = boroughcode::text||lpad(taxblock::text, 5, '0')||lpad(taxlot::text, 4, '0');
 
+-- update pluto if zonedist contains two zoning districts
+UPDATE pluto
+SET zonedist1 = split_part(zonedist1, '/', 1),
+	zonedist2 = split_part(zonedist1, '/', 2)
+WHERE zonedist1 LIKE '%/%'
+	AND zonedist2 IS NULL;
+
+UPDATE pluto
+SET zonedist1 = split_part(zonedist1, '/', 1),
+	zonedist3 = split_part(zonedist1, '/', 2)
+WHERE zonedist1 LIKE '%/%'
+	AND zonedist2 IS NOT NULL
+	AND zonedist3 IS NULL;
+
+UPDATE pluto
+SET zonedist2 = split_part(zonedist2, '/', 1),
+	zonedist3 = split_part(zonedist2, '/', 2)
+WHERE zonedist2 LIKE '%/%'
+	AND zonedist3 IS NULL;
+
+UPDATE pluto
+SET zonedist2 = split_part(zonedist2, '/', 1),
+	zonedist4 = split_part(zonedist2, '/', 2)
+WHERE zonedist2 LIKE '%/%'
+	AND zonedist3 IS NOT NULL
+	AND zonedist4 IS NULL;
+
+UPDATE pluto
+SET zonedist3 = split_part(zonedist3, '/', 1),
+	zonedist4 = split_part(zonedist3, '/', 2)
+WHERE zonedist3 LIKE '%/%'
+	AND zonedist4 IS NULL;
+
 -- calculate if tax lot is split by two or more zoning boundary lines and update splitzone
 UPDATE pluto 
 SET splitzone = 'Y'
