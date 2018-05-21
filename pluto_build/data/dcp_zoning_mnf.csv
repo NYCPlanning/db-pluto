@@ -1,0 +1,13 @@
+Zoning District,Residential Use Group 1-2,Community Facility Use Group 3-4,Commercial Use Group 5-15,General Service Use Group 16,Manufacturing Use Group 17,Manufacturing Use Grroup 18,Manufacturing FAR,Required Accessory Manufacturing Parking (sq ft) PRC-B
+M1-1,,Y,Y,Y,Y,,1,1 per 300
+M1-2,,Y,Y,Y,Y,,2,1 per 300
+M1-3,,Y,Y,Y,Y,,5,1 per 300
+M1-4,,Y,Y,Y,Y,,2,None
+M1-5,,Y,Y,Y,Y,,5,None
+M1-6,,Y,Y,Y,Y,,10,None
+M2-1,,,Y,Y,Y,,2,1 per 300
+M2-2,,,Y,Y,Y,,5,1 per 300
+M2-3,,,Y,Y,Y,,2,None
+M2-4,,,Y,Y,Y,,5,None
+M3-1,,,Y,Y,Y,Y,2,1 per 300
+M3-2,,,Y,Y,Y,Y,2,None

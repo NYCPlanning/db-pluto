@@ -1,0 +1,37 @@
+Zoning District,Single-Family Detached Use Group 1,"Single- and
+ Two-Family Detached Use Group 2","Single- and
+ Two-Family Zero Lot Line Use Group 2","Single- and
+ Two-Family Semi-Det. Use Group 2","Single- and
+ Two-Family Attached Use Group 2",Multi-Family All Use Group 2,"Community Facility Use Groups 3, 4",Lot Area(min) Detached/Zero Lot Line,Lot Area(min) Other,Lot Width(min) Detached/Zero Lot Line,Lot Width(min) Other,Front Yard(min),"Side Yards(min)
+ Interior or Through Lots Detached or Zero Lot Line Number","Side Yards(min)
+ Interior or Through Lots Detached or Zero Lot Line Each","Side Yards(min)
+ Interior or Through Lots Detached or Zero Lot Line Total","Side Yards(min)
+ Interior or Through Lots Semi-Detached Number","Side Yards(min)
+ Interior or Through Lots Semi-Detached Each","Side Yards(min)
+ Interior or Through Lots Semi-Detached Total","Side Yards(min)
+ Interior or Through Lots Multi-Family Number","Side Yards(min)
+ Interior or Through Lots Multi-Family Each","Side Yards(min)
+ Interior or Through Lots Multi-Family Total",Rear Yard(min),Open Space Ratio,Lot Coverage(max),Residential FAR Basic,Residential FAR with Attic Allowance,Community Facility FAR,Sky Exposure Plane starts at:,Perimeter/Street Wall(max),Building Height(max) Basic,Building Height(max) with QGF,Street Wall(max),Dwelling Unit Factor Detached/Semi-Detached,Dwelling Unit Factor Other,General(min % of DU) for Group Parking Facilities,"Reduced Requirements
+ (min % of DU) IRHU-outside Transit Zone",Waived Requirements AIRS-outside Transit Zone,Waived Requirements IRHU/AIRS-inside Transit Zone,Waived Requirements if required small # spaces =,Waived Requirements for Single-Family interior lots with lot width less than 25ft
+R1-1,Y,,,,,,Y,"9,500 sf",n/a,100 ft,n/a,20 ft,2,15 ft,35 ft,n/a,n/a,n/a,n/a,n/a,n/a,30 ft,150,n/a,0.5,n/a,1,25 ft,n/a,35 ft,n/a,n/a,"4,750",n/a,100%,n/a,n/a,n/a,n/a,n/a
+R1-2,Y,,,,,,Y,"5,700 sf",n/a,60 ft,n/a,20 ft,2,8 ft,20 ft,n/a,n/a,n/a,n/a,n/a,n/a,30 ft,150,n/a,0.5,n/a,1,25 ft,n/a,35 ft,n/a,n/a,"2,850",n/a,100%,n/a,n/a,n/a,n/a,n/a
+R1-2A,Y,,,,,,Y,"5,700 sf",n/a,60 ft,n/a,20 ft*,2,8 ft,20 ft,n/a,n/a,n/a,n/a,n/a,n/a,30 ft,n/a,30%,0.5,n/a,1,n/a,25 ft,35 ft,n/a,n/a,"2,850",n/a,100%,n/a,n/a,n/a,n/a,n/a
+R2,Y,,,,,,Y,"3,800 sf",n/a,40 ft,n/a,15 ft,2,5 ft,13 ft,n/a,n/a,n/a,n/a,n/a,n/a,30 ft,150,n/a,0.5,n/a,1,25 ft,n/a,35 ft,n/a,n/a,"1,900",n/a,100%,n/a,n/a,n/a,n/a,n/a
+R2A,Y,,,,,,Y,"3,800 sf",n/a,40 ft,n/a,15 ft*,2,5 ft,13 ft,n/a,n/a,n/a,n/a,n/a,n/a,30 ft,n/a,30%,0.5,n/a,1,n/a,21 ft,35 ft,n/a,n/a,"1,900",n/a,100%,n/a,n/a,n/a,n/a,n/a
+R2X,Y,,,,,,Y,"2,850 sf",n/a,30 ft,n/a,15 ft,2,2 ft,10 ft,n/a,n/a,n/a,n/a,n/a,n/a,20 ft,n/a,n/a,0.85,1.02,1,n/a,21 ft,35 ft,n/a,n/a,"2,900",n/a,100%,n/a,n/a,n/a,n/a,n/a
+R3-1,Y,Y,,Y,,,Y,"3,800 sf",1700 sf,40 ft,18 ft,16 ft,2,5 ft,13 ft,1,8 ft,8 ft,n/a,n/a,n/a,30 ft,n/a,35%,0.5,0.6,1,n/a,21 ft,35 ft,n/a,n/a,625,n/a,100%,n/a,n/a,n/a,n/a,n/a
+R3-2,Y,Y,,Y,Y,Y,Y,"3,800 sf",1700 sf,40 ft,18 ft,17 ft,2,5 ft,13 ft,1,8 ft,8 ft,2,8 ft,16 ft,30 ft,n/a,35%,0.5,0.6,1,n/a,21 ft,35 ft,n/a,125 ft,625,870,100%,50%,10%,0%,n/a,n/a
+R3A,Y,Y,Y,,,,Y,"2,375 sf",n/a,25 ft,n/a,10 ft*,1,0 ft,8 ft,n/a,n/a,n/a,n/a,n/a,n/a,30 ft,n/a,n/a,0.5,0.6,1,n/a,21 ft,35 ft,n/a,n/a,710,n/a,100%,n/a,n/a,n/a,n/a,Waived
+R3X,Y,Y,,,,,Y,3325 sf,n/a,35 ft,n/a,10 ft*,2,2 ft,10 ft,n/a,n/a,n/a,n/a,n/a,n/a,30 ft,n/a,n/a,0.5,0.6,1,n/a,21 ft,35 ft,n/a,n/a,"1,000",n/a,100%,n/a,n/a,n/a,n/a,n/a
+R4,Y,Y,,Y,Y,Y,Y,"3,800 sf","1,700 sf",40 ft,18 ft,10 or 18 ft,2,5 ft,13 ft,1,8 ft,8 ft,2,8 ft,16 ft,30 ft,n/a,45%,0.75,0.9,2,n/a,25 ft,35 ft,n/a,185 ft,870,870,100%,50%,10%,0%,n/a,n/a
+"R4
+ Infill",Y,Y,,Y,Y,Y,Y,"3,800 sf","1,700 sf",40 ft,18 ft,18 ft,2,5 ft,13 ft,1,8 ft,8 ft,2,8 ft,16 ft,30 ft,n/a,55%,1.35,n/a,2,n/a,25 ft,35 ft,n/a,185 ft,900,900,66%,50%,10%,0%,n/a,n/a
+R4-1,Y,Y,Y,Y,,,Y,"2,375 sf","1,700 sf",25 ft,18 ft,10 ft*,1,0 ft,8 ft,1,4 ft,4 ft,n/a,n/a,n/a,30 ft,n/a,n/a,0.75,0.9,2,n/a,25 ft,35 ft,n/a,n/a,870,870,100%,50%,n/a,n/a,n/a,Waived
+R4A,Y,Y,,,,,Y,2850 sf,n/a,30 ft,n/a,10 ft*,2,2 ft,10 ft,n/a,n/a,n/a,n/a,n/a,n/a,30 ft,n/a,n/a,0.75,0.9,2,n/a,21 ft,35 ft,n/a,n/a,"1,280","1,280",100%,50%,n/a,n/a,n/a,n/a
+R4B,Y,Y,Y,Y,Y,,Y,2375 sf,"1,700 sf",25 ft,18 ft,5 ft*,1,0 ft,8 ft,1,4 ft,4 ft,n/a,n/a,n/a,30 ft,n/a,55%,0.9,n/a,2,n/a,n/a,24 ft,n/a,n/a,870,870,100%,50%,n/a,n/a,1,n/a
+R5,Y,Y,,Y,Y,Y,Y,3800 sf,"1,700 sf",40 ft,18 ft,10 or 18 ft,2,5 ft,13 ft,1,8 ft,8 ft,2,8 ft,16 ft,30 ft,n/a,55%,1.25,n/a,2,n/a,30 ft,40 ft,n/a,185 ft,760,760,85%,42.50%,10%,0%,n/a,n/a
+"R5
+ Infill",Y,Y,,Y,Y,Y,Y,3800 sf,"1,700 sf",40 ft,18 ft,18 ft,2,5 ft,13 ft,1,8 ft,8 ft,2,8 ft,16 ft,30 ft,n/a,55%,1.65,n/a,2,n/a,30 ft,33 ft,n/a,185 ft,900,900,66%,42.50%,10%,0%,n/a,n/a
+R5A,Y,Y,,,,,Y,"2,850",n/a,30 ft,n/a,10 ft*,2,2 ft,10 ft,n/a,n/a,n/a,n/a,n/a,n/a,30 ft,n/a,n/a,1.1,n/a,2,n/a,25 ft,35 ft,n/a,n/a,"1,560","1,560",100%,50%,n/a,n/a,n/a,n/a
+R5B,Y,Y,Y,Y,Y,Y,Y,"2,375 sf","1,700 sf",25 ft,18 ft,5 ft*,1,0 ft,8 ft,1,4 ft,4 ft,0 ft,0 ft,0 ft,30 ft,n/a,55%,1.35,n/a,2,n/a,30 ft,33 ft,n/a,n/a,900 or 1350,900 or 1350,66%,42.50%,10%,0%,1,n/a
+R5D,Y,Y,Y,Y,Y,Y,Y,"2,375 sf","1,700 sf",25 ft,18 ft,5 ft*,1,0 ft,8 ft,1,4 ft,4 ft,0 ft,0 ft,0 ft,30 ft,n/a,60%,2,n/a,2,n/a,n/a,40 ft,45 ft,n/a,760,760,66%,35%,10%,0%,1,n/a
