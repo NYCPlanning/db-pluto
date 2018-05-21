@@ -1,0 +1,182 @@
+Zoning District,Zoning District type,Residential Equivalent,Commercial FAR,Required Accessory Parking,Signage Size (individual),Signage Size (total),Signage Size (illuminated),Signage Height above street level,"Commercial FAR
+ (R1-R5)","Commercial FAR
+ (R6-R10)",Depth of Overlay
+C1-1,Local Retail and Service Overlay,,,,150 sf,"3 X Street frontage
+ (150 sf total)","3 X street frontage
+ (50 sf total)",25 ft,1,2,200
+C1-2,Local Retail and Service Overlay,,,,150 sf,"3 X Street frontage
+ (150 sf total)","3 X street frontage
+ (50 sf total)",25 ft,1,2,150
+C1-3,Local Retail and Service Overlay,,,,150 sf,"3 X Street frontage
+ (150 sf total)","3 X street frontage
+ (50 sf total)",25 ft,1,2,150
+C1-4,Local Retail and Service Overlay,,,,150 sf,"3 X Street frontage
+ (150 sf total)","3 X street frontage
+ (50 sf total)",25 ft,1,2,100
+C1-5,Local Retail and Service Overlay,,,,150 sf,"3 X Street frontage
+ (150 sf total)","3 X street frontage
+ (50 sf total)",25 ft,1,2,100
+C2-1,Local Retail and Service Overlay,,,,150 sf,"3 X Street frontage
+ (150 sf total)","3 X street frontage
+ (50 sf total)",25 ft,1,2,150
+C2-2,Local Retail and Service Overlay,,,,150 sf,"3 X Street frontage
+ (150 sf total)","3 X street frontage
+ (50 sf total)",25 ft,1,2,150
+C2-3,Local Retail and Service Overlay,,,,150 sf,"3 X Street frontage
+ (150 sf total)","3 X street frontage
+ (50 sf total)",25 ft,1,2,150
+C2-4,Local Retail and Service Overlay,,,,150 sf,"3 X Street frontage
+ (150 sf total)","3 X street frontage
+ (50 sf total)",25 ft,1,2,100
+C2-5,Local Retail and Service Overlay,,,,150 sf,"3 X Street frontage
+ (150 sf total)","3 X street frontage
+ (50 sf total)",25 ft,1,2,100
+C1-6,Local Retail and Service,R7-2,2,None,150 sf,"3 X Street frontage
+ (150 sf total)","3 X street frontage
+ (50 sf total)",25 ft,,,
+C1-7,Local Retail and Service,R8,2,None,150 sf,"3 X Street frontage
+ (150 sf total)","3 X street frontage
+ (50 sf total)",25 ft,,,
+C1-8,Local Retail and Service,R9,2,None,150 sf,"3 X Street frontage
+ (150 sf total)","3 X street frontage
+ (50 sf total)",25 ft,,,
+C1-9,Local Retail and Service,R10,2,None,150 sf,"3 X Street frontage
+ (150 sf total)","3 X street frontage
+ (50 sf total)",25 ft,,,
+C1-6A,Local Retail and Service,R7A,2,None,150 sf,"3 X Street frontage
+ (150 sf total)","3 X street frontage
+ (50 sf total)",25 ft,,,
+C1-7A,Local Retail and Service,R8A,2,None,150 sf,"3 X Street frontage
+ (150 sf total)","3 X street frontage
+ (50 sf total)",25 ft,,,
+C1-8A,Local Retail and Service,R9A,2,None,150 sf,"3 X Street frontage
+ (150 sf total)","3 X street frontage
+ (50 sf total)",25 ft,,,
+C1-8X,Local Retail and Service,R9X,2,None,150 sf,"3 X Street frontage
+ (150 sf total)","3 X street frontage
+ (50 sf total)",25 ft,,,
+C1-9A,Local Retail and Service,R10A,2,None,150 sf,"3 X Street frontage
+ (150 sf total)","3 X street frontage
+ (50 sf total)",25 ft,,,
+C2-6,Local Retail and Service,R7-2,2,None,150 sf,"3 X Street frontage
+ (150 sf total)","3 X street frontage
+ (50 sf total)",25 ft,,,
+C2-7,Local Retail and Service,R9,2,None,150 sf,"3 X Street frontage
+ (150 sf total)","3 X street frontage
+ (50 sf total)",25 ft,,,
+C2-8,Local Retail and Service,R10,2,None,150 sf,"3 X Street frontage
+ (150 sf total)","3 X street frontage
+ (50 sf total)",25 ft,,,
+C2-6A,Local Retail and Service,R7A,2,None,150 sf,"3 X Street frontage
+ (150 sf total)","3 X street frontage
+ (50 sf total)",25 ft,,,
+C2-7A,Local Retail and Service,R9A,2,None,150 sf,"3 X Street frontage
+ (150 sf total)","3 X street frontage
+ (50 sf total)",25 ft,,,
+C2-7X,Local Retail and Service,R9X,2,None,150 sf,"3 X Street frontage
+ (150 sf total)","3 X street frontage
+ (50 sf total)",25 ft,,,
+C2-8A,Local Retail and Service,R10A,2,None,150 sf,"3 X Street frontage
+ (150 sf total)","3 X street frontage
+ (50 sf total)",25 ft,,,
+C3,Waterfront Recreation,R3-2,0.5,1 per 150 sf,50 sf,50 sf,Not permitted,25 sf,,,
+C3A,Waterfront Recreation,R3A,0.5,1 per 150 sf,50 sf,50 sf,Not permitted,25 sf,,,
+C4-1,Non-Contextual General Commercial ,R5,1,1 per 150 sf,500 sf,5 X street frontage (500 sf total),5 X street frontage (500 sf total),40 ft,,,
+C4-2,Non-Contextual General Commercial ,R6,3.4,1 per 300 sf,500 sf,5 X street frontage (500 sf total),5 X street frontage (500 sf total),40 ft,,,
+C4-3,Non-Contextual General Commercial ,R6,3.4,1 per 400 sf,500 sf,5 X street frontage (500 sf total),5 X street frontage (500 sf total),40 ft,,,
+C4-4,Non-Contextual General Commercial ,R7-2,3.4,"1 per 1,000 sf",500 sf,5 X street frontage (500 sf total),5 X street frontage (500 sf total),40 ft,,,
+C4-5,Non-Contextual General Commercial ,R7-2,3.4,None,500 sf,5 X street frontage (500 sf total),5 X street frontage (500 sf total),40 ft,,,
+C4-6,Non-Contextual General Commercial ,R10,10,None,500 sf,5 X street frontage (500 sf total),5 X street frontage (500 sf total),40 ft,,,
+C4-7,Non-Contextual General Commercial ,R10,10,None,500 sf,5 X street frontage (500 sf total),5 X street frontage (500 sf total),40 ft,,,
+C4-2A,Contextual General Commercial,R6A,3,1 per 400 sf,500 sf,"5 X street frontage
+ (500 sf total)","5 X street frontage
+ (500 sf total)",40 ft,,,
+C4-3A,Contextual General Commercial,R6A,3,1 per 400 sf,500 sf,"5 X street frontage
+ (500 sf total)","5 X street frontage
+ (500 sf total)",40 ft,,,
+C4-4A,Contextual General Commercial,R7A,4,None,500 sf,"5 X street frontage
+ (500 sf total)","5 X street frontage
+ (500 sf total)",40 ft,,,
+C4-5A,Contextual General Commercial,R7A,4,None,500 sf,"5 X street frontage
+ (500 sf total)","5 X street frontage
+ (500 sf total)",40 ft,,,
+C4-6A,Contextual General Commercial,R10A,3.4,None,500 sf,"5 X street frontage
+ (500 sf total)","5 X street frontage
+ (500 sf total)",40 ft,,,
+C4-7A,Contextual General Commercial,R10A,10,None,500 sf,"5 X street frontage
+ (500 sf total)","5 X street frontage
+ (500 sf total)",40 ft,,,
+C4-4D,Contextual General Commercial,R8A,3.4,"1 per 1,000 sf",500 sf,"5 X street frontage
+ (500 sf total)","5 X street frontage
+ (500 sf total)",40 ft,,,
+C4-5D,Contextual General Commercial,R7D,4.2,"1 per 1,000 sf",500 sf,"5 X street frontage
+ (500 sf total)","5 X street frontage
+ (500 sf total)",40 ft,,,
+C4-5X,Contextual General Commercial,R7X,4,None,500 sf,"5 X street frontage
+ (500 sf total)","5 X street frontage
+ (500 sf total)",40 ft,,,
+C5-1,Restricted Central Commercial,R10,4,None,200 sf,3 X street frontage (200 sf),Not permitted,25 ft,,,
+C5-3,Restricted Central Commercial,R9,15,None,200 sf,3 X street frontage (200 sf),Not permitted,25 ft,,,
+C5-4,Restricted Central Commercial,R10,10,None,500 sf,"5 X street frontage
+ (500 sf total)","5 X street frontage
+ (500 sf total)",40 ft,,,
+C5-5,Restricted Central Commercial,R10,15,None,200 sf,3 X street frontage (200 sf),Not permitted,25 ft,,,
+C5-5,Restricted Central Commercial,R10A,4,None,200 sf,3 X street frontage (200 sf),Not permitted,25 ft,,,
+C5-2A,Restricted Central Commercial,R10A,10,None,200 sf,3 X street frontage (200 sf),Not permitted,25 ft,,,
+C6-1,Contextual Restricted and General Central Commercial,R7-2,6,None,500 sf,"5 X street frontage
+ (500 sf total)","5 X street frontage
+ (500 sf total)",40 ft,,,
+C6-2,Contextual Restricted and General Central Commercial,R10,6,None,500 sf,"5 X street frontage
+ (500 sf total)","5 X street frontage
+ (500 sf total)",40 ft,,,
+C6-3,Contextual Restricted and General Central Commercial,R9,6,None,500 sf,"5 X street frontage
+ (500 sf total)","5 X street frontage
+ (500 sf total)",40 ft,,,
+C6-4,Contextual Restricted and General Central Commercial,R10,10,None,500 sf,"5 X street frontage
+ (500 sf total)","5 X street frontage
+ (500 sf total)",40 ft,,,
+C6-5,Contextual Restricted and General Central Commercial,R10,10,None,No restriction,No restriction,No restriction,No restriction,,,
+C6-6,Contextual Restricted and General Central Commercial,R10,15,None,500 sf,"5 X street frontage
+ (500 sf total)","5 X street frontage
+ (500 sf total)",40 ft,,,
+C6-7,Contextual Restricted and General Central Commercial,R10,15,None,No restriction,No restriction,No restriction,No restriction,,,
+C6-8,Contextual Restricted and General Central Commercial,R10,10,None,500 sf,"5 X street frontage
+ (500 sf total)","5 X street frontage
+ (500 sf total)",40 ft,,,
+C6-9,Contextual Restricted and General Central Commercial,R10,15,None,500 sf,"5 X street frontage
+ (500 sf total)","5 X street frontage
+ (500 sf total)",40 ft,,,
+C6-1A,Contextual Restricted and General Central Commercial,R6,6,None,500 sf,"5 X street frontage
+ (500 sf total)","5 X street frontage
+ (500 sf total)",40 ft,,,
+C6-2A,Contextual Restricted and General Central Commercial,R8A,6,None,500 sf,"5 X street frontage
+ (500 sf total)","5 X street frontage
+ (500 sf total)",40 ft,,,
+C6-3A,Contextual Restricted and General Central Commercial,R9A,6,None,500 sf,"5 X street frontage
+ (500 sf total)","5 X street frontage
+ (500 sf total)",40 ft,,,
+C6-3D,Contextual Restricted and General Central Commercial,R9D,9,None,500 sf,"5 X street frontage
+ (500 sf total)","5 X street frontage
+ (500 sf total)",40 ft,,,
+C6-3X,Contextual Restricted and General Central Commercial,R9X,6,None,500 sf,"5 X street frontage
+ (500 sf total)","5 X street frontage
+ (500 sf total)",40 ft,,,
+C6-4A,Contextual Restricted and General Central Commercial,R10A,10,None,500 sf,"5 X street frontage
+ (500 sf total)","5 X street frontage
+ (500 sf total)",40 ft,,,
+C6-4X,Contextual Restricted and General Central Commercial,R10X,10,None,500 sf,"5 X street frontage
+ (500 sf total)","5 X street frontage
+ (500 sf total)",40 ft,,,
+C7,Commercial Amusement,None,2,1 per 400 sf,No restriction,No restriction,No restriction,No restriction,,,
+C8-1,General Service,None,1,1 per 300 sf," 500 sf
+ Non-illuminated: 750 sf",6 X street frontage,5 X street frontage,"40 ft illuminated;
+ 58 ft non-illuminated",,,
+C8-2,General Service,None,2,1 per 400 sf," 500 sf
+ Non-illuminated: 750 sf",6 X street frontage,5 X street frontage,"40 ft illuminated;
+ 58 ft non-illuminated",,,
+C8-3,General Service,None,2,"1 per 1,000 sf"," 500 sf
+ Non-illuminated: 750 sf",6 X street frontage,5 X street frontage,"40 ft illuminated;
+ 58 ft non-illuminated",,,
+C8-4,General Service,None,5,None," 500 sf
+ Non-illuminated: 750 sf",6 X street frontage,5 X street frontage,"40 ft illuminated;
+ 58 ft non-illuminated",,,
