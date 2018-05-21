@@ -4,7 +4,7 @@ UPDATE pluto
 SET builtfar = round(bldgarea::numeric / lotarea::numeric, 2)
 WHERE lotarea <> '0' AND lotarea IS NOT NULL;
 
--- add FAR values based on ZoneDist1 using lookup table
+-- add FAR values based on zonedist and using lookup table
 WITH fars AS (
 	SELECT zoningdistrict,
 		NULL AS residfar,
@@ -28,11 +28,15 @@ WITH fars AS (
 	FROM dcp_zoning_res1to5
 	UNION
 	SELECT zoningdistrict,
-		farmax AS residfar,
+		CASE
+			WHEN widestreetfarmax IS NOT NULL THEN widestreetfarmax
+			ELSE farmax
+			END) AS commfar,
 		 NULL AS commfar,
 		NULL AS facilfar
 	FROM dcp_zoning_res6to10
 )
+
 
 SELECT * FROM fars ORDER BY zoningdistrict
 
