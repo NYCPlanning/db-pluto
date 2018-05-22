@@ -241,7 +241,7 @@ SELECT 'assessland' AS field, COUNT(*)
 FROM pluto a
 INNER JOIN dcp_mappluto b
 ON a.bbl||'.00'::text=b.bbl::text
-WHERE a.assessland::double precision <> b.assessland::double precision
+WHERE a.assessland::text <> round(b.assessland)::text
 UNION
 SELECT 'assesstot' AS field, COUNT(*)
 FROM pluto a
