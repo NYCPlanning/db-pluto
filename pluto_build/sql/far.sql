@@ -4,11 +4,6 @@ UPDATE pluto
 SET builtfar = round(bldgarea::numeric / lotarea::numeric, 2)
 WHERE lotarea <> '0' AND lotarea IS NOT NULL;
 
-UPDATE pluto
-SET residfar = NULL,
-commfar = NULL,
-facilfar = NULL
-
 -- add FAR values based on zonedist and using lookup table
 -- create view of lookup table
 CREATE TABLE fars AS (
