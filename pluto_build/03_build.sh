@@ -37,4 +37,7 @@ psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/zoning.sql
 psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/far.sql
 psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/edesignation.sql
 
+echo 'Transform RPAD data attributes'
+psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/irrlotcode.sql
+
 psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/ipis.sql

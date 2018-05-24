@@ -4,7 +4,7 @@ WITH distincteasements AS (
 	SELECT DISTINCT b.boro||b.block||b.lot as bbl,
 	easement
 	FROM pluto_input_cama_dof b
-	WHERE easement IS NOT NULL
+	WHERE easement IS NOT NULL AND easement <> ' '
 ),
 -- count the number of distinct easements for a lot
 counteasements AS (

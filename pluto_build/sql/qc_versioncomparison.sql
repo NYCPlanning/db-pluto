@@ -1,4 +1,7 @@
+-- compare two versions of pluto be calculating how many field values are differnt for the same lot between versions
+-- drop existing output table
 DROP TABLE IF EXISTS pluto_qc_versioncomparisoncount;
+-- input the versions of pluto that you'd like to compare
 CREATE TABLE pluto_qc_versioncomparisoncount AS (
 	WITH pluto AS (SELECT * FROM pluto),
 dcp_mappluto AS (SELECT * FROM dcp_mappluto),
@@ -175,7 +178,7 @@ SELECT 'numfloors' AS field, COUNT(*)
 FROM pluto a
 INNER JOIN dcp_mappluto b
 ON a.bbl||'.00'::text=b.bbl::text
-WHERE a.numfloors::text <> b.numfloors::text
+WHERE a.numfloors::double precision <> b.numfloors::double precision
 UNION
 SELECT 'unitstotal' AS field, COUNT(*)
 FROM pluto a
@@ -187,13 +190,13 @@ SELECT 'lotfront' AS field, COUNT(*)
 FROM pluto a
 INNER JOIN dcp_mappluto b
 ON a.bbl||'.00'::text=b.bbl::text
-WHERE a.lotfront::double precision <> b.lotfront::double precision
+WHERE round(a.lotfront::double precision) <> round(b.lotfront::double precision)
 UNION
 SELECT 'lotdepth' AS field, COUNT(*)
 FROM pluto a
 INNER JOIN dcp_mappluto b
 ON a.bbl||'.00'::text=b.bbl::text
-WHERE a.lotdepth::text <> b.lotdepth::text
+WHERE a.lotdepth::double precision <> round(b.lotdepth::double precision)
 UNION
 SELECT 'bldgfront' AS field, COUNT(*)
 FROM pluto a
@@ -301,19 +304,19 @@ SELECT 'residfar' AS field, COUNT(*)
 FROM pluto a
 INNER JOIN dcp_mappluto b
 ON a.bbl||'.00'::text=b.bbl::text
-WHERE a.residfar::text <> b.residfar::text
+WHERE round(a.residfar::numeric) <> round(b.residfar::numeric)
 UNION
 SELECT 'commfar' AS field, COUNT(*)
 FROM pluto a
 INNER JOIN dcp_mappluto b
 ON a.bbl||'.00'::text=b.bbl::text
-WHERE a.commfar::text <> b.commfar::text
+WHERE round(a.commfar::numeric) <> round(b.commfar::numeric)
 UNION
 SELECT 'facilfar' AS field, COUNT(*)
 FROM pluto a
 INNER JOIN dcp_mappluto b
 ON a.bbl||'.00'::text=b.bbl::text
-WHERE a.facilfar::text <> b.facilfar::text
+WHERE round(a.facilfar::numeric) <> round(b.facilfar::numeric)
 UNION
 SELECT 'borocode' AS field, COUNT(*)
 FROM pluto a
@@ -328,9 +331,13 @@ ON a.bbl||'.00'::text=b.bbl::text
 WHERE a.condono::text <> b.condono::text
 )
 
-SELECT * FROM countchange ORDER BY count DESC)
+SELECT * FROM countchange ORDER BY count DESC
+);
 
-
+-- write to an output file
+-- set the denominator
 COPY(
-SELECT * FROM pluto_qc_versioncomparisoncount ORDER BY count DESC
-) TO '/prod/db-pluto/pluto_build/output/qc_versioncomparisoncount.csv' DELIMITER ',' CSV HEADER;
+SELECT a.field, a.count, round(((a.count::double precision/49911)*100)::numeric,2) AS percentmismatch
+FROM pluto_qc_versioncomparisoncount a
+ORDER BY count DESC
+) TO '/prod/db-pluto/pluto_build/output/qc_versioncomparison.csv' DELIMITER ',' CSV HEADER;
