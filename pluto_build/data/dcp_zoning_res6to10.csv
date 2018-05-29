@@ -1,23 +1,23 @@
-Zoning District,Zoning District type,Lot Area min.,Lot Width min.,Rear Yard min.,Lot Coverage Corner max.,Lot Coverage Other Lot max.,FAR max.,Base Height min.-max. (w/QGF),Building Height max. (w/QGF),# of Stories max. (w/QGF),MIH Lot Coverage Other Lot max.,MIH FAR max.,MIH Base Height min.-max. (w/QGF),MIH Building Height max. (w/QGF),MIH # of Stories max. (w/QGF),Dwelling Unit Factor,Required Parking Standard min. per d.u.,Required Parking IRHU min. per d.u.,Sky Exposure Plane starts at:,Open Space ratio range,Wide Street Lot Coverage Other Lot max.,Wide Street FAR max.,Wide Street Base Height min.-max. (w/QGF),Wide Street Building Height max. (w/QGF),Wide Street # of Stories max. (w/QGF),Wide Street MIH FAR max.,Wide Street MIH Base Height min.-max. (w/QGF),Wide Street MIH Building Height max. (w/QGF),Wide Street MIH # of Stories max. (w/QGF)
-R6A,Medium-Density Contextual Residence District										,"1,700 sf",18 ft,30 ft,100%,65%,3,40-60 (65) ft,70 (75) ft,n/a (7),,3.6,40-65 ft,80 (85) ft,8,680,50%,25%,,,,,,,,,,,
-R6B,Medium-Density Contextual Residence District,"1,700 sf",18 ft,30 ft,100%,60%,2,30-40 (45) ft,50 (55) ft,n/a (5),,2.2,,,,680,50%,25%,,,,,,,,,,,
-R7A,Medium-Density Contextual Residence District,"1,700 sf",18 ft,30 ft,100%,65%,4,40-65 (75) ft,80 (85) ft,n/a (8),,4.6,40-75 ft,90 (95) ft,9,680,50%,15%,,,,,,,,,,,
-R7B,Medium-Density Contextual Residence District,"1,700 sf",18 ft,30 ft,100%,65%,4,40-65 ft,75 ft,n/a,,,,,,680,50%,25%,,,,,,,,,,,
-R7D,Medium-Density Contextual Residence District,"1,700 sf",18 ft,30 ft,100%,65%,4.2,60-85 ft,100 (105) ft,n/a (10),,5.6,60-95 ft,110 (115) ft,11,680,50%,15%,,,,,,,,,,,
-R7X,Medium-Density Contextual Residence District,"1,700 sf",18 ft,30 ft,100%,70%,5,60-85 (95) ft,120 (125) ft,n/a (12),,6,60-105 ft,140 (145) ft,14,680,50%,25%,,,,,,,,,,,
-R8A,Medium-Density Contextual Residence District,"1,700 sf",18 ft,30 ft,100%,70%,6.02,60-85 (95) ft,120 (125) ft,n/a (12),,7.2,60-105 ft,140 (145) ft,14,680,40%,12%,,,,,,,,,,,
-R8B,Medium-Density Contextual Residence District,"1,700 sf",18 ft,30 ft,100%,70%,4,55-65 ft,75 ft,n/a,,,,,,680,40%,15%,,,,,,,,,,,
-R8X,Medium-Density Contextual Residence District,"1,700 sf",18 ft,30 ft,100%,70%,6.02,60-85 (95) ft,150 (155) ft,n/a (15),,7.2,60-105 ft,170 (175) ft,17,680,40%,12%,,,,,,,,,,,
-R9A,High-Density Contextual Residence District,"1,700 sf",18 ft,30 ft,100%,70%,7.52,60-95 ft,135 ft,n/a,,8.5,60-125 ft,160 (165) ft,16,680,40%,12%,,,,,60-105 ft,145 ft,,,,170 (175) ft,17
-R9X,High-Density Contextual Residence District,"1,700 sf",18 ft,30 ft,100%,70%,9,60-120 (125) ft,160 (165) ft,n/a (16),,9.7,60-145 ft,190 (195) ft,19,680,40%,12%,,,,,105-120 (125) ft,170 (175) ft,n/a (17),,105-145 ft,200 (205) ft,20
-R10A,High-Density Contextual Residence District,"1,700 sf",18 ft,30 ft,100%,70%,10,60-125 ft,185 ft,n/a,,12,60-155 ft,210 (215) ft,21,680,40%,12%,,,,,125-155 ft,210 (215) ft,n/a (21),,,230 (235) ft,23
-R10X,High-Density Contextual Residence District,1700 sf,18 ft,30 ft,100%,70%,10,60-85 ft,n/a,33-40%,,12,,,,680,40%,12%,,,,,,,,,,,
-R6HF,High-Density Non-Contextual Residence District,,,,,,2.43,,,,,,,,,680,70%,25%,60 ft,27.5-37.5,,,,,,,,,
-R7-1HF,High-Density Non-Contextual Residence District,,,,,,3.44,,,,,,,,,680,60%,15%,60 ft,15.5-25.5,,,,,,,,,
-R7-2HF,High-Density Non-Contextual Residence District,,,,,,3.44,,,,,,,,,680,50%,15%,60 ft,15.5-25.5,,,,,,,,,
-R8HF,High-Density Non-Contextual Residence District,,,,,,6.02,,,,,,,,,680,40%,15%,60 ft,5.9-11.9,,,,,,,,,
-R6QHO,Medium-Density Non-Contextual Residence District,"1,700 sf",18 ft,30 ft,100%,60%,2.2,30-45 ft,55 ft,n/a,65%,3.6,n/a-65 ft,115 ft,11,680,50%,25%,,,65%,3,40-65 ft,70 (75) ft,n/a (7),,,,
-R7QHO,Medium-Density Non-Contextual Residence District,"1,700 sf",18 ft,30 ft,100%,65%,3.44,40-65 ft,75 ft,n/a,,4.6,n/a--75 ft,135 ft,13,680,50%,15%,,,,4,40-75 ft,80 (85) ft,n/a (8),,,,
-R8QHO,Medium-Density Non-Contextual Residence District,"1,700 sf",18 ft,30 ft,100%,70%,6.02,60-85 ft,115 ft,n/a,,7.2,n/a--105 ft,215 ft,21,680,40%,12%,,,,7.2,60-95 ft,130 (135) ft,n/a (13),,,,
-R9QHO,High-Density Non-Contextual Residence District,"1,700 sf",18 ft,30 ft,100%,70%,7.52,60-95 ft,135 ft,n/a,,8,60-125 ft,160 (165) ft,16,680,40%,12%,,,,,60-105 ft,145 ft,,,,170 (175) ft,17
-R10QHO,High-Density Non-Contextual Residence District,"1,700 sf",18 ft,30 ft,100%,70%,10,60-125 ft,185 ft,n/a,,12,60-155 ft,210 (215) ft,21,680,40%,12%,,,,,125-155 ft,210 ft,,,125-155 ft,230 (235) ft,
+Zoning District,Zoning District type,Lot Area min.,Lot Width min.,Rear Yard min.,Lot Coverage Corner max.,Lot Coverage Other Lot max.,FAR max.,Base Height min.-max. (w/QGF),Building Height max. (w/QGF),# of Stories max. (w/QGF),MIH Lot Coverage Other Lot max.,MIH FAR max.,MIH Base Height min.-max. (w/QGF),MIH Building Height max. (w/QGF),MIH # of Stories max. (w/QGF),Dwelling Unit Factor,Required Parking Standard min. per d.u.,Required Parking IRHU min. per d.u.,Sky Exposure Plane starts at:,Open Space ratio range,Wide Street Lot Coverage Other Lot max.,Wide Street FAR max.,Wide Street Base Height min.-max. (w/QGF),Wide Street Building Height max. (w/QGF),Wide Street # of Stories max. (w/QGF),Wide Street MIH FAR max.,Wide Street MIH Base Height min.-max. (w/QGF),Wide Street MIH Building Height max. (w/QGF),Wide Street MIH # of Stories max. (w/QGF),Community Facility FAR
+R6A,Medium-Density Contextual Residence District										,"1,700 sf",18 ft,30 ft,100%,65%,3,40-60 (65) ft,70 (75) ft,n/a (7),,3.6,40-65 ft,80 (85) ft,8,680,50%,25%,,,,,,,,,,,,3
+R6B,Medium-Density Contextual Residence District,"1,700 sf",18 ft,30 ft,100%,60%,2,30-40 (45) ft,50 (55) ft,n/a (5),,2.2,,,,680,50%,25%,,,,,,,,,,,,2
+R7A,Medium-Density Contextual Residence District,"1,700 sf",18 ft,30 ft,100%,65%,4,40-65 (75) ft,80 (85) ft,n/a (8),,4.6,40-75 ft,90 (95) ft,9,680,50%,15%,,,,,,,,,,,,4
+R7B,Medium-Density Contextual Residence District,"1,700 sf",18 ft,30 ft,100%,65%,3,40-65 ft,75 ft,n/a,,,,,,680,50%,25%,,,,,,,,,,,,3
+R7D,Medium-Density Contextual Residence District,"1,700 sf",18 ft,30 ft,100%,65%,4.2,60-85 ft,100 (105) ft,n/a (10),,5.6,60-95 ft,110 (115) ft,11,680,50%,15%,,,,,,,,,,,,4.2
+R7X,Medium-Density Contextual Residence District,"1,700 sf",18 ft,30 ft,100%,70%,5,60-85 (95) ft,120 (125) ft,n/a (12),,6,60-105 ft,140 (145) ft,14,680,50%,25%,,,,,,,,,,,,5
+R8A,Medium-Density Contextual Residence District,"1,700 sf",18 ft,30 ft,100%,70%,6.02,60-85 (95) ft,120 (125) ft,n/a (12),,7.2,60-105 ft,140 (145) ft,14,680,40%,12%,,,,,,,,,,,,6.5
+R8B,Medium-Density Contextual Residence District,"1,700 sf",18 ft,30 ft,100%,70%,4,55-65 ft,75 ft,n/a,,,,,,680,40%,15%,,,,,,,,,,,,4
+R8X,Medium-Density Contextual Residence District,"1,700 sf",18 ft,30 ft,100%,70%,6.02,60-85 (95) ft,150 (155) ft,n/a (15),,7.2,60-105 ft,170 (175) ft,17,680,40%,12%,,,,,,,,,,,,6
+R9A,High-Density Contextual Residence District,"1,700 sf",18 ft,30 ft,100%,70%,7.52,60-95 ft,135 ft,n/a,,8.5,60-125 ft,160 (165) ft,16,680,40%,12%,,,,,60-105 ft,145 ft,,,,170 (175) ft,17,7.5
+R9X,High-Density Contextual Residence District,"1,700 sf",18 ft,30 ft,100%,70%,9,60-120 (125) ft,160 (165) ft,n/a (16),,9.7,60-145 ft,190 (195) ft,19,680,40%,12%,,,,,105-120 (125) ft,170 (175) ft,n/a (17),,105-145 ft,200 (205) ft,20,9
+R10A,High-Density Contextual Residence District,"1,700 sf",18 ft,30 ft,100%,70%,10,60-125 ft,185 ft,n/a,,12,60-155 ft,210 (215) ft,21,680,40%,12%,,,,,125-155 ft,210 (215) ft,n/a (21),,,230 (235) ft,23,10
+R10X,High-Density Contextual Residence District,1700 sf,18 ft,30 ft,100%,70%,10,60-85 ft,n/a,33-40%,,12,,,,680,40%,12%,,,,,,,,,,,,10
+R6HF,High-Density Non-Contextual Residence District,,,,,,2.43,,,,,,,,,680,70%,25%,60 ft,27.5-37.5,,,,,,,,,,4.8
+R7-1HF,High-Density Non-Contextual Residence District,,,,,,3.44,,,,,,,,,680,60%,15%,60 ft,15.5-25.5,,,,,,,,,,4.8
+R7-2HF,High-Density Non-Contextual Residence District,,,,,,3.44,,,,,,,,,680,50%,15%,60 ft,15.5-25.5,,,,,,,,,,6.5
+R8HF,High-Density Non-Contextual Residence District,,,,,,6.02,,,,,,,,,680,40%,15%,60 ft,5.9-11.9,,,,,,,,,,6.5
+R6QHO,Medium-Density Non-Contextual Residence District,"1,700 sf",18 ft,30 ft,100%,60%,2.2,30-45 ft,55 ft,n/a,65%,3.6,n/a-65 ft,115 ft,11,680,50%,25%,,,65%,3,40-65 ft,70 (75) ft,n/a (7),,,,,4.8
+R7QHO,Medium-Density Non-Contextual Residence District,"1,700 sf",18 ft,30 ft,100%,65%,3.44,40-65 ft,75 ft,n/a,,4.6,n/a--75 ft,135 ft,13,680,50%,15%,,,,4,40-75 ft,80 (85) ft,n/a (8),,,,,6.5
+R8QHO,Medium-Density Non-Contextual Residence District,"1,700 sf",18 ft,30 ft,100%,70%,6.02,60-85 ft,115 ft,n/a,,7.2,n/a--105 ft,215 ft,21,680,40%,12%,,,,7.2,60-95 ft,130 (135) ft,n/a (13),,,,,6.5
+R9QHO,High-Density Non-Contextual Residence District,"1,700 sf",18 ft,30 ft,100%,70%,7.52,60-95 ft,135 ft,n/a,,8,60-125 ft,160 (165) ft,16,680,40%,12%,,,,,60-105 ft,145 ft,,,,170 (175) ft,17,10
+R10QHO,High-Density Non-Contextual Residence District,"1,700 sf",18 ft,30 ft,100%,70%,10,60-125 ft,185 ft,n/a,,12,60-155 ft,210 (215) ft,21,680,40%,12%,,,,,125-155 ft,210 ft,,,125-155 ft,230 (235) ft,,10
