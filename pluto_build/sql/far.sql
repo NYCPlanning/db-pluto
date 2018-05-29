@@ -34,7 +34,7 @@ CREATE TABLE fars AS (
 			ELSE farmax
 			END) AS commfar,
 		 NULL AS commfar,
-		NULL AS facilfar
+		commfacfar AS facilfar
 	FROM dcp_zoning_res6to10
 );
 UPDATE fars
