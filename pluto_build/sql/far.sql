@@ -5,9 +5,11 @@ SET builtfar = round(bldgarea::numeric / lotarea::numeric, 2)
 WHERE lotarea <> '0' AND lotarea IS NOT NULL;
 
 -- add FAR values based on zonedist and using lookup table
+DROP TABLE IF EXISTS fars;
 -- create view of lookup table
 CREATE TABLE fars AS (
 	SELECT zoningdistrict,
+		resequivalent,
 		NULL AS residfar,
 		 (CASE
 			WHEN commfar IS NULL THEN commfarr6otr10
@@ -17,18 +19,21 @@ CREATE TABLE fars AS (
 	FROM dcp_zoning_comm
 	UNION
 	SELECT zoningdistrict,
+	 	NULL AS resequivalent,
 		NULL AS residfar,
 		mnffar AS commfar,
 		NULL AS facilfar
 	FROM dcp_zoning_mnf
 	UNION
 	SELECT zoningdistrict,
+		NULL AS resequivalent,
 		resfarbasic AS residfar,
 		NULL AS commfar,
 		commfacfar AS facilfar
 	FROM dcp_zoning_res1to5
 	UNION
 	SELECT zoningdistrict,
+		NULL AS resequivalent,
 		(CASE
 			WHEN widestreetfarmax IS NOT NULL THEN widestreetfarmax
 			ELSE farmax
@@ -40,6 +45,24 @@ CREATE TABLE fars AS (
 UPDATE fars
 SET zoningdistrict = LEFT(zoningdistrict,length(zoningdistrict)-2)
 WHERE zoningdistrict LIKE '%HF';
+-- update resid and commfacility far based on resequivalent
+UPDATE fars a
+SET residfar = c.residfar
+FROM (SELECT a.resequivalent, b.residfar, b.facilfar 
+	FROM fars a
+	JOIN fars b
+	ON a.resequivalent=b.zoningdistrict
+) c
+WHERE c.resequivalent=a.resequivalent;
+UPDATE fars a
+SET facilfar = c.facilfar
+FROM (SELECT a.resequivalent, b.residfar, b.facilfar 
+	FROM fars a
+	JOIN fars b
+	ON a.resequivalent=b.zoningdistrict
+) c
+WHERE c.resequivalent=a.resequivalent;
+
 -- base on zoning district 1
 UPDATE pluto a
 SET residfar = b.residfar,
@@ -171,4 +194,14 @@ WHERE split_part(a.zonedist3, '/', 2)=b.zoningdistrict
 AND a.facilfar IS NULL;
 -- drop far table
 DROP TABLE IF EXISTS fars;
+-- make NULLs zeros
+UPDATE pluto a
+SET residfar = 0
+WHERE a.residfar IS NULL;
+UPDATE pluto a
+SET commfar = 0
+WHERE a.commfar IS NULL;
+UPDATE pluto a
+SET facilfar = 0
+WHERE a.facilfar IS NULL;
 
