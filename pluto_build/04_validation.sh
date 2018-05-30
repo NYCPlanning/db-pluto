@@ -11,3 +11,7 @@ DBUSER=$(cat $REPOLOC/pluto.config.json | jq -r '.DBUSER')
 start=$(date +'%T')
 echo "Starting to validate latest pluto"
 psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/qc_versioncomparison.sql
+psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/qc_numbldgs.sql
+psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/qc_yearbuilt.sql
+
+psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/qc_fieldcomparisons.sql
