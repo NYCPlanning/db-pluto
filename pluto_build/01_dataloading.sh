@@ -18,6 +18,8 @@ node loader.js install lpc_historic_districts
 node loader.js install lpc_landmarks
 node loader.js install dcas_ipis
 node loader.js install dcp_edesignation
+node loader.js install dof_dtm
+node loader.js install doitt_buildingfootprints
 
 ## Other_datasets - PULLING FROM PLUTO GitHub repo
 echo 'Loading datasets from PLUTO GitHub repo...'
