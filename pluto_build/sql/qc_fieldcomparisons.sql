@@ -16,3 +16,7 @@ WHERE a.ownername <> b.ownername
 GROUP BY a.ownername, b.ownername
 ORDER BY count DESC
 
+UPDATE pluto
+SET residfar = NULL,
+commfar = NULL,
+facilfar = NULL
