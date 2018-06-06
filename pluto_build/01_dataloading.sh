@@ -20,6 +20,7 @@ node loader.js install dcas_ipis
 node loader.js install dcp_edesignation
 node loader.js install dof_dtm
 node loader.js install doitt_buildingfootprints
+node loader.js install dcas_facilities_colp
 
 ## Other_datasets - PULLING FROM PLUTO GitHub repo
 echo 'Loading datasets from PLUTO GitHub repo...'
