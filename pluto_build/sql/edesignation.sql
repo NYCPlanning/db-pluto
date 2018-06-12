@@ -1,5 +1,6 @@
 -- set the E Designation number
 -- if there is more than one enumber for one lot take the enumber from the lowest ceqr_num and ulurp_num
+-- **change to using csv file**
 WITH edesignation AS (
 	SELECT bbl, enumber 
 	FROM (
