@@ -37,7 +37,7 @@ CREATE TABLE fars AS (
 		(CASE
 			WHEN widestreetfarmax IS NOT NULL THEN widestreetfarmax
 			ELSE farmax
-			END) AS commfar,
+			END) AS residfar,
 		 NULL AS commfar,
 		commfacfar AS facilfar
 	FROM dcp_zoning_res6to10

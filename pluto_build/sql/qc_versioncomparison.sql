@@ -190,25 +190,25 @@ SELECT 'lotfront' AS field, COUNT(*)
 FROM pluto a
 INNER JOIN dcp_mappluto b
 ON a.bbl||'.00'::text=b.bbl::text
-WHERE round(a.lotfront::double precision) <> round(b.lotfront::double precision)
+WHERE trunc(a.lotfront::numeric, 0) <> trunc(b.lotfront::numeric, 0)
 UNION
 SELECT 'lotdepth' AS field, COUNT(*)
 FROM pluto a
 INNER JOIN dcp_mappluto b
 ON a.bbl||'.00'::text=b.bbl::text
-WHERE a.lotdepth::double precision <> round(b.lotdepth::double precision)
+WHERE trunc(a.lotdepth::numeric, 0) <> trunc(b.lotdepth::numeric, 0)
 UNION
 SELECT 'bldgfront' AS field, COUNT(*)
 FROM pluto a
 INNER JOIN dcp_mappluto b
 ON a.bbl||'.00'::text=b.bbl::text
-WHERE a.bldgfront::text <> round(b.bldgfront)::text
+WHERE trunc(a.bldgfront::numeric, 0) <> trunc(b.bldgfront::numeric, 0) AND b.bldgfront::text LIKE '%[0-9]%'
 UNION
 SELECT 'bldgdepth' AS field, COUNT(*)
 FROM pluto a
 INNER JOIN dcp_mappluto b
 ON a.bbl||'.00'::text=b.bbl::text
-WHERE a.bldgdepth::double precision <> b.bldgdepth::double precision
+WHERE trunc(a.bldgdepth::numeric, 0) <> trunc(b.bldgdepth::numeric, 0)
 UNION
 SELECT 'ext' AS field, COUNT(*)
 FROM pluto a
