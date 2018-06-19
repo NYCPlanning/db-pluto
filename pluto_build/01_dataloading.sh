@@ -34,3 +34,5 @@ node loader.js install dcp_zoning_comm
 node loader.js install dcp_zoning_mnf
 node loader.js install dcp_zoning_res1to5
 node loader.js install dcp_zoning_res6to10
+node loader.js install dof_condo
+node loader.js install dof_condo_units

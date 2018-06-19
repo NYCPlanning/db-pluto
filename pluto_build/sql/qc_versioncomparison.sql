@@ -336,8 +336,5 @@ SELECT * FROM countchange ORDER BY count DESC
 
 -- write to an output file
 -- set the denominator
-COPY(
-SELECT a.field, a.count, round(((a.count::double precision/49911)*100)::numeric,2) AS percentmismatch
-FROM pluto_qc_versioncomparisoncount a
-ORDER BY count DESC
-) TO '/prod/db-pluto/pluto_build/output/qc_versioncomparison.csv' DELIMITER ',' CSV HEADER;
+\copy (SELECT a.field, a.count, round(((a.count::double precision/49911)*100)::numeric,2) AS percentmismatch FROM pluto_qc_versioncomparisoncount a ORDER BY count DESC) TO '/prod/db-pluto/pluto_build/output/qc_versioncomparison.csv' DELIMITER ',' CSV HEADER;
+
