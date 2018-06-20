@@ -22,7 +22,7 @@ node loader.js install dof_dtm
 node loader.js install doitt_buildingfootprints
 node loader.js install dcas_facilities_colp
 
-## Other_datasets - PULLING FROM PLUTO GitHub repo
+## Other_datasets - PULLING FROM FTP or PLUTO GitHub repo
 echo 'Loading datasets from PLUTO GitHub repo...'
 node loader.js install pluto_input_allocated
 node loader.js install pluto_input_geocodes
