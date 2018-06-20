@@ -1,0 +1,74 @@
+psudo code
+
+Jean
+
+- QA/QC lot area of old and new RPAD (count and report)
+- for zero or missing condo #s if there is a missing condo number you have to correct it
+- missing building class and frequency distribution (done)
+
+- limit fields to only necessary fields
+- make bbl valid
+
+- sum 3 $ fields to get accessed total (value sum = current transactional value + tentative change + final change)
+
+- Geocoding
+-- BL, 1E, 1A --> what attributes are we getting from each?
+-- no mathces from geocoding rerun through 1E again w/ GBAT control cards
+-- still no matches
+	- take all matched records 
+	- find more frequently occurring census tract for a tax block
+	- info applied to tax lots that so not have matches
+	- BLCTOR1.dob
+	- create geocodes file
+	- from geocoding it pick up number of structures, which gets inserted into number of building field to replace RPAD value
+
+- if vacant building and (AV land = AV total) then zero out building frontage, building debth, stories, and number of buildings
+- if no lot area and no lot depth was = to acre then lot frantage x 43560 + .5
+
+- if lot area = 0 and if lot not irregular and lot depth adn lot front have values then multiply lot front x lot depth to get lot area
+
+- gfa code and foot code > file with logic from Jean
+
+- pick up owner from IPIS (boro, taxlot, block, easement)
+
+- based on if bbl in list then changes building class  > file with bbls from Jean
+
+-- reformat ADATE
+
+FOLLOW-UP (with Lynn)
+RPAD addresses that don't geocode --> send to GRU
+# of structures - how are we getting this value in PAD
+
+Jie
+Part 1
+DTM
+base bbl -> billing bbl -> taxlot polygon
+^using condo lookup table from DOF
+
+Report
+missing
+split --> manually assign
+merged lots --> condo, non condo
+
+Pre BBL assignment
+
+- delete fiels, premerge code, bbl assignemnet code, duplicate code
+
+- CLIP --> what do we clip to?
+- QA/QC 
+- Don't delete slivers
+- validation
+
+Part 2 (tax lot / Community district file)
+-- assign the CDs that the tax lot falls within 
+
+Part 3
+PLUTO is ready
+Joing PLUTO onto base dtm to generate MapPLUTO
+Generate files for each boro
+	- map only lots
+	- pluto only
+	- map pluto
+Edit xml metadata file and apply xml to each file and convert to pdf
+
+
