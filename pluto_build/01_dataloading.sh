@@ -36,3 +36,15 @@ node loader.js install dcp_zoning_res1to5
 node loader.js install dcp_zoning_res6to10
 node loader.js install dof_condo
 node loader.js install dof_condo_units
+
+DBSOURCE=$(cat $REPOLOC/cpdb.config.json | jq -r '.DBSOURCE')
+
+echo $DBSOURCE
+
+# create helper views
+#default to run on scraped data from Capital Commitment Plan
+if [ $DBSOURCE = 'fisa_capitalcommitments' ]; then
+    psql -U $DBUSER -d $DBNAME -f $REPOLOC/capitalprojects_build/sql/projects_fisa.sql
+else
+    psql -U $DBUSER -d $DBNAME -f $REPOLOC/capitalprojects_build/sql/projects.sql
+fi
