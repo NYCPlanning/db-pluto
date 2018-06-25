@@ -22,7 +22,7 @@ CREATE TABLE fars AS (
 	 	NULL AS resequivalent,
 		NULL AS residfar,
 		mnffar AS commfar,
-		NULL AS facilfar
+		commfacfar AS facilfar
 	FROM dcp_zoning_mnf
 	UNION
 	SELECT zoningdistrict,
