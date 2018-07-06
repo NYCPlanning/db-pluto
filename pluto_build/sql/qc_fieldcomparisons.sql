@@ -1,3 +1,4 @@
+-- outputs reports comparing values for specific fileds in pluto where values do not match for the same bbl
 COPY(
 SELECT a.zonedist1, b.zonedist1, a.zonedist2, b.zonedist2, a.zonedist3, b.zonedist3, a.residfar, b.residfar, a.commfar, b.commfar, a.facilfar, b.facilfar, COUNT(*)
 FROM pluto a
