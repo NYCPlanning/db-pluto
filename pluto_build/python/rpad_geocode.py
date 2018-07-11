@@ -57,6 +57,7 @@ locs.reset_index(inplace = True)
 for i in range(len(rpad)):
     if (locs['lat'][i] != 'none') & (locs['lon'][i] != 'none'):
         upd = "UPDATE pluto_rpad_geo a SET geom = ST_SetSRID(ST_MakePoint(" + str(locs['lon'][i]) + ", " + str(locs['lat'][i]) + "), 4326) WHERE boro = '" + sca['boro'][i] + "' AND tb = '" + sca['tb'][i] + "' AND tl = '" + sca['tl'][i] + "' ;"
+    elif upd = "UPDATE pluto_rpad_geo a SET geom = NULL;"
     engine.execute(upd)
 
 
