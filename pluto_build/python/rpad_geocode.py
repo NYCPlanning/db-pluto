@@ -70,8 +70,7 @@ def get_loc(borough, block, lot):
                         'giHighHouseNumber' : [giHighHouseNumber],
                         'giStreetCode' : [giStreetCode],
                         'rpadBldgClass' : [rpadBldgClass],
-                        'numBldgs' : [numBldgs]
-                        })
+                        'numBldgs' : [numBldgs]})
     return(loc)
 
 locs = pd.DataFrame()
