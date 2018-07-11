@@ -32,11 +32,11 @@ g = Geoclient(app_id, app_key)
 def get_loc(boro, block, lot):
     geo = g.bbl(boro, block, lot)
     try:
-        lat = geo['latitude']
+        lat = geo['latitudeInternalLabel']
     except:
         lat = 'none'
     try:
-        lon = geo['longitude']
+        lon = geo['longitudeInternalLabel']
     except:
         lon = 'none'
     loc = pd.DataFrame({'lat' : [lat],
