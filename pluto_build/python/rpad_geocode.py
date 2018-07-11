@@ -64,7 +64,7 @@ def get_loc(borough, block, lot):
                         'bbl' : [bbl],
                         'billingbbl' : [billingbbl],
                         'giHighHouseNumber' : [giHighHouseNumber],
-                        'giStreetCode' : [giStreetCode1],
+                        'giStreetCode' : [giStreetCode],
                         'rpadBldgClass' : [rpadBldgClass]
                         })
     return(loc)
