@@ -94,7 +94,7 @@ for i in range(len(rpad)):
     if (locs['rpadBldgClass'][i] != 'none'):
         upd = "UPDATE pluto_rpad_geo a SET rpadBldgClass = '" + str(locs['rpadBldgClass'][i]) + "' WHERE boro = '" + rpad['boro'][i] + "' AND tb = '" + rpad['tb'][i] + "' AND tl = '" + rpad['tl'][i] + "' ;"
     if (locs['numBldgs'][i] != 'none'):
-        upd = "UPDATE pluto_rpad_geo a SET numBldgs = " + str(locs['numBldgs'][i]) + " WHERE boro = '" + rpad['boro'][i] + "' AND tb = '" + rpad['tb'][i] + "' AND tl = '" + rpad['tl'][i] + "' ;"
+        upd = "UPDATE pluto_rpad_geo a SET numBldgs = '" + str(locs['numBldgs'][i]) + "' WHERE boro = '" + rpad['boro'][i] + "' AND tb = '" + rpad['tb'][i] + "' AND tl = '" + rpad['tl'][i] + "' ;"
     elif (locs['lat'][i] == 'none') & (locs['lon'][i] == 'none'):
         upd = "UPDATE pluto_rpad_geo a SET geom = NULL;"
     engine.execute(upd)
