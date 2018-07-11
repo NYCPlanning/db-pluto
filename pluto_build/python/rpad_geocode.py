@@ -23,14 +23,14 @@ app_key = config['GEOCLIENT_APP_KEY']
 engine = sql.create_engine('postgresql://{}@localhost:5432/{}'.format(DBUSER, DBNAME))
 
 # read in rpad table
-rpad = pd.read_sql_query('SELECT * FROM pluto_rpad_geo WHERE geom IS NULL AND boro IS NOT NULL;', engine)
+rpad = pd.read_sql_query('SELECT * FROM pluto_rpad_geo WHERE geom IS NULL AND borough IS NOT NULL;', engine)
 
 # get the geo data
 
 g = Geoclient(app_id, app_key)
 
-def get_loc(boro, block, lot):
-    geo = g.bbl(boro, block, lot)
+def get_loc(borough, block, lot):
+    geo = g.bbl(borough, block, lot)
     try:
         lat = geo['latitudeInternalLabel']
     except:
