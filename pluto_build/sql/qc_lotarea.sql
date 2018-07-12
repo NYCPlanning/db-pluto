@@ -1,5 +1,6 @@
 -- report instances where the lot area has changed for the same lot between RPAD versions
 -- could indicate an error
+COPY(
 SELECT a.boro||lpad(a.tb, 5, '0')||lpad(a.block, 4, '0') as bbl
 	a.land_area, 
 	b.land_area, 
