@@ -11,6 +11,12 @@ DBUSER=$(cat $REPOLOC/pluto.config.json | jq -r '.DBUSER')
 start=$(date +'%T')
 echo "Starting to build PLUTO"
 
+
+echo 'Geocoding geoms...'
+source activate py2
+python $REPOLOC/pluto_build/python/rpad_geocode.py
+source deactivate
+
 # create the table
 echo 'Creating base PLUTO table'
 psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/create.sql
