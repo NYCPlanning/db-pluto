@@ -22,10 +22,10 @@ Jean
 	- create geocodes file
 	- from geocoding it pick up number of structures, which gets inserted into number of building field to replace RPAD value
 
-- if vacant building and (AV land = AV total) then zero out building frontage, building debth, stories, and number of buildings
-- if no lot area and no lot depth was = to acre then lot frantage x 43560 + .5
+- (DONE) if vacant building and (AV land = AV total) then zero out building frontage, building debth, stories, and number of buildings
+- (DONE) if no lot area and no lot depth was = to acre then lot frantage x 43560 + .5
 
-- if lot area = 0 and if lot not irregular and lot depth adn lot front have values then multiply lot front x lot depth to get lot area
+- (DONE)if lot area = 0 and if lot not irregular and lot depth adn lot front have values then multiply lot front x lot depth to get lot area
 
 - gfa code and foot code > file with logic from Jean
 

@@ -19,6 +19,11 @@ python $REPOLOC/pluto_build/python/rpad_geocode_bbl.py
 python $REPOLOC/pluto_build/python/rpad_geocode_address.py
 source deactivate
 
+psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/zerovacantlots.sql
+psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/lotarea.sql
+
+
+
 # create the table
 echo 'Creating base PLUTO table'
 psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/create.sql
