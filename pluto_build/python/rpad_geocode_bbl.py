@@ -35,11 +35,11 @@ g = Geoclient(app_id, app_key)
 def get_loc(borough, block, lot):
     geo = g.bbl(borough, block, lot)
     try:
-        lat = geo['latitudeInternalLabel']
+        lat = geo['internalLabelYCoordinate']
     except:
         lat = 'none'
     try:
-        lon = geo['longitudeInternalLabel']
+        lon = geo['internalLabelXCoordinate']
     except:
         lon = 'none'
     try:
