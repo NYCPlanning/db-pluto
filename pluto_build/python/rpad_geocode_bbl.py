@@ -95,14 +95,14 @@ for i in range(len(rpad)):
         upd = "UPDATE pluto_rpad_geo a SET geom = NULL;"
     engine.execute(upd)
 
-# need to add in number of buildings
-#    try:
-#        numBldgs = geo['numberOfExistingStructuresOnLot']
-#    except:
-#        numBldgs = 'none'
-#                        'numBldgs' : [numBldgs]
-#    if (locs['numBldgs'][i] != 'none'):
-#        upd = "UPDATE pluto_rpad_geo a SET numBldgs = '" + str(locs['numBldgs'][i]) + "' WHERE boro = '" + rpad['boro'][i] + "' AND tb = '" + rpad['tb'][i] + "' AND tl = '" + rpad['tl'][i] + "' ;"
+#need to add in number of buildings
+#try:
+#numBldgs = geo['numberOfExistingStructuresOnLot']
+#except:
+#numBldgs = 'none'
+#'numBldgs' : [numBldgs]
+#if (locs['numBldgs'][i] != 'none'):
+#upd = "UPDATE pluto_rpad_geo a SET numBldgs = '" + str(locs['numBldgs'][i]) + "' WHERE boro = '" + rpad['boro'][i] + "' AND tb = '" + rpad['tb'][i] + "' AND tl = '" + rpad['tl'][i] + "' ;"
 
 # not deleting because if I ever figure it out this is probably a better way of doing this... 
 #md = sql.MetaData(engine)
