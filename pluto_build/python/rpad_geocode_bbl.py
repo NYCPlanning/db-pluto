@@ -62,10 +62,6 @@ def get_loc(borough, block, lot):
         rpadBldgClass = geo['rpadBuildingClassificationCode']
     except:
         rpadBldgClass = 'none'
-#    try:
-#        numBldgs = geo['numberOfExistingStructuresOnLot']
-#    except:
-#        numBldgs = 'none'
     loc = pd.DataFrame({'lat' : [lat],
                         'lon' : [lon],
                         'bbl' : [bbl],
@@ -73,7 +69,6 @@ def get_loc(borough, block, lot):
                         'giHighHouseNumber' : [giHighHouseNumber],
                         'giStreetCode' : [giStreetCode],
                         'rpadBldgClass' : [rpadBldgClass]
-#                        'numBldgs' : [numBldgs]
                         })
     return(loc)
 
@@ -97,11 +92,18 @@ for i in range(len(rpad)):
         upd = "UPDATE pluto_rpad_geo a SET giHighHouseNumber = " + str(locs['giHighHouseNumber'][i]) + ", giStreetCode = " + str(locs['giStreetCode'][i]) +" WHERE boro = '" + rpad['boro'][i] + "' AND tb = '" + rpad['tb'][i] + "' AND tl = '" + rpad['tl'][i] + "' ;"
     if (locs['rpadBldgClass'][i] != 'none'):
         upd = "UPDATE pluto_rpad_geo a SET rpadBldgClass = '" + str(locs['rpadBldgClass'][i]) + "' WHERE boro = '" + rpad['boro'][i] + "' AND tb = '" + rpad['tb'][i] + "' AND tl = '" + rpad['tl'][i] + "' ;"
-#    if (locs['numBldgs'][i] != 'none'):
-#        upd = "UPDATE pluto_rpad_geo a SET numBldgs = '" + str(locs['numBldgs'][i]) + "' WHERE boro = '" + rpad['boro'][i] + "' AND tb = '" + rpad['tb'][i] + "' AND tl = '" + rpad['tl'][i] + "' ;"
     elif (locs['lat'][i] == 'none') & (locs['lon'][i] == 'none'):
         upd = "UPDATE pluto_rpad_geo a SET geom = NULL;"
     engine.execute(upd)
+
+# need to add in number of buildings
+#    try:
+#        numBldgs = geo['numberOfExistingStructuresOnLot']
+#    except:
+#        numBldgs = 'none'
+#                        'numBldgs' : [numBldgs]
+#    if (locs['numBldgs'][i] != 'none'):
+#        upd = "UPDATE pluto_rpad_geo a SET numBldgs = '" + str(locs['numBldgs'][i]) + "' WHERE boro = '" + rpad['boro'][i] + "' AND tb = '" + rpad['tb'][i] + "' AND tl = '" + rpad['tl'][i] + "' ;"
 
 # not deleting because if I ever figure it out this is probably a better way of doing this... 
 #md = sql.MetaData(engine)
