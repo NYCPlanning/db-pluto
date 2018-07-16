@@ -1,3 +1,6 @@
+# GeoClient (DoITT)
+# Running the BBL associated with each RPAD record through GeoClient BL funtion
+# to return the Billing bbl, address (house number and street code), and number of buildings
 import pandas as pd
 import subprocess
 import os
