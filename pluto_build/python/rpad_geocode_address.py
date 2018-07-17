@@ -26,14 +26,14 @@ app_key = config['GEOCLIENT_APP_KEY']
 engine = sql.create_engine('postgresql://{}@localhost:5432/{}'.format(DBUSER, DBNAME))
 
 # read in rpad table
-rpad = pd.read_sql_query('SELECT * FROM pluto_rpad_geo WHERE giHighHouseNumber IS NOT NULL AND borough IS NOT NULL AND cd IS NULL;', engine)
+rpad = pd.read_sql_query('SELECT * FROM pluto_rpad_geo WHERE housenum_hi IS NOT NULL AND borough IS NOT NULL AND cd IS NULL;', engine)
 
 # get the geo data
 
 g = Geoclient(app_id, app_key)
 
 def get_loc(num, street, boro)
-    geo = g.bbl(giHighHouseNumber, giStreetCode, borough)
+    geo = g.bbl(housenum_hi, stcode11, borough)
     try:
         cd = geo['communityDistrict']
     except:
@@ -95,8 +95,8 @@ def get_loc(num, street, boro)
 
 locs = pd.DataFrame()
 for i in range(len(rpad)):
-    new = get_loc(rpad['giHighHouseNumber'][i],
-                  rpad['giStreetCode'][i],
+    new = get_loc(rpad['housenum_hi'][i],
+                  rpad['stcode11'][i],
                   rpad['borough'][i]
     )
     locs = pd.concat((locs, new))
