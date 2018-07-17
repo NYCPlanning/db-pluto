@@ -32,7 +32,7 @@ rpad = pd.read_sql_query('SELECT * FROM pluto_rpad_geo WHERE housenum_hi IS NOT 
 
 g = Geoclient(app_id, app_key)
 
-def get_loc(num, street, boro)
+def get_loc(num, street, boro):
     geo = g.bbl(housenum_hi, stcode11, borough)
     try:
         cd = geo['communityDistrict']
