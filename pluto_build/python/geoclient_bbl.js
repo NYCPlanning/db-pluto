@@ -148,7 +148,7 @@ function updateFacilities(data, row) {
                           AND upper(borough) = \'{{firstBoroughName}}\'
                           AND processingflag IS NULL`;
 
-  if(data.latitude && data.longitude) {
+  if(data.latitudeInternalLabel && data.longitudeInternalLabel) {
     // console.log('Updating facilities');
 
     var insert = Mustache.render(insertTemplate, {
