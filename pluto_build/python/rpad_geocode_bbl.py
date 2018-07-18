@@ -45,32 +45,12 @@ def get_loc(borough, block, lot):
     except:
         lon = 'none'
     try:
-        bbl = geo['bbl']
-    except:
-        bbl = 'none'
-    try:
         billingbbl = geo['condominiumBillingBbl']
     except:
         billingbbl = 'none'
-    try:
-        giHighHouseNumber = geo['giHighHouseNumber1']
-    except:
-        giHighHouseNumber = 'none'
-    try:
-        giStreetCode = geo['giStreetCode1']
-    except:
-        giStreetCode = 'none'
-    try:
-        rpadBldgClass = geo['rpadBuildingClassificationCode']
-    except:
-        rpadBldgClass = 'none'
     loc = pd.DataFrame({'lat' : [lat],
                         'lon' : [lon],
-                        'bbl' : [bbl],
-                        'billingbbl' : [billingbbl],
-                        'giHighHouseNumber' : [giHighHouseNumber],
-                        'giStreetCode' : [giStreetCode],
-                        'rpadBldgClass' : [rpadBldgClass]
+                        'billingbbl' : [billingbbl]
                         })
     return(loc)
 
