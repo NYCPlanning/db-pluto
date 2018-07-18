@@ -18,7 +18,7 @@ var pgp = require('pg-promise')(),
 
 // REQUIRE JS FILE WITH API CREDENTIALS -- USED IN addressLookup FUNCTION
 // ALSO REQUIRES WITH DATABASE CONFIGURATION
-var config = require('../plutoconfig.js');
+var config = require('plutoconfig.js');
 
 // USE DATABASE CONFIGURATION JS FILE TO LINK TO DATABASE
 var db = pgp(config);
