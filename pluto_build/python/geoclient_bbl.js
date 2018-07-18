@@ -145,8 +145,7 @@ function updateFacilities(data, row) {
                         WHERE
                           tl=\'{{bblTaxLotIn}}\'
                           AND tb=\'{{bblTaxBlock}}\'
-                          AND upper(borough) = \'{{firstBoroughName}}\'
-                          AND processingflag IS NULL`;
+                          AND upper(borough) = \'{{firstBoroughName}}\'`;
 
   if(data.latitudeInternalLabel && data.longitudeInternalLabel) {
     // console.log('Updating facilities');
