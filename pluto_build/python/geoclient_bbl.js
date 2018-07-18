@@ -31,9 +31,9 @@ var db = pgp(config);
 
 // querying for records without geoms
 var nullGeomQuery = `SELECT DISTINCT
-                      boro,
-                      addressnum,
-                      streetname
+                      borough,
+                      tb,
+                      tl
                     FROM pluto_rpad_geo
                     WHERE
                       borough IS NOT NULL
