@@ -19,7 +19,7 @@ python $REPOLOC/pluto_build/python/rpad_geocode_bbl.py
 python $REPOLOC/pluto_build/python/rpad_geocode_address.py
 source deactivate
 
- node ./3_geoprocessing/geoclient_bbl.js
+ node pluto_build/python/geoclient_bbl.js
 
 
 psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/zerovacantlots.sql
