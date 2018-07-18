@@ -1,6 +1,8 @@
 # GeoClient (DoITT) 
 # Running the BBL associated with each RPAD record through GeoClient BL funtion
 # to return the Billing bbl, address (house number and street code), and number of buildings
+# https://api.cityofnewyork.us/geoclient/v1/bbl.json?borough=manhattan&block=1889&lot=1&app_id=de39a958&app_key=66e5acfdfefa705283602f21eec10083
+
 import pandas as pd
 import subprocess
 import os

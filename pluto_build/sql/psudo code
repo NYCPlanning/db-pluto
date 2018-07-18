@@ -3,7 +3,7 @@ psudo code
 Jean
 
 - QA/QC lot area of old and new RPAD (count and report)
-- for zero or missing condo #s if there is a missing condo number you have to correct it
+- (DONE) for zero or missing condo #s if there is a missing condo number you have to correct it
 - (DONE) missing building class and frequency distribution (done)
 
 - limit fields to only necessary fields
