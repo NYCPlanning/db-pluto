@@ -75,9 +75,9 @@ def get_loc(num, street, borough):
     except:
         sanitdistrict = 'none'
     try:
-        sanitsub = geo['sanitationCollectionSchedulingSectionAndSubsection']
+        sanitationCollectionSchedulingSectionAndSubsection = geo['sanitationCollectionSchedulingSectionAndSubsection']
     except:
-        sanitsub = 'none'
+        sanitationCollectionSchedulingSectionAndSubsection = 'none'
     loc = pd.DataFrame({'cd' : [cd],
                         'ct2010' : [ct2010],
                         'cb2010' : [cb2010],
@@ -88,7 +88,7 @@ def get_loc(num, street, borough):
                         'healthcenterdistrict' : [healthcenterdistrict],
                         'healtharea' : [healtharea],
                         'sanitdistrict' : [sanitdistrict],
-                        'sanitsub' : [sanitsub]
+                        'sanitationCollectionSchedulingSectionAndSubsection' : [sanitationCollectionSchedulingSectionAndSubsection]
                         })
     return(loc)
 
@@ -105,7 +105,7 @@ locs.reset_index(inplace = True)
 
 for i in range(len(rpad)):
     if (locs['sanitsub'][i] != 'none'):
-        upd = "UPDATE pluto_rpad_geo a SET sanitsub = '" + str(locs['sanitsub'][i]) + "' WHERE borough = '" + rpad['borough'][i] + "' AND gihighhousenumber1 = " + rpad['gihighhousenumber1'][i] + " AND gistreetname1 = '" + rpad['gistreetname1'][i] + "' ;"
+        upd = "UPDATE pluto_rpad_geo a SET sanitsub = '" + str(locs['sanitationCollectionSchedulingSectionAndSubsection'][i]) + "' WHERE borough = '" + rpad['borough'][i] + "' AND gihighhousenumber1 = " + rpad['gihighhousenumber1'][i] + " AND gistreetname1 = '" + rpad['gistreetname1'][i] + "' ;"
     elif (locs['cd'][i] == 'none'):
         upd = "UPDATE pluto_rpad_geo a SET cd = NULL;"
     engine.execute(upd)
