@@ -40,9 +40,9 @@ def get_loc(borough, block, lot):
     except:
         billingbbl = 'none'
     try:
-        giHighHouseNumber = geo['giHighHouseNumber']
+        giHighHouseNumber1 = geo['giHighHouseNumber1']
     except:
-        giHighHouseNumber = 'none'
+        giHighHouseNumber1 = 'none'
     try:
         giStreetName1 = geo['giStreetName1']
     except:
@@ -52,7 +52,7 @@ def get_loc(borough, block, lot):
     except:
         numberOfExistingStructuresOnLot = 'none'
     loc = pd.DataFrame({'billingbbl' : [billingbbl],
-                        'giHighHouseNumber' : [giHighHouseNumber],
+                        'giHighHouseNumber1' : [giHighHouseNumber1],
                         'giStreetName1' : [giStreetName1],
                         'numberOfExistingStructuresOnLot' : [numberOfExistingStructuresOnLot]                        
                         })
@@ -71,9 +71,9 @@ locs.reset_index(inplace = True)
 
 for i in range(len(rpad)):
     if (locs['billingbbl'][i] != 'none'):
-        upd = "UPDATE pluto_rpad_geo a SET billingbbl = '" + str(locs['billingbbl'][i]) + "', giHighHouseNumber = '" + str(locs['giHighHouseNumber'][i]) + "', giStreetName1 = '" + str(locs['giStreetName1'][i]) + "', numberOfExistingStructuresOnLot = " + str(locs['numberOfExistingStructuresOnLot'][i]) + "  WHERE borough = '" + rpad['borough'][i] + "' AND tb = '" + rpad['tb'][i] + "' AND tl = '" + rpad['tl'][i] + "' ;"
-    elif (locs['giHighHouseNumber'][i] == 'none'):
-        upd = "UPDATE pluto_rpad_geo a SET giHighHouseNumber = NULL;"
+        upd = "UPDATE pluto_rpad_geo a SET billingbbl = '" + str(locs['billingbbl'][i]) + "', giHighHouseNumber1 = '" + str(locs['giHighHouseNumber1'][i]) + "', giStreetName1 = '" + str(locs['giStreetName1'][i]) + "', numberOfExistingStructuresOnLot = " + str(locs['numberOfExistingStructuresOnLot'][i]) + "  WHERE borough = '" + rpad['borough'][i] + "' AND tb = '" + rpad['tb'][i] + "' AND tl = '" + rpad['tl'][i] + "' ;"
+    elif (locs['giHighHouseNumber1'][i] == 'none'):
+        upd = "UPDATE pluto_rpad_geo a SET giHighHouseNumber1 = NULL;"
     engine.execute(upd)
 
 
