@@ -78,7 +78,6 @@ def get_loc(num, street, borough):
         sanitsub = geo['sanitationCollectionSchedulingSectionAndSubsection']
     except:
         sanitsub = 'none'
-
     loc = pd.DataFrame({'cd' : [cd],
                         'ct2010' : [ct2010],
                         'cb2010' : [cb2010],
