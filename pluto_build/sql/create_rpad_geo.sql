@@ -17,7 +17,7 @@ LIMIT 100
 ALTER TABLE pluto_rpad_geo
 ADD COLUMN bbl text,
 ADD COLUMN billingbbl text,
-ADD COLUMN giHighHouseNumber text,
+ADD COLUMN giHighHouseNumber1 text,
 ADD COLUMN giStreetName1 text,
 ADD COLUMN numberOfExistingStructuresOnLot text,
 ADD COLUMN cd text,
