@@ -26,7 +26,7 @@ app_key = config['GEOCLIENT_APP_KEY']
 engine = sql.create_engine('postgresql://{}@localhost:5432/{}'.format(DBUSER, DBNAME))
 
 # read in rpad table
-rpad = pd.read_sql_query('SELECT * FROM pluto_rpad_geo WHERE housenum_hi IS NOT NULL AND borough IS NOT NULL AND cd IS NULL;', engine)
+rpad = pd.read_sql_query('SELECT * FROM pluto_rpad_geo WHERE giHighHouseNumber1 <> 'none' AND borough IS NOT NULL AND cd IS NULL;', engine)
 
 # get the geo data
 
@@ -95,8 +95,8 @@ def get_loc(num, street, borough):
 
 locs = pd.DataFrame()
 for i in range(len(rpad)):
-    new = get_loc(rpad['housenum_hi'][i],
-                  rpad['stcode11'][i],
+    new = get_loc(rpad['giHighHouseNumber1'][i],
+                  rpad['giStreetName1'][i],
                   rpad['borough'][i]
     )
     locs = pd.concat((locs, new))
@@ -107,24 +107,6 @@ locs.reset_index(inplace = True)
 for i in range(len(rpad)):
     if (locs['cd'][i] != 'none'):
         upd = "UPDATE pluto_rpad_geo a SET cd = " + str(locs['cd'][i]) + " WHERE boro = '" + rpad['boro'][i] + "' AND tb = '" + rpad['tb'][i] + "' AND tl = '" + rpad['tl'][i] + "' ;"
-    if (locs['cb2010'][i] != 'none'):
-        upd = "UPDATE pluto_rpad_geo a SET ct2010 = " + str(locs['ct2010'][i]) + ", cb2010 = " + str(locs['cb2010'][i]) +" WHERE boro = '" + rpad['boro'][i] + "' AND tb = '" + rpad['tb'][i] + "' AND tl = '" + rpad['tl'][i] + "' ;"
-    if (locs['council'][i] != 'none'):
-        upd = "UPDATE pluto_rpad_geo a SET council = '" + str(locs['council'][i]) + "' WHERE boro = '" + rpad['boro'][i] + "' AND tb = '" + rpad['tb'][i] + "' AND tl = '" + rpad['tl'][i] + "' ;"
-    if (locs['zipcode'][i] != 'none'):
-        upd = "UPDATE pluto_rpad_geo a SET zipcode = '" + str(locs['zipcode'][i]) + "' WHERE boro = '" + rpad['boro'][i] + "' AND tb = '" + rpad['tb'][i] + "' AND tl = '" + rpad['tl'][i] + "' ;"
-    if (locs['firecomp'][i] != 'none'):
-        upd = "UPDATE pluto_rpad_geo a SET firecomp = '" + str(locs['firecomp'][i]) + "' WHERE boro = '" + rpad['boro'][i] + "' AND tb = '" + rpad['tb'][i] + "' AND tl = '" + rpad['tl'][i] + "' ;"
-    if (locs['policeprct'][i] != 'none'):
-        upd = "UPDATE pluto_rpad_geo a SET policeprct = '" + str(locs['policeprct'][i]) + "' WHERE boro = '" + rpad['boro'][i] + "' AND tb = '" + rpad['tb'][i] + "' AND tl = '" + rpad['tl'][i] + "' ;"
-    if (locs['healthcenterdistrict'][i] != 'none'):
-        upd = "UPDATE pluto_rpad_geo a SET healthcenterdistrict = '" + str(locs['healthcenterdistrict'][i]) + "' WHERE boro = '" + rpad['boro'][i] + "' AND tb = '" + rpad['tb'][i] + "' AND tl = '" + rpad['tl'][i] + "' ;"
-    if (locs['healtharea'][i] != 'none'):
-        upd = "UPDATE pluto_rpad_geo a SET healtharea = '" + str(locs['healtharea'][i]) + "' WHERE boro = '" + rpad['boro'][i] + "' AND tb = '" + rpad['tb'][i] + "' AND tl = '" + rpad['tl'][i] + "' ;"
-    if (locs['sanitdistrict'][i] != 'none'):
-        upd = "UPDATE pluto_rpad_geo a SET sanitdistrict = '" + str(locs['sanitdistrict'][i]) + "' WHERE boro = '" + rpad['boro'][i] + "' AND tb = '" + rpad['tb'][i] + "' AND tl = '" + rpad['tl'][i] + "' ;"
-    if (locs['sanitsub'][i] != 'none'):
-        upd = "UPDATE pluto_rpad_geo a SET sanitsub = '" + str(locs['sanitsub'][i]) + "' WHERE boro = '" + rpad['boro'][i] + "' AND tb = '" + rpad['tb'][i] + "' AND tl = '" + rpad['tl'][i] + "' ;"
     elif (locs['cd'][i] == 'none'):
         upd = "UPDATE pluto_rpad_geo a SET cd = NULL;"
     engine.execute(upd)
