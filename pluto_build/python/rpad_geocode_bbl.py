@@ -28,7 +28,7 @@ app_key = config['GEOCLIENT_APP_KEY']
 engine = sql.create_engine('postgresql://{}@localhost:5432/{}'.format(DBUSER, DBNAME))
 
 # read in rpad table
-rpad = pd.read_sql_query('SELECT * FROM pluto_rpad_geo WHERE geom IS NULL AND borough IS NOT NULL;', engine)
+rpad = pd.read_sql_query('SELECT * FROM pluto_rpad_geo WHERE billingbbl IS NULL AND borough IS NOT NULL;', engine)
 
 # get the geo data
 
@@ -37,26 +37,16 @@ g = Geoclient(app_id, app_key)
 def get_loc(borough, block, lot):
     geo = g.bbl(borough, block, lot)
     try:
-        lat = geo['latitudeInternalLabel']
-    except:
-        lat = 'none'
-    try:
-        lon = geo['longitudeInternalLabel']
-    except:
-        lon = 'none'
-    try:
         billingbbl = geo['condominiumBillingBbl']
     except:
         billingbbl = 'none'
-    loc = pd.DataFrame({'lat' : [lat],
-                        'lon' : [lon],
-                        'billingbbl' : [billingbbl]
+    loc = pd.DataFrame({'billingbbl' : [billingbbl]
                         })
     return(loc)
 
 locs = pd.DataFrame()
 for i in range(len(rpad)):
-    new = get_loc(rpad['boro'][i],
+    new = get_loc(rpad['borough'][i],
                   rpad['tb'][i],
                   rpad['tl'][i]
     )
@@ -66,10 +56,8 @@ locs.reset_index(inplace = True)
 # populate the rpad geom information
 
 for i in range(len(rpad)):
-    if (locs['lat'][i] != 'none') & (locs['lon'][i] != 'none'):
-        upd = "UPDATE pluto_rpad_geo a SET geom = ST_SetSRID(ST_MakePoint(" + float(locs['lon'][i]) + ", " + float(locs['lat'][i]) + "), 4326) WHERE boro = '" + rpad['boro'][i] + "' AND tb = '" + rpad['tb'][i] + "' AND tl = '" + rpad['tl'][i] + "' ;"
     if (locs['billingbbl'][i] != 'none'):
-        upd = "UPDATE pluto_rpad_geo a SET billingbbl = " + str(locs['billingbbl'][i]) + " WHERE boro = '" + rpad['boro'][i] + "' AND tb = '" + rpad['tb'][i] + "' AND tl = '" + rpad['tl'][i] + "' ;"
+        upd = "UPDATE pluto_rpad_geo a SET billingbbl = " + str(locs['billingbbl'][i]) + " WHERE borough = '" + rpad['borough'][i] + "' AND tb = '" + rpad['tb'][i] + "' AND tl = '" + rpad['tl'][i] + "' ;"
     elif (locs['lat'][i] == 'none') & (locs['lon'][i] == 'none'):
         upd = "UPDATE pluto_rpad_geo a SET geom = NULL;"
     engine.execute(upd)
