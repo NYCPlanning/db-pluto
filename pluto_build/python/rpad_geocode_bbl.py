@@ -72,8 +72,8 @@ locs.reset_index(inplace = True)
 for i in range(len(rpad)):
     if (locs['billingbbl'][i] != 'none'):
         upd = "UPDATE pluto_rpad_geo a SET billingbbl = '" + str(locs['billingbbl'][i]) + "', giHighHouseNumber = '" + str(locs['giHighHouseNumber'][i]) + "', giStreetName1 = '" + str(locs['giStreetName1'][i]) + "', numberOfExistingStructuresOnLot = " + str(locs['numberOfExistingStructuresOnLot'][i]) + "  WHERE borough = '" + rpad['borough'][i] + "' AND tb = '" + rpad['tb'][i] + "' AND tl = '" + rpad['tl'][i] + "' ;"
-    elif (locs['billingbbl'][i] == 'none'):
-        upd = "UPDATE pluto_rpad_geo a SET geom = NULL;"
+    elif (locs['giHighHouseNumber'][i] == 'none'):
+        upd = "UPDATE pluto_rpad_geo a SET giHighHouseNumber = NULL;"
     engine.execute(upd)
 
 
