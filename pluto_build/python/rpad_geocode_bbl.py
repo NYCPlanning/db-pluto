@@ -51,10 +51,20 @@ def get_loc(borough, block, lot):
         numberOfExistingStructuresOnLot = geo['numberOfExistingStructuresOnLot']
     except:
         numberOfExistingStructuresOnLot = 'none'
+    try:
+        latitudeInternalLabel = geo['latitudeInternalLabel']
+    except:
+        latitudeInternalLabel = 'none'
+    try:
+        longitudeInternalLabel = geo['longitudeInternalLabel']
+    except:
+        longitudeInternalLabel = 'none'
     loc = pd.DataFrame({'billingbbl' : [billingbbl],
                         'giHighHouseNumber1' : [giHighHouseNumber1],
                         'giStreetName1' : [giStreetName1],
-                        'numberOfExistingStructuresOnLot' : [numberOfExistingStructuresOnLot]                        
+                        'numberOfExistingStructuresOnLot' : [numberOfExistingStructuresOnLot],
+                        'latitudeInternalLabel' : [latitudeInternalLabel],
+                        'longitudeInternalLabel' : [longitudeInternalLabel]                       
                         })
     return(loc)
 
@@ -73,7 +83,7 @@ for i in range(len(rpad)):
     if (locs['billingbbl'][i] != 'none'):
         upd = "UPDATE pluto_rpad_geo a SET billingbbl = '" + str(locs['billingbbl'][i]) + "', giHighHouseNumber1 = '" + str(locs['giHighHouseNumber1'][i]) + "', giStreetName1 = '" + str(locs['giStreetName1'][i]) + "', numberOfExistingStructuresOnLot = " + str(locs['numberOfExistingStructuresOnLot'][i]) + "  WHERE borough = '" + rpad['borough'][i] + "' AND tb = '" + rpad['tb'][i] + "' AND tl = '" + rpad['tl'][i] + "' ;"
     elif (locs['giHighHouseNumber1'][i] == 'none'):
-        upd = "UPDATE pluto_rpad_geo a SET giHighHouseNumber1 = NULL;"
+        upd = "UPDATE pluto_rpad_geo a SET geom = ST_SetSRID(ST_MakePoint(" + str(locs['lon'][i]) + ", " + str(locs['lat'][i]) + "), 4326) WHERE borough = '" + rpad['borough'][i] + "' AND tb = '" + rpad['tb'][i] + "' AND tl = '" + rpad['tl'][i] + "' ;"
     engine.execute(upd)
 
 
