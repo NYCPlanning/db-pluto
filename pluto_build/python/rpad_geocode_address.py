@@ -104,7 +104,7 @@ locs.reset_index(inplace = True)
 # populate the rpad geom information
 
 for i in range(len(rpad)):
-    if (locs['cd'][i] != 'none'):
+    if (locs['sanitsub'][i] != 'none'):
         upd = "UPDATE pluto_rpad_geo a SET sanitsub = '" + str(locs['sanitsub'][i]) + "' WHERE borough = '" + rpad['borough'][i] + "' AND gihighhousenumber1 = " + rpad['gihighhousenumber1'][i] + " AND gistreetname1 = '" + rpad['gistreetname1'][i] + "' ;"
     elif (locs['cd'][i] == 'none'):
         upd = "UPDATE pluto_rpad_geo a SET cd = NULL;"
