@@ -94,8 +94,8 @@ def get_loc(num, street, borough):
 
 locs = pd.DataFrame()
 for i in range(len(rpad)):
-    new = get_loc(rpad['giHighHouseNumber1'][i],
-                  rpad['giStreetName1'][i],
+    new = get_loc(rpad['gihighhousenumber1'][i],
+                  rpad['gistreetname1'][i],
                   rpad['borough'][i]
     )
     locs = pd.concat((locs, new))
