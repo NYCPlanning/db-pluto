@@ -1,7 +1,6 @@
 # GeoClient (DoITT) 
 # Running the BBL associated with each RPAD record through GeoClient BL funtion
-# to return the Billing bbl, address (house number and street code), and number of buildings
-# https://api.cityofnewyork.us/geoclient/v1/bbl.json?borough=manhattan&block=1889&lot=1&app_id=de39a958&app_key=66e5acfdfefa705283602f21eec10083
+# to return the Billing bbl, address (house number and street name), and number of buildings
 
 import pandas as pd
 import subprocess
@@ -40,7 +39,22 @@ def get_loc(borough, block, lot):
         billingbbl = geo['condominiumBillingBbl']
     except:
         billingbbl = 'none'
-    loc = pd.DataFrame({'billingbbl' : [billingbbl]
+    try:
+        giHighHouseNumber = geo['giHighHouseNumber']
+    except:
+        giHighHouseNumber = 'none'
+    try:
+        giStreetName1 = geo['giStreetName1']
+    except:
+        giStreetName1 = 'none'
+    try:
+        numberOfExistingStructuresOnLot = geo['numberOfExistingStructuresOnLot']
+    except:
+        numberOfExistingStructuresOnLot = 'none'
+    loc = pd.DataFrame({'billingbbl' : [billingbbl],
+                        'giHighHouseNumber' : [giHighHouseNumber],
+                        'giStreetName1' : [giStreetName1],
+                        'numberOfExistingStructuresOnLot' : [numberOfExistingStructuresOnLot]
                         })
     return(loc)
 
@@ -58,7 +72,11 @@ locs.reset_index(inplace = True)
 for i in range(len(rpad)):
     if (locs['billingbbl'][i] != 'none'):
         upd = "UPDATE pluto_rpad_geo a SET billingbbl = " + str(locs['billingbbl'][i]) + " WHERE borough = '" + rpad['borough'][i] + "' AND tb = '" + rpad['tb'][i] + "' AND tl = '" + rpad['tl'][i] + "' ;"
-    elif (locs['lat'][i] == 'none') & (locs['lon'][i] == 'none'):
+    if (locs['giHighHouseNumber'][i] != 'none') & (locs['giStreetName1'][i] != 'none'):
+        upd = "UPDATE pluto_rpad_geo a SET giHighHouseNumber = " + str(locs['giHighHouseNumber'][i]) + ", giStreetName1 = " + str(locs['giStreetName1'][i]) + "  WHERE borough = '" + rpad['borough'][i] + "' AND tb = '" + rpad['tb'][i] + "' AND tl = '" + rpad['tl'][i] + "' ;"
+    if (locs['numberOfExistingStructuresOnLot'][i] != 'none'):
+        upd = "UPDATE pluto_rpad_geo a SET numberOfExistingStructuresOnLot = " + str(locs['numberOfExistingStructuresOnLot'][i]) + " WHERE borough = '" + rpad['borough'][i] + "' AND tb = '" + rpad['tb'][i] + "' AND tl = '" + rpad['tl'][i] + "' ;"
+    elif (locs['billingbbl'][i] == 'none'):
         upd = "UPDATE pluto_rpad_geo a SET geom = NULL;"
     engine.execute(upd)
 
