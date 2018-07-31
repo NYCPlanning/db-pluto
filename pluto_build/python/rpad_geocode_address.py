@@ -40,46 +40,6 @@ def get_loc(num, street, borough):
         communityDistrict = geo['communityDistrict']
     except:
         communityDistrict = 'none'
-    try:
-        censusTract2010 = geo['censusTract2010']
-    except:
-        censusTract2010 = 'none'
-    try:
-        censusBlock2010 = geo['censusBlock2010']
-    except:
-        censusBlock2010 = 'none'
-    try:
-        cityCouncilDistrict = geo['cityCouncilDistrict']
-    except:
-        cityCouncilDistrict = 'none'
-    try:
-        zipCode = geo['zipCode']
-    except:
-        zipCode = 'none'
-    try:
-        fireCompanyNumber = geo['fireCompanyNumber']
-    except:
-        fireCompanyNumber = 'none'
-    try:
-        policePrecinct = geo['policePrecinct']
-    except:
-        policePrecinct = 'none'
-    try:
-        healthCenterDistrict = geo['healthCenterDistrict']
-    except:
-        healthCenterDistrict = 'none'
-    try:
-        healthArea = geo['healthArea']
-    except:
-        healthArea = 'none'
-    try:
-        sanitationDistrict = geo['sanitationDistrict']
-    except:
-        sanitationDistrict = 'none'
-    try:
-        sanitationCollectionSchedulingSectionAndSubsection = geo['sanitationCollectionSchedulingSectionAndSubsection']
-    except:
-        sanitationCollectionSchedulingSectionAndSubsection = 'none'
     loc = pd.DataFrame({'communityDistrict' : [communityDistrict]
                         })
     return(loc)
