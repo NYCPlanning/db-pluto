@@ -1,5 +1,5 @@
 -- add in zoning information from dcp_zoning_taxlot database
-UPDATE pluto 
+UPDATE pluto a
 SET 
 	zonedist1 = zoningdistrict1,
 	zonedist2 = zoningdistrict2,
@@ -13,8 +13,17 @@ SET
 	ltdheight = limitedheightdistrict,
 	zonemap = zoningmapnumber,
 	zmcode = zoningmapcode
-FROM dcp_zoning_taxlot
-WHERE borocode||lpad(block, 5, '0')||lpad(lot, 4, '0') = boroughcode::text||lpad(taxblock::text, 5, '0')||lpad(taxlot::text, 4, '0');
+FROM dcp_zoning_taxlot b
+WHERE a.bbl = b.bbl;
+
+-- calculate if tax lot is split by two or more zoning boundary lines and update splitzone
+UPDATE pluto 
+SET splitzone = 'Y'
+WHERE zonedist2 IS NOT NULL OR overlay2 IS NOT NULL OR spdist2 IS NOT NULL;
+
+UPDATE pluto 
+SET splitzone = 'N'
+WHERE splitzone IS NULL AND zonedist1 IS NOT NULL;
 
 -- -- update pluto if zonedist contains two zoning districts
 -- UPDATE pluto
@@ -56,12 +65,3 @@ WHERE borocode||lpad(block, 5, '0')||lpad(lot, 4, '0') = boroughcode::text||lpad
 -- 	zonedist4 = split_part(zonedist3, '/', 2)
 -- WHERE zonedist3 LIKE '%/%'
 -- 	AND zonedist4 IS NULL;
-
--- calculate if tax lot is split by two or more zoning boundary lines and update splitzone
-UPDATE pluto 
-SET splitzone = 'Y'
-WHERE zonedist2 IS NOT NULL OR overlay2 IS NOT NULL OR spdist2 IS NOT NULL;
-
-UPDATE pluto 
-SET splitzone = 'N'
-WHERE splitzone IS NULL AND zonedist1 IS NOT NULL;
