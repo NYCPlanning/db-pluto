@@ -28,7 +28,7 @@ app_key = config['GEOCLIENT_APP_KEY']
 engine = sql.create_engine('postgresql://{}@localhost:5432/{}'.format(DBUSER, DBNAME))
 
 # read in rpad table
-rpad = pd.read_sql_query('SELECT * FROM pluto_rpad_geo WHERE gihighhousenumber1 IS NOT NULL AND borough IS NOT NULL AND cd IS NULL;', engine)
+rpad = pd.read_sql_query('SELECT * FROM pluto_rpad_geo WHERE gihighhousenumber1 IS NOT NULL AND cd IS NULL;', engine)
 
 # get the geo data
 
@@ -58,7 +58,7 @@ for i in range(len(rpad)):
     if locs['communityDistrict'][i] != 'none':
         upd = "UPDATE pluto_rpad_geo a SET cd = '"+ locs['communityDistrict'][i] +"' WHERE borough = '" + rpad['borough'][i] + "' AND tb = '" + rpad['tb'][i] + "' AND tl = '" + rpad['tl'][i] + "' ;"
     elif locs['communityDistrict'][i] == 'none':
-        upd = "UPDATE pluto_rpad_geo a SET cd = NULL;"
+        upd = "UPDATE pluto_rpad_geo a SET cd = 'NULL';"
     engine.execute(upd)
 
 # not deleting because if I ever figure it out this is probably a better way of doing this... 
