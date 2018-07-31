@@ -56,7 +56,7 @@ locs.reset_index(inplace = True)
 
 for i in range(len(rpad)):
     if locs['communityDistrict'][i] != 'none':
-        upd = "UPDATE pluto_rpad_geo a SET cd = '"+ str(locs['communityDistrict'][i]) +"' WHERE a.gihighhousenumber1::text = '"+ rpad['gihighhousenumber1'][i] +"' AND a.gistreetname1 = '"+ rpad['gistreetname1'][i] +"' AND a.borough = '"+ rpad['borough'][i] +"';"
+        upd = "UPDATE pluto_rpad_geo a SET cd = '"+ str(locs['communityDistrict'][i]) +"' WHERE a.gistreetname1 = '"+ rpad['gistreetname1'][i] +"' AND a.borough = '"+ rpad['borough'][i] +"';"
     elif locs['communityDistrict'][i] == 'none':
         upd = "UPDATE pluto_rpad_geo a SET cd = NULL;"
     engine.execute(upd)
