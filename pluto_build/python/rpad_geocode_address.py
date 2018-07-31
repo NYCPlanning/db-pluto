@@ -1,6 +1,8 @@
 # GeoClient (DoITT)
 # Running the address info retrieved by running each RPAD record through GeoClient BL funtion
 # through GeoClient address function to return political boundaries
+/https://api.cityofnewyork.us/geoclient/v1/address.json?houseNumber=314&street=west 100 st&borough=manhattan&app_id=de39a958&app_key=66e5acfdfefa705283602f21eec10083
+
 import pandas as pd
 import subprocess
 import os
@@ -39,55 +41,55 @@ def get_loc(num, street, borough):
     except:
         communityDistrict = 'none'
     try:
-        ct2010 = geo['censusTract2010']
+        censusTract2010 = geo['censusTract2010']
     except:
-        ct2010 = 'none'
+        censusTract2010 = 'none'
     try:
-        cb2010 = geo['censusBlock2010']
+        censusBlock2010 = geo['censusBlock2010']
     except:
-        cb2010 = 'none'
+        censusBlock2010 = 'none'
     try:
-        council = geo['cityCouncilDistrict']
+        cityCouncilDistrict = geo['cityCouncilDistrict']
     except:
-        council = 'none'
+        cityCouncilDistrict = 'none'
     try:
-        zipcode = geo['zipCode']
+        zipCode = geo['zipCode']
     except:
-        zipcode = 'none'
+        zipCode = 'none'
     try:
-        firecomp = geo['fireCompanyNumber']
+        fireCompanyNumber = geo['fireCompanyNumber']
     except:
-        firecomp = 'none'
+        fireCompanyNumber = 'none'
     try:
-        policeprct = geo['policePrecinct']
+        policePrecinct = geo['policePrecinct']
     except:
-        policeprct = 'none'
+        policePrecinct = 'none'
     try:
-        healthcenterdistrict = geo['healthCenterDistrict']
+        healthCenterDistrict = geo['healthCenterDistrict']
     except:
-        healthcenterdistrict = 'none'
+        healthCenterDistrict = 'none'
     try:
-        healtharea = geo['healthArea']
+        healthArea = geo['healthArea']
     except:
-        healtharea = 'none'
+        healthArea = 'none'
     try:
-        sanitdistrict = geo['sanitationDistrict']
+        sanitationDistrict = geo['sanitationDistrict']
     except:
-        sanitdistrict = 'none'
+        sanitationDistrict = 'none'
     try:
         sanitationCollectionSchedulingSectionAndSubsection = geo['sanitationCollectionSchedulingSectionAndSubsection']
     except:
         sanitationCollectionSchedulingSectionAndSubsection = 'none'
     loc = pd.DataFrame({'communityDistrict' : [communityDistrict],
-                        'ct2010' : [ct2010],
-                        'cb2010' : [cb2010],
-                        'council' : [council],
-                        'zipcode' : [zipcode],
-                        'firecomp' : [firecomp],
-                        'policeprct' : [policeprct],
-                        'healthcenterdistrict' : [healthcenterdistrict],
-                        'healtharea' : [healtharea],
-                        'sanitdistrict' : [sanitdistrict],
+                        'censusTract2010' : [censusTract2010],
+                        'censusBlock2010' : [censusBlock2010],
+                        'cityCouncilDistrict' : [cityCouncilDistrict],
+                        'zipCode' : [zipCode],
+                        'fireCompanyNumber' : [fireCompanyNumber],
+                        'policePrecinct' : [policePrecinct],
+                        'healthCenterDistrict' : [healthCenterDistrict],
+                        'healthArea' : [healthArea],
+                        'sanitationDistrict' : [sanitationDistrict],
                         'sanitationCollectionSchedulingSectionAndSubsection' : [sanitationCollectionSchedulingSectionAndSubsection]
                         })
     return(loc)
