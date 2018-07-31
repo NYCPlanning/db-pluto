@@ -80,17 +80,7 @@ def get_loc(num, street, borough):
         sanitationCollectionSchedulingSectionAndSubsection = geo['sanitationCollectionSchedulingSectionAndSubsection']
     except:
         sanitationCollectionSchedulingSectionAndSubsection = 'none'
-    loc = pd.DataFrame({'communityDistrict' : [communityDistrict],
-                        'censusTract2010' : [censusTract2010],
-                        'censusBlock2010' : [censusBlock2010],
-                        'cityCouncilDistrict' : [cityCouncilDistrict],
-                        'zipCode' : [zipCode],
-                        'fireCompanyNumber' : [fireCompanyNumber],
-                        'policePrecinct' : [policePrecinct],
-                        'healthCenterDistrict' : [healthCenterDistrict],
-                        'healthArea' : [healthArea],
-                        'sanitationDistrict' : [sanitationDistrict],
-                        'sanitationCollectionSchedulingSectionAndSubsection' : [sanitationCollectionSchedulingSectionAndSubsection]
+    loc = pd.DataFrame({'communityDistrict' : [communityDistrict]
                         })
     return(loc)
 
