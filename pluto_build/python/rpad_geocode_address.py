@@ -35,9 +35,9 @@ g = Geoclient(app_id, app_key)
 def get_loc(num, street, borough):
     geo = g.bbl(num, street, borough)
     try:
-        cd = geo['communityDistrict']
+        communityDistrict = geo['communityDistrict']
     except:
-        cd = 'none'
+        communityDistrict = 'none'
     try:
         ct2010 = geo['censusTract2010']
     except:
@@ -78,7 +78,7 @@ def get_loc(num, street, borough):
         sanitationCollectionSchedulingSectionAndSubsection = geo['sanitationCollectionSchedulingSectionAndSubsection']
     except:
         sanitationCollectionSchedulingSectionAndSubsection = 'none'
-    loc = pd.DataFrame({'cd' : [cd],
+    loc = pd.DataFrame({'communityDistrict' : [communityDistrict],
                         'ct2010' : [ct2010],
                         'cb2010' : [cb2010],
                         'council' : [council],
@@ -104,9 +104,9 @@ locs.reset_index(inplace = True)
 # populate the rpad geom information
 
 for i in range(len(rpad)):
-    if (locs['cd'][i] != 'none'):
-        upd = "UPDATE pluto_rpad_geo a SET cd = '" + str(locs['cd'][i]) + "' WHERE borough = '" + rpad['borough'][i] + "' AND gihighhousenumber1 = " + rpad['gihighhousenumber1'][i] + " AND gistreetname1 = '" + rpad['gistreetname1'][i] + "' ;"
-    elif (locs['cd'][i] == 'none'):
+    if (locs['communityDistrict'][i] != 'none'):
+        upd = "UPDATE pluto_rpad_geo a SET cd = '" + str(locs['communityDistrict'][i]) + "' WHERE borough = '" + rpad['borough'][i] + "' AND gihighhousenumber1 = " + rpad['gihighhousenumber1'][i] + " AND gistreetname1 = '" + rpad['gistreetname1'][i] + "' ;"
+    elif (locs['communityDistrict'][i] == 'none'):
         upd = "UPDATE pluto_rpad_geo a SET cd = NULL;"
     engine.execute(upd)
 
