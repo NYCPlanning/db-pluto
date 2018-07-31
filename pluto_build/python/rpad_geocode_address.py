@@ -40,7 +40,58 @@ def get_loc(num, street, borough):
         communityDistrict = geo['communityDistrict']
     except:
         communityDistrict = 'none'
-    loc = pd.DataFrame({'communityDistrict' : [communityDistrict]})
+    try:
+        censusTract2010 = geo['censusTract2010']
+    except:
+        censusTract2010 = 'none'
+    try:
+        censusBlock2010 = geo['censusBlock2010']
+    except:
+        censusBlock2010 = 'none'
+    try:
+        cityCouncilDistrict = geo['cityCouncilDistrict']
+    except:
+        cityCouncilDistrict = 'none'
+    try:
+        zipCode = geo['zipCode']
+    except:
+        zipCode = 'none'
+    try:
+        fireCompanyNumber = geo['fireCompanyNumber']
+    except:
+        fireCompanyNumber = 'none'
+    try:
+        policePrecinct = geo['policePrecinct']
+    except:
+        policePrecinct = 'none'
+    try:
+        healthCenterDistrict = geo['healthCenterDistrict']
+    except:
+        healthCenterDistrict = 'none'
+    try:
+        healthArea = geo['healthArea']
+    except:
+        healthArea = 'none'
+    try:
+        sanitationDistrict = geo['sanitationDistrict']
+    except:
+        sanitationDistrict = 'none'
+    try:
+        sanitationCollectionSchedulingSectionAndSubsection = geo['sanitationCollectionSchedulingSectionAndSubsection']
+    except:
+        sanitationCollectionSchedulingSectionAndSubsection = 'none'
+    loc = pd.DataFrame({'communityDistrict' : [communityDistrict],
+                        'censusTract2010' : [censusTract2010],
+                        'censusBlock2010' : [censusBlock2010],
+                        'communitySchoolDistrict' : [communitySchoolDistrict],
+                        'cityCouncilDistrict' : [cityCouncilDistrict],
+                        'zipCode' : [zipCode],
+                        'fireCompanyNumber' : [fireCompanyNumber],
+                        'policePrecinct' : [policePrecinct],
+                        'healthCenterDistrict' : [healthCenterDistrict],
+                        'healthArea' : [healthArea],
+                        'sanitationDistrict' : [sanitationDistrict],
+                        'sanitationCollectionSchedulingSectionAndSubsection' : [sanitationCollectionSchedulingSectionAndSubsection]})
     return(loc)
 
 locs = pd.DataFrame()
@@ -56,7 +107,7 @@ locs.reset_index(inplace = True)
 
 for i in range(len(rpad)):
     if locs['communityDistrict'][i] != 'none':
-        upd = "UPDATE pluto_rpad_geo a SET cd = '" + str(locs['communityDistrict'][i]) + "' WHERE borough = '" + rpad['borough'][i] + "' AND tb = '" + rpad['tb'][i] + "' AND tl = '" + rpad['tl'][i] + "' ;"
+        upd = "UPDATE pluto_rpad_geo a SET cd = '" + str(locs['communityDistrict'][i]) + "', ct2010 = '" + str(locs['censusTract2010'][i]) + "', cb2010 = '" + str(locs['censusBlock2010'][i]) + "', schooldist = '" + str(locs['communitySchoolDistrict'][i]) + "', council = '" + str(locs['cityCouncilDistrict'][i]) + "', zipcode = '" + str(locs['zipCode'][i]) + "', firecomp = '" + str(locs['fireCompanyNumber'][i]) + "', policeprct = '" + str(locs['policePrecinct'][i]) + "', healthcenterdistrict = '" + str(locs['healthCenterDistrict'][i]) + "', healtharea = '" + str(locs['healthArea'][i]) + "', sanitdistrict = '" + str(locs['sanitationDistrict'][i]) + "', sanitsub = '" + str(locs['sanitationCollectionSchedulingSectionAndSubsection'][i]) + "' WHERE borough = '" + rpad['borough'][i] + "' AND tb = '" + rpad['tb'][i] + "' AND tl = '" + rpad['tl'][i] + "' ;"
     elif locs['communityDistrict'][i] == 'none':
         upd = "UPDATE pluto_rpad_geo a SET cd = NULL;"
     engine.execute(upd)
