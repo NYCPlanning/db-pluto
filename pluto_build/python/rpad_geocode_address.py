@@ -1,7 +1,6 @@
 # GeoClient (DoITT)
 # Running the address info retrieved by running each RPAD record through GeoClient BL funtion
 # through GeoClient address function to return political boundaries
-# https://api.cityofnewyork.us/geoclient/v1/address.json?houseNumber=314&street=west 100 st&borough=manhattan&app_id=de39a958&app_key=66e5acfdfefa705283602f21eec10083
 
 import pandas as pd
 import subprocess

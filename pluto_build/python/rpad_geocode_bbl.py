@@ -67,7 +67,9 @@ def get_loc(borough, block, lot):
                         'giHighHouseNumber1' : [giHighHouseNumber1],
                         'giStreetName1' : [giStreetName1],
                         'numberOfExistingStructuresOnLot' : [numberOfExistingStructuresOnLot],
-                        'buildingIdentificationNumber' : [buildingIdentificationNumber]                     
+                        'buildingIdentificationNumber' : [buildingIdentificationNumber],
+                        'latitudeInternalLabel' : [latitudeInternalLabel],
+                        'longitudeInternalLabel' : [longitudeInternalLabel]                      
                         })
     return(loc)
 
@@ -85,7 +87,7 @@ locs.reset_index(inplace = True)
 for i in range(len(rpad)):
     if (locs['billingbbl'][i] != 'none'):
         upd = "UPDATE pluto_rpad_geo a SET billingbbl = '" + str(locs['billingbbl'][i]) + "', giHighHouseNumber1 = '" + str(locs['giHighHouseNumber1'][i]) + "', giStreetName1 = '" + str(locs['giStreetName1'][i]) + "', buildingIdentificationNumber = '" + str(locs['buildingIdentificationNumber'][i]) + "', numberOfExistingStructuresOnLot = " + str(locs['numberOfExistingStructuresOnLot'][i]) + "  WHERE borough = '" + rpad['borough'][i] + "' AND tb = '" + rpad['tb'][i] + "' AND tl = '" + rpad['tl'][i] + "' ;"
-    elif (locs['billingbbl'][i] == 'none'):
+    elif (locs['billingbbl'][i] == 'none') & (locs['latitudeInternalLabel'][i] != 'none'):
         upd = "UPDATE pluto_rpad_geo a SET geom = ST_SetSRID(ST_MakePoint(" + str(locs['longitudeInternalLabel'][i]) + ", " + str(locs['latitudeInternalLabel'][i]) + "), 4326) WHERE borough = '" + rpad['borough'][i] + "' AND tb = '" + rpad['tb'][i] + "' AND tl = '" + rpad['tl'][i] + "' ;"
     engine.execute(upd)
 
