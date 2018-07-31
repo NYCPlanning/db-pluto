@@ -11,7 +11,6 @@ SELECT a.*,
 		ELSE NULL
 	END) AS borough
 FROM pluto_rpad a
-LIMIT 100
 );
 
 ALTER TABLE pluto_rpad_geo
