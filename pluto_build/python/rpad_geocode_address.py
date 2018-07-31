@@ -49,6 +49,10 @@ def get_loc(num, street, borough):
     except:
         censusBlock2010 = 'none'
     try:
+        communitySchoolDistrict = geo['communitySchoolDistrict']
+    except:
+        communitySchoolDistrict = 'none'
+    try:
         cityCouncilDistrict = geo['cityCouncilDistrict']
     except:
         cityCouncilDistrict = 'none'
