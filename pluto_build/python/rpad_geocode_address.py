@@ -112,7 +112,7 @@ for i in range(len(rpad)):
     if locs['communityDistrict'][i] != 'none':
         upd = "UPDATE pluto_rpad_geo a SET cd = '" + str(locs['communityDistrict'][i]) + "', ct2010 = '" + str(locs['censusTract2010'][i]) + "', cb2010 = '" + str(locs['censusBlock2010'][i]) + "', schooldist = '" + str(locs['communitySchoolDistrict'][i]) + "', council = '" + str(locs['cityCouncilDistrict'][i]) + "', zipcode = '" + str(locs['zipCode'][i]) + "', firecomp = '" + str(locs['fireCompanyNumber'][i]) + "', policeprct = '" + str(locs['policePrecinct'][i]) + "', healthcenterdistrict = '" + str(locs['healthCenterDistrict'][i]) + "', healtharea = '" + str(locs['healthArea'][i]) + "', sanitdistrict = '" + str(locs['sanitationDistrict'][i]) + "', sanitsub = '" + str(locs['sanitationCollectionSchedulingSectionAndSubsection'][i]) + "' WHERE borough = '" + rpad['borough'][i] + "' AND tb = '" + rpad['tb'][i] + "' AND tl = '" + rpad['tl'][i] + "' ;"
     elif locs['communityDistrict'][i] == 'none':
-        upd = "UPDATE pluto_rpad_geo a SET cd = NULL;"
+        upd = "UPDATE pluto_rpad_geo a SET cd = NULL WHERE borough = '" + rpad['borough'][i] + "' AND tb = '" + rpad['tb'][i] + "' AND tl = '" + rpad['tl'][i] + "';"
     engine.execute(upd)
 
 # not deleting because if I ever figure it out this is probably a better way of doing this... 
