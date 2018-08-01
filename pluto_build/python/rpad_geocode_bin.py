@@ -33,7 +33,7 @@ rpad = pd.read_sql_query("SELECT * FROM pluto_rpad_geo WHERE (giHighHouseNumber1
 
 g = Geoclient(app_id, app_key)
 
-def get_loc(borough, block, lot):
+def get_loc(bin):
     geo = g.bin(bin)
     try:
         giHighHouseNumber1 = geo['giHighHouseNumber1']
