@@ -76,8 +76,8 @@ def get_loc(borough, block, lot):
 locs = pd.DataFrame()
 for i in range(len(rpad)):
     new = get_loc(rpad['borough'][i],
-                  rpad['billingbbl'][1:5][i],
-                  rpad['billingbbl'][-4:][i]
+                  rpad['billingbbl'[1:5]][i],
+                  rpad['billingbbl'[-4:]][i]
     )
     locs = pd.concat((locs, new))
 locs.reset_index(inplace = True)
