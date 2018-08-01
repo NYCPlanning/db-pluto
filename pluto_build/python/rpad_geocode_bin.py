@@ -69,9 +69,11 @@ locs.reset_index(inplace = True)
 
 for i in range(len(rpad)):
     if locs['giHighHouseNumber2'][i] != 'none':
-        upd = "UPDATE pluto_rpad_geo a SET giHighHouseNumber1 = '" + str(locs['giHighHouseNumber2'][i]) + "', giStreetName1 = '" + str(locs['giStreetName2'][i]) + "' WHERE borough = '" + rpad['borough'][i] + "' AND tb = '" + rpad['tb'][i] + "' AND tl = '" + rpad['tl'][i] + "';"
-    elif locs['giHighHouseNumber2'][i] == 'none':
-        upd = "UPDATE pluto_rpad_geo a SET giHighHouseNumber1 = NULL WHERE borough = '" + rpad['borough'][i] + "' AND tb = '" + rpad['tb'][i] + "' AND tl = '" + rpad['tl'][i] + "';"
+        upd = "UPDATE pluto_rpad_geo a SET giHighHouseNumber1 = '" + str(locs['giHighHouseNumber2'][i]) + "', giStreetName1 = '" + str(locs['giStreetName2'][i]) + "' WHERE buildingidentificationnumber = '" + rpad['buildingidentificationnumber'][i] + "';"
+    elif (locs['latitudeInternalLabel'][i] != 'none') & (locs['longitudeInternalLabel'][i] != 'none'):
+        upd = "UPDATE dcp_cpdb_agencyverified a SET geom = ST_SetSRID(ST_MakePoint(" + str(locs['longitudeInternalLabel'][i]) + ", " + str(locs['latitudeInternalLabel'][i]) + "), 4326) WHERE buildingidentificationnumber = '" + rpad['buildingidentificationnumber'][i] + "';"
+    elif (locs['latitudeInternalLabel'][i] == 'none') & (locs['longitudeInternalLabel'][i] == 'none') & (locs['giHighHouseNumber2'][i] == 'none'):
+        upd = "UPDATE dcp_cpdb_agencyverified a SET geom = NULL WHERE buildingidentificationnumber = '" + rpad['buildingidentificationnumber'][i] + "';"
     engine.execute(upd)
 
 
