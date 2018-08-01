@@ -35,8 +35,6 @@ g = Geoclient(app_id, app_key)
 
 def get_loc(borough, block, lot):
     geo = g.bbl(borough, block, lot)
-    print geo
-
     try:
         billingbbl = geo['condominiumBillingBbl']
     except:
