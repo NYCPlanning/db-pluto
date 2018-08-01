@@ -35,6 +35,8 @@ g = Geoclient(app_id, app_key)
 
 def get_loc(borough, block, lot):
     geo = g.bbl(borough, block, lot)
+    print geo
+
     try:
         billingbbl = geo['condominiumBillingBbl']
     except:
@@ -76,19 +78,20 @@ def get_loc(borough, block, lot):
 locs = pd.DataFrame()
 for i in range(len(rpad)):
     new = get_loc(rpad['borough'][i],
-                  (rpad['billingbbl'][i])[1:5],
-                  (rpad['billingbbl'][i])[-4:]
+                  rpad['billingblock'][i],
+                  rpad['billinglot'][i]
     )
     locs = pd.concat((locs, new))
-    print locs
 
 locs.reset_index(inplace = True)
 
 # populate the rpad geom information
 
 for i in range(len(rpad)):
-    if locs['billingbbl'][i] != 'none':
-        upd = "UPDATE pluto_rpad_geo a SET billingbbl = '" + str(locs['billingbbl'][i]) + "', giHighHouseNumber1 = '" + str(locs['giHighHouseNumber1'][i]) + "', giStreetName1 = '" + str(locs['giStreetName1'][i]) + "', buildingIdentificationNumber = '" + str(locs['buildingIdentificationNumber'][i]) + "', numberOfExistingStructuresOnLot = " + str(locs['numberOfExistingStructuresOnLot'][i]) + "  WHERE borough = '" + rpad['borough'][i] + "' AND tb = '" + rpad['tb'][i] + "' AND tl = '" + rpad['tl'][i] + "';"
+    if locs['giHighHouseNumber1'][i] != 'none':
+        upd = "UPDATE pluto_rpad_geo a SET giHighHouseNumber1 = '" + str(locs['giHighHouseNumber1'][i]) + "', giStreetName1 = '" + str(locs['giStreetName1'][i]) + "', buildingIdentificationNumber = '" + str(locs['buildingIdentificationNumber'][i]) + "', numberOfExistingStructuresOnLot = " + str(locs['numberOfExistingStructuresOnLot'][i]) + "  WHERE borough = '" + rpad['borough'][i] + "' AND tb = '" + rpad['tb'][i] + "' AND tl = '" + rpad['tl'][i] + "';"
+    elif locs['giHighHouseNumber1'][i] == 'none':
+        upd = "UPDATE pluto_rpad_geo a SET giHighHouseNumber1 = NULL WHERE borough = '" + rpad['borough'][i] + "' AND tb = '" + rpad['tb'][i] + "' AND tl = '" + rpad['tl'][i] + "';"
     engine.execute(upd)
 
 
