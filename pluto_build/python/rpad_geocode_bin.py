@@ -36,13 +36,13 @@ g = Geoclient(app_id, app_key)
 def get_loc(bin):
     geo = g.bin(bin)
     try:
-        giHighHouseNumber1 = geo['giHighHouseNumber1']
+        giHighHouseNumber2 = geo['giHighHouseNumber2']
     except:
-        giHighHouseNumber1 = 'none'
+        giHighHouseNumber2 = 'none'
     try:
-        giStreetName1 = geo['giStreetName1']
+        giStreetName2 = geo['giStreetName2']
     except:
-        giStreetName1 = 'none'
+        giStreetName2 = 'none'
     try:
         latitudeInternalLabel = geo['latitudeInternalLabel']
     except:
@@ -51,8 +51,8 @@ def get_loc(bin):
         longitudeInternalLabel = geo['longitudeInternalLabel']
     except:
         longitudeInternalLabel = 'none'
-    loc = pd.DataFrame({'giHighHouseNumber1' : [giHighHouseNumber1],
-                        'giStreetName1' : [giStreetName1],
+    loc = pd.DataFrame({'giHighHouseNumber2' : [giHighHouseNumber2],
+                        'giStreetName2' : [giStreetName2],
                         'latitudeInternalLabel' : [latitudeInternalLabel],
                         'longitudeInternalLabel' : [longitudeInternalLabel]                      
                         })
@@ -68,9 +68,9 @@ locs.reset_index(inplace = True)
 # populate the rpad geom information
 
 for i in range(len(rpad)):
-    if locs['giHighHouseNumber1'][i] != 'none':
-        upd = "UPDATE pluto_rpad_geo a SET giHighHouseNumber1 = '" + str(locs['giHighHouseNumber1'][i]) + "', giStreetName1 = '" + str(locs['giStreetName1'][i]) + "' WHERE borough = '" + rpad['borough'][i] + "' AND tb = '" + rpad['tb'][i] + "' AND tl = '" + rpad['tl'][i] + "';"
-    elif locs['giHighHouseNumber1'][i] == 'none':
+    if locs['giHighHouseNumber2'][i] != 'none':
+        upd = "UPDATE pluto_rpad_geo a SET giHighHouseNumber1 = '" + str(locs['giHighHouseNumber2'][i]) + "', giStreetName1 = '" + str(locs['giStreetName2'][i]) + "' WHERE borough = '" + rpad['borough'][i] + "' AND tb = '" + rpad['tb'][i] + "' AND tl = '" + rpad['tl'][i] + "';"
+    elif locs['giHighHouseNumber2'][i] == 'none':
         upd = "UPDATE pluto_rpad_geo a SET giHighHouseNumber1 = NULL WHERE borough = '" + rpad['borough'][i] + "' AND tb = '" + rpad['tb'][i] + "' AND tl = '" + rpad['tl'][i] + "';"
     engine.execute(upd)
 
