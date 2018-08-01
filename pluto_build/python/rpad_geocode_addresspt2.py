@@ -27,7 +27,7 @@ app_key = config['GEOCLIENT_APP_KEY']
 engine = sql.create_engine('postgresql://{}@localhost:5432/{}'.format(DBUSER, DBNAME))
 
 # read in rpad table
-rpad = pd.read_sql_query('SELECT * FROM pluto_rpad_geo WHERE housenum_lo IS NOT NULL AND cd IS NULL;', engine)
+rpad = pd.read_sql_query('SELECT * FROM pluto_rpad_geo WHERE gihighhousenumber1 IS NOT NULL AND cd IS NULL;', engine)
 
 # get the geo data
 
@@ -99,8 +99,8 @@ def get_loc(num, street, borough):
 
 locs = pd.DataFrame()
 for i in range(len(rpad)):
-    new = get_loc(rpad['housenum_lo'][i],
-                  rpad['street_name'][i],
+    new = get_loc(rpad['gihighhousenumber1'][i],
+                  rpad['gistreetname1'][i],
                   rpad['borough'][i]
     )
     locs = pd.concat((locs, new))
