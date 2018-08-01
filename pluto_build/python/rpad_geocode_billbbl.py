@@ -27,7 +27,7 @@ app_key = config['GEOCLIENT_APP_KEY']
 engine = sql.create_engine('postgresql://{}@localhost:5432/{}'.format(DBUSER, DBNAME))
 
 # read in rpad table
-rpad = pd.read_sql_query("SELECT * FROM pluto_rpad_geo WHERE (gihighhousenumber1 IS NULL OR gihighhousenumber1 = 'none') AND borough IS NOT NULL AND billingbbl IS NOT NULL;", engine)
+rpad = pd.read_sql_query("SELECT * FROM pluto_rpad_geo WHERE (gihighhousenumber1 IS NULL OR gihighhousenumber1 = 'none') AND borough IS NOT NULL AND (billingbbl IS NOT NULL AND billingbbl <> '0000000000' AND billingbbl <> 'none');", engine)
 
 # get the geo data
 
@@ -80,6 +80,8 @@ for i in range(len(rpad)):
                   (rpad['billingbbl'][i])[-4:]
     )
     locs = pd.concat((locs, new))
+    print locs
+
 locs.reset_index(inplace = True)
 
 # populate the rpad geom information
