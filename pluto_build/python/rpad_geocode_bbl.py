@@ -27,7 +27,7 @@ app_key = config['GEOCLIENT_APP_KEY']
 engine = sql.create_engine('postgresql://{}@localhost:5432/{}'.format(DBUSER, DBNAME))
 
 # read in rpad table
-rpad = pd.read_sql_query('SELECT * FROM pluto_rpad_geo WHERE billingbbl IS NULL AND borough IS NOT NULL;', engine)
+rpad = pd.read_sql_query("SELECT * FROM pluto_rpad_geo WHERE (billingbbl IS NULL OR billingbbl = 'none') AND borough IS NOT NULL;", engine)
 
 # get the geo data
 
