@@ -15,18 +15,29 @@ psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/create_rpad_geo.sql
 
 echo 'Geocoding RPAD...'
 source activate py2
-python $REPOLOC/pluto_build/python/rpad_geocode_bbl.py
-python $REPOLOC/pluto_build/python/rpad_geocode_billbbl.py
 python $REPOLOC/pluto_build/python/rpad_geocode_address.py
+# getting address if address in RPAD did not geocode
+python $REPOLOC/pluto_build/python/rpad_geocode_bbl.py
+psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/geocode_billbbl.sql
+python $REPOLOC/pluto_build/python/rpad_geocode_billbbl.py
+python $REPOLOC/pluto_build/python/rpad_geocode_bin.py
+# using GeoClient address to get spatial attributes
+python $REPOLOC/pluto_build/python/rpad_geocode_addresspt2.py
 source deactivate
 
 psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/geocode_nones.sql
 
+echo 'Reporting records that did not get geocoded...'
+psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/geocode_notgeocoded.sql
 
+echo 'Making DCP edits to RPAD...'
 psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/zerovacantlots.sql
 psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/lotarea.sql
 
+psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/primebbl.sql
 
+echo 'Creating table that aggregates condo data and is used to build PLUTO...'
+psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/create_allocated.sql
 
 # create the table
 echo 'Creating base PLUTO table'
