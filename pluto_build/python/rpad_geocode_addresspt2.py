@@ -83,6 +83,14 @@ def get_loc(num, street, borough):
         sanitationCollectionSchedulingSectionAndSubsection = geo['sanitationCollectionSchedulingSectionAndSubsection']
     except:
         sanitationCollectionSchedulingSectionAndSubsection = 'none'
+    try:
+        boePreferredStreetName = geo['boePreferredStreetName']
+    except:
+        boePreferredStreetName = 'none'
+    try:
+        numberOfExistingStructuresOnLot = geo['numberOfExistingStructuresOnLot']
+    except:
+        numberOfExistingStructuresOnLot = 'none'
     loc = pd.DataFrame({'communityDistrict' : [communityDistrict],
                         'censusTract2010' : [censusTract2010],
                         'censusBlock2010' : [censusBlock2010],
@@ -94,7 +102,9 @@ def get_loc(num, street, borough):
                         'healthCenterDistrict' : [healthCenterDistrict],
                         'healthArea' : [healthArea],
                         'sanitationDistrict' : [sanitationDistrict],
-                        'sanitationCollectionSchedulingSectionAndSubsection' : [sanitationCollectionSchedulingSectionAndSubsection]})
+                        'sanitationCollectionSchedulingSectionAndSubsection' : [sanitationCollectionSchedulingSectionAndSubsection],
+                        'boePreferredStreetName' : [boePreferredStreetName],
+                        'numberOfExistingStructuresOnLot' : [numberOfExistingStructuresOnLot]})
     return(loc)
 
 locs = pd.DataFrame()
@@ -110,7 +120,7 @@ locs.reset_index(inplace = True)
 
 for i in range(len(rpad)):
     if locs['communityDistrict'][i] != 'none':
-        upd = "UPDATE pluto_rpad_geo a SET cd = '" + str(locs['communityDistrict'][i]) + "', ct2010 = '" + str(locs['censusTract2010'][i]) + "', cb2010 = '" + str(locs['censusBlock2010'][i]) + "', schooldist = '" + str(locs['communitySchoolDistrict'][i]) + "', council = '" + str(locs['cityCouncilDistrict'][i]) + "', zipcode = '" + str(locs['zipCode'][i]) + "', firecomp = '" + str(locs['fireCompanyNumber'][i]) + "', policeprct = '" + str(locs['policePrecinct'][i]) + "', healthcenterdistrict = '" + str(locs['healthCenterDistrict'][i]) + "', healtharea = '" + str(locs['healthArea'][i]) + "', sanitdistrict = '" + str(locs['sanitationDistrict'][i]) + "', sanitsub = '" + str(locs['sanitationCollectionSchedulingSectionAndSubsection'][i]) + "' WHERE borough = '" + rpad['borough'][i] + "' AND tb = '" + rpad['tb'][i] + "' AND tl = '" + rpad['tl'][i] + "' ;"
+        upd = "UPDATE pluto_rpad_geo a SET cd = '" + str(locs['communityDistrict'][i]) + "', ct2010 = '" + str(locs['censusTract2010'][i]) + "', cb2010 = '" + str(locs['censusBlock2010'][i]) + "', schooldist = '" + str(locs['communitySchoolDistrict'][i]) + "', council = '" + str(locs['cityCouncilDistrict'][i]) + "', zipcode = '" + str(locs['zipCode'][i]) + "', firecomp = '" + str(locs['fireCompanyNumber'][i]) + "', policeprct = '" + str(locs['policePrecinct'][i]) + "', healthcenterdistrict = '" + str(locs['healthCenterDistrict'][i]) + "', healtharea = '" + str(locs['healthArea'][i]) + "', sanitdistrict = '" + str(locs['sanitationDistrict'][i]) + "', sanitsub = '" + str(locs['sanitationCollectionSchedulingSectionAndSubsection'][i]) + "', boePreferredStreetName = '" + str(locs['boePreferredStreetName'][i]) + "', numberOfExistingStructuresOnLot = '" + str(locs['numberOfExistingStructuresOnLot'][i]) + "' WHERE borough = '" + rpad['borough'][i] + "' AND tb = '" + rpad['tb'][i] + "' AND tl = '" + rpad['tl'][i] + "' ;"
     elif locs['communityDistrict'][i] == 'none':
         upd = "UPDATE pluto_rpad_geo a SET cd = NULL WHERE borough = '" + rpad['borough'][i] + "' AND tb = '" + rpad['tb'][i] + "' AND tl = '" + rpad['tl'][i] + "';"
     engine.execute(upd)
