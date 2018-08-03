@@ -22,7 +22,7 @@ app_key = config['GEOCLIENT_APP_KEY']
 # connect to postgres db
 engine = sql.create_engine('postgresql://{}@localhost:5432/{}'.format(DBUSER, DBNAME))
 # read in rpad table
-rpad = pd.read_sql_query('SELECT * FROM pluto_rpad_geo WHERE ap_date IS NOT NULL AND ap_datef IS NULL;', engine)
+rpad = pd.read_sql_query('SELECT * FROM pluto_rpad_geo WHERE ap_date IS NOT NULL AND length(ap_date) > 2 AND ap_datef IS NULL;', engine)
 
 for i in range(len(rpad)):
     if rpad['ap_date'][i] != 'none':
