@@ -11,7 +11,6 @@ SELECT a.*,
 		ELSE NULL
 	END) AS borough
 FROM pluto_rpad a
-LIMIT 1000
 );
 
 ALTER TABLE pluto_rpad_geo
@@ -38,4 +37,5 @@ ADD COLUMN sanitsub text,
 ADD COLUMN billingblock text,
 ADD COLUMN billinglot text,
 ADD COLUMN primebbl text,
+ADD COLUMN ap_datef text,
 ADD COLUMN geom geometry;
