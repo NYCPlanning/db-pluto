@@ -9,7 +9,16 @@ SET bldgclass = bldgcl,
 	lotarea = land_area,
 	yearbuilt = yrbuilt,
 	ownername = owner,
-	irrlotcode = irreg
+	irrlotcode = irreg,
+	address = trim(leading '0' FROM prime)||' '||boePreferredStreetName,
+-- set the number of buildings on a lot
+-- if GeoClient returned a value then we use the value GeoClient returned
+	numbldgs = (CASE 
+					WHEN numberOfExistingStructuresOnLot::integer > 0 THEN numberOfExistingStructuresOnLot
+					ELSE bldgs
+				END),
+	appbbl = ap_boro||lpad(ap_block, 5, '0')||lpad(ap_lot, 4, '0'),
+	appdate = ap_datef
 FROM pluto_rpad_geo
 WHERE a.bbl=b.primebbl
 AND b.tl NOT LIKE '75%'
@@ -23,7 +32,15 @@ SET bldgclass = bldgcl,
 	lotarea = land_area,
 	yearbuilt = yrbuilt,
 	ownername = owner,
-	irrlotcode = irreg
+	irrlotcode = irreg,
+	address = trim(leading '0' FROM prime)||' '||boePreferredStreetName,
+	numbldgs = (CASE 
+					WHEN numberOfExistingStructuresOnLot::integer > 0 THEN numberOfExistingStructuresOnLot
+					ELSE bldgs
+				END),
+	appbbl = ap_boro||lpad(ap_block, 5, '0')||lpad(ap_lot, 4, '0'),
+	appdate = ap_datef
+
 FROM pluto_rpad_geo
 WHERE a.bbl=b.primebbl
 AND b.tl LIKE '75%'
@@ -37,19 +54,7 @@ SET unitsres = SUM(coop_apts::integer),
 FROM pluto_rpad_geo b
 WHERE a.bbl=b.primebbl
 GROUP BY primebbl;
-
-UPDATE pluto_allocated a
-address = trim(leading '0' FROM b.prime)||' '||b.boePreferredStreetName
-
--- set the number of buildings on a lot
--- if GeoClient returned a value then we use the value GeoClient returned
-UPDATE pluto_allocated a
-SET numbldgs = (CASE 
-					WHEN numberOfExistingStructuresOnLot::integer > 0 THEN numberOfExistingStructuresOnLot
-					ELSE bldgs
-				END)
-WHERE a.bbl=b.primebbl;
-
+ 
 
 
 psudo code
