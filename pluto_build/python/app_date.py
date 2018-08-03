@@ -26,7 +26,7 @@ rpad = pd.read_sql_query('SELECT * FROM pluto_rpad_geo WHERE ap_date IS NOT NULL
 
 for i in range(len(rpad)):
     if rpad['ap_date'][i] != 'none':
-        upd = "UPDATE pluto_rpad_geo a SET ap_datef = '"datetime.datetime.strptime('ap_date', '%Y%j').strftime('%m/%d/%Y')"' WHERE ap_date = '" + rpad['ap_date'][i] + "';"
+        upd = "UPDATE pluto_rpad_geo a SET ap_datef = '" + datetime.datetime.strptime('ap_date', '%Y%j').strftime('%m/%d/%Y') + "' WHERE ap_date = '" + rpad['ap_date'][i] + "';"
     elif locs['ap_date'][i] == 'none':
         upd = "UPDATE pluto_rpad_geo a SET ap_date = NULL WHERE ap_date = '" + rpad['ap_date'][i] + "';"
 	engine.execute(upd)
