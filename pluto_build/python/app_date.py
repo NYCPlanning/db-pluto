@@ -1,3 +1,5 @@
+# transform the ap date from YY and day of year to MM/DD/YYYY format
+
 import datetime
 import pandas as pd
 import subprocess
