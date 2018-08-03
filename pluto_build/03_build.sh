@@ -33,8 +33,9 @@ psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/geocode_notgeocoded.sql
 echo 'Making DCP edits to RPAD...'
 psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/zerovacantlots.sql
 psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/lotarea.sql
-
 psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/primebbl.sql
+python $REPOLOC/pluto_build/python/app_date.py
+
 
 echo 'Creating table that aggregates condo data and is used to build PLUTO...'
 psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/create_allocated.sql
