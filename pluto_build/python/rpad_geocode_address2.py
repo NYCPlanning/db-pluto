@@ -12,7 +12,7 @@ nyc_geoclient.api
 """
 
 import requests
-
+import urllib
 from urllib import urlencode
 
 class Geoclient(object):
@@ -208,7 +208,7 @@ app_key = config['GEOCLIENT_APP_KEY']
 engine = sql.create_engine('postgresql://{}@localhost:5432/{}'.format(DBUSER, DBNAME))
 
 # read in rpad table
-rpad = pd.read_sql_query('SELECT * FROM pluto_rpad_geo WHERE housenum_lo IS NOT NULL AND cd IS NULL;', engine)
+rpad = pd.read_sql_query('SELECT * FROM pluto_rpad_geo WHERE housenum_lo IS NOT NULL AND cd IS NULL LIMIT 100;', engine)
 
 # get the geo data
 
