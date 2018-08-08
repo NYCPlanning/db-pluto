@@ -15,6 +15,21 @@ import requests
 import urllib
 from urllib import urlencode
 
+# make sure we are at the top of the repo
+wd = subprocess.check_output('git rev-parse --show-toplevel', shell = True)
+os.chdir(wd[:-1]) #-1 removes \n
+
+# load config file
+with open('pluto.config.json') as conf:
+    config = json.load(conf)
+
+DBNAME = config['DBNAME']
+DBUSER = config['DBUSER']
+# load necessary environment variables
+app_id = config['GEOCLIENT_APP_ID']
+app_key = config['GEOCLIENT_APP_KEY']
+base_url = config[u'BASE_URL']
+
 class Geoclient(object):
     """
     This object's methods provide access to the NYC Geoclient REST API.
@@ -35,7 +50,7 @@ class Geoclient(object):
         Your NYC Geoclient application key.
     """
 
-    BASE_URL = u'https://api.cityofnewyork.us/geoclient/v1/'
+    BASE_URL = base_url
 
     def __init__(self, app_id, app_key):
         if not app_id:
@@ -190,19 +205,7 @@ class Geoclient(object):
         """
         return self._request(u'place', name=name, borough=borough)
 
-# make sure we are at the top of the repo
-wd = subprocess.check_output('git rev-parse --show-toplevel', shell = True)
-os.chdir(wd[:-1]) #-1 removes \n
 
-# load config file
-with open('pluto.config.json') as conf:
-    config = json.load(conf)
-
-DBNAME = config['DBNAME']
-DBUSER = config['DBUSER']
-# load necessary environment variables
-app_id = config['GEOCLIENT_APP_ID']
-app_key = config['GEOCLIENT_APP_KEY']
 
 # connect to postgres db
 engine = sql.create_engine('postgresql://{}@localhost:5432/{}'.format(DBUSER, DBNAME))
