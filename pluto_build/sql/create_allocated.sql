@@ -5,9 +5,16 @@
 UPDATE pluto_allocated a
 SET bldgclass = bldgcl,
 	numfloors = story,
+	lotfront = lfft::integer,
+	lotdepth = ldft::integer,
+	bldgfront = bfft::integer,
+	bldgdepth = bdft:integer,
+	ext = b.ext,
 	condono = condo_number,
 	lotarea = land_area,
 	yearbuilt = yrbuilt,
+	yearalter1 = yralt1,
+	yearalter2 = yralt1,
 	ownername = owner,
 	irrlotcode = irreg,
 	address = trim(leading '0' FROM prime)||' '||boePreferredStreetName,
@@ -19,7 +26,7 @@ SET bldgclass = bldgcl,
 				END),
 	appbbl = ap_boro||lpad(ap_block, 5, '0')||lpad(ap_lot, 4, '0'),
 	appdate = ap_datef
-FROM pluto_rpad_geo
+FROM pluto_rpad_geo b
 WHERE a.bbl=b.primebbl
 AND b.tl NOT LIKE '75%'
 AND b.condo_number = '0';
@@ -28,12 +35,21 @@ AND b.condo_number = '0';
 UPDATE pluto_allocated a
 SET bldgclass = bldgcl,
 	numfloors = story,
+	lotfront = lfft::integer,
+	lotdepth = ldft::integer,
+	bldgfront = bfft::integer,
+	bldgdepth = bdft:integer,
+	ext = b.ext,
 	condono = condo_number,
 	lotarea = land_area,
 	yearbuilt = yrbuilt,
+	yearalter1 = yralt1,
+	yearalter2 = yralt1,
 	ownername = owner,
 	irrlotcode = irreg,
 	address = trim(leading '0' FROM prime)||' '||boePreferredStreetName,
+-- set the number of buildings on a lot
+-- if GeoClient returned a value then we use the value GeoClient returned
 	numbldgs = (CASE 
 					WHEN numberOfExistingStructuresOnLot::integer > 0 THEN numberOfExistingStructuresOnLot
 					ELSE bldgs

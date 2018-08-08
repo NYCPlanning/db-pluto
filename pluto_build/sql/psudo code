@@ -33,11 +33,11 @@ Jean
 
 - based on if bbl in list then changes building class  > file with bbls from Jean
 
--- reformat ADATE
+-- (DONE) reformat ADATE
 
 FOLLOW-UP (with Lynn)
-RPAD addresses that don't geocode --> send to GRU
-# of structures - how are we getting this value in PAD
+(DONE) RPAD addresses that don't geocode --> send to GRU
+(DONE) # of structures - how are we getting this value in PAD
 
 Jie
 Part 1
