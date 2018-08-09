@@ -69,8 +69,8 @@ SET unitsres = SUM(coop_apts::integer),
 	unitstotal = SUM(units::integer),
 	assessland = SUM(curavl_act::double precision),
 	assesstot = SUM(curavt_act::double precision),
-	exemptland =
-	exempttot = 
+	exemptland = SUM(curexl_act::double precision),
+	exempttot = SUM(curext_act::double precision)
 FROM pluto_rpad_geo b
 WHERE a.bbl=b.primebbl
 GROUP BY primebbl;
