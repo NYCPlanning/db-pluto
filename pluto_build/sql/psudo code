@@ -84,7 +84,7 @@ Base DTM creation notes
 	change mappluto flag
 	xx aa <-- manually assign
 	xx bb 
-- In case where billing bbl is none take option where billing bbl is not null
+-  (DONE) In case where billing bbl is none take option where billing bbl is not null
 	xx	11 <-- take this one 
 	xx 	None
 -- Merge non condo tax lots polygons with the same base bbl
