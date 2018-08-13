@@ -223,8 +223,6 @@ def get_loc(num, street, borough):
         billingbbl = 'none'
     try:
         communityDistrict = geo['communityDistrict']
-    except:
-        communityDistrict = 'none'
     try:
         censusTract2010 = geo['censusTract2010']
     except:
