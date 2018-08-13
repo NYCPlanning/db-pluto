@@ -25,27 +25,5 @@ SET --bldgclass = b.bldg_cl,
 	--condono	= b.condo_num,
 	--appbbl = b.ap_boro||b.ap_block||b.ap_lot,
 	--appdate = b.ap_date
-FROM pluto_input_allocated b
+FROM pluto_allocated b
 WHERE a.borocode||lpad(a.block, 5, '0')||lpad(a.lot, 4, '0') = b.boro::text||lpad(b.block::text, 5, '0')||lpad(b.lot::text, 4, '0');
-
-1016617501.00 (condo)
-bldgarea   | 19738
-assessland | 112497.000000
-assesstot  | 2812501.00000
-exemptland | 71010.0000000
-exempttot  | 2771014.00000
-
-1016800048.00
-bldgarea   | 12000
-assessland | 123278.000000
-assesstot  | 400390.000000
-exemptland | 123278.000000
-exempttot  | 400390.000000
-
-
-1012310038.00
-bldgarea   | 7371
-assessland | 363600.000000
-assesstot  | 1224450.00000
-exemptland | 178164.000000
-exempttot  | 561809.000000

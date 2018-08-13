@@ -73,10 +73,10 @@ Edit xml metadata file and apply xml to each file and convert to pdf
 
 Jie
 Base DTM creation notes
-- In the condo table delete duplicate records (base bbl and billing bbl are the same)
+- (DONE) In the condo table delete duplicate records (base bbl and billing bbl are the same)
 	xx	yy
 	xx	yy <-- delete
-- If base bbl is the same with differnt billing bbl manaual steps
+- (DONE) If base bbl is the same with differnt billing bbl manaual steps
 	in DTM you'll see multiple polygons with same base bbl 
 	manually assign billing bbl on of the billing as base bbl based on previous version of MapPLUTO
 	Get info from DOF to know which polygon gets which billing bbl
@@ -87,13 +87,13 @@ Base DTM creation notes
 -  (DONE) In case where billing bbl is none take option where billing bbl is not null
 	xx	11 <-- take this one 
 	xx 	None
--- Merge non condo tax lots polygons with the same base bbl
--- Assign billing bbl to condos lots and then merge based on bbl
+-- (DONE) Merge non condo tax lots polygons with the same base bbl
+-- (DONE) Assign billing bbl to condos lots and then merge based on billing bbl
 -- Tax lots where BBL is NULL assign BBL based on previous MapPLUTO (fixed via DTM)
 -- Recheck for duplicate bbl for polygons where one polygon is condo and the other is not condo
 	-- always merge polygons - discretion as to if it becomes condo or non-condo lot
 
--- Use shoreline file that comes with DTM use to clip . erase with 0.05 tolerance
+-- (DONE) Use shoreline file that comes with DTM use to clip . erase with 0.05 tolerance
 
 -- Validate clipped topology to check to make sure that everything in non clipped bbl w/in shoreline boundary is in clipped mappluto
 
