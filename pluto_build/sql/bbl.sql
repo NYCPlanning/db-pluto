@@ -7,16 +7,16 @@ INSERT INTO pluto (
 	lot
 	)
 SELECT
-	b.boro||lpad(b.block, 5, '0')||lpad(b.lot, 4, '0'),
-	b.boro,
+	b.primebbl,
+	LEFT(b.primebbl,1),
 	(CASE
-		WHEN b.boro = '1' THEN 'MN'
-		WHEN b.boro = '2' THEN 'BX'
-		WHEN b.boro = '3' THEN 'BK'
-		WHEN b.boro = '4' THEN 'QN'
-		WHEN b.boro = '5' THEN 'SI'
+		WHEN LEFT(b.primebbl,1) = '1' THEN 'MN'
+		WHEN LEFT(b.primebbl,1) = '2' THEN 'BX'
+		WHEN LEFT(b.primebbl,1) = '3' THEN 'BK'
+		WHEN LEFT(b.primebbl,1) = '4' THEN 'QN'
+		WHEN LEFT(b.primebbl,1) = '5' THEN 'SI'
 		ELSE NULL
 	END),
-	trim(leading '0' FROM b.block),
-	trim(leading '0' FROM b.lot)
-FROM (SELECT DISTINCT boro, block, lot FROM pluto_input_allocated) AS b;
+	trim(leading '0' FROM SUBSTRING(b.primebbl,2,5)),
+	trim(leading '0' FROM RIGHT(b.primebbl, 4))
+FROM (SELECT DISTINCT primebbl FROM pluto_rpad_geo) AS b;

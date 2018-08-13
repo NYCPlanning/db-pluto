@@ -1,4 +1,4 @@
--- Adding on data from allocated input table
+-- Adding on data from geocodes input table
 UPDATE pluto a
 SET cd = b.borocode||b.cd,
 	ct2010 = b.census_tract_2010,
@@ -14,12 +14,12 @@ SET cd = b.borocode||b.cd,
 	sanitdistrict = b.sanitation_district,
 	sanitsub = b.sanitation_subsection,
 	address = trim(leading '0' FROM b.hsnum)||' '||b.stname
-FROM pluto_input_geocodes b
-WHERE a.borocode||lpad(a.block, 5, '0')||lpad(a.lot, 4, '0') = b.boro::text||lpad(b.block::text, 5, '0')||lpad(b.lot::text, 4, '0');
+FROM pluto_rpad_geo b
+WHERE a.bbl = b.primebbl;
 
 --updating the building code if it was not updated in alloceted
 UPDATE pluto a
 SET bldgclass = b.bldg_cl
-FROM pluto_input_geocodes b
-WHERE a.borocode||lpad(a.block, 5, '0')||lpad(a.lot, 4, '0') = b.boro::text||lpad(b.block::text, 5, '0')||lpad(b.lot::text, 4, '0')
+FROM pluto_rpad_geo b
+WHERE a.bbl = b.primebbl
 	AND bldgclass IS NULL;
