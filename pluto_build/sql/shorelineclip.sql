@@ -6,4 +6,4 @@ CREATE TABLE mappluto_clipped AS (
 -- clip mappluto to shoreline
 UPDATE mappluto_clipped a
 SET geom = ST_Intersection(a.geom, b.geom)
-FROM pluto_shoreline b;
+FROM dof_shoreline b;
