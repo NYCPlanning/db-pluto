@@ -1,4 +1,40 @@
 -- create the allocated table from pluto_rpad_geo
+DROP TABLE IF EXISTS pluto_allocated CASCADE;
+CREATE TABLE pluto_allocated (
+	bbl text,
+	bldgclass text,
+	ownertype  text,
+	ownername text,
+	lotarea text,
+	bldgarea text,
+	numbldgs text,
+	numfloors text,
+	unitsres text,
+	unitstotal text,
+	lotfront text,
+	lotdepth text,
+	bldgfront text,
+	bldgdepth text,
+	ext text,
+	irrlotcode text,
+	assessland text,
+	assesstot text,
+	exemptland text,
+	exempttot text,
+	yearbuilt text,
+	yearalter1 text,
+	yearalter2 text,
+	condono text,
+	appbbl text,
+	appdate text
+);
+
+INSERT INTO pluto_allocated (
+	bbl
+	)
+SELECT
+	b.primebbl
+FROM (SELECT DISTINCT primebbl FROM pluto_rpad_geo) AS b;
 
 -- fill in one-to-one attributes
 -- for noncondo records
@@ -56,7 +92,6 @@ SET bldgclass = bldgcl,
 				END),
 	appbbl = ap_boro||lpad(ap_block, 5, '0')||lpad(ap_lot, 4, '0'),
 	appdate = ap_datef
-
 FROM pluto_rpad_geo
 WHERE a.bbl=b.primebbl
 AND b.tl LIKE '75%'
