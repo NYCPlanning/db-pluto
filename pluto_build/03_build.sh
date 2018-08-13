@@ -41,7 +41,6 @@ echo 'Creating table that aggregates condo data and is used to build PLUTO...'
 psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/create_allocated.sql
 psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/yearbuilt.sql
 
-
 # create the table
 echo 'Creating base PLUTO table'
 psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/create.sql
@@ -51,9 +50,7 @@ psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/bbl.sql
 echo 'Adding on RPAD data attributes'
 psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/allocated.sql
 psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/geocodes.sql
-
 psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/numericfields.sql
-
 
 # add on CAMA data attributes
 echo 'Adding on CAMA data attributes'
@@ -73,6 +70,14 @@ psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/edesignation.sql
 
 echo 'Transform RPAD data attributes'
 psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/irrlotcode.sql
+
+echo 'Create base DTM'
+
+psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/dedupecondotable.sql
+psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/dtmmergepolygons.sql
+psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/shorelineclip.sql
+
+
 ##psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/colp.sql
 
 ##psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/ipis.sql
