@@ -209,7 +209,7 @@ class Geoclient(object):
 engine = sql.create_engine('postgresql://{}@localhost:5432/{}'.format(DBUSER, DBNAME))
 
 # read in rpad table
-rpad = pd.read_sql_query("SELECT trim(leading '0' from housenum_lo), street_name, borough, tb, tl FROM pluto_rpad_geo WHERE housenum_lo IS NOT NULL AND street_name IS NOT NULL AND cd IS NULL LIMIT 10000;", engine)
+rpad = pd.read_sql_query("SELECT trim(leading '0' from housenum_lo) as housenum_lo, street_name, borough, tb, tl FROM pluto_rpad_geo WHERE housenum_lo IS NOT NULL AND street_name IS NOT NULL AND cd IS NULL LIMIT 10000;", engine)
 
 # get the geo data
 
