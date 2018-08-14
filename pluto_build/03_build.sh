@@ -16,6 +16,7 @@ psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/create_rpad_geo.sql
 echo 'Geocoding RPAD...'
 source activate py2
 python $REPOLOC/pluto_build/python/rpad_geocode_address.py
+python $REPOLOC/pluto_build/python/rpad_geocode_addressymo.py
 psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/geocode_nones.sql
 # getting address if address in RPAD did not geocode
 python $REPOLOC/pluto_build/python/rpad_geocode_bbl.py
