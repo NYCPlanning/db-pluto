@@ -39,3 +39,11 @@ ADD COLUMN billinglot text,
 ADD COLUMN primebbl text,
 ADD COLUMN ap_datef text,
 ADD COLUMN geom geometry;
+
+UPDATE pluto_rpad_geo
+SET housenum_lo = NULL
+WHERE housenum_lo = ' ';
+
+UPDATE pluto_rpad_geo
+SET street_name = NULL
+WHERE street_name = ' ';
