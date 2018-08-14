@@ -16,11 +16,14 @@ psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/create_rpad_geo.sql
 echo 'Geocoding RPAD...'
 source activate py2
 python $REPOLOC/pluto_build/python/rpad_geocode_address.py
+psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/geocode_nones.sql
 # getting address if address in RPAD did not geocode
 python $REPOLOC/pluto_build/python/rpad_geocode_bbl.py
 psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/geocode_billbbl.sql
 python $REPOLOC/pluto_build/python/rpad_geocode_billbbl.py
+psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/geocode_nones.sql
 python $REPOLOC/pluto_build/python/rpad_geocode_bin.py
+psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/geocode_nones.sql
 # using GeoClient address to get spatial attributes
 python $REPOLOC/pluto_build/python/rpad_geocode_addresspt2.py
 source deactivate
@@ -72,9 +75,9 @@ echo 'Transform RPAD data attributes'
 psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/irrlotcode.sql
 
 echo 'Create base DTM'
-
 psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/dedupecondotable.sql
 psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/dtmmergepolygons.sql
+psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/plutogeoms.sql
 psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/shorelineclip.sql
 
 

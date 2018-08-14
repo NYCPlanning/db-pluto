@@ -13,7 +13,7 @@ SET buildingIdentificationNumber = NULL
 WHERE buildingIdentificationNumber = 'none';
 UPDATE pluto_rpad_geo
 SET cd = NULL 
-WHERE cd = 'none';
+WHERE cd = 'none' OR cd = 'foo';
 UPDATE pluto_rpad_geo
 SET ct2010 = NULL 
 WHERE ct2010 = 'none';

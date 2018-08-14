@@ -1,6 +1,6 @@
 -- create mappluto file
 CREATE TABLE mappluto_clipped AS (
-	SELECT * FROM pluto_rpad_geo
+	SELECT * FROM pluto
 	WHERE geom IS NOT NULL);
 
 -- clip mappluto to shoreline
