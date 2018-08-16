@@ -274,13 +274,13 @@ SELECT 'yearalter1' AS field, COUNT(*)
 FROM pluto a
 INNER JOIN dcp_mappluto b
 ON a.bbl||'.00'::text=b.bbl::text
-WHERE a.yearalter1::text <> b.yearalter1::text
+WHERE a.yearalter1::integer <> b.yearalter1::integer
 UNION
 SELECT 'yearalter2' AS field, COUNT(*)
 FROM pluto a
 INNER JOIN dcp_mappluto b
 ON a.bbl||'.00'::text=b.bbl::text
-WHERE a.yearalter2::text <> b.yearalter2::text
+WHERE a.yearalter2::integer <> b.yearalter2::integer
 UNION
 SELECT 'histdist' AS field, COUNT(*)
 FROM pluto a
@@ -336,5 +336,5 @@ SELECT * FROM countchange ORDER BY count DESC
 
 -- write to an output file
 -- set the denominator
-\copy (SELECT a.field, a.count, round(((a.count::double precision/49911)*100)::numeric,2) AS percentmismatch FROM pluto_qc_versioncomparisoncount a ORDER BY count DESC) TO '/prod/db-pluto/pluto_build/output/qc_versioncomparison.csv' DELIMITER ',' CSV HEADER;
+\copy (SELECT a.field, a.count, round(((a.count::double precision/857026)*100)::numeric,2) AS percentmismatch FROM pluto_qc_versioncomparisoncount a ORDER BY count DESC) TO '/prod/db-pluto/pluto_build/output/qc_versioncomparison.csv' DELIMITER ',' CSV HEADER;
 
