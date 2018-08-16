@@ -1,25 +1,26 @@
 -- Adding on data from geocodes input table
+-- might need to get fire company type
 UPDATE pluto a
-SET cd = b.borocode||b.cd,
-	ct2010 = b.census_tract_2010,
-	cb2010 = b.census_block_2010,
-	schooldist = b.school_dstrict,
-	council = b.cc_district,
+SET cd = b.cd,
+	ct2010 = b.ct2010,
+	cb2010 = b.cb2010,
+	schooldist = b.schooldist,
+	council = b.council,
 	zipcode = b.zipcode,
-	firecomp = b.fire_company_type||b.fire_company_num,
-	policeprct = b.police_prct,
-	healthcenterdistrict = b.health_center_district,
-	healtharea = b.health_area,
-	sanitboro = b.sanitation_district_boro,
-	sanitdistrict = b.sanitation_district,
-	sanitsub = b.sanitation_subsection,
-	address = trim(leading '0' FROM b.hsnum)||' '||b.stname
+	firecomp = b.firecomp,
+	policeprct = b.policeprct,
+	healthcenterdistrict = b.healthcenterdistrict,
+	healtharea = b.healtharea,
+	sanitboro = b.sanitboro,
+	sanitdistrict = b.sanitdistrict,
+	sanitsub = b.sanitsub,
+	address = trim(leading '0' FROM b.prime)||' '||b.boepreferredstreetname
 FROM pluto_rpad_geo b
 WHERE a.bbl = b.primebbl;
 
 --updating the building code if it was not updated in alloceted
 UPDATE pluto a
-SET bldgclass = b.bldg_cl
+SET bldgclass = b.bldgcl
 FROM pluto_rpad_geo b
 WHERE a.bbl = b.primebbl
 	AND bldgclass IS NULL;
