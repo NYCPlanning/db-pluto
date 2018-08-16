@@ -8,6 +8,8 @@ cd $REPOLOC
 DBNAME=$(cat $REPOLOC/pluto.config.json | jq -r '.DBNAME')
 DBUSER=$(cat $REPOLOC/pluto.config.json | jq -r '.DBUSER')
 
+# Dependencies - the zoning tax lot database and max far table should be built and updated
+
 start=$(date +'%T')
 echo "Starting to build PLUTO"
 
@@ -75,6 +77,15 @@ psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/edesignation.sql
 echo 'Transform RPAD data attributes'
 psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/irrlotcode.sql
 
+echo 'Adding DCP data attributes'
+psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/version.sql
+psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/coords.sql
+psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/address.sql
+psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/sanitboro.sql
+psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/clean.sql
+
+
+
 echo 'Create base DTM'
 psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/dedupecondotable.sql
 psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/dtmmergepolygons.sql
@@ -82,6 +93,7 @@ psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/plutogeoms.sql
 psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/shorelineclip.sql
 
 
-##psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/colp.sql
 
+
+##psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/colp.sql
 ##psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/ipis.sql

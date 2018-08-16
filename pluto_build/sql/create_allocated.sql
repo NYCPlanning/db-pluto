@@ -26,7 +26,8 @@ CREATE TABLE pluto_allocated (
 	yearalter2 text,
 	condono text,
 	appbbl text,
-	appdate text
+	appdate text,
+	address text
 );
 
 INSERT INTO pluto_allocated (
@@ -41,10 +42,10 @@ FROM (SELECT DISTINCT primebbl FROM pluto_rpad_geo) AS b;
 UPDATE pluto_allocated a
 SET bldgclass = bldgcl,
 	numfloors = story,
-	lotfront = lfft::integer,
-	lotdepth = ldft::integer,
-	bldgfront = bfft::integer,
-	bldgdepth = bdft:integer,
+	lotfront = lfft,
+	lotdepth = ldft,
+	bldgfront = bfft,
+	bldgdepth = bdft,
 	ext = b.ext,
 	condono = condo_number,
 	lotarea = land_area,
@@ -71,10 +72,10 @@ AND b.condo_number = '0';
 UPDATE pluto_allocated a
 SET bldgclass = bldgcl,
 	numfloors = story,
-	lotfront = lfft::integer,
-	lotdepth = ldft::integer,
-	bldgfront = bfft::integer,
-	bldgdepth = bdft:integer,
+	lotfront = lfft,
+	lotdepth = ldft,
+	bldgfront = bfft,
+	bldgdepth = bdft,
 	ext = b.ext,
 	condono = condo_number,
 	lotarea = land_area,
@@ -92,20 +93,30 @@ SET bldgclass = bldgcl,
 				END),
 	appbbl = ap_boro||lpad(ap_block, 5, '0')||lpad(ap_lot, 4, '0'),
 	appdate = ap_datef
-FROM pluto_rpad_geo
+FROM pluto_rpad_geo b
 WHERE a.bbl=b.primebbl
 AND b.tl LIKE '75%'
 AND b.condo_number IS NOT NULL
 AND b.condo_number <> '0';
 
 -- populate the fields that where values are aggregated
+WITH primesums AS (
+	SELECT primebbl,
+	SUM(coop_apts::integer) as unitsres,
+	SUM(units::integer) as unitstotal,
+	SUM(curavl_act::double precision) as assessland,
+	SUM(curavt_act::double precision) as assesstot,
+	SUM(curexl_act::double precision) as exemptland,
+	SUM(curext_act::double precision) as exempttot
+	FROM pluto_rpad_geo
+	GROUP BY primebbl)
+
 UPDATE pluto_allocated a
-SET unitsres = SUM(coop_apts::integer),
-	unitstotal = SUM(units::integer),
-	assessland = SUM(curavl_act::double precision),
-	assesstot = SUM(curavt_act::double precision),
-	exemptland = SUM(curexl_act::double precision),
-	exempttot = SUM(curext_act::double precision)
-FROM pluto_rpad_geo b
-WHERE a.bbl=b.primebbl
-GROUP BY primebbl;
+SET unitsres = b.unitsres,
+	unitstotal = b.unitstotal,
+	assessland = b.assessland,
+	assesstot = b.assesstot,
+	exemptland = b.exemptland,
+	exempttot = b.exempttot
+FROM primesums b
+WHERE a.bbl=b.primebbl;

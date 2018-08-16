@@ -12,9 +12,6 @@ FROM pluto_condo
 WHERE bbl=condo_base
 AND condo_bill IS NOT NULL;
 
-SELECT primebbl, ST_Union(geom) geom 
-FROM pluto_dtm 
-GROUP BY category;
 -- create merged geometries for condo records
 DROP TABLE IF EXISTS pluto_dtm_condosmerged;
 CREATE TABLE pluto_dtm_condosmerged AS (
