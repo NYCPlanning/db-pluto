@@ -27,7 +27,7 @@ DBNAME = config['DBNAME']
 DBUSER = config['DBUSER']
 # load necessary environment variables
 app_id = config['GEOCLIENT_APP_ID']
-app_key = config['GEOCLIENT_APP_KEY']
+key = config['GEOCLIENT_APP_KEY']
 base_url = config[u'BASE_URL']
 
 class Geoclient(object):
@@ -52,17 +52,17 @@ class Geoclient(object):
 
     BASE_URL = base_url
 
-    def __init__(self, app_id, app_key):
-        if not app_key:
+    def __init__(self, key):
+        if not key:
             raise Exception("Missing app_key")
 
         self.app_id = app_id
-        self.app_key = app_key
+        self.key = key
 
     def _request(self, endpoint, **kwargs):
         kwargs.update({
             'app_id': self.app_id,
-            'app_key': self.app_key
+            'key': self.key
         })
 
         # Ensure no 'None' values are sent to server
@@ -210,7 +210,7 @@ rpad = pd.read_sql_query('SELECT license_number, street_number, street_name, bor
 
 # get the geo data
 
-g = Geoclient(app_id, app_key)
+g = Geoclient(key)
 
 def get_loc(AddressNo, StreetName, Borough):
     geo = g.address(AddressNo, StreetName, Borough)
