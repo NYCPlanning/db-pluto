@@ -212,8 +212,8 @@ rpad = pd.read_sql_query('SELECT license_number, street_number, street_name, bor
 
 g = Geoclient(app_id, app_key)
 
-def get_loc(num, street, borough):
-    geo = g.address(num, street, borough)
+def get_loc(AddressNo, StreetName, Borough):
+    geo = g.address(AddressNo, StreetName, Borough)
     try:
         out_latitude = geo['out_latitude']
     except:
