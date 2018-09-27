@@ -5,7 +5,6 @@ import sqlalchemy as sql
 import json
 import requests
 import urllib
-from jsonpath_rw import parse
 from urllib import urlencode
 
 # If you get this error: requests.exceptions.ConnectionError: ('Connection aborted.', error(54, 'Connection reset by peer')) install below or try the other solutions in the link
