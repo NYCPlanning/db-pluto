@@ -30,7 +30,7 @@ base_url = config[u'BASE_URL']
 # connect to postgres db
 engine = sql.create_engine('postgresql://{}@localhost:5432/{}'.format(DBUSER, DBNAME))
 # read in retail stores table
-retail = pd.read_sql_query('SELECT boro||tb||tl as bbl, trim(leading '0' from housenum_lo) as housenum_lo, trim(street_name) as street_name, boro FROM pluto_rpad_geo WHERE borough IS NOT NULL AND tb IS NOT NULL AND housenum_lo IS NOT NULL AND street_name IS NOT NULL AND longitude IS NULL;', engine)
+retail = pd.read_sql_query("SELECT boro||tb||tl as bbl, trim(leading '0' from housenum_lo) as housenum_lo, trim(street_name) as street_name, boro FROM pluto_rpad_geo WHERE borough IS NOT NULL AND tb IS NOT NULL AND housenum_lo IS NOT NULL AND street_name IS NOT NULL AND longitude IS NULL;", engine)
 # get apt response and write values to database
 for i in range(len(retail)):
     license_number = retail.iloc[i, 0]
