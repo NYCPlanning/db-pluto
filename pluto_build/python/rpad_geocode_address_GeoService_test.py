@@ -3,7 +3,6 @@ import subprocess
 import os
 import sqlalchemy as sql
 import json
-import usaddress
 import requests
 import urllib
 from jsonpath_rw import parse
