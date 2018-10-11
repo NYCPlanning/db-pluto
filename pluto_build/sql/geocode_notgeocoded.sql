@@ -1,16 +1,15 @@
 -- Reporting records that did not geocode
+DROP TABLE IF EXISTS pluto_temp_qc_notgeocoded;
 CREATE TABLE pluto_temp_qc_notgeocoded AS (
-	SELECT  boro||tb||tl AS bbl,
+	SELECT  bbl,
 			billingbbl,
-			buildingIdentificationNumber AS bin,
-			giHighHouseNumber1 AS housenumber,
-			giStreetName1 AS streetname,
+			housenum_lo,
+			street_name,
 			stcode11,
-			owner,
 			COUNT(*)
 	FROM pluto_rpad_geo
-	WHERE geom IS NULL AND cd IS NULL
-	GROUP BY boro||tb||tl, billingbbl, buildingIdentificationNumber, giHighHouseNumber1, giStreetName1, stcode11, owner
+	WHERE cd IS NULL
+	GROUP BY bbl, billingbbl, housenum_lo, street_name, stcode11
 	ORDER BY bbl
 );
 
