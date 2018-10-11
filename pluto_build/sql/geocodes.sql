@@ -11,7 +11,6 @@ SET cd = b.cd,
 	policeprct = b.policeprct,
 	healthcenterdistrict = b.healthcenterdistrict,
 	healtharea = b.healtharea,
-	sanitboro = b.sanitboro,
 	sanitdistrict = b.sanitdistrict,
 	sanitsub = b.sanitsub,
 	address = trim(leading '0' FROM b.prime)||' '||b.boepreferredstreetname

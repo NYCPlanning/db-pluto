@@ -1,4 +1,4 @@
-## INPUTS ALL RECORDS SEPERATED BY A ; ##
+-- INPUTS ALL RECORDS SEPERATED BY A ; 
 -- -- if the lot is in a historical district add in the name of the Historic District from lpc_historic_districts
 -- -- concatenates historic districts seperated by a semi colon for lots within more than one Historic District 
 -- UPDATE pluto a
@@ -24,7 +24,7 @@
 -- 		GROUP BY b.bbl) c
 -- WHERE a.borocode||lpad(a.block, 5, '0')||lpad(a.lot, 4, '0') = c.bbl;
 
-## INPUTS FIRST ALPHABETICAL RECORD ##
+-- INPUTS FIRST ALPHABETICAL RECORD
 -- if the lot is in a historical district add in the name of the Historic District from lpc_historic_districts
 -- the first alphabetical historical district is appended
 WITH histdistricts AS (
