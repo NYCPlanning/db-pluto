@@ -1,6 +1,6 @@
 field,count,percentmismatch
+numbldgs,855113,99.78
 areasource,842679,98.33
-numbldgs,820639,95.75
 yearbuilt,814536,95.04
 residfar,378910,44.21
 exempttot,357680,41.74
@@ -47,9 +47,9 @@ zonedist3,41,0.00
 spdist2,29,0.00
 overlay2,23,0.00
 zonedist4,2,0.00
-ltdheight,0,0.00
-spdist3,0,0.00
-ownertype,0,0.00
 condono,0,0.00
+ownertype,0,0.00
 bldgfront,0,0.00
 borocode,0,0.00
+spdist3,0,0.00
+ltdheight,0,0.00
