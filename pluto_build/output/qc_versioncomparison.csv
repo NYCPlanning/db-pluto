@@ -1,7 +1,5 @@
 field,count,percentmismatch
-numbldgs,855113,99.78
 areasource,842679,98.33
-yearbuilt,814536,95.04
 residfar,378910,44.21
 exempttot,357680,41.74
 exemptland,321516,37.52
@@ -17,6 +15,7 @@ bldgclass,15269,1.78
 landuse,14264,1.66
 facilfar,7781,0.91
 histdist,7256,0.85
+numbldgs,6671,0.78
 easements,6249,0.73
 zonedist1,5896,0.69
 assesstot,5711,0.67
@@ -26,6 +25,7 @@ unitstotal,3980,0.46
 lottype,3876,0.45
 lotarea,3299,0.38
 bldgdepth,3269,0.38
+yearbuilt,2816,0.33
 zonedist2,2298,0.27
 resarea,2155,0.25
 commfar,2025,0.24
@@ -47,9 +47,9 @@ zonedist3,41,0.00
 spdist2,29,0.00
 overlay2,23,0.00
 zonedist4,2,0.00
-condono,0,0.00
-ownertype,0,0.00
 bldgfront,0,0.00
 borocode,0,0.00
-spdist3,0,0.00
 ltdheight,0,0.00
+spdist3,0,0.00
+condono,0,0.00
+ownertype,0,0.00
