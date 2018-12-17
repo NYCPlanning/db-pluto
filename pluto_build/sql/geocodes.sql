@@ -3,6 +3,7 @@
 UPDATE pluto a
 SET cd = b.cd,
 	ct2010 = b.ct2010,
+	tract2010 = b.ct2010,
 	cb2010 = b.cb2010,
 	schooldist = b.schooldist,
 	council = b.council,

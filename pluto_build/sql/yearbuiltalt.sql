@@ -13,7 +13,7 @@ SET yearbuilt = '19'||yearbuilt
 WHERE length(yearbuilt) = 2
 AND yearbuilt::integer > 0;
 
-UPDATE pluto
+UPDATE pluto_allocated
 SET yearbuilt = '0'
 WHERE yearbuilt IS NULL 
 OR yearbuilt::integer = 0;
@@ -32,7 +32,7 @@ SET yearalter1 = '19'||yearalter1
 WHERE length(yearalter1) = 2
 AND yearalter1::integer > 0;
 
-UPDATE pluto
+UPDATE pluto_allocated
 SET yearalter1 = '0'
 WHERE yearalter1 IS NULL
 OR yearalter1::integer = 0;
@@ -51,7 +51,7 @@ SET yearalter2 = '19'||yearalter2
 WHERE length(yearalter2) = 2
 AND yearalter2::integer > 0;
 
-UPDATE pluto
+UPDATE pluto_allocated
 SET yearalter2 = '0'
 WHERE yearalter2 IS NULL
 OR yearalter2::integer = 0;

@@ -4,7 +4,7 @@
 DROP TABLE IF EXISTS export_mappluto;
 CREATE TABLE export_mappluto AS (
 SELECT
-	gid::integer 
+	gid::integer, 
 	borough,
 	block::numeric,
 	lot::integer,
@@ -92,14 +92,14 @@ SELECT
 	FIRM07_FLA,
 	PFIRM15_FL,
 	Version,
-	MAPPLUTO_F::integer
+	MAPPLUTO_F::integer,
+	geom
 FROM dcp_mappluto_18v11);
 
 -- Set the projection to state plane
-UPDATE export_mappluto
-SET geom = ST_Transform(geom,'4326','2263');
+SELECT UpdateGeometrySRID('export_mappluto','geom',2263);
 
 
-\copy (SELECT * FROM export_mappluto) TO '/prod/db-pluto/pluto_build/output/pluto.csv' DELIMITER ',' CSV HEADER;
+\copy (SELECT * FROM dcp_mappluto_18v11) TO '/prod/db-pluto/pluto_build/output/dcp_mappluto_18v11.csv' DELIMITER ',' CSV HEADER;
 
 DROP TABLE IF EXISTS export_mappluto;
