@@ -172,7 +172,7 @@ SELECT 'numbldgs' AS field, COUNT(*)
 FROM pluto a
 INNER JOIN dcp_mappluto b
 ON a.bbl||'.00'::text=b.bbl::text
-WHERE a.numbldgs::text <> b.numbldgs::text
+WHERE trim(leading '0' FROM a.numbldgs::text) <> trim(leading '0' FROM b.numbldgs::text)
 UNION
 SELECT 'numfloors' AS field, COUNT(*)
 FROM pluto a
@@ -244,13 +244,13 @@ SELECT 'assessland' AS field, COUNT(*)
 FROM pluto a
 INNER JOIN dcp_mappluto b
 ON a.bbl||'.00'::text=b.bbl::text
-WHERE a.assessland::text <> round(b.assessland)::text
+WHERE round(a.assessland::numeric,2)::text <> round(b.assessland::numeric,2)::text
 UNION
 SELECT 'assesstot' AS field, COUNT(*)
 FROM pluto a
 INNER JOIN dcp_mappluto b
 ON a.bbl||'.00'::text=b.bbl::text
-WHERE a.assesstot::text <> round(b.assesstot)::text
+WHERE round(a.assesstot::numeric,2)::text <> round(b.assesstot::numeric,2)::text
 UNION
 SELECT 'exemptland' AS field, COUNT(*)
 FROM pluto a
@@ -268,7 +268,7 @@ SELECT 'yearbuilt' AS field, COUNT(*)
 FROM pluto a
 INNER JOIN dcp_mappluto b
 ON a.bbl||'.00'::text=b.bbl::text
-WHERE a.yearbuilt::text <> b.yearbuilt::text
+WHERE a.yearbuilt::numeric <> b.yearbuilt::numeric
 UNION
 SELECT 'yearalter1' AS field, COUNT(*)
 FROM pluto a
@@ -304,19 +304,19 @@ SELECT 'residfar' AS field, COUNT(*)
 FROM pluto a
 INNER JOIN dcp_mappluto b
 ON a.bbl||'.00'::text=b.bbl::text
-WHERE round(a.residfar::numeric) <> round(b.residfar::numeric)
+WHERE round(a.residfar::numeric,2) <> round(b.residfar::numeric,2)
 UNION
 SELECT 'commfar' AS field, COUNT(*)
 FROM pluto a
 INNER JOIN dcp_mappluto b
 ON a.bbl||'.00'::text=b.bbl::text
-WHERE round(a.commfar::numeric) <> round(b.commfar::numeric)
+WHERE round(a.commfar::numeric,2) <> round(b.commfar::numeric,2)
 UNION
 SELECT 'facilfar' AS field, COUNT(*)
 FROM pluto a
 INNER JOIN dcp_mappluto b
 ON a.bbl||'.00'::text=b.bbl::text
-WHERE round(a.facilfar::numeric) <> round(b.facilfar::numeric)
+WHERE round(a.facilfar::numeric,2) <> round(b.facilfar::numeric,2)
 UNION
 SELECT 'borocode' AS field, COUNT(*)
 FROM pluto a
