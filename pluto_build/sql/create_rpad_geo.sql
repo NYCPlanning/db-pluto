@@ -13,33 +13,34 @@ SELECT a.*,
 FROM pluto_rpad a
 );
 
-ALTER TABLE pluto_rpad_geo
-ADD COLUMN bbl text,
-ADD COLUMN billingbbl text,
-ADD COLUMN giHighHouseNumber1 text,
-ADD COLUMN giStreetName1 text,
-ADD COLUMN boePreferredStreetName text,
-ADD COLUMN buildingIdentificationNumber text,
-ADD COLUMN numberOfExistingStructuresOnLot text,
-ADD COLUMN cd text,
-ADD COLUMN ct2010 text,
-ADD COLUMN cb2010 text,
-ADD COLUMN schooldist text,
-ADD COLUMN council text,
-ADD COLUMN zipcode text,
-ADD COLUMN firecomp text,
-ADD COLUMN policeprct text,
-ADD COLUMN healthcenterdistrict text,
-ADD COLUMN healtharea text,	
-ADD COLUMN sanitboro text,
-ADD COLUMN sanitdistrict text,
-ADD COLUMN sanitsub text,
-ADD COLUMN billingblock text,
-ADD COLUMN billinglot text,
-ADD COLUMN primebbl text,
-ADD COLUMN ap_datef text,
-ADD COLUMN geom geometry;
+-- ALTER TABLE pluto_rpad_geo
+-- ADD COLUMN bbl text,
+-- ADD COLUMN billingbbl text,
+-- ADD COLUMN giHighHouseNumber1 text,
+-- ADD COLUMN giStreetName1 text,
+-- ADD COLUMN boePreferredStreetName text,
+-- ADD COLUMN buildingIdentificationNumber text,
+-- ADD COLUMN numberOfExistingStructuresOnLot text,
+-- ADD COLUMN cd text,
+-- ADD COLUMN ct2010 text,
+-- ADD COLUMN cb2010 text,
+-- ADD COLUMN schooldist text,
+-- ADD COLUMN council text,
+-- ADD COLUMN zipcode text,
+-- ADD COLUMN firecomp text,
+-- ADD COLUMN policeprct text,
+-- ADD COLUMN healthcenterdistrict text,
+-- ADD COLUMN healtharea text,	
+-- ADD COLUMN sanitboro text,
+-- ADD COLUMN sanitdistrict text,
+-- ADD COLUMN sanitsub text,
+-- ADD COLUMN billingblock text,
+-- ADD COLUMN billinglot text,
+-- ADD COLUMN primebbl text,
+-- ADD COLUMN ap_datef text,
+-- ADD COLUMN geom geometry;
 
+-- removing blanks
 UPDATE pluto_rpad_geo
 SET housenum_lo = NULL
 WHERE housenum_lo = ' ';
@@ -47,6 +48,25 @@ WHERE housenum_lo = ' ';
 UPDATE pluto_rpad_geo
 SET street_name = NULL
 WHERE street_name = ' ';
+
+-- append the fraction of feet as a decimal place to feet for the 4 fields
+UPDATE pluto_rpad_geo
+SET lfft = lfft||'.'||lfin,
+	bfft = bfft||'.'||bfin,
+	bdft = bdft||'.'||bdin;
+
+UPDATE pluto_rpad_geo
+SET lfft = round(lfft::numeric, 2)::text,
+	bfft = round(bfft::numeric, 2)::text,
+	bdft = round(bdft::numeric, 2)::text;
+-- do seperately for ldft because of Acre
+UPDATE pluto_rpad_geo
+SET ldft = ldft||'.'||ldin
+WHERE ldft <> 'ACRE';
+
+UPDATE pluto_rpad_geo
+SET ldft = round(ldft::numeric, 2)::text
+WHERE ldft <> 'ACRE';
 
 -- using seprate pluto_input_geocodes from mainframe processing as input
 DROP TABLE IF EXISTS pluto_rpad_geo;

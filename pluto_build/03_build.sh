@@ -45,7 +45,7 @@ python $REPOLOC/pluto_build/python/app_date.py
 
 echo 'Creating table that aggregates condo data and is used to build PLUTO...'
 psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/create_allocated.sql
-psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/yearbuilt.sql
+psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/yearbuiltalt.sql
 
 # create the table
 echo 'Creating base PLUTO table'

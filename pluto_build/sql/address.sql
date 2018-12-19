@@ -1,4 +1,4 @@
--- when the address is still null poptulate the address
+-- when the address is still null populate the address
 UPDATE pluto a
 SET address = trim(leading '0' FROM b.prime)||' '||b.street_name
 FROM pluto_rpad_geo b

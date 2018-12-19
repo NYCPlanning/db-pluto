@@ -6,7 +6,7 @@ WITH coords AS
 )
 
 UPDATE pluto a
-SET xcoord = ST_X(b.geom),
-	ycoord = ST_Y(b.geom)
+SET ycoord = ST_Y(ST_Transform(b.geom, 2263)),
+	xcoord = ST_X(ST_Transform(b.geom, 2263))
 FROM coords b
 WHERE a.bbl = b.bbl;
