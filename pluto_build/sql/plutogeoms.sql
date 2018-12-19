@@ -7,3 +7,5 @@ UPDATE pluto a
 SET geom = b.geom
 FROM pluto_dtm b
 WHERE a.bbl = b.bbl;
+
+DROP TABLE pluto_dtm;

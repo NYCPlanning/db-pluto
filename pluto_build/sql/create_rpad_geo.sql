@@ -77,7 +77,6 @@ LEFT JOIN pluto_input_geocodes b
 ON a.boro||a.tb||a.tl=b.borough||lpad(b.block,5,'0')||lpad(b.lot,4,'0')
 );
 
-
 ALTER TABLE pluto_rpad_geo 
 RENAME communitydistrict TO cd;
 ALTER TABLE pluto_rpad_geo 
