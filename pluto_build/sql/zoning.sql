@@ -11,7 +11,7 @@ SET
 	spdist2 = specialdistrict2,
 	spdist3 = specialdistrict3,
 	ltdheight = limitedheightdistrict,
-	zonemap = zoningmapnumber,
+	zonemap = lower(zoningmapnumber),
 	zmcode = zoningmapcode
 FROM dcp_zoning_taxlot b
 WHERE a.bbl = b.bbl;
