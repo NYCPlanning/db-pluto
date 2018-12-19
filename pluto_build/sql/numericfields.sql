@@ -1,11 +1,13 @@
 -- only allow numeric values in the lot depth field
 UPDATE pluto a
 SET lotdepth = NULL 
-WHERE a.lotdepth ~ '[^0-9]';
+WHERE a.lotdepth ~ '[^0-9]'
+AND lotdepth NOT LIKE '%.%';
 -- only allow numeric values in the numfloors field
 UPDATE pluto a
 SET numfloors = NULL 
-WHERE a.numfloors ~ '[^0-9]';
+WHERE a.numfloors ~ '[^0-9]'
+AND numfloors NOT LIKE '%.%';
 
 -- remove decimal places in ct2010 where it is only zero after decimal
 UPDATE pluto a
