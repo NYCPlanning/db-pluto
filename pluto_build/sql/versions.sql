@@ -6,5 +6,4 @@ SET version = 'b18v2',
 	zoningdate = '09/21/18',
 	landmkdate = '09/24/2018',
 	basempdate = '09/24/2018',
-	edesigdate = '09/24/2018',
-	tract2010 = ct2010;
+	edesigdate = '09/24/2018';

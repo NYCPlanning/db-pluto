@@ -7,7 +7,6 @@ WITH floodplain AS (
 	FROM fema_firms2007_100yr b
 	WHERE (b.fld_zone <> 'X' AND b.fld_zone <> 'AE')
 )
-
 UPDATE pluto a
 SET firm07_flag = '1'
 FROM floodplain b
