@@ -15,7 +15,7 @@ AND b.bldgnum = '1';
 -- assign an area source to records that aready have bldgarea from RPAD
 UPDATE pluto a
 SET areasource = '2'
-WHERE bldgarea <> '0' AND bldgarea IS NOT NULL;
+WHERE bldgarea::numeric <> 0 AND bldgarea IS NOT NULL;
 
 -- populate bldgarea from CAMA data
 UPDATE pluto a
