@@ -1,10 +1,9 @@
 -- export the datasets
 
 -- create temp table with correct data schema
-DROP TABLE IF EXISTS export_mappluto;
-CREATE TABLE export_mappluto AS (
+DROP TABLE IF EXISTS export_pluto;
+CREATE TABLE export_pluto AS (
 SELECT
-	gid::integer, 
 	borough,
 	block::numeric,
 	lot::integer,
@@ -16,7 +15,7 @@ SELECT
 	zipcode::numeric,
 	firecomp,
 	policeprct::integer,
-	healthcent,
+	healthcenterdistrict,
 	healtharea::integer,
 	sanitboro,
 	sanitdistr,
@@ -92,14 +91,13 @@ SELECT
 	FIRM07_FLA,
 	PFIRM15_FL,
 	Version,
-	MAPPLUTO_F::integer,
-	geom
-FROM dcp_mappluto_18v11);
+	MAPPLUTO_F::integer
+FROM pluto);
 
 -- Set the projection to state plane
-SELECT UpdateGeometrySRID('export_mappluto','geom',2263);
+SELECT UpdateGeometrySRID('export_pluto','geom',2263);
 
 
-\copy (SELECT * FROM dcp_mappluto_18v11) TO '/prod/db-pluto/pluto_build/output/dcp_mappluto_18v11.csv' DELIMITER ',' CSV HEADER;
+\copy (SELECT * FROM export_pluto WHERE bbl LIKE '2%') TO '/prod/db-pluto/pluto_build/output/pluto.csv' DELIMITER ',' CSV HEADER;
 
 DROP TABLE IF EXISTS export_mappluto;

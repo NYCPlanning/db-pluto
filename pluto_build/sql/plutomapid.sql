@@ -11,12 +11,6 @@
 -- 5 In DOF Modified DTM but NOT in PLUTO, therefore the tax lot
 -- is totally under water.
 
--- create index on pluto and shoreline file
-DROP INDEX pluto_gix;
-DROP INDEX dof_shoreline_union_gix;
-CREATE INDEX pluto_gix ON pluto USING GIST (geom);
-CREATE INDEX dof_shoreline_union_gix ON dof_shoreline_union USING GIST (geom);
-
 -- set the mappluto ID based on the critera above
 -- values can overwrite each other
 UPDATE pluto
@@ -47,5 +41,3 @@ FROM dof_shoreline_union b
 WHERE a.appbbl IS NULL
 AND a.geom IS NOT NULL
 AND ST_Within(a.geom, b.geom);
-
-SELECT COUNT(a.*) FROM pluto a, dof_shoreline_union b WHERE ST_Within(a.geom, b.geom) 
