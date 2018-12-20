@@ -1,4 +1,20 @@
-#!/bin/bash
+-- Reporting records that did not geocode
+DROP TABLE IF EXISTS pluto_temp_qc_notgeocoded;
+CREATE TABLE pluto_temp_qc_notgeocoded AS (
+	SELECT  bbl,
+			billingbbl,
+			housenum_lo,
+			street_name,
+			stcode11,
+			COUNT(*)
+	FROM pluto_rpad_geo
+	WHERE cd IS NULL
+	GROUP BY bbl, billingbbl, housenum_lo, street_name, stcode11
+	ORDER BY bbl
+);
+
+\copy (SELECT * FROM pluto_temp_qc_notgeocoded) TO '/prod/db-pluto/pluto_build/output/qc_notgeocoded.csv' DELIMITER ',' CSV HEADER;
+DROP TABLE IF EXISTS pluto_temp_qc_notgeocoded;#!/bin/bash
 
 # make sure we are at the top of the git directory
 REPOLOC="$(git rev-parse --show-toplevel)"
@@ -73,6 +89,8 @@ psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/lpc.sql
 psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/zoning.sql
 psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/far.sql
 psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/edesignation.sql
+psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/ownertype.sql
+
 
 echo 'Transform RPAD data attributes'
 psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/irrlotcode.sql
@@ -89,12 +107,12 @@ psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/plutogeoms.sql
 psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/coords.sql
 psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/shorelineclip.sql
 
+psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/spatialindex.sql
+
+
 psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/flood_flag.sql
 
 psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/plutomapid.sql
-
-
-
 
 ##psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/colp.sql
 ##psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/ipis.sql

@@ -28,6 +28,7 @@ node loader.js install pluto_input_landuse_bldgclass
 
 echo 'Loading datasets from FTP...'
 node loader.js install pluto_rpad
+node loader.js install pluto_input_geocodes
 node loader.js install pluto_input_cama_dof
 node loader.js install dof_dtm
 node loader.js install dof_shoreline

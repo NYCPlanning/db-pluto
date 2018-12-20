@@ -27,6 +27,6 @@ ogr2ogr -f "GeoJSON" pluto_build/output/mappluto_clipped.geojson PG:"host=localh
 
 pgsql2shp -u dbadmin -f pluto_build/output/dcp_mappluto_18v11 capdb "SELECT * FROM dcp_mappluto_18v11 WHERE ST_GeometryType(geom)='ST_MultiPolygon'"
 
-scp adoyle@45.55.59.45:/prod/db-pluto/pluto_build/output/dcp_mappluto_18v11.csv dcp_mappluto_18v11.csv
+scp adoyle@45.55.59.45:/prod/db-pluto/pluto_build/output/pluto.csv pluto.csv
 
-\copy (SELECT * FROM pluto) TO '/prod/db-pluto/pluto_build/output/pluto.csv' DELIMITER ',' CSV HEADER;
+\copy (SELECT * FROM pluto WHERE bbl LIKE '2%') TO '/prod/db-pluto/pluto_build/output/pluto.csv' DELIMITER ',' CSV HEADER;
