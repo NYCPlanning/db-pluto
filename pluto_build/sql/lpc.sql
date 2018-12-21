@@ -34,7 +34,8 @@ WITH histdistricts AS (
     	OVER (PARTITION BY bbl
       	ORDER BY hist_dist) AS row_number
   		FROM lpc_historic_districts
-  		WHERE hist_dist <> '0') x
+  		WHERE hist_dist <> '0'
+  		AND hist_dist <> 'Individual Landmarks') x
 	WHERE x.row_number = 1)
 
 UPDATE pluto a
