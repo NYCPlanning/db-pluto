@@ -14,6 +14,8 @@ SET cd = b.cd,
 	healtharea = b.healtharea,
 	sanitdistrict = b.sanitdistrict,
 	sanitsub = b.sanitsub,
+	taxmap = b.taxmap,
+	sanborn = b.sanboro||b.sanpage||b.sanvol,
 	address = trim(leading '0' FROM b.prime)||' '||b.boepreferredstreetname
 FROM pluto_rpad_geo b
 WHERE a.bbl = b.primebbl;
