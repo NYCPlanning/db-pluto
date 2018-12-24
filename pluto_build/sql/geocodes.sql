@@ -16,7 +16,7 @@ SET cd = b.cd,
 	sanitsub = b.sanitsub,
 	taxmap = b.taxmap,
 	sanborn = b.sanboro||b.sanpage||b.sanvol,
-	address = trim(leading '0' FROM b.prime)||' '||b.boepreferredstreetname
+	address = trim(leading '0' FROM b.housenum_lo)||' '||b.boepreferredstreetname
 FROM pluto_rpad_geo b
 WHERE a.bbl = b.primebbl;
 
