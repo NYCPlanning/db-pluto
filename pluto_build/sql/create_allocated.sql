@@ -55,7 +55,7 @@ SET bldgclass = bldgcl,
 	yearalter2 = yralt1,
 	ownername = owner,
 	irrlotcode = irreg,
-	address = trim(leading '0' FROM prime)||' '||boePreferredStreetName,
+	address = trim(leading '0' FROM housenum_lo)||' '||boePreferredStreetName,
 -- set the number of buildings on a lot
 -- if GeoClient returned a value then we use the value GeoClient returned
 	numbldgs = (CASE 
@@ -86,7 +86,7 @@ SET bldgclass = bldgcl,
 	yearalter2 = yralt1,
 	ownername = owner,
 	irrlotcode = irreg,
-	address = trim(leading '0' FROM prime)||' '||boePreferredStreetName,
+	address = trim(leading '0' FROM housenum_lo)||' '||boePreferredStreetName,
 -- set the number of buildings on a lot
 -- if GeoClient returned a value then we use the value GeoClient returned
 	numbldgs = (CASE 

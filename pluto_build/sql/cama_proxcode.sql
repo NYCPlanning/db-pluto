@@ -12,6 +12,7 @@ WITH dcpcamavals AS(
 		END) proxcode
 	FROM pluto_input_cama_dof
 	WHERE proxcode <> '0'
+	AND proxcode <> 'N'
 	AND bldgnum = '1'
 )
 

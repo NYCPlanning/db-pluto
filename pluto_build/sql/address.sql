@@ -1,8 +1,9 @@
 -- when the address is still null populate the address
 UPDATE pluto a
-SET address = trim(leading '0' FROM b.prime)||' '||b.street_name
+SET address = trim(leading '0' FROM b.housenum_hi)||' '||b.street_name
 FROM pluto_rpad_geo b
-WHERE a.bbl = b.primebbl AND a.address IS NULL;
+WHERE a.bbl = b.primebbl AND a.address IS NULL 
+AND b.housenum_hi IS NOT NULL AND b.street_name IS NOT NULL;
 
 -- remove extra spaces from the address
 UPDATE pluto a
