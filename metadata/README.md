@@ -41,7 +41,7 @@ Starting in 2019, PLUTO data will be updated four times a year. Check the City P
 www.nyc.gov/planning for update status. The date of the eight source data files and the base
 map used to create PLUTO18v2 are:
 
-### PLUTO 18v1.1 - DATES OF DATA
+### PLUTO 18v2 - DATES OF DATA
 
 |**SOURCE**|**DATE OF DATA**|
 |---|---|
@@ -71,76 +71,11 @@ If you have any questions concerning the data, please click on http://www.nyc.go
 to submit your questions.
 
 ### APPENDIX
-### CHANGES IN PLUTO BETWEEN PLUTO 18v1 AND PLUTO18v1.1
+### CHANGES IN PLUTO BETWEEN PLUTO 18v1.1 AND PLUTO18v2
 
-#### CHANGE IN METHODOLOGY FOR ZONING FIELDS
+#### CHANGE IN METHODOLOGY
 
-To update zoning fields in previous versions of PLUTO, City Planning maintained a dataset with
-the zoning characteristics of each lot. This was updated for every rezoning, as well as for lot
-changes resulting from merger, apportionment, or condo conversion. This was a labor-intensive
-process and sometimes resulted in lots with zoning that did not agree with the underlying zoning
-districts.
-The new methodology programmatically determines the zoning designations using the NYC GIS
-Zoning Features available on BYTES of the BIG APPLE™. A zoning district is assigned to a tax
-lot if it covers at least 10% of the lot’s area. A commercial overlay is assigned to a tax lot if it
-covers at least 10% of the lot’s area OR at least 50% of the commercial overlay district is
-contained within the lot. See the data dictionary for additional information.
-Previously, a variety of sources were used to identify parkland. Starting with PLUTO18v1.1,
-NYC GIS Zoning Features are the data source used for identifying parkland and tax lots that
-intersect with areas designated in NYC GIS Zoning Features as PARK, BALL FIELD,
-PLAYGROUND, and PUBLIC SPACES have been assigned a single value of PARK. No other
-parkland datasets are incorporated. The NYC GIS Zoning Features do not constitute a definitive
-list of parks in the city. Lots designated as PARK should not be used to calculate the amount of
-open space in an area.
-The abbreviations used to designate special districts have been changed to agree with those in
-NYC GIS Zoning Features. Special districts “CR1” and “CR2” are combined into “CR”. In the
-area of Manhattan covered by both the Special 125th Street District and the Special Transit
-District, previous versions of PLUTO set Special District 1 equal to “125” and Special District 2
-equal to “TA”. The special district for these areas is now designated as “125th/TA”. In the area
-of Brooklyn covered by both the Special Enhanced Commercial District 5 or 6 and Mixed Use
-District MX-16), previous versions set Special District 1 equal to “EC-5” or “EC-6” and Special
-District 2 equal to “MX-16”. These areas are now designated as “MX-16/EC-5” or “MX-16/EC-6”.
-See the table below for a list of changes to special district abbreviations.
-
-#### FIELDS UPDATED FOR ZONING ONLY UPDATE
-
-|**Field Name**|**Field Description**|
-|---|---|
-|ZoneDist1|Zoning District 1|
-|ZoneDist2|Zoning District 2|
-|ZoneDist3|Zoning District 3|
-|ZoneDist4|Zoning District 4|
-|Overlay1|Commercial Overlay 1|
-|Overlay2|Commercial Overlay 2|
-|SPDist1|Special Purpose District 1|
-|SPDist2|Special Purpose District 2|
-|SPDist3|Special Purpose District 3|
-|LtdHeight|Limited Height District|
-|SplitZone|Split Boundary Indicator|
-|ResidFAR|Maximum Allowable Residential FAR|
-|CommFAR|Maximum Allowable Commercial FAR|
-|FacilFAR|Maximum Allowable Community Facility FAR|
-|ZoneMap|Zoning Map #|
-|ZMCode|Zoning Map Code|
-
-***
-
-#### CHANGES TO SPECIAL DISTRICT ABBREVIATIONS
-
-|**18v1**|**18v1.1**|**Description**|
-|---|---|---|
-|125|125th|Special 125th Street District|
-| |125th/TA|Special 125th Street Dist/Transit Land use Dist|
-|CR-1|CR|Special Coastal Risk District|
-|CR-2|CR|Special Coastal Risk District|
-| |EHC|East Harlem Corridors|
-| |EHC/TA|East Harlem Corridors/Transit Land Use District|
-| |IN|Special Inwood District|
-|MID|MiD|Special Midtown District|
-| |MX-16/EC-5|Mixed Use District/Enhanced Commercial District 5|
-| |MX-16/EC-6|Mixed Use District/Enhanced Commercial District 6|
-|WCH|WCh|Special West Chelsea District|
-
+The methodology used to create PLUTO has changed with version 18v2. As with previous versions, data is pulled from RPAD and geocoded on the mainframe. All other processing is now done in SQL. The code can be viewed at https://github.com/NYCPlanning/db-pluto. There may be small changes in how a field is calculated, particularly those derived from the Department of Finance's Mass Appraisal System.
 ***
 
 #### NEW ZONING DISTRICT
