@@ -40,7 +40,7 @@ echo 'Making DCP edits to RPAD...'
 psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/zerovacantlots.sql
 psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/lotarea.sql
 psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/primebbl.sql
-python $REPOLOC/pluto_build/python/app_date.py
+psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/apdate.sql
 
 
 echo 'Creating table that aggregates condo data and is used to build PLUTO...'
@@ -56,6 +56,7 @@ psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/bbl.sql
 echo 'Adding on RPAD data attributes'
 psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/allocated.sql
 psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/geocodes.sql
+psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/appbbl.sql
 psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/numericfields.sql
 
 # add on CAMA data attributes
@@ -88,6 +89,7 @@ psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/sanitboro.sql
 psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/dedupecondotable.sql
 psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/dtmmergepolygons.sql
 psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/plutogeoms.sql
+psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/geomclean.sql
 psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/coords.sql
 psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/shorelineclip.sql
 

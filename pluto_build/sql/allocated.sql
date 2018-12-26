@@ -27,3 +27,8 @@ SET bldgclass = b.bldgclass,
 	appdate = b.appdate
 FROM pluto_allocated b
 WHERE a.bbl = b.bbl;
+
+--where ext is just spaces set to NULL
+UPDATE pluto a
+SET ext = NULL
+WHERE a.ext !~ '[A-Z]';

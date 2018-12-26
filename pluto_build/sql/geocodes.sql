@@ -6,16 +6,16 @@ SET cd = b.cd,
 	tract2010 = b.ct2010,
 	cb2010 = b.cb2010,
 	schooldist = b.schooldist,
-	council = b.council,
+	council = ltrim(b.council, '0'),
 	zipcode = b.zipcode,
 	firecomp = b.firecomp,
-	policeprct = b.policeprct,
+	policeprct = ltrim(b.policeprct, '0'),
 	healthcenterdistrict = b.healthcenterdistrict,
-	healtharea = b.healtharea,
+	healtharea = ltrim(b.healtharea, '0'),
 	sanitdistrict = b.sanitdistrict,
 	sanitsub = b.sanitsub,
 	taxmap = b.taxmap,
-	sanborn = b.sanboro||b.sanpage||b.sanvol,
+	sanborn = rpad(b.sanboro||b.sanpage,4)||b.sanvol,
 	address = trim(leading '0' FROM b.housenum_lo)||' '||b.street_name
 FROM pluto_rpad_geo b
 WHERE a.bbl = b.primebbl;
@@ -26,3 +26,8 @@ SET bldgclass = b.bldgcl
 FROM pluto_rpad_geo b
 WHERE a.bbl = b.primebbl
 	AND bldgclass IS NULL;
+
+--where sanborn is just spaces set to NULL
+UPDATE pluto a
+SET sanborn = NULL
+WHERE a.sanborn !~ '[0-9]';

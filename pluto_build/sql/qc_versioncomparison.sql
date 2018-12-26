@@ -329,6 +329,18 @@ FROM pluto a
 INNER JOIN dcp_mappluto b
 ON a.bbl||'.00'::text=b.bbl::text
 WHERE a.condono::text <> b.condono::text
+UNION
+SELECT 'firm07_flag' AS field, COUNT(*)
+FROM pluto a
+INNER JOIN dcp_mappluto b
+ON a.bbl||'.00'::text=b.bbl::text
+WHERE a.firm07_flag::text <> b.firm07_flag::text
+UNION
+SELECT 'appbbl' AS field, COUNT(*)
+FROM pluto a
+INNER JOIN dcp_mappluto b
+ON a.bbl||'.00'::text=b.bbl::text
+WHERE a.appbbl::text <> b.appbbl::text
 )
 
 SELECT * FROM countchange ORDER BY count DESC
