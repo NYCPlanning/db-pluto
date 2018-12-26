@@ -5,7 +5,7 @@
 WITH floodplain AS (
 	SELECT *
 	FROM fema_firms2007_100yr b
-	WHERE (b.fld_zone <> 'X' AND b.fld_zone <> 'AE')
+	WHERE (b.fld_zone <> 'X' AND b.fld_zone <> '0.2 PCT ANNUAL CHANCE FLOOD HAZARD')
 )
 UPDATE pluto a
 SET firm07_flag = '1'
@@ -16,7 +16,7 @@ WHERE ST_Intersects(a.geom,b.geom);
 WITH floodplain AS (
 	SELECT *
 	FROM fema_pfirms2015_100yr b
-	WHERE (b.fld_zone <> 'X' AND b.fld_zone <> 'AE')
+	WHERE (b.fld_zone <> 'X' AND b.fld_zone <> '0.2 PCT ANNUAL CHANCE FLOOD HAZARD')
 )
 UPDATE pluto a
 SET pfirm15_flag = '1'
