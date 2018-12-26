@@ -8,7 +8,7 @@ CREATE TABLE pluto_temp_qc_notgeocoded AS (
 			stcode11,
 			COUNT(*)
 	FROM pluto_rpad_geo
-	WHERE cd IS NULL
+	WHERE cd IS NULL AND bbl IS NOT NULL
 	GROUP BY bbl, billingbbl, housenum_lo, street_name, stcode11
 	ORDER BY bbl
 );
