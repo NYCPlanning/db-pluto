@@ -1,20 +1,14 @@
 # PLUTO METADATA README
-## November 2018 (18v1.1)
+## December 2018 (18v2)
 
 ### Announcements
 
-Version 18v1.1 is not a full PLUTO update. Fields related to zoning have been updated to
-incorporate all rezonings through 10/26/18. The methodology used to assign zoning to a tax lot
-has also changed. Please see the Appendix for a list of all fields that have been updated, as
-well as for details on the methodology used.
-In addition, version 18v1.1 corrects the Land Use for Building Class C7 from 2 (Multi-Family
-Walk-Up Buildings) to 4 (Mixed Residential & Commercial Buildings).
+The methodology used to create PLUTO has changed with version 18v2. As with previous versions, data is pulled from RPAD and geocoded on the mainframe. All other processing is done in SQL. The code can be viewed at https://github.com/NYCPlanning/db-pluto.
 
 ### WHAT IS PLUTO?&trade;
 
 The Primary Land Use Tax Lot Output (PLUTO™) data file contains extensive land use and
-geographic data at the tax lot level in ASCII comma-delimited borough files. Each file contains
-the tax lots within the borough.
+geographic data at the tax lot level in a comma-delimited file.
 The PLUTO tax lot data files contain over seventy data fields derived from data files maintained
 by the Department of City Planning (DCP), Department of Finance (DOF), Department of
 Citywide Administrative Services (DCAS), and Landmarks Preservation Commission (LPC).
@@ -29,11 +23,11 @@ per tax lot except for condominiums. PLUTO data contain one record per condomini
 complex instead of records for each condominium unit tax lot. A tax lot is usually a parcel of
 real property. The parcel can be under water, vacant, or contain one or more buildings or
 structures. The Department of Finance assigns a tax lot number to each condominium unit and
-a "billing" tax lot number to the Condominium Complex. A Condominium Complex is defined as
+a billing tax lot number to the Condominium Complex. A Condominium Complex is defined as
 one or more structures or properties under the auspices of the same condominium association.
 DCP summarizes DOF's condominium unit tax lot data so that each Condominium Complex
 within a tax block is represented by only one record. The Condominium Complex record is
-assigned the "billing" tax lot number when one exists. When the "billing" tax lot number has not
+assigned the billing tax lot number when one exists. When the billing tax lot number has not
 yet been assigned by DOF, the lowest tax lot number within the tax block of the Condominium
 Complex is assigned.
 The second idiosyncrasy is related to borough and community district geography. Two portions
@@ -43,9 +37,9 @@ Bronx, while Rikers Island is legally part of The Bronx but is serviced by Queen
 Marble Hill tax lots are located in the Manhattan borough file and Rikers Island tax lots are in
 The Bronx borough file. 
 
-The PLUTO data is usually updated twice a year. Check the City Planning web site,
+Starting in 2019, PLUTO data will be updated four times a year. Check the City Planning web site,
 www.nyc.gov/planning for update status. The date of the eight source data files and the base
-map used to create PLUTO18v1.1 are:
+map used to create PLUTO18v2 are:
 
 ### PLUTO 18v1.1 - DATES OF DATA
 
