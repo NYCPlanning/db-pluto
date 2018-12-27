@@ -16,7 +16,9 @@ SET cd = b.cd,
 	sanitsub = b.sanitsub,
 	taxmap = b.taxmap,
 	sanborn = rpad(b.sanboro||b.sanpage,4)||b.sanvol,
-	address = trim(leading '0' FROM b.housenum_lo)||' '||b.street_name
+	address = trim(leading '0' FROM b.housenum_lo)||' '||b.street_name,
+	ycoord = b.ycoord,
+	xcoord = b.xcoord
 FROM pluto_rpad_geo b
 WHERE a.bbl = b.primebbl;
 
@@ -26,8 +28,3 @@ SET bldgclass = b.bldgcl
 FROM pluto_rpad_geo b
 WHERE a.bbl = b.primebbl
 	AND bldgclass IS NULL;
-
---where sanborn is just spaces set to NULL
-UPDATE pluto a
-SET sanborn = NULL
-WHERE a.sanborn !~ '[0-9]';

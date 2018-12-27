@@ -31,3 +31,16 @@ WHERE tract2010 LIKE '%.%';
 UPDATE pluto a
 SET tract2010 = NULL 
 WHERE a.tract2010 ~ '[^0-9]';
+
+--where sanborn is just spaces set to NULL
+UPDATE pluto a
+SET sanborn = NULL
+WHERE a.sanborn !~ '[0-9]';
+
+--where x/y cood is just spaces set to NULL
+UPDATE pluto a
+SET xcoord = NULL
+WHERE a.xcoord !~ '[0-9]';
+UPDATE pluto a
+SET ycoord = NULL
+WHERE a.ycoord !~ '[0-9]';
