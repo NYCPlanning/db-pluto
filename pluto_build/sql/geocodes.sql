@@ -15,10 +15,10 @@ SET cd = b.cd,
 	sanitdistrict = b.sanitdistrict,
 	sanitsub = b.sanitsub,
 	taxmap = b.taxmap,
-	sanborn = rpad(b.sanboro||b.sanpage,4)||b.sanvol,
+	sanborn = rpad(b.sanboro||b.sanpage,4,' ')||b.sanvol,
 	address = trim(leading '0' FROM b.housenum_lo)||' '||b.street_name,
-	ycoord = b.ycoord,
-	xcoord = b.xcoord
+	ycoord = ltrim(b.ycoord, '0'),
+	xcoord = ltrim(b.xcoord, '0')
 FROM pluto_rpad_geo b
 WHERE a.bbl = b.primebbl;
 
