@@ -16,6 +16,24 @@ SET
 FROM dcp_zoning_taxlot b
 WHERE a.bbl = b.bbl;
 
+UPDATE pluto a
+SET 
+	zonedist1 = zoningdistrict1,
+	zonedist2 = zoningdistrict2,
+	zonedist3 = zoningdistrict3,
+	zonedist4 = zoningdistrict4,
+	overlay1 = commercialoverlay1,
+	overlay2 = commercialoverlay2,
+	spdist1 = specialdistrict1,
+	spdist2 = specialdistrict2,
+	spdist3 = specialdistrict3,
+	ltdheight = limitedheightdistrict,
+	zonemap = lower(zoningmapnumber),
+	zmcode = zoningmapcode
+FROM dcp_zoning_taxlot b
+WHERE a.appbbl = b.bbl
+AND zonedist1 IS NULL;
+
 -- calculate if tax lot is split by two or more zoning boundary lines and update splitzone
 UPDATE pluto 
 SET splitzone = 'Y'

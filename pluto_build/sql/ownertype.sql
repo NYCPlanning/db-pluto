@@ -28,6 +28,5 @@ AND a.bbl= b.bbl;
 -- set X as owner type
 UPDATE pluto a
 SET ownertype = 'X'
-FROM dcas_facilities_colp b
-WHERE a.ownertype IS NULL
-AND a.bbl= b.bbl;
+WHERE a.exempttot = a.assesstot
+AND a.ownertype IS NULL;
