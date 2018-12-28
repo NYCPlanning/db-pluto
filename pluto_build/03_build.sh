@@ -56,6 +56,9 @@ psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/bbl.sql
 echo 'Adding on RPAD data attributes'
 psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/allocated.sql
 psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/geocodes.sql
+
+psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/spatialjoins.sql
+
 psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/numericfields.sql
 
 # add on CAMA data attributes
@@ -96,6 +99,7 @@ psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/spatialindex.sql
 # add on spatial tags
 psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/flood_flag.sql
 psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/plutomapid.sql
+
 
 ##psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/colp.sql
 ##psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/ipis.sql
