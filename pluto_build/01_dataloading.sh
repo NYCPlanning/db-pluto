@@ -26,6 +26,19 @@ node loader.js install dcas_facilities_colp
 node loader.js install lpc_historic_districts
 node loader.js install lpc_landmarks
 
+node loader.js install dcp_cdboundaries
+node loader.js install dcp_censustracts
+node loader.js install dcp_censusblocks
+node loader.js install dcp_school_districts
+node loader.js install dcp_councildistricts
+node loader.js install doitt_zipcodes
+node loader.js install dcp_firecompanies
+node loader.js install dcp_policeprecincts
+node loader.js install dcp_healthareas
+node loader.js install dcp_healthcenters
+node loader.js install dsny_sections
+
+
 ## Other_datasets - PULLING FROM FTP or PLUTO GitHub repo
 echo 'Loading datasets from PLUTO GitHub repo...'
 node loader.js install dcp_zoning_maxfar
@@ -41,5 +54,4 @@ node loader.js install dof_shoreline
 node loader.js install dof_condo
 node loader.js install fema_pfirms2015_100yr
 node loader.js install fema_firms2007_100yr
-
 ## node loader.js install dof_condo_units
