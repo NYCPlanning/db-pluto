@@ -22,8 +22,8 @@ WHERE a.bbl = dcpcamavals.bbl;
 -- update lots with lot type value of 5
 UPDATE pluto a
 SET lottype = b.lottype
-FROM pluto_input_cama_dof b
-WHERE a.bbl = b.boro||b.block||b.lot
+FROM pluto_input_cama b
+WHERE a.bbl = b.primebbl
 AND b.lottype = '5'
 AND a.lottype IS NULL;
 

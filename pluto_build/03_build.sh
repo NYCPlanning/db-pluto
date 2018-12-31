@@ -72,10 +72,11 @@ psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/cama_easements.sql
 
 # populate other fields from misc sources
 echo 'Adding on data attributes from other sources'
-psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/landuse.sql
-psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/lpc.sql
 psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/zoning.sql
 psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/far.sql
+psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/bldgclass.sql
+psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/landuse.sql
+psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/lpc.sql
 psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/edesignation.sql
 psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/ownertype.sql
 
