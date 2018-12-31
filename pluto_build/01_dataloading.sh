@@ -25,7 +25,7 @@ node loader.js install dcas_facilities_colp
 # node loader.js install dcas_ipis
 node loader.js install lpc_historic_districts
 node loader.js install lpc_landmarks
-
+# for spatial joins
 node loader.js install dcp_cdboundaries
 node loader.js install dcp_censustracts
 node loader.js install dcp_censusblocks
@@ -36,8 +36,7 @@ node loader.js install dcp_firecompanies
 node loader.js install dcp_policeprecincts
 node loader.js install dcp_healthareas
 node loader.js install dcp_healthcenters
-node loader.js install dsny_sections
-
+node loader.js install dsny_frequencies
 
 ## Other_datasets - PULLING FROM FTP or PLUTO GitHub repo
 echo 'Loading datasets from PLUTO GitHub repo...'

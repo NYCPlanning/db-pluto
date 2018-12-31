@@ -1,5 +1,8 @@
 -- if a lot did not get assigned service areas through Geosupport assign service areas spatially
 
+DROP INDEX dcp_censusblocks_gix;
+CREATE INDEX dcp_censusblocks_gix ON dcp_censusblocks USING GIST (geom);
+
 UPDATE pluto a
 SET cd = b.borocd
 FROM dcp_cdboundaries b
@@ -71,10 +74,9 @@ WHERE ST_Within(ST_Transform(ST_SetSRID(ST_MakePoint(a.xcoord::double precision,
 AND a.healtharea IS NULL
 AND a.xcoord IS NOT NULL;
 
--- working on
 UPDATE pluto a
-SET sanitdistrict = LEFT(sectioncode,3)
-sanitsub = 
+SET sanitdistrict = LEFT(schedulecode,3)
+sanitsub = RIGHT(schedulecode,2)
 FROM dsny_sections b
 WHERE ST_Within(ST_Transform(ST_SetSRID(ST_MakePoint(a.xcoord::double precision,a.ycoord::double precision),2263), 4326),b.geom)
 AND a.sanitsub IS NULL

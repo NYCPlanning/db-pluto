@@ -50,9 +50,20 @@ WHERE bldgarea::numeric <> 0 AND bldgarea IS NOT NULL;
 UPDATE pluto a
 SET bldgarea = b.grossarea,
 areasource = '7'
-FROM pluto_input_cama_dof b
-WHERE a.bbl=b.boro||b.block||b.lot
-AND (bldgarea::numeric = 0 OR bldgarea IS NULL);
+FROM pluto_input_cama b
+WHERE a.bbl=b.primebbl
+AND (bldgarea::numeric = 0 OR bldgarea IS NULL)
+AND b.bldgnum = '1'
+AND a.lot NOT LIKE '75%';
+
+UPDATE pluto a
+SET bldgarea = SUM(b.grossarea::double precision),
+areasource = '7'
+FROM pluto_input_cama b
+WHERE a.bbl=b.primebbl
+AND (bldgarea::numeric = 0 OR bldgarea IS NULL)
+AND b.bldgnum = '1'
+AND a.lot LIKE '75%';
 
 -- calcualte bldgarea by multiplying bldgfront x bldgdepth X num stories
 -- set area source to 5

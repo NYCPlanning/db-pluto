@@ -63,6 +63,7 @@ psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/numericfields.sql
 
 # add on CAMA data attributes
 echo 'Adding on CAMA data attributes'
+psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/create_cama_primebbl.sql
 psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/cama_bsmttype.sql
 psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/cama_lottype.sql
 psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/cama_proxcode.sql
