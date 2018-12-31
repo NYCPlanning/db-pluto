@@ -1,9 +1,9 @@
 -- set the number of easements associated with a lot
 -- get a list of distinct easements for each lot
 WITH distincteasements AS (
-	SELECT DISTINCT b.boro||b.block||b.lot as bbl,
+	SELECT DISTINCT primebbl as bbl,
 	easement
-	FROM pluto_input_cama_dof b
+	FROM pluto_input_cama b
 	WHERE easement IS NOT NULL AND easement <> ' '
 ),
 -- count the number of distinct easements for a lot
