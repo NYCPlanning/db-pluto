@@ -44,18 +44,21 @@ FROM histdistricts
 WHERE a.borocode||lpad(a.block, 5, '0')||lpad(a.lot, 4, '0') = histdistricts.bbl;
 
 -- if the lot contains a landmark add in the name of the landmark from lpc_landmarks
--- the first alphabetical landmark is appended
 WITH landmarks AS (
-	SELECT bbl, lm_type
+	SELECT bbl, lm_type, row_number
 	FROM (
-		SELECT bbl,lm_type, ROW_NUMBER()
+		SELECT DISTINCT bbl,lm_type, ROW_NUMBER()
     	OVER (PARTITION BY bbl
       	ORDER BY lm_type) AS row_number
   		FROM lpc_landmarks
   		WHERE lm_type = 'Interior Landmark' OR lm_type = 'Individual Landmark') x
-	WHERE x.row_number = 1)
+	WHERE x.row_number >= 2)
 
 UPDATE pluto a
-SET landmark = upper(b.lm_type)
+SET landmark = CASE 
+                WHEN row_number = 1 THEN upper(b.lm_type)
+                WHEN row_number = 2 THEN upper('Individual and Interior Landmark')
+                ELSE upper(b.lm_type)
+                END
 FROM landmarks b
 WHERE a.borocode||lpad(a.block, 5, '0')||lpad(a.lot, 4, '0') = b.bbl;

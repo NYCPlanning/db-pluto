@@ -4,6 +4,13 @@ DROP INDEX dcp_censusblocks_gix;
 CREATE INDEX dcp_censusblocks_gix ON dcp_censusblocks USING GIST (geom);
 
 UPDATE pluto a
+SET xcoord = NULL
+WHERE a.xcoord !~ '[0-9]';
+UPDATE pluto a
+SET ycoord = NULL
+WHERE a.ycoord !~ '[0-9]';
+
+UPDATE pluto a
 SET cd = b.borocd
 FROM dcp_cdboundaries b
 WHERE ST_Within(ST_Transform(ST_SetSRID(ST_MakePoint(a.xcoord::double precision,a.ycoord::double precision),2263), 4326),b.geom)
@@ -15,7 +22,7 @@ SET ct2010 = b.ct2010,
 tract2010 = b.ct2010
 FROM dcp_censustracts b
 WHERE ST_Within(ST_Transform(ST_SetSRID(ST_MakePoint(a.xcoord::double precision,a.ycoord::double precision),2263), 4326),b.geom)
-AND a.ct2010 IS NULL
+AND (a.ct2010 IS NULL OR a.ct2010 = ' ')
 AND a.xcoord IS NOT NULL;
 
 UPDATE pluto a
@@ -37,13 +44,6 @@ SET council = ltrim(b.coundist::text, '0')
 FROM dcp_councildistricts b
 WHERE ST_Within(ST_Transform(ST_SetSRID(ST_MakePoint(a.xcoord::double precision,a.ycoord::double precision),2263), 4326),b.geom)
 AND a.council IS NULL
-AND a.xcoord IS NOT NULL;
-
-UPDATE pluto a
-SET zipcode = b.zipcode
-FROM doitt_zipcodes b
-WHERE ST_Within(ST_Transform(ST_SetSRID(ST_MakePoint(a.xcoord::double precision,a.ycoord::double precision),2263), 4326),b.geom)
-AND a.zipcode IS NULL
 AND a.xcoord IS NOT NULL;
 
 UPDATE pluto a
@@ -75,10 +75,9 @@ AND a.healtharea IS NULL
 AND a.xcoord IS NOT NULL;
 
 UPDATE pluto a
-SET sanitdistrict = LEFT(schedulecode,3)
+SET sanitdistrict = LEFT(schedulecode,3),
 sanitsub = RIGHT(schedulecode,2)
-FROM dsny_sections b
-WHERE ST_Within(ST_Transform(ST_SetSRID(ST_MakePoint(a.xcoord::double precision,a.ycoord::double precision),2263), 4326),b.geom)
-AND a.sanitsub IS NULL
+FROM dsny_frequencies b
+WHERE ST_Within(ST_Transform(ST_SetSRID(ST_MakePoint(a.xcoord::double precision,a.ycoord::double precision),2263), 4326),b.wkb_geometry)
+AND (a.sanitsub IS NULL OR a.sanitsub = ' ')
 AND a.xcoord IS NOT NULL;
-

@@ -15,17 +15,18 @@ AND a.lot NOT LIKE '75%';
 
 -- populate the fields that where values are aggregated
 WITH primesums AS (
-	SELECT primebbl,
+	SELECT billingbbl as primebbl,
 	SUM(commercialarea::double precision) as commercialarea,
 	SUM(residarea::double precision) as residarea,
 	SUM(officearea::double precision) as officearea,
 	SUM(retailarea::double precision) as retailarea,
 	SUM(garagearea::double precision) as garagearea,
-	SUM(strgearea::double precision) as strgearea,
-	SUM(factryarea::double precision) as factryarea,
+	SUM(storagearea::double precision) as storagearea,
+	SUM(factoryarea::double precision) as factoryarea,
 	SUM(otherarea::double precision) as otherarea
-	FROM pluto_rpad_geo
-	GROUP BY primebbl)
+	FROM pluto_input_cama
+	WHERE bldgnum = '1' AND billingbbl::numeric > 0
+	GROUP BY billingbbl)
 
 UPDATE pluto a
 SET comarea = b.commercialarea,
@@ -38,7 +39,6 @@ SET comarea = b.commercialarea,
 	otherarea = b.otherarea
 FROM primesums b
 WHERE a.bbl=b.primebbl
-AND b.bldgnum = '1'
 AND a.lot LIKE '75%';
 
 -- assign an area source to records that aready have bldgarea from RPAD
@@ -56,13 +56,19 @@ AND (bldgarea::numeric = 0 OR bldgarea IS NULL)
 AND b.bldgnum = '1'
 AND a.lot NOT LIKE '75%';
 
+WITH primesums AS (
+	SELECT billingbbl as primebbl,
+	SUM(grossarea::double precision) as grossarea
+	FROM pluto_input_cama
+	WHERE bldgnum = '1' AND billingbbl::numeric > 0
+	GROUP BY billingbbl)
+
 UPDATE pluto a
-SET bldgarea = SUM(b.grossarea::double precision),
+SET bldgarea = b.grossarea,
 areasource = '7'
-FROM pluto_input_cama b
+FROM primesums b
 WHERE a.bbl=b.primebbl
 AND (bldgarea::numeric = 0 OR bldgarea IS NULL)
-AND b.bldgnum = '1'
 AND a.lot LIKE '75%';
 
 -- calcualte bldgarea by multiplying bldgfront x bldgdepth X num stories
