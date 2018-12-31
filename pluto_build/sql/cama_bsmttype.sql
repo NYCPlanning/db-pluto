@@ -5,10 +5,10 @@
 WITH dcpcamavals AS(
 	SELECT DISTINCT x.bbl, x.bsmnt_type, x.bsmntgradient, b.bsmtcode
 	FROM (
-		SELECT boro||block||lot AS bbl, bsmnt_type, bsmntgradient, ROW_NUMBER()
+		SELECT primebbl AS bbl, bsmnt_type, bsmntgradient, ROW_NUMBER()
     	OVER (PARTITION BY boro||block||lot
       	ORDER BY bsmnt_type ASC) AS row_number
-  		FROM pluto_input_cama_dof
+  		FROM pluto_input_cama
   		WHERE bsmnt_type <> '0'
 		AND bldgnum = '1') x
 	LEFT JOIN pluto_input_bsmtcode b

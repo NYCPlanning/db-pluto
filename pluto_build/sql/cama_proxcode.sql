@@ -3,14 +3,14 @@
 -- select proxcode for lot from record where bldgnum is 1
 -- all bbl reocrds have at least one record with a bldgnum = '1'
 WITH dcpcamavals AS(
-	SELECT DISTINCT boro||block||lot AS bbl,
+	SELECT DISTINCT primebbl AS bbl,
 		(CASE
 			WHEN proxcode = '5' THEN '2'
 			WHEN proxcode = '4' THEN '3'
 			WHEN proxcode = '6' THEN '3'
 			ELSE proxcode
 		END) proxcode
-	FROM pluto_input_cama_dof
+	FROM pluto_input_cama
 	WHERE proxcode <> '0'
 	AND proxcode <> 'N'
 	AND bldgnum = '1'

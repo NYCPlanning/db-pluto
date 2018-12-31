@@ -8,9 +8,38 @@ SET comarea = b.commercialarea,
 	strgearea = b.storagearea,
 	factryarea = b.factoryarea,
 	otherarea = b.otherarea
-FROM pluto_input_cama_dof b
-WHERE a.bbl=b.boro||b.block||b.lot
-AND b.bldgnum = '1';
+FROM pluto_input_cama b
+WHERE a.bbl=b.primebbl
+AND b.bldgnum = '1'
+AND a.lot NOT LIKE '75%';
+
+-- populate the fields that where values are aggregated
+WITH primesums AS (
+	SELECT primebbl,
+	SUM(commercialarea::double precision) as commercialarea,
+	SUM(residarea::double precision) as residarea,
+	SUM(officearea::double precision) as officearea,
+	SUM(retailarea::double precision) as retailarea,
+	SUM(garagearea::double precision) as garagearea,
+	SUM(strgearea::double precision) as strgearea,
+	SUM(factryarea::double precision) as factryarea,
+	SUM(otherarea::double precision) as otherarea
+	FROM pluto_rpad_geo
+	GROUP BY primebbl)
+
+UPDATE pluto a
+SET comarea = b.commercialarea,
+	resarea = b.residarea,
+	officearea = b.officearea,
+	retailarea = b.retailarea,
+	garagearea = b.garagearea,
+	strgearea = b.storagearea,
+	factryarea = b.factoryarea,
+	otherarea = b.otherarea
+FROM primesums b
+WHERE a.bbl=b.primebbl
+AND b.bldgnum = '1'
+AND a.lot LIKE '75%';
 
 -- assign an area source to records that aready have bldgarea from RPAD
 UPDATE pluto a
@@ -25,13 +54,14 @@ FROM pluto_input_cama_dof b
 WHERE a.bbl=b.boro||b.block||b.lot
 AND (bldgarea::numeric = 0 OR bldgarea IS NULL);
 
--- calcualte bldgarea by multiplying bldgfront x bldgdepth
+-- calcualte bldgarea by multiplying bldgfront x bldgdepth X num stories
 -- set area source to 5
 UPDATE pluto a
-SET bldgarea = a.bldgfront::numeric*a.bldgdepth::numeric,
+SET bldgarea = a.bldgfront::numeric*a.bldgdepth::numeric*numfloors::numeric,
 areasource = '5'
 WHERE (a.bldgarea::numeric = 0 OR a.bldgarea IS NULL)
 AND a.bldgfront::numeric <> 0
+AND a.numfloors::numeric <> 0
 AND a.areasource IS NULL;
 
 -- set area source to 4 for vacant lots
