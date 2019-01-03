@@ -43,22 +43,26 @@ SET histdist = histdistricts.hist_dist
 FROM histdistricts
 WHERE a.borocode||lpad(a.block, 5, '0')||lpad(a.lot, 4, '0') = histdistricts.bbl;
 
--- if the lot contains a landmark add in the name of the landmark from lpc_landmarks
+-- if the lot contains a landmark add mark it as an Interior, Individual, or Individual and Interior Landmark
 WITH landmarks AS (
-	SELECT bbl, lm_type, row_number
-	FROM (
-		SELECT DISTINCT bbl,lm_type, ROW_NUMBER()
-    	OVER (PARTITION BY bbl
-      	ORDER BY lm_type) AS row_number
-  		FROM lpc_landmarks
-  		WHERE lm_type = 'Interior Landmark' OR lm_type = 'Individual Landmark') x
-	WHERE x.row_number >= 2)
+  SELECT DISTINCT bbl,lm_type, ROW_NUMBER()
+      OVER (PARTITION BY bbl
+        ORDER BY lm_type) AS row_number 
+      FROM (
+            SELECT DISTINCT bbl,lm_type 
+            FROM lpc_landmarks 
+            WHERE (lm_type = 'Interior Landmark' OR lm_type = 'Individual Landmark')) x ),
+maxnum AS (
+  SELECT bbl, max(row_number) as maxrow_number FROM landmarks GROUP BY bbl)
 
 UPDATE pluto a
-SET landmark = CASE 
-                WHEN row_number = 1 THEN upper(b.lm_type)
-                WHEN row_number = 2 THEN upper('Individual and Interior Landmark')
+SET landmark = (CASE
+                WHEN c.maxrow_number = 1 THEN upper(b.lm_type)
+                WHEN c.maxrow_number = 2 THEN upper('Individual and Interior Landmark')
                 ELSE upper(b.lm_type)
-                END
-FROM landmarks b
-WHERE a.borocode||lpad(a.block, 5, '0')||lpad(a.lot, 4, '0') = b.bbl;
+                END)
+FROM landmarks b, maxnum c
+WHERE a.borocode||lpad(a.block, 5, '0')||lpad(a.lot, 4, '0') = b.bbl
+AND c.bbl = b.bbl;
+
+
