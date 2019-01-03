@@ -10,7 +10,7 @@ R7,	Commercial Unit of 1-3 Units Bldg- Orig Class 1,Com,,
 R8,	Commercial Unit of 2-10 Unit Bldg,Com,,
 R9,	Co-op within a Condominium,Res,,
 RA,"Cultural, Medical, Educational, etc.",,,
-RB,	Office Space,Comm,,
+RB,	Office Space,Com,,
 RC,Commercial Building (Mixed Commercial Condo Building Classification Codes),Mix,Y,Two or more Com code types
 RD,Residential Building (Mixed Residential Condo Building Classification Codes),Mix,Y,Two or more Res code types
 RG,	Indoor Parking,,,
