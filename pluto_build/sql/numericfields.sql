@@ -9,11 +9,21 @@ SET numfloors = NULL
 WHERE a.numfloors ~ '[^0-9]'
 AND numfloors NOT LIKE '%.%';
 
+-- add decimals
+UPDATE pluto 
+SET ct2010 = replace(ct2010, RIGHT(ct2010,2), '.'||RIGHT(ct2010,2))
+WHERE ct2010 NOT LIKE '%.%';
+UPDATE pluto 
+SET tract2010 = replace(ct2010, RIGHT(ct2010,2), '.'||RIGHT(ct2010,2))
+WHERE tract2010 NOT LIKE '%.%';
 -- remove decimal places in ct2010 where it is only zero after decimal
 UPDATE pluto a
 SET ct2010 = trunc(a.ct2010::numeric) 
 WHERE a.ct2010 ~ '[0-9]'
 AND ct2010 LIKE '%.00';
+UPDATE pluto a
+SET ct2010 = a.ct2010::numeric
+WHERE a.ct2010 ~ '[0-9]';
 -- only allow numeric values in the ct2010 field
 UPDATE pluto a
 SET ct2010 = NULL 
@@ -31,6 +41,10 @@ WHERE tract2010 LIKE '%.%';
 UPDATE pluto a
 SET tract2010 = NULL 
 WHERE a.tract2010 ~ '[^0-9]';
+
+-- pad school district to 2 characters
+UPDATE pluto a
+SET schooldist = lpad(schooldist,2,'0');
 
 --where sanborn is just spaces set to NULL
 UPDATE pluto a
