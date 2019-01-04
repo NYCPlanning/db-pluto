@@ -11,10 +11,18 @@ AND numfloors NOT LIKE '%.%';
 
 -- add decimals
 UPDATE pluto 
+SET ct2010 = replace(ct2010, '.', '')
+WHERE ct2010 LIKE '.%';
+
+UPDATE pluto 
+SET tract2010 = replace(tract2010, '.', '')
+WHERE tract2010 LIKE '.%';
+
+UPDATE pluto 
 SET ct2010 = replace(ct2010, RIGHT(ct2010,2), '.'||RIGHT(ct2010,2))
 WHERE ct2010 NOT LIKE '%.%';
 UPDATE pluto 
-SET tract2010 = replace(ct2010, RIGHT(ct2010,2), '.'||RIGHT(ct2010,2))
+SET tract2010 = replace(tract2010, RIGHT(tract2010,2), '.'||RIGHT(tract2010,2))
 WHERE tract2010 NOT LIKE '%.%';
 -- remove decimal places in ct2010 where it is only zero after decimal
 UPDATE pluto a

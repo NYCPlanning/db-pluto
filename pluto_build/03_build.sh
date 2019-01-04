@@ -72,10 +72,6 @@ psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/cama_easements.sql
 
 # populate other fields from misc sources
 echo 'Adding on data attributes from other sources'
-psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/zoning.sql
-psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/far.sql
-psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/bldgclass.sql
-psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/landuse.sql
 psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/lpc.sql
 psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/edesignation.sql
 psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/ownertype.sql
@@ -97,6 +93,23 @@ psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/geomclean.sql
 psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/shorelineclip.sql
 
 psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/spatialindex.sql
+echo 'Computing spatial data'
+psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/zoning_zoningdistrict.sql
+psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/zoning_commercialoverlay.sql
+psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/zoning_specialdistrict.sql
+psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/zoning_limitedheight.sql
+psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/zoning_zonemap.sql
+psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/zoning_correctdups.sql
+psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/zoning_correctgaps.sql
+
+psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/far.sql
+
+
+# update the building class based on zoning
+psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/bldgclass.sql
+
+psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/landuse.sql
+
 
 # add on spatial tags
 psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/flood_flag.sql
