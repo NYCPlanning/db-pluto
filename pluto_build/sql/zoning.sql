@@ -35,6 +35,7 @@ WHERE a.appbbl = b.bbl
 AND zonedist1 IS NULL;
 
 -- calculate if tax lot is split by two or more zoning boundary lines and update splitzone
+-- move code into seperate script
 UPDATE pluto 
 SET splitzone = 'Y'
 WHERE zonedist1 IS NOT NULL

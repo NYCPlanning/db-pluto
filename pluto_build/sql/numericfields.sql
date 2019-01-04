@@ -9,21 +9,6 @@ SET numfloors = NULL
 WHERE a.numfloors ~ '[^0-9]'
 AND numfloors NOT LIKE '%.%';
 
--- add decimals
-UPDATE pluto 
-SET ct2010 = replace(ct2010, '.', '')
-WHERE ct2010 LIKE '.%';
-
-UPDATE pluto 
-SET tract2010 = replace(tract2010, '.', '')
-WHERE tract2010 LIKE '.%';
-
-UPDATE pluto 
-SET ct2010 = replace(ct2010, RIGHT(ct2010,2), '.'||RIGHT(ct2010,2))
-WHERE ct2010 NOT LIKE '%.%';
-UPDATE pluto 
-SET tract2010 = replace(tract2010, RIGHT(tract2010,2), '.'||RIGHT(tract2010,2))
-WHERE tract2010 NOT LIKE '%.%';
 -- remove decimal places in ct2010 where it is only zero after decimal
 UPDATE pluto a
 SET ct2010 = trunc(a.ct2010::numeric) 
@@ -39,7 +24,7 @@ WHERE a.ct2010 !~ '[0-9]';
 
 -- remove end zeros for numbers with only zeros past decimal and pad to 4 characters
 UPDATE pluto a
-SET tract2010 = lpad(trunc(a.ct2010::numeric)::text,4,'0')
+SET tract2010 = lpad(trunc(a.tract2010::numeric)::text,4,'0')
 WHERE tract2010 LIKE '%.00';
 -- remove decimal place and pad to 6 characters
 UPDATE pluto a

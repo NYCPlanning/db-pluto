@@ -11,7 +11,15 @@ SET comarea = b.commercialarea,
 FROM pluto_input_cama b
 WHERE a.bbl=b.primebbl
 AND b.bldgnum = '1'
-AND a.lot NOT LIKE '75%';
+AND a.lot NOT LIKE '75%'
+AND (b.commercialarea::numeric > 0
+	OR b.residarea::numeric > 0
+	OR b.officearea::numeric > 0
+	OR b.retailarea::numeric > 0
+	OR b.garagearea::numeric > 0
+	OR b.storagearea::numeric > 0
+	OR b.factoryarea::numeric > 0
+	OR b.otherarea::numeric > 0);
 
 -- populate the fields that where values are aggregated
 WITH primesums AS (
