@@ -22,6 +22,7 @@ echo 'Loading open source datasets...'
 node loader.js install dcp_edesignation
 node loader.js install dcp_zoning_taxlot
 node loader.js install dcas_facilities_colp
+node loader.js install dcp_zoningmapindex
 # node loader.js install dcas_ipis
 node loader.js install lpc_historic_districts
 node loader.js install lpc_landmarks
@@ -43,6 +44,8 @@ echo 'Loading datasets from PLUTO GitHub repo...'
 node loader.js install dcp_zoning_maxfar
 node loader.js install pluto_input_bsmtcode
 node loader.js install pluto_input_landuse_bldgclass
+node loader.js install pluto_input_condo_bldgclass
+
 
 echo 'Loading datasets from FTP...'
 node loader.js install pluto_rpad
@@ -51,6 +54,7 @@ node loader.js install pluto_input_cama_dof
 node loader.js install dof_dtm
 node loader.js install dof_shoreline
 node loader.js install dof_condo
+node loader.js install dcp_zoningfeatures
 node loader.js install fema_pfirms2015_100yr
 node loader.js install fema_firms2007_100yr
 ## node loader.js install dof_condo_units
