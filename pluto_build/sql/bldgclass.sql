@@ -78,7 +78,7 @@ UPDATE pluto a
 SET bldgclass = 'RZ'
 FROM bblsbldgclass b
 WHERE a.bbl = b.billingbbl
-AND type = 'Res, Ware';
+AND type = 'Ind, Res';
 DROP TABLE IF EXISTS bblsbldgclasslookup;
 DROP TABLE IF EXISTS bblsbldgclass;
 
