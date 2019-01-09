@@ -38,3 +38,12 @@ SELECT b.bbl,
 ;
 
 DROP TABLE pluto_dtm;
+
+-- add values in fields that cannot be NULL
+UPDATE pluto
+SET block = '0'
+WHERE block = ''; 
+
+UPDATE pluto
+SET lot = '0'
+WHERE lot = ''; 
