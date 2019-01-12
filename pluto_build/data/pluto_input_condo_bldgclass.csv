@@ -10,7 +10,7 @@ RA,"Cultural, Medical, Educational, etc.",Com,,
 RB,	Office Space,Com,,
 RH,Hotel/Boatel,Com,,
 RK,Retail Space,Com,,
-R9,	Co-op within a Condominium,,,
+R9,	Co-op within a Condominium,R9,,
 RW,Warehouse/Factory/Industrial,Ind,,
 RC,Commercial Building (Mixed Commercial Condo Building Classification Codes),Mix,Y,Two or more Com code types —> Com
 RD,Residential Building (Mixed Residential Condo Building Classification Codes),Mix,Y,Two or more Res code types —> Res
