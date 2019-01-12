@@ -69,10 +69,21 @@
 -- WHERE ldft <> 'ACRE';
 
 -- using seprate pluto_input_geocodes from mainframe processing as input
+
+-- getting distinct BBLs FROM raw data
 DROP TABLE IF EXISTS pluto_rpad_geo;
 CREATE TABLE pluto_rpad_geo AS (
+WITH pluto_rpad_rownum AS (
+	SELECT a.*, ROW_NUMBER()
+    	OVER (PARTITION BY boro||tl||tb
+      	ORDER BY curavt_act DESC, land_area DESC, ease DESC) AS row_number
+  		FROM pluto_rpad a),
+pluto_rpad_sub AS (
+	SELECT * 
+	FROM pluto_rpad_rownum 
+	WHERE row_number = 1)
 SELECT a.*, b.*
-FROM pluto_rpad a
+FROM pluto_rpad_sub a
 LEFT JOIN pluto_input_geocodes b
 ON a.boro||a.tb||a.tl=b.borough||lpad(b.block,5,'0')||lpad(b.lot,4,'0')
 );
