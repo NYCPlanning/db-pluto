@@ -81,7 +81,6 @@ echo 'Transform RPAD data attributes'
 psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/irrlotcode.sql
 
 echo 'Adding DCP data attributes'
-psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/versions.sql
 psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/address.sql
 psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/sanitboro.sql
 
@@ -104,21 +103,19 @@ psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/zoning_correctdups.sql
 psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/zoning_correctgaps.sql
 psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/zoning_splitzone.sql
 
-
 psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/far.sql
 
 
 # update the building class based on zoning
 psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/bldgclass.sql
-
 psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/landuse.sql
-
 
 # add on spatial tags
 psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/flood_flag.sql
-#insert new script here
+psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/dtmgeoms.sql
+psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/geomclean.sql
 psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/plutomapid.sql
-
+psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/versions.sql
 
 ##psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/colp.sql
 ##psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/ipis.sql

@@ -64,5 +64,3 @@ SET landmark = (CASE
 FROM landmarks b, maxnum c
 WHERE a.borocode||lpad(a.block, 5, '0')||lpad(a.lot, 4, '0') = b.bbl
 AND c.bbl = b.bbl;
-
-
