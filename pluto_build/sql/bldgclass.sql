@@ -68,12 +68,12 @@ UPDATE pluto a
 SET bldgclass = 'RM'
 FROM bblsbldgclass b
 WHERE a.bbl = b.billingbbl
-AND type = 'Com, Res';
+AND (type = 'Com, Res' OR (type LIKE '%R9%' AND type NOT LIKE '%Ind%'));
 UPDATE pluto a
 SET bldgclass = 'RX'
 FROM bblsbldgclass b
 WHERE a.bbl = b.billingbbl
-AND type = 'Com, Ind, Res';
+AND (type = 'Com, Ind, Res' OR type LIKE '%Ind, R9%');
 UPDATE pluto a
 SET bldgclass = 'RZ'
 FROM bblsbldgclass b
