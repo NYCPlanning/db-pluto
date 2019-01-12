@@ -35,7 +35,7 @@ maxnum AS (
 bldgclassmed as (
 	SELECT a.billingbbl, a.bldgcl, a.row_number, c.type
 	FROM bldgclass a, maxnum b, pluto_input_condo_bldgclass c
-	WHERE b.maxrow_number > 2
+	WHERE b.maxrow_number >= 2
 	AND a.billingbbl=b.billingbbl
 	AND a.bldgcl = c.code
 	ORDER BY billingbbl)
