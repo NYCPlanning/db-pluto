@@ -6,4 +6,4 @@ SET bfft = '0',
 	bdft = '0',
 	story = '0',
 	bldgs = '0'
-WHERE a.curavl = a.curavl AND upper(bldgcl) LIKE 'V%';
+WHERE a.curavl = a.curavt AND upper(bldgcl) LIKE 'V%';
