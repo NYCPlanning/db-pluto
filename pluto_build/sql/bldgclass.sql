@@ -6,7 +6,11 @@ WITH bldgclass AS (
       FROM (
             SELECT DISTINCT billingbbl,bldgcl 
             FROM pluto_rpad_geo 
-            WHERE bldgcl <> 'R0' AND billingbbl::numeric > 0) x ),
+            WHERE bldgcl <> 'R0' 
+            AND bldgcl <> 'RG' 
+            AND bldgcl <> 'RP' 
+            AND bldgcl <> 'RT'
+            AND billingbbl::numeric > 0) x ),
 maxnum AS (
   SELECT billingbbl, max(row_number) as maxrow_number FROM bldgclass GROUP BY billingbbl)
 
@@ -29,7 +33,11 @@ WITH bldgclass AS (
       FROM (
             SELECT DISTINCT billingbbl,bldgcl 
             FROM pluto_rpad_geo 
-            WHERE bldgcl <> 'R0' AND billingbbl::numeric > 0) x ),
+            WHERE bldgcl <> 'R0' 
+            AND bldgcl <> 'RG' 
+            AND bldgcl <> 'RP' 
+            AND bldgcl <> 'RT'
+            AND billingbbl::numeric > 0) x ),
 maxnum AS (
   SELECT billingbbl, max(row_number) as maxrow_number FROM bldgclass GROUP BY billingbbl),
 bldgclassmed as (
@@ -89,3 +97,29 @@ SET bldgclass = 'Q0'
 WHERE zonedist1 = 'PARK'
 AND (bldgclass IS NULL OR bldgclass LIKE 'V%');
 
+-- update Z7 values
+DROP TABLE IF EXISTS bblsbldgclasslookup;
+CREATE TABLE bblsbldgclasslookup AS (
+WITH z7s AS (
+  SELECT bbl FROM pluto
+  WHERE bldgclass = 'Z7'),
+bldgclass AS (
+    SELECT DISTINCT bbl ,bldgcl, ROW_NUMBER()
+    OVER (PARTITION BY bbl
+        ORDER BY bldgcl) AS row_number 
+      FROM (
+            SELECT DISTINCT a.boro||a.tb||a.tl AS bbl,a.bldgcl 
+            FROM pluto_rpad a
+            RIGHT JOIN z7s b
+            ON b.bbl = a.boro||a.tb||a.tl) x )
+SELECT bbl, bldgcl
+FROM bldgclass 
+WHERE row_number = 1);
+
+UPDATE pluto a
+SET bldgclass = b.bldgcl
+FROM bblsbldgclasslookup b
+WHERE a.bbl = b.bbl
+AND a.bldgclass = 'Z7';
+
+DROP TABLE IF EXISTS bblsbldgclasslookup;
