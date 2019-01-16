@@ -9,7 +9,7 @@ WHERE a.bldgclass = b.bldgclass;
 -- for vacant lots and number of buildings is 0 and building floor area is 0
 UPDATE pluto a
 SET areasource = '4'
-WHERE areasource IS NULL
+WHERE (areasource IS NULL OR areasource = '0')
 	AND landuse = '11'
 	AND numbldgs::numeric = 0
 	AND (bldgarea::numeric = 0 OR bldgarea IS NULL);

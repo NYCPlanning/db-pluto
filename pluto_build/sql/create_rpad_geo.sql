@@ -76,7 +76,7 @@ CREATE TABLE pluto_rpad_geo AS (
 WITH pluto_rpad_rownum AS (
 	SELECT a.*, ROW_NUMBER()
     	OVER (PARTITION BY boro||tl||tb
-      	ORDER BY curavt_act DESC, land_area DESC, ease ASC) AS row_number
+      	ORDER BY curavt_act::numeric DESC, land_area::numeric DESC, ease ASC) AS row_number
   		FROM pluto_rpad a),
 pluto_rpad_sub AS (
 	SELECT * 
