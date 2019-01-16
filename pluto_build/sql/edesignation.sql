@@ -6,7 +6,7 @@ WITH edesignation AS (
 	FROM (
 		SELECT bbl, enumber, ROW_NUMBER()
     	OVER (PARTITION BY bbl
-      	ORDER BY ceqr_num, ulurp_num) AS row_number
+      	ORDER BY ceqr_num, ulurp_num, enumber) AS row_number
   		FROM dcp_edesignation) x
 	WHERE x.row_number = 1)
 
