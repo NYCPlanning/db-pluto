@@ -8,31 +8,10 @@ cd $REPOLOC
 DBNAME=$(cat $REPOLOC/pluto.config.json | jq -r '.DBNAME')
 DBUSER=$(cat $REPOLOC/pluto.config.json | jq -r '.DBUSER')
 
-# Dependencies - the zoning tax lot database and max far table should be built and updated
-
 start=$(date +'%T')
 echo "Starting to build PLUTO"
-
 psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/create_rpad_geo.sql
-
-echo 'Geocoding RPAD...'
-# source activate py2
-# python $REPOLOC/pluto_build/python/rpad_geocode_address.py
-# python $REPOLOC/pluto_build/python/rpad_geocode_addressymo.py
-# psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/geocode_nones.sql
-# # getting address if address in RPAD did not geocode
-# python $REPOLOC/pluto_build/python/rpad_geocode_bbl.py
-# psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/geocode_billbbl.sql
-# python $REPOLOC/pluto_build/python/rpad_geocode_billbbl.py
-# psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/geocode_nones.sql
-# python $REPOLOC/pluto_build/python/rpad_geocode_bin.py
-# psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/geocode_nones.sql
-# # using GeoClient address to get spatial attributes
-# python $REPOLOC/pluto_build/python/rpad_geocode_addresspt2.py
-# source deactivate
-
 psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/geocode_nones.sql
-
 echo 'Reporting records that did not get geocoded...'
 psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/geocode_notgeocoded.sql
 
@@ -42,26 +21,22 @@ psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/lotarea.sql
 psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/primebbl.sql
 psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/apdate.sql
 
-
 echo 'Creating table that aggregates condo data and is used to build PLUTO...'
 psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/create_allocated.sql
 psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/yearbuiltalt.sql
 
-# create the table
 echo 'Creating base PLUTO table'
 psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/create.sql
 psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/bbl.sql
 
-# populate RPAD data
 echo 'Adding on RPAD data attributes'
 psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/allocated.sql
+echo 'Adding on spatial data attributes'
 psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/geocodes.sql
-
 psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/spatialjoins.sql
-
+# clean up numeric fields
 psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/numericfields.sql
 
-# add on CAMA data attributes
 echo 'Adding on CAMA data attributes'
 psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/create_cama_primebbl.sql
 psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/cama_bsmttype.sql
@@ -70,12 +45,10 @@ psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/cama_proxcode.sql
 psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/cama_bldgarea.sql
 psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/cama_easements.sql
 
-# populate other fields from misc sources
 echo 'Adding on data attributes from other sources'
 psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/lpc.sql
 psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/edesignation.sql
 psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/ownertype.sql
-
 
 echo 'Transform RPAD data attributes'
 psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/irrlotcode.sql
@@ -92,7 +65,7 @@ psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/geomclean.sql
 psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/shorelineclip.sql
 
 psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/spatialindex.sql
-echo 'Computing spatial data'
+echo 'Computing zoning fields'
 psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/zoning_zoningdistrict.sql
 psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/zoning_commercialoverlay.sql
 psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/zoning_specialdistrict.sql
@@ -102,20 +75,18 @@ psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/zoning_parks.sql
 psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/zoning_correctdups.sql
 psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/zoning_correctgaps.sql
 psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/zoning_splitzone.sql
-
+echo 'Filling in FAR values'
 psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/far.sql
 
-
-# update the building class based on zoning
+echo 'Populating building class for condos lots and land use field'
 psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/bldgclass.sql
 psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/landuse.sql
 
-# add on spatial tags
+echo 'Flagging tax lots within the FEMA floodplain'
 psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/flood_flag.sql
+echo 'Adding in geometries that are in the DTM but not in RPAD'
 psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/dtmgeoms.sql
 psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/geomclean.sql
+echo 'Populating PLUTO tags and version fields '
 psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/plutomapid.sql
 psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/versions.sql
-
-##psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/colp.sql
-##psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/ipis.sql
