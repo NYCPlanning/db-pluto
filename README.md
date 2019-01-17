@@ -1,6 +1,6 @@
 # PLUTO and MapPLUTO
 
-Please note that we're still working on this repo as we optimize the build processes, update the source for the raw data inputs, and implement better technologies.  We're excited that PLUTO users can now look under the hood and begin exploring how PLUTO is built and each of its individual fields are calcualted. If you have suggestions or find any problems, please open an issue, or if you have questions please reach out to us directly.
+Please note that we're still working on this repo as we optimize the build processes, update the sources for the raw data inputs, and implement better technologies.  We're excited that PLUTO users can now look under the hood and begin exploring how PLUTO is built and each of its individual fields are calculated. If you have suggestions or find any problems, please open an issue, or if you have questions please reach out to us directly.
 
 ## About PLUTO
 
@@ -68,18 +68,13 @@ Check for new building classes and zero or missing condo numbers.  New building 
 
 #### 03_build.sh
 
-
+Build PLUTO and MapPLUTO.
 
 #### 05_export.sh
+
+Export PLUTO and MapPLUTO.
 
 #### Validation
 
 Please see https://github.com/NYCPlanning/db-pluto-qaqc for validation scripts.
 
-
-
-Build PLUTO based on the input datasets.
-
-## Maintenance information
-
-#### Release schedule
