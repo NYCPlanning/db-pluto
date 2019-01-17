@@ -46,6 +46,8 @@ node loader.js install pluto_input_landuse_bldgclass
 node loader.js install pluto_input_condo_bldgclass
 
 echo 'Loading datasets from FTP...'
+# we'll be working to make these input datasets publicly avaialble 
+
 # raw RPAD data from DOF
 node loader.js install pluto_rpad
 # Geocoded RPAD data (includes billing BBL for condo lots and geospatial fields returned by GeoSupport)
