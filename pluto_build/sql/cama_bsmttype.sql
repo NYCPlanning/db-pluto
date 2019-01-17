@@ -7,7 +7,7 @@ WITH dcpcamavals AS(
 	FROM (
 		SELECT primebbl AS bbl, bsmnt_type, bsmntgradient, ROW_NUMBER()
     	OVER (PARTITION BY boro||block||lot
-      	ORDER BY bsmnt_type ASC) AS row_number
+      	ORDER BY bsmnt_type DESC, bsmntgradient DESC) AS row_number
   		FROM pluto_input_cama
   		WHERE bsmnt_type <> '0'
 		AND bldgnum = '1') x
