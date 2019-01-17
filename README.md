@@ -1,12 +1,14 @@
 # PLUTO and MapPLUTO
 
+Please note that we're still working on this repo as we optimize the build processes, update the source for the raw data inputs, and implement better technologies.  We're excited that PLUTO users can now look under the hood and begin exploring how PLUTO is built and each of its individual fields are calcualted. If you have suggestions or find any problems, please open an issue, or if you have questions please reach out to us directly.
+
+## About PLUTO
+
 The Primary Land Use Tax Lot Output (PLUTO) **reports tax lot and building characteristics, and geographic/political/administrative districts at the tax lot level** from data maintained by the Department of City Planning (DCP), Department of Finance (DOF), Department of Citywide Administrative Services (DCAS), and Landmarks Preservation Commission (LPC).
 
 DCP merges PLUTO data with the DCP modified version of DOF’s Digital Tax Map to create MapPLUTO for use with various geographic information systems.
 
-There are two **idiosyncrasies** regarding the tax lot data. 
-1. The PLUTO data contain one record per tax lot except for condominiums. PLUTO data contain one record per condominium complex instead of records for each condominium unit tax lot by summarizing DOF's condominium unit tax lot data so that each condominium complex within a tax block is represented by only one record.
-2. Two portions of the City, Marble Hill and Rikers Island, are legally located in one borough but are serviced by another borough. Specifically, Marble Hill is legally located in Manhattan but is serviced by The Bronx, while Rikers Island is legally part of The Bronx but is serviced by Queens.
+The PLUTO data contain one record per tax lot except for condominiums.  PLUTO data contain one record per condominium complex instead of records for each condominium unit tax lot.  A tax lot is usually a parcel of real property.  The parcel can be under water, vacant, or contain one or more buildings or structures.  The Department of Finance assigns a tax lot number to each condominium unit and a "billing" tax lot number to the Condominium Complex.  A Condominium Complex is defined as one or more structures or properties under the auspices of the same condominium association.  DCP summarizes DOF's condominium unit tax lot data so that each Condominium Complex within a tax block is represented by only one record.  The Condominium Complex record is assigned the "billing" tax lot number when one exists.  When the "billing" tax lot number has not yet been assigned by DOF, the lowest tax lot number within the tax block of the Condominium Complex is assigned.
 
 **Limitations**:
 DCP provides PLUTO for informational purposes only. DCP does not warranty and is not liable for the completeness, accuracy, content, or fitness for any particular purpose or use of PLUTO.
@@ -27,12 +29,11 @@ We want to make PLUTO most useful and accurate for its users, so open an [issue]
 
 3. psql 9.5.5
 
-4. Ability to attach PostGIS extension and the fuzzystrmatch extension to postgres databases
+4. Ability to attach PostGIS extension to postgres databases
    
 5. If psql role you intend to use is not your unix name, set up a .pgpass file like this:
     *:*:*:dbadmin:dbadmin_password
     ~/.pgpass should have permissions 0600 (chmod 0600 ~/.pgpass)
-
 
 ### Development workflow
 
@@ -63,9 +64,19 @@ Download and load all input datasets required to create PLUTO into database.
 
 #### 02_qaqc.sh
 
-Check that there are no errors in the source datasets and generate reports with diagnostics.
+Check for new building classes and zero or missing condo numbers.  New building classes need to be added to pluto_input_landuse_bldgclass.csv
 
 #### 03_build.sh
+
+
+
+#### 05_export.sh
+
+#### Validation
+
+Please see https://github.com/NYCPlanning/db-pluto-qaqc for validation scripts.
+
+
 
 Build PLUTO based on the input datasets.
 
