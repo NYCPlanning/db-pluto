@@ -3,7 +3,8 @@
 ################################################################################################
 ### OBTAINING DATA
 ################################################################################################
-### NOTE: This script requires you to setup the DATABASE_URL environment variable.
+### NOTE: This script requires you to setup the environment variable.
+### The config files in both this repo and the data loading scripts repo need to match (Enhancement: Set up scripts to point to one config file)
 ### Directions are in the README.md.
 
 ## Load all datasets from sources using the civic data loader
