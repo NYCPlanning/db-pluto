@@ -21,7 +21,6 @@ cd 'data-loading-scripts'
 ## Open_datasets - PULLING FROM OPEN DATA
 echo 'Loading open source datasets...'
 node loader.js install dcp_edesignation
-node loader.js install dcp_zoning_taxlot
 node loader.js install dcas_facilities_colp
 node loader.js install dcp_zoningmapindex
 node loader.js install lpc_historic_districts
