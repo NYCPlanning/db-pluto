@@ -33,7 +33,7 @@ We want to make PLUTO most useful and accurate for its users, so open an [issue]
    
 5. If psql role you intend to use is not your unix name, set up a .pgpass file like this:
     *:*:*:dbadmin:dbadmin_password
-    ~/.pgpass should have permissions 0600 (chmod 0600 ~/.pgpass)
+    ```~/.pgpass should have permissions 0600 (chmod 0600 ~/.pgpass)```
 
 ### Development workflow
 
@@ -42,12 +42,12 @@ We want to make PLUTO most useful and accurate for its users, so open an [issue]
 **pluto.config.json**
 
 Your config file should look something like this:
-{
+```{
 "DBNAME":"databasename",
 "DBUSER":"databaseuser",
 "GEOCLIENT_APP_ID":"id",
 "GEOCLIENT_APP_KEY":"key"
-}
+}```
 
 #### Prepare data-loading-scripts
 
@@ -72,7 +72,9 @@ Build PLUTO and MapPLUTO.
 
 #### 05_export.sh
 
-Export PLUTO and MapPLUTO.
+Export PLUTO and unclipped MapPLUTO.
+
+Please go to NYC Planning's [Bytes of the Big Apple](https://www1.nyc.gov/site/planning/data-maps/open-data.page) to download the offical versions of PLUTO and MapPLUTO
 
 #### Validation
 

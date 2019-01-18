@@ -9,7 +9,7 @@ FROM dof_shoreline;
 -- 	SELECT * FROM pluto
 -- 	WHERE geom IS NOT NULL);
 
--- -- clip mappluto to shoreline
+-- -- clip mappluto to shoreline -- really slow
 -- UPDATE mappluto_clipped a
 -- SET geom = ST_Difference(a.geom, b.geom)
 -- FROM dof_shoreline b
