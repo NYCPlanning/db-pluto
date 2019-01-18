@@ -42,12 +42,12 @@ We want to make PLUTO most useful and accurate for its users, so open an [issue]
 **pluto.config.json**
 
 Your config file should look something like this:
-```{
-"DBNAME":"databasename",
-"DBUSER":"databaseuser",
-"GEOCLIENT_APP_ID":"id",
-"GEOCLIENT_APP_KEY":"key"
-}```
+```{```
+```"DBNAME":"databasename",```
+```"DBUSER":"databaseuser",```
+```"GEOCLIENT_APP_ID":"id",```
+```"GEOCLIENT_APP_KEY":"key"```
+```}```
 
 #### Prepare data-loading-scripts
 
