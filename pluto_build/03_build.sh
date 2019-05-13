@@ -10,6 +10,7 @@ DBUSER=$(cat $REPOLOC/pluto.config.json | jq -r '.DBUSER')
 
 start=$(date +'%T')
 echo "Starting to build PLUTO"
+psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/pts_clean.sql
 psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/create_rpad_geo.sql
 psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/geocode_nones.sql
 echo 'Reporting records that did not get geocoded...'

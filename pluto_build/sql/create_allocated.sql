@@ -102,13 +102,18 @@ AND b.condo_number <> '0';
 
 -- populate the fields that where values are aggregated
 -- Building area
+WITH bldgareasums AS (
+SELECT SUM(b.gross_sqft::numeric) AS bldgareasum, 
+	primebbl
+	FROM pluto_rpad_geo b
+	WHERE b.tl NOT LIKE '75%'
+	AND b.condo_number IS NOT NULL
+	AND b.condo_number <> '0'
+	GROUP BY primebbl)
 UPDATE pluto_allocated a
-SET bldgarea = SUM(b.gross_sqft::numeric)
-FROM pluto_rpad_geo b
-WHERE a.bbl=b.primebbl
-AND b.tl NOT LIKE '75%'
-AND b.condo_number IS NOT NULL
-AND b.condo_number <> '0';
+SET bldgarea = bldgareasum
+FROM bldgareasums b
+WHERE a.bbl=b.primebbl;
 
 -- $ fields
 WITH primesums AS (
