@@ -16,6 +16,7 @@ WHERE (a.land_area IS NULL OR a.land_area = '0')
 -- if lot area = 0 or is NULL 
 -- and lot depth =  ACRE 
 -- then lot area = lot front x 43560 + .5
+-- there are no more values name ACRE --
 UPDATE pluto_rpad_geo b
 SET land_area = (a.lfft::double precision * 43560 + 0.5)
 FROM pluto_rpad_geo a
