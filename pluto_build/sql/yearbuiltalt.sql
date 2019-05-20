@@ -2,11 +2,10 @@
 -- yearbuilt
 UPDATE pluto_allocated
 SET yearbuilt = (CASE 
-	WHEN LEFT(yearbuilt,1) = '1' THEN '20'||RIGHT(yearbuilt,2)
-	ELSE '1'||yearbuilt
+	WHEN LEFT(yearbuilt,1) = '0' THEN '1'||RIGHT(yearbuilt,3)
+	ELSE yearbuilt
 	END)
-WHERE length(yearbuilt) = 3
-AND yearbuilt::integer > 0;
+WHERE yearbuilt::integer > 0;
 
 UPDATE pluto_allocated
 SET yearbuilt = '19'||yearbuilt
@@ -21,11 +20,10 @@ OR yearbuilt::integer = 0;
 -- yearalter1
 UPDATE pluto_allocated
 SET yearalter1 = (CASE 
-	WHEN LEFT(yearalter1,1) = '1' THEN '20'||RIGHT(yearalter1,2)
+	WHEN LEFT(yearalter1,1) = '0' THEN '1'||RIGHT(yearalter1,3)
 	ELSE '1'||yearalter1
 	END)
-WHERE length(yearalter1) = 3
-AND yearalter1::integer > 0;
+WHERE yearalter1::integer > 0;
 
 UPDATE pluto_allocated
 SET yearalter1 = '19'||yearalter1
@@ -40,11 +38,10 @@ OR yearalter1::integer = 0;
 -- yearalter2
 UPDATE pluto_allocated
 SET yearalter2 = (CASE 
-	WHEN LEFT(yearalter2,1) = '1' THEN '20'||RIGHT(yearalter2,2)
+	WHEN LEFT(yearalter2,1) = '0' THEN '1'||RIGHT(yearalter2,3)
 	ELSE '1'||yearalter2
 	END)
-WHERE length(yearalter2) = 3
-AND yearalter2::integer > 0;
+WHERE yearalter2::integer > 0;
 
 UPDATE pluto_allocated
 SET yearalter2 = '19'||yearalter2
