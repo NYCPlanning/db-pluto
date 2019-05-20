@@ -3,7 +3,7 @@ DROP TABLE IF EXISTS pluto_rpad_geo;
 CREATE TABLE pluto_rpad_geo AS (
 WITH pluto_rpad_rownum AS (
 	SELECT a.*, ROW_NUMBER()
-    	OVER (PARTITION BY boro||tl||tb
+    	OVER (PARTITION BY boro||tb||tl
       	ORDER BY curavt_act::numeric DESC, land_area::numeric DESC, ease ASC) AS row_number
   		FROM dof_pts_propmaster a),
 pluto_rpad_sub AS (
