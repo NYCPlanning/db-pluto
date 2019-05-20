@@ -67,7 +67,7 @@ SET bldgclass = bldgcl,
 FROM pluto_rpad_geo b
 WHERE a.bbl=b.primebbl
 AND b.tl NOT LIKE '75%'
-AND b.condo_number = '0';
+AND b.condo_number IS NULL;
 
 -- for condos get values from records where tax lot starts with 75, which indicates that this is the condo
 UPDATE pluto_allocated a
@@ -122,7 +122,8 @@ WITH primesums AS (
 	SUM(units::integer) as unitstotal,
 	SUM(curavl_act::double precision) as assessland,
 	SUM(curavt_act::double precision) as assesstot,
-	SUM(curexl_act::double precision) as exemptland,
+	-- field no longer exists
+	-- SUM(curexl_act::double precision) as exemptland,
 	SUM(curext_act::double precision) as exempttot
 	FROM pluto_rpad_geo
 	GROUP BY primebbl)
@@ -132,7 +133,7 @@ SET unitsres = b.unitsres,
 	unitstotal = b.unitstotal,
 	assessland = b.assessland,
 	assesstot = b.assesstot,
-	exemptland = b.exemptland,
+	-- exemptland = b.exemptland,
 	exempttot = b.exempttot
 FROM primesums b
 WHERE a.bbl=b.primebbl;
