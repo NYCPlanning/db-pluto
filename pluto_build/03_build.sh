@@ -39,12 +39,13 @@ psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/spatialjoins.sql
 psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/numericfields.sql
 
 echo 'Adding on CAMA data attributes'
+psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/landuse.sql
 psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/create_cama_primebbl.sql
 psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/cama_bsmttype.sql
 psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/cama_lottype.sql
 psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/cama_proxcode.sql
 psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/cama_bldgarea.sql
-psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/cama_easements.sql
+psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/cama_easements.sql # did not run
 
 echo 'Adding on data attributes from other sources'
 psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/lpc.sql
