@@ -43,7 +43,8 @@ CREATE TABLE dof_pts_propmaster (
 	AP_BLOCK text,
 	AP_LOT text,
 	AP_EASE text,
-	AP_DATE text);
+	AP_DATE text,
+	PRIMEBBL text);
 -- insert unique ids
 INSERT INTO dof_pts_propmaster (BBL)
 SELECT DISTINCT parid FROM pts;
