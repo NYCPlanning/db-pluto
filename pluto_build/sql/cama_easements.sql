@@ -2,16 +2,16 @@
 -- get a list of distinct easements for each lot
 WITH distincteasements AS (
 	SELECT DISTINCT primebbl as bbl,
-	easement
-	FROM pluto_input_cama b
-	WHERE easement IS NOT NULL AND easement <> ' '
+	ease
+	FROM dof_pts_propmaster b
+	WHERE ease IS NOT NULL AND ease <> ' '
 ),
 -- count the number of distinct easements for a lot
 counteasements AS (
 	SELECT bbl,
 	COUNT(*) as numeasements
 	FROM distincteasements b
-	WHERE b.easement IS NOT NULL
+	WHERE b.ease IS NOT NULL
 	GROUP BY b.bbl
 )
 -- set the number of easements for the lot
