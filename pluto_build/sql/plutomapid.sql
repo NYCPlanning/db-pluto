@@ -40,4 +40,5 @@ SET plutomapid = '5'
 FROM dof_shoreline_union b
 WHERE a.appbbl IS NULL
 AND a.geom IS NOT NULL
-AND ST_Within(a.geom, b.geom);
+AND ST_Within(a.geom, b.geom)
+AND (plutomapid IS NULL OR plutomapid = '3');

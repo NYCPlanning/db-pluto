@@ -33,4 +33,5 @@ SET zonedist2 = NULL,
 	spdist3 = NULL,
 	ltdheight = NULL
 WHERE zonedist1 = 'PARK'
-AND zonedist2 IS NULL;
+AND (zonedist2 IS NULL
+	OR zonedist2 = 'PARK');

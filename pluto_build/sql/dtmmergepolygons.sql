@@ -26,6 +26,7 @@ SELECT bbl, ST_Union(geom) geom
 FROM pluto_dtm
 WHERE bbl IS NOT NULL
 AND primebbl IS NULL
+-- AND st_isvalidreason(geom) <> 'IllegalArgumentException: Invalid number of points in LinearRing found 3 - must be 0 or >= 4'
 GROUP BY bbl);
 -- merge condo and non condo records into one table
 DROP TABLE IF EXISTS pluto_dtm;
