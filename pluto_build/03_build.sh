@@ -37,6 +37,7 @@ psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/geocodes.sql
 psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/spatialjoins.sql
 # clean up numeric fields
 psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/numericfields.sql
+psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/condono.sql
 
 echo 'Adding on CAMA data attributes'
 psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/landuse.sql
