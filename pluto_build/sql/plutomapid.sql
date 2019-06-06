@@ -15,30 +15,28 @@
 -- values can overwrite each other
 UPDATE pluto
 SET plutomapid = '1'
-WHERE appbbl IS NOT NULL
-AND geom IS NOT NULL;
+WHERE geom IS NOT NULL
+AND plutomapid <> '3';
 
 UPDATE pluto
 SET plutomapid = '2'
-WHERE appbbl IS NOT NULL
-AND geom IS NULL;
+WHERE geom IS NULL;
 
-UPDATE pluto
-SET plutomapid = '3'
-WHERE appbbl IS NULL
-AND geom IS NOT NULL;
+-- UPDATE pluto
+-- SET plutomapid = '3'
+-- WHERE appbbl IS NULL
+-- AND geom IS NOT NULL;
 
 UPDATE pluto a
 SET plutomapid = '4'
 FROM dof_shoreline_union b
-WHERE appbbl IS NOT NULL
-AND a.geom IS NOT NULL
-AND ST_Within(a.geom, b.geom);
+WHERE a.geom IS NOT NULL
+AND ST_Within(a.geom, b.geom)
+AND plutomapid = '1';
 
 UPDATE pluto a
 SET plutomapid = '5'
 FROM dof_shoreline_union b
-WHERE a.appbbl IS NULL
-AND a.geom IS NOT NULL
+WHERE a.geom IS NOT NULL
 AND ST_Within(a.geom, b.geom)
-AND (plutomapid IS NULL OR plutomapid = '3');
+AND plutomapid = '3';

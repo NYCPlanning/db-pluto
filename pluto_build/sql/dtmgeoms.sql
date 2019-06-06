@@ -20,7 +20,8 @@ INSERT INTO pluto (
 	borough,
 	block,
 	lot,
-	geom)
+	geom,
+	plutomapid)
 SELECT b.bbl,
 	LEFT(b.bbl,1),
 	(CASE
@@ -33,7 +34,8 @@ SELECT b.bbl,
 	END),
 	trim(leading '0' FROM SUBSTRING(b.bbl,2,5)),
 	trim(leading '0' FROM RIGHT(b.bbl, 4)),
-	b.geom
+	b.geom,
+	'3'
 	FROM notinpluto b
 ;
 
