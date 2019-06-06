@@ -156,3 +156,11 @@ UPDATE pluto a
 SET facilfar = 0
 WHERE a.facilfar IS NULL
 OR a.facilfar = '-';
+
+-- make values numeric
+UPDATE pluto a
+SET residfar = residfar::double precision;
+UPDATE pluto a
+SET commfar = commfar::double precision;
+UPDATE pluto a
+SET facilfar = facilfar::double precision;
