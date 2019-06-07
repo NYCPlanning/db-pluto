@@ -16,7 +16,7 @@
 UPDATE pluto
 SET plutomapid = '1'
 WHERE geom IS NOT NULL
-AND plutomapid <> '3';
+AND plutomapid IS NULL;
 
 UPDATE pluto
 SET plutomapid = '2'
