@@ -49,7 +49,7 @@ echo 'Loading datasets from FTP...'
 # we'll be working to make these input datasets publicly avaialble 
 
 # raw RPAD data from DOF
-node loader.js install pluto_rpad
+node loader.js install pluto_pts
 # Geocoded RPAD data (includes billing BBL for condo lots and geospatial fields returned by GeoSupport)
 node loader.js install pluto_input_geocodes
 # raw CAMA data from DOF
