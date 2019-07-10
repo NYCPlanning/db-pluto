@@ -6,7 +6,7 @@ WITH dcpcamavals AS(
 	lottype
 	FROM (
 		SELECT primebbl AS bbl, lottype, ROW_NUMBER()
-    	OVER (PARTITION BY boro||block||lot
+    	OVER (PARTITION BY LEFT(bbl,10)
       	ORDER BY lottype) AS row_number
   		FROM pluto_input_cama
   		WHERE lottype <> '0' 

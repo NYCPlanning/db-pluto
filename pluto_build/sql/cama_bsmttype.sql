@@ -6,7 +6,7 @@ WITH dcpcamavals AS(
 	SELECT DISTINCT x.bbl, x.bsmnt_type, x.bsmntgradient, b.bsmtcode
 	FROM (
 		SELECT primebbl AS bbl, bsmnt_type, bsmntgradient, ROW_NUMBER()
-    	OVER (PARTITION BY boro||block||lot
+    	OVER (PARTITION BY LEFT(bbl,10)
       	ORDER BY bsmnt_type DESC, bsmntgradient DESC) AS row_number
   		FROM pluto_input_cama
   		WHERE bsmnt_type <> '0'
