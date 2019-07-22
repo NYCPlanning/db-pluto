@@ -58,7 +58,7 @@ CREATE TABLE pluto (
 	BsmtCode text,
 	AssessLand text,
 	AssessTot text,
-	ExemptLand text,
+	-- ExemptLand text,
 	ExemptTot text,
 	YearBuilt text,
 	YearAlter1 text,
