@@ -9,11 +9,17 @@ SET numfloors = NULL
 WHERE a.numfloors ~ '[^0-9]'
 AND numfloors NOT LIKE '%.%';
 
--- remove decimal places in ct2010 where it is only zero after decimal
+-- add decimal in ct2010 where there is a suffix
 UPDATE pluto a
-SET ct2010 = trunc(a.ct2010::numeric) 
+SET ct2010 = LEFT(a.ct2010,4)||'.'||RIGHT(a.ct2010,2)
 WHERE a.ct2010 ~ '[0-9]'
-AND ct2010 LIKE '%.00';
+AND ct2010 NOT LIKE '%00';
+-- remove suffix in ct2010 where it is only zero after decimal
+UPDATE pluto a
+SET ct2010 = LEFT(a.ct2010,4)
+WHERE a.ct2010 ~ '[0-9]'
+AND ct2010 LIKE '%00';
+-- make values numeric
 UPDATE pluto a
 SET ct2010 = a.ct2010::numeric
 WHERE a.ct2010 ~ '[0-9]';
@@ -24,8 +30,8 @@ WHERE a.ct2010 !~ '[0-9]';
 
 -- remove end zeros for numbers with only zeros past decimal and pad to 4 characters
 UPDATE pluto a
-SET tract2010 = lpad(trunc(a.tract2010::numeric)::text,4,'0')
-WHERE tract2010 LIKE '%.00';
+SET tract2010 = LEFT(a.tract2010,4)
+WHERE tract2010 LIKE '%00';
 -- remove decimal place and pad to 6 characters
 UPDATE pluto a
 SET tract2010 = lpad(replace(tract2010, '.', '')::text,6,'0')
@@ -55,4 +61,8 @@ WHERE a.ycoord !~ '[0-9]';
 -- make appbbl a single 0 where it's zero
 UPDATE pluto
 SET appbbl = '0'
-WHERE appbbl::numeric = 0;
+WHERE appbbl::numeric = 0
+
+-- make sanitdistrict numeric
+UPDATE pluto
+SET sanitdistrict = sanitdistrict::integer;
