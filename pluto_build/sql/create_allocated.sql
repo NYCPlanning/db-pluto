@@ -55,7 +55,7 @@ SET bldgclass = bldgcl,
 	yearalter2 = yralt2,
 	ownername = owner,
 	irrlotcode = irreg,
-	address = housenum_lo' '||street_name,
+	address = housenum_lo||' '||street_name,
 -- set the number of buildings on a lot
 -- if GeoClient returned a value then we use the value GeoClient returned
 	numbldgs = (CASE 
