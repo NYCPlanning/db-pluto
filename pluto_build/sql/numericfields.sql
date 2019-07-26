@@ -61,7 +61,7 @@ WHERE a.ycoord !~ '[0-9]';
 -- make appbbl a single 0 where it's zero
 UPDATE pluto
 SET appbbl = '0'
-WHERE appbbl::numeric = 0
+WHERE appbbl::numeric = 0;
 
 -- make sanitdistrict numeric
 UPDATE pluto
