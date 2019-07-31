@@ -65,3 +65,6 @@ node loader.js install dcp_zoningfeatures
 # FEMA 2007 and preliminary 2015 100 year flood zones 
 node loader.js install fema_firms2007_100yr
 node loader.js install fema_pfirms2015_100yr
+
+# temporary solution for condo lot descriptive attributes
+node loader.js install pluto_input_condolot_descriptiveattributes
