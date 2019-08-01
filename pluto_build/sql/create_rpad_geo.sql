@@ -81,6 +81,18 @@ UPDATE pluto_rpad_geo
 SET ldft = round(ldft::numeric, 2)::text
 WHERE ldft <> 'ACRE';
 
+-- backfill X and Y coordinates
+WITH geoms AS (
+	SELECT a.bbl,
+		ST_SetSRID(ST_MakePoint(a.longitude::double precision, a.latitude::double precision),4326) as geom
+	FROM pluto_rpad_geo a
+	WHERE a.longitude IS NOT NULL)
+UPDATE pluto_rpad_geo a
+SET xcoord = ST_X(ST_TRANSFORM(geom, 2263))::integer,
+ycoord = ST_Y(ST_TRANSFORM(geom, 2263))::integer
+FROM geoms b
+WHERE a.bbl = b.bbl;
+
 -- -- create RPAD table that is run through Geoclient
 -- DROP TABLE IF EXISTS pluto_rpad_geo;
 -- CREATE TABLE pluto_rpad_geo AS (
