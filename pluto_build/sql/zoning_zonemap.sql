@@ -3,12 +3,14 @@
 -- the order zoning maps are assigned is based on which map covers the majority of the lot
 -- a map is only assigned if more than 10% of the map covers the lot
 -- OR more than a specified area of the lot if covered by the map
+DROP INDEX dcp_zoningmapindex_gix;
+CREATE INDEX dcp_zoningmapindex_gix ON dcp_zoningmapindex USING GIST (geom);
 
 DROP TABLE zoningmapperorder;
 CREATE TABLE zoningmapperorder AS (
 WITH 
 zoningmapper AS (
-SELECT p.bbl, n.sectionalm,
+SELECT p.bbl, n.zoning_map,
   (ST_Area(CASE 
     WHEN ST_CoveredBy(ST_MakeValid(p.geom), n.geom) 
     THEN p.geom 
@@ -31,14 +33,14 @@ SELECT p.bbl, n.sectionalm,
    INNER JOIN dcp_zoningmapindex AS n 
     ON ST_Intersects(p.geom, n.geom)
 )
-SELECT bbl, sectionalm, segbblgeom, (segbblgeom/allbblgeom)*100 as perbblgeom, (segzonegeom/allzonegeom)*100 as perzonegeom, ROW_NUMBER()
+SELECT bbl, zoning_map, segbblgeom, (segbblgeom/allbblgeom)*100 as perbblgeom, (segzonegeom/allzonegeom)*100 as perzonegeom, ROW_NUMBER()
     	OVER (PARTITION BY bbl
       	ORDER BY segbblgeom DESC) AS row_number
   		FROM zoningmapper
 );
 
 UPDATE pluto a
-SET zonemap = lower(sectionalm)
+SET zonemap = lower(zoning_map)
 FROM zoningmapperorder b
 WHERE a.bbl=b.bbl
 AND row_number = 1
