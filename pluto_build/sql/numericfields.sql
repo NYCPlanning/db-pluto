@@ -9,6 +9,10 @@ SET numfloors = NULL
 WHERE a.numfloors ~ '[^0-9]'
 AND numfloors NOT LIKE '%.%';
 
+-- remove commas from lot area
+UPDATE pluto a
+SET lotarea = (lotarea,',','');
+
 -- add decimal in ct2010 where there is a suffix
 UPDATE pluto a
 SET ct2010 = LEFT(a.ct2010,4)||'.'||RIGHT(a.ct2010,2)
