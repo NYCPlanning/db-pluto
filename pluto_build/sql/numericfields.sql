@@ -11,7 +11,8 @@ AND numfloors NOT LIKE '%.%';
 
 -- remove commas from lot area
 UPDATE pluto a
-SET lotarea = REPLACE(lotarea,',','');
+SET lotarea = REPLACE(lotarea,',','')
+WHERE lotarea LIKE '%,%';
 
 -- add decimal in ct2010 where there is a suffix
 UPDATE pluto a
