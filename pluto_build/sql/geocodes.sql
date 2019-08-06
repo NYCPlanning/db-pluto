@@ -16,7 +16,7 @@ SET cd = b.cd,
 	sanitsub = b.sanitsub,
 	taxmap = b.taxmap,
 	sanborn = b.sanbornmapidentifier,
-	address = trim(leading '0' FROM b.housenum_lo)||' '||b.street_name,
+	address = concat(b.housenum_lo,' ',b.street_name),
 	ycoord = ltrim(b.ycoord, '0'),
 	xcoord = ltrim(b.xcoord, '0')
 FROM pluto_rpad_geo b
