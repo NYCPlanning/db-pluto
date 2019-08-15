@@ -73,11 +73,11 @@ SET newownername = replace(newownername,'SERVIC', 'SERVICES')
 WHERE newownername LIKE '%SERVIC';
 
 UPDATE pluto_corr_ownername_temp
-SET newownername = replace(newownername,'DEPARTMENTOF', 'DEPARTMENT OF')
-WHERE newownername LIKE '%DEPARTMENTOF%';
+SET newownername = replace(newownername,'DEPARTMENT.OF', 'DEPARTMENT OF')
+WHERE newownername LIKE '%DEPARTMENT%OF%';
 
 UPDATE pluto_corr_ownername_temp
-SET newownername = replace(newownername,'DEV ', 'DEVELOPMENT ');
+SET newownername = replace(newownername,'DEV ', 'DEVELOPMENT ')
 WHERE newownername LIKE '% DEV %';
 
 UPDATE pluto_corr_ownername_temp
@@ -85,7 +85,7 @@ SET newownername = replace(newownername,'CORP', 'CORPORATION')
 WHERE newownername LIKE '%CORP';
 
 UPDATE pluto_corr_ownername_temp
-SET newownername = replace(newownername,'AUTH', 'AUTHORITY');
+SET newownername = replace(newownername,'AUTH', 'AUTHORITY')
 WHERE newownername LIKE '%AUTH';
 
 UPDATE pluto_corr_ownername_temp
@@ -115,7 +115,8 @@ WHERE newownername LIKE '%HOUS%PRES%DEVELOP%';
 
 UPDATE pluto_corr_ownername_temp
 SET newownername = 'NYC ECONOMIC DEVELOPMENT CORPORATION'
-WHERE newownername LIKE '%NYC%ECONOMIC%DEVELOPMENT%';
+WHERE newownername LIKE '%NYC%ECONOMIC%DEVELOPMENT%'
+	OR newownername LIKE '%ECONOMIC%DEVELOPMENT%CORP%';
 
 UPDATE pluto_corr_ownername_temp
 SET newownername = 'NYC DEPARTMENT OF EDUCATION'
@@ -150,6 +151,14 @@ SET newownername = 'NYC TAXI AND LIMOUSINE COMMISSION'
 WHERE newownername LIKE '%TAXI%LIMO%';
 
 UPDATE pluto_corr_ownername_temp
+SET newownername = 'MTA - STATEN ISLAND RAILWAY'
+WHERE newownername LIKE '%MTA%-%STATEN%ISLAND%RAILWAY%';
+
+UPDATE pluto_corr_ownername_temp
+SET newownername = 'OFFICE OF CHIEF MEDICAL EXAMINER'
+WHERE newownername LIKE '%OFFICE%CHIEF%MEDICAL%';
+
+UPDATE pluto_corr_ownername_temp
 SET newownername = replace(newownername,'(', '');
 UPDATE pluto_corr_ownername_temp
 SET newownername = replace(newownername,')', '');
@@ -171,6 +180,9 @@ WHERE newownername LIKE 'DEPARTMENT%'
 	;
 
 
+1 | NAME NOT ON FILE
+20 | NOT ON FILE
+
 
 SELECT COUNT(*), newownername FROM pluto_corr_ownername_temp GROUP BY newownername ORDER BY newownername; 
 
@@ -180,4 +192,5 @@ SELECT COUNT(*), ownername, newownername FROM pluto_corr_ownername_temp GROUP BY
 
 
 
-
+SELECT * FROM pluto_corr_ownername_temp
+WHERE newownername LIKE '%AUTH'
