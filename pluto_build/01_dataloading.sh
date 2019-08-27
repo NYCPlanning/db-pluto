@@ -1,70 +1,104 @@
-#!/bin/bash
+# # Create a postgres database container pluto
+DB_CONTAINER_NAME=pluto
 
-################################################################################################
-### OBTAINING DATA
-################################################################################################
-### NOTE: This script requires you to setup the environment variable.
-### The config files in both this repo and the data loading scripts repo need to match (Enhancement: Set up scripts to point to one config file)
-### Directions are in the README.md.
+# [ ! "$(docker ps -a | grep $DB_CONTAINER_NAME)" ]\
+#      && docker run -itd --name=$DB_CONTAINER_NAME\
+#             -v `pwd`:/home/pluto_build\
+#             -w /home/pluto_build\
+#             --shm-size=1g\
+#             --cpus=2\
+#             --env-file .env\
+#             -p 3484:5432\
+#             mdillon/postgis
 
-## Load all datasets from sources using the civic data loader
-## https://github.com/NYCPlanning/data-loading-scripts
+# ## Wait for database to get ready, this might take 5 seconds of trys
+# docker start $DB_CONTAINER_NAME
+# until docker exec $DB_CONTAINER_NAME psql -h localhost -U postgres; do
+#     echo "Waiting for postgres container..."
+#     sleep 0.5
+# done
 
-# make sure we are at the top of the git directory
-REPOLOC="$(git rev-parse --show-toplevel)"
-cd $REPOLOC
-# go back one level to folder with all repos
-cd ..
-# enter the data-loading-scripts repo
-cd 'data-loading-scripts'
+# docker inspect -f '{{.State.Running}}' $DB_CONTAINER_NAME
+# docker exec pluto psql -U postgres -h localhost -c "SELECT 'DATABSE IS UP';"
 
-## Open_datasets - PULLING FROM OPEN DATA
-echo 'Loading open source datasets...'
-node loader.js install dcp_edesignation
-node loader.js install dcas_facilities_colp
-node loader.js install dcp_zoningmapindex
-node loader.js install lpc_historic_districts
-node loader.js install lpc_landmarks
-# for spatial joins
-node loader.js install dcp_cdboundaries
-node loader.js install dcp_censustracts
-node loader.js install dcp_censusblocks
-node loader.js install dcp_school_districts
-node loader.js install dcp_councildistricts
-node loader.js install doitt_zipcodes
-node loader.js install dcp_firecompanies
-node loader.js install dcp_policeprecincts
-node loader.js install dcp_healthareas
-node loader.js install dcp_healthcenters
-node loader.js install dsny_frequencies
+# ## load data into the pluto container
+# docker run --rm\
+#             --network=host\
+#             -v `pwd`/python:/home/python\
+#             -w /home/python\
+#             --env-file .env\
+#             sptkl/cook:latest python3 dataloading.py
 
-## Other_datasets - PULLING FROM FTP or PLUTO GitHub repo
-echo 'Loading datasets from PLUTO GitHub repo...'
-node loader.js install dcp_zoning_maxfar
-node loader.js install pluto_input_bsmtcode
-node loader.js install pluto_input_landuse_bldgclass
-node loader.js install pluto_input_condo_bldgclass
+## Do a pg_dump for backup
+# docker exec pluto pg_dump -d postgres -U postgres | gzip > output/pluto.gz
 
-echo 'Loading datasets from FTP...'
-# we'll be working to make these input datasets publicly avaialble 
+## Geocode pts
+docker run --rm\
+            -v `pwd`/python:/home/python\
+            -w /home/python\
+            --env-file .env\
+            --network=host\
+            sptkl/docker-geosupport:19b2 bash -c "pip install pandas sqlalchemy psycopg2-binary; python3 geocode.py"
 
-# raw RPAD data from DOF
-node loader.js install pluto_pts
-# Geocoded RPAD data (includes billing BBL for condo lots and geospatial fields returned by GeoSupport)
-node loader.js install pluto_input_geocodes
-# raw CAMA data from DOF
-node loader.js install pluto_input_cama_dof
-# raw Digital Tax Map from DOF
-node loader.js install dof_dtm
-# raw NYC shoreline file from DOF
-node loader.js install dof_shoreline
-# raw DOF condo table
-node loader.js install dof_condo
-# DCP zoning datasets
-node loader.js install dcp_zoningfeatures
-# FEMA 2007 and preliminary 2015 100 year flood zones 
-node loader.js install fema_firms2007_100yr
-node loader.js install fema_pfirms2015_100yr
+docker exec $DB_CONTAINER_NAME psql -h localhost -U postgres -c "
+DROP TABLE IF EXISTS pluto_input_geocodes;
+CREATE TABLE pluto_input_geocodes (
+    borough text,
+    block text,
+    lot text,
+    input_hnum text,
+    input_sname text,
+    easement text,
+    billingbbl text,
+    bbl text,
+    communitydistrict text,
+    censustract2010 text,
+    censusblock2010 text,
+    communityschooldistrict text,
+    citycouncildistrict text,
+    zipcode text,
+    firecompanynumber text,
+    policeprecinct text,
+    healthcenterdistrict text,
+    healtharea text,
+    sanitationdistrict text,
+    sanitationcollectionscheduling text,
+    boepreferredstreetname text,
+    numberofexistingstructures text,
+    taxmapnumbersectionandvolume text,
+    sanbornmapidentifier text,
+    xcoord text,
+    ycoord text,
+    longitude text,
+    latitude text,
+    grc text,
+    grc2 text, 
+    msg text,
+    msg2 text
+);
+"
+docker exec $DB_CONTAINER_NAME psql -h localhost -U postgres -c "
+    \COPY pluto_input_geocodes FROM python/geo_result.csv WITH NULL AS '' DELIMITER ',' CSV HEADER;
+"
 
-# temporary solution for condo lot descriptive attributes
-node loader.js install pluto_input_condolot_descriptiveattributes
+docker exec $DB_CONTAINER_NAME psql -h localhost -U postgres -c "
+    ALTER TABLE pluto_input_geocodes
+        ADD wkb_geometry geometry(Geometry,4326);
+
+    UPDATE pluto_input_geocodes
+    SET wkb_geometry = ST_SetSRID(ST_Point(longitude::DOUBLE PRECISION,
+                        latitude::DOUBLE PRECISION), 4326),
+        xcoord = ST_X(ST_TRANSFORM(wkb_geometry, 2263)),
+        ycoord = ST_Y(ST_TRANSFORM(wkb_geometry, 2263))
+    ;
+"
+
+docker exec $DB_CONTAINER_NAME bash -c '
+    pg_dump -t pluto_input_geocodes --no-owner -U postgres -d postgres | psql $RECIPE_ENGINE
+    DATE=$(date "+%Y/%m/%d"); 
+    psql $EDM_DATA -c "CREATE SCHEMA IF NOT EXISTS pluto_input_geocodes;";
+    psql $EDM_DATA -c "ALTER TABLE pluto_input_geocodes SET SCHEMA pluto_input_geocodes;";
+    psql $EDM_DATA -c "DROP TABLE IF EXISTS pluto_input_geocodes.\"$DATE\";";
+    psql $EDM_DATA -c "ALTER TABLE pluto_input_geocodes.pluto_input_geocodes RENAME TO \"$DATE\";";
+'
+# rm python/geo_result.csv
