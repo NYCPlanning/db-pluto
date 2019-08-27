@@ -1,38 +1,38 @@
 # # Create a postgres database container pluto
 DB_CONTAINER_NAME=pluto
 
-# [ ! "$(docker ps -a | grep $DB_CONTAINER_NAME)" ]\
-#      && docker run -itd --name=$DB_CONTAINER_NAME\
-#             -v `pwd`:/home/pluto_build\
-#             -w /home/pluto_build\
-#             --shm-size=1g\
-#             --cpus=2\
-#             --env-file .env\
-#             -p 3484:5432\
-#             mdillon/postgis
+[ ! "$(docker ps -a | grep $DB_CONTAINER_NAME)" ]\
+     && docker run -itd --name=$DB_CONTAINER_NAME\
+            -v `pwd`:/home/pluto_build\
+            -w /home/pluto_build\
+            --shm-size=1g\
+            --cpus=2\
+            --env-file .env\
+            -p 3484:5432\
+            mdillon/postgis
 
-# ## Wait for database to get ready, this might take 5 seconds of trys
-# docker start $DB_CONTAINER_NAME
-# until docker exec $DB_CONTAINER_NAME psql -h localhost -U postgres; do
-#     echo "Waiting for postgres container..."
-#     sleep 0.5
-# done
+## Wait for database to get ready, this might take 5 seconds of trys
+docker start $DB_CONTAINER_NAME
+until docker exec $DB_CONTAINER_NAME psql -h localhost -U postgres; do
+    echo "Waiting for postgres container..."
+    sleep 0.5
+done
 
-# docker inspect -f '{{.State.Running}}' $DB_CONTAINER_NAME
-# docker exec pluto psql -U postgres -h localhost -c "SELECT 'DATABSE IS UP';"
+docker inspect -f '{{.State.Running}}' $DB_CONTAINER_NAME
+docker exec pluto psql -U postgres -h localhost -c "SELECT 'DATABSE IS UP';"
 
-# ## load data into the pluto container
-# docker run --rm\
-#             --network=host\
-#             -v `pwd`/python:/home/python\
-#             -w /home/python\
-#             --env-file .env\
-#             sptkl/cook:latest python3 dataloading.py
+## load data into the pluto container
+docker run --rm\
+            --network=host\
+            -v `pwd`/python:/home/python\
+            -w /home/python\
+            --env-file .env\
+            sptkl/cook:latest python3 dataloading.py
 
-## Do a pg_dump for backup
-# docker exec pluto pg_dump -d postgres -U postgres | gzip > output/pluto.gz
+# Do a pg_dump for backup
+docker exec pluto pg_dump -d postgres -U postgres | gzip > output/pluto.gz
 
-## Geocode pts
+# Geocode pts
 docker run --rm\
             -v `pwd`/python:/home/python\
             -w /home/python\
@@ -75,11 +75,9 @@ CREATE TABLE pluto_input_geocodes (
     grc2 text, 
     msg text,
     msg2 text
-);
-"
-docker exec $DB_CONTAINER_NAME psql -h localhost -U postgres -c "
-    \COPY pluto_input_geocodes FROM python/geo_result.csv WITH NULL AS '' DELIMITER ',' CSV HEADER;
-"
+);"
+
+docker exec $DB_CONTAINER_NAME psql -h localhost -U postgres -c "\COPY pluto_input_geocodes FROM python/geo_result.csv WITH NULL AS '' DELIMITER ',' CSV HEADER;"
 
 docker exec $DB_CONTAINER_NAME psql -h localhost -U postgres -c "
     ALTER TABLE pluto_input_geocodes
@@ -96,9 +94,9 @@ docker exec $DB_CONTAINER_NAME psql -h localhost -U postgres -c "
 docker exec $DB_CONTAINER_NAME bash -c '
     pg_dump -t pluto_input_geocodes --no-owner -U postgres -d postgres | psql $RECIPE_ENGINE
     DATE=$(date "+%Y/%m/%d"); 
-    psql $EDM_DATA -c "CREATE SCHEMA IF NOT EXISTS pluto_input_geocodes;";
-    psql $EDM_DATA -c "ALTER TABLE pluto_input_geocodes SET SCHEMA pluto_input_geocodes;";
-    psql $EDM_DATA -c "DROP TABLE IF EXISTS pluto_input_geocodes.\"$DATE\";";
-    psql $EDM_DATA -c "ALTER TABLE pluto_input_geocodes.pluto_input_geocodes RENAME TO \"$DATE\";";
+    psql $RECIPE_ENGINE -c "CREATE SCHEMA IF NOT EXISTS pluto_input_geocodes;";
+    psql $RECIPE_ENGINE -c "ALTER TABLE pluto_input_geocodes SET SCHEMA pluto_input_geocodes;";
+    psql $RECIPE_ENGINE -c "DROP TABLE IF EXISTS pluto_input_geocodes.\"$DATE\";";
+    psql $RECIPE_ENGINE -c "ALTER TABLE pluto_input_geocodes.pluto_input_geocodes RENAME TO \"$DATE\";";
 '
-# rm python/geo_result.csv
+docker exec $DB_CONTAINER_NAME rm python/geo_result.csv

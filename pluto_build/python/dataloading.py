@@ -37,6 +37,7 @@ def ETL():
     importer.import_table(schema_name='pluto_pts')
     # Geocoded RPAD data (includes billing BBL for condo lots and geospatial fields returned by GeoSupport)
     # importer.import_table(schema_name='pluto_input_geocodes')
+
     # raw CAMA data from DOF
     importer.import_table(schema_name='pluto_input_cama_dof')
 

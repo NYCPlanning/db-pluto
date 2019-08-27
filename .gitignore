@@ -1,2 +1,3 @@
 /pluto_build/data/ftp
 .env
+*.gz
