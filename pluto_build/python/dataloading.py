@@ -1,7 +1,8 @@
 from cook import Importer
 import os
+import sys
 
-def ETL():
+def ETL(geocode):
     RECIPE_ENGINE = os.environ.get('RECIPE_ENGINE', '')
     BUILD_ENGINE=os.environ.get('BUILD_ENGINE', '')
 
@@ -31,12 +32,15 @@ def ETL():
     importer.import_table(schema_name='pluto_input_landuse_bldgclass')
     importer.import_table(schema_name='pluto_input_condo_bldgclass')
 
-    # we'll be working to make these input datasets publicly avaialble 
+    # # we'll be working to make these input datasets publicly avaialble 
 
-    # raw RPAD data from DOF
+    # # raw RPAD data from DOF
     importer.import_table(schema_name='pluto_pts')
     # Geocoded RPAD data (includes billing BBL for condo lots and geospatial fields returned by GeoSupport)
-    # importer.import_table(schema_name='pluto_input_geocodes')
+    if geocode == 'no':
+        importer.import_table(schema_name='pluto_input_geocodes')
+    else: 
+        pass
 
     # raw CAMA data from DOF
     importer.import_table(schema_name='pluto_input_cama_dof')
@@ -65,4 +69,5 @@ def ETL():
     importer.import_table(schema_name='pluto_input_condolot_descriptiveattributes')
 
 if __name__ == "__main__":
-    ETL()
+    geocode=sys.argv[1]
+    ETL(geocode)

@@ -1,95 +1,93 @@
 #!/bin/bash
 
-# make sure we are at the top of the git directory
-REPOLOC="$(git rev-parse --show-toplevel)"
-cd $REPOLOC
-
 # load config
-DBNAME=$(cat $REPOLOC/pluto.config.json | jq -r '.DBNAME')
-DBUSER=$(cat $REPOLOC/pluto.config.json | jq -r '.DBUSER')
+DBNAME='postgres'
+DBUSER='postgres'
 
 start=$(date +'%T')
+
 echo "Starting to build PLUTO"
-psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/pts_clean.sql
-psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/create_rpad_geo.sql
-psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/geocode_nones.sql
-echo 'Reporting records that did not get geocoded...'
-psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/geocode_notgeocoded.sql
+# docker exec pluto psql -U $DBUSER -d $DBNAME -f sql/pts_clean.sql
+docker exec pluto psql -U $DBUSER -d $DBNAME -f sql/create_rpad_geo.sql
+# docker exec pluto psql -U $DBUSER -d $DBNAME -f sql/geocode_nones.sql
 
-echo 'Making DCP edits to RPAD...'
-psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/zerovacantlots.sql
-psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/lotarea.sql
-psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/primebbl.sql
-psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/apdate.sql
+# echo 'Reporting records that did not get geocoded...'
+# docker exec pluto psql -U $DBUSER -d $DBNAME -f sql/geocode_notgeocoded.sql
 
-echo 'Creating table that aggregates condo data and is used to build PLUTO...'
-psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/create_allocated.sql
-psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/yearbuiltalt.sql
+# echo 'Making DCP edits to RPAD...'
+# docker exec pluto psql -U $DBUSER -d $DBNAME -f sql/zerovacantlots.sql
+# docker exec pluto psql -U $DBUSER -d $DBNAME -f sql/lotarea.sql
+# docker exec pluto psql -U $DBUSER -d $DBNAME -f sql/primebbl.sql
+# docker exec pluto psql -U $DBUSER -d $DBNAME -f sql/apdate.sql
 
-echo 'Creating base PLUTO table'
-psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/create.sql
-psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/bbl.sql
+# echo 'Creating table that aggregates condo data and is used to build PLUTO...'
+# docker exec pluto psql -U $DBUSER -d $DBNAME -f sql/create_allocated.sql
+# docker exec pluto psql -U $DBUSER -d $DBNAME -f sql/yearbuiltalt.sql
 
-echo 'Adding on RPAD data attributes'
-psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/allocated.sql
-echo 'Adding on spatial data attributes'
-psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/geocodes.sql
-psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/spatialjoins.sql
-# clean up numeric fields
-psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/numericfields.sql
-psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/condono.sql
+# echo 'Creating base PLUTO table'
+# docker exec pluto psql -U $DBUSER -d $DBNAME -f sql/create.sql
+# docker exec pluto psql -U $DBUSER -d $DBNAME -f sql/bbl.sql
 
-echo 'Adding on CAMA data attributes'
-psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/landuse.sql
-psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/create_cama_primebbl.sql
-psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/cama_bsmttype.sql
-psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/cama_lottype.sql
-psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/cama_proxcode.sql
-psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/cama_bldgarea.sql
-psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/cama_easements.sql
+# echo 'Adding on RPAD data attributes'
+# docker exec pluto psql -U $DBUSER -d $DBNAME -f sql/allocated.sql
+# echo 'Adding on spatial data attributes'
+# docker exec pluto psql -U $DBUSER -d $DBNAME -f sql/geocodes.sql
+# docker exec pluto psql -U $DBUSER -d $DBNAME -f sql/spatialjoins.sql
+# # clean up numeric fields
+# docker exec pluto psql -U $DBUSER -d $DBNAME -f sql/numericfields.sql
+# docker exec pluto psql -U $DBUSER -d $DBNAME -f sql/condono.sql
 
-echo 'Adding on data attributes from other sources'
-psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/lpc.sql
-psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/edesignation.sql
-psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/ownertype.sql
+# echo 'Adding on CAMA data attributes'
+# docker exec pluto psql -U $DBUSER -d $DBNAME -f sql/landuse.sql
+# docker exec pluto psql -U $DBUSER -d $DBNAME -f sql/create_cama_primebbl.sql
+# docker exec pluto psql -U $DBUSER -d $DBNAME -f sql/cama_bsmttype.sql
+# docker exec pluto psql -U $DBUSER -d $DBNAME -f sql/cama_lottype.sql
+# docker exec pluto psql -U $DBUSER -d $DBNAME -f sql/cama_proxcode.sql
+# docker exec pluto psql -U $DBUSER -d $DBNAME -f sql/cama_bldgarea.sql
+# docker exec pluto psql -U $DBUSER -d $DBNAME -f sql/cama_easements.sql
 
-echo 'Transform RPAD data attributes'
-psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/irrlotcode.sql
+# echo 'Adding on data attributes from other sources'
+# docker exec pluto psql -U $DBUSER -d $DBNAME -f sql/lpc.sql
+# docker exec pluto psql -U $DBUSER -d $DBNAME -f sql/edesignation.sql
+# docker exec pluto psql -U $DBUSER -d $DBNAME -f sql/ownertype.sql
 
-echo 'Adding DCP data attributes'
-psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/address.sql
-psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/sanitboro.sql
+# echo 'Transform RPAD data attributes'
+# docker exec pluto psql -U $DBUSER -d $DBNAME -f sql/irrlotcode.sql
 
-echo 'Create base DTM'
-psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/dedupecondotable.sql
-psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/dtmmergepolygons.sql
-psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/plutogeoms.sql
-psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/geomclean.sql
-psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/shorelineclip.sql
+# echo 'Adding DCP data attributes'
+# docker exec pluto psql -U $DBUSER -d $DBNAME -f sql/address.sql
+# docker exec pluto psql -U $DBUSER -d $DBNAME -f sql/sanitboro.sql
 
-psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/spatialindex.sql
-echo 'Computing zoning fields'
-psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/zoning_zoningdistrict.sql
-psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/zoning_commercialoverlay.sql
-psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/zoning_specialdistrict.sql
-psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/zoning_limitedheight.sql
-psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/zoning_zonemap.sql
-psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/zoning_parks.sql
-psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/zoning_correctdups.sql
-psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/zoning_correctgaps.sql
-psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/zoning_splitzone.sql
-echo 'Filling in FAR values'
-psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/far.sql
+# echo 'Create base DTM'
+# docker exec pluto psql -U $DBUSER -d $DBNAME -f sql/dedupecondotable.sql
+# docker exec pluto psql -U $DBUSER -d $DBNAME -f sql/dtmmergepolygons.sql
+# docker exec pluto psql -U $DBUSER -d $DBNAME -f sql/plutogeoms.sql
+# docker exec pluto psql -U $DBUSER -d $DBNAME -f sql/geomclean.sql
+# docker exec pluto psql -U $DBUSER -d $DBNAME -f sql/shorelineclip.sql
 
-echo 'Populating building class for condos lots and land use field'
-psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/bldgclass.sql
-psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/landuse.sql
+# docker exec pluto psql -U $DBUSER -d $DBNAME -f sql/spatialindex.sql
+# echo 'Computing zoning fields'
+# docker exec pluto psql -U $DBUSER -d $DBNAME -f sql/zoning_zoningdistrict.sql
+# docker exec pluto psql -U $DBUSER -d $DBNAME -f sql/zoning_commercialoverlay.sql
+# docker exec pluto psql -U $DBUSER -d $DBNAME -f sql/zoning_specialdistrict.sql
+# docker exec pluto psql -U $DBUSER -d $DBNAME -f sql/zoning_limitedheight.sql
+# docker exec pluto psql -U $DBUSER -d $DBNAME -f sql/zoning_zonemap.sql
+# docker exec pluto psql -U $DBUSER -d $DBNAME -f sql/zoning_parks.sql
+# docker exec pluto psql -U $DBUSER -d $DBNAME -f sql/zoning_correctdups.sql
+# docker exec pluto psql -U $DBUSER -d $DBNAME -f sql/zoning_correctgaps.sql
+# docker exec pluto psql -U $DBUSER -d $DBNAME -f sql/zoning_splitzone.sql
+# echo 'Filling in FAR values'
+# docker exec pluto psql -U $DBUSER -d $DBNAME -f sql/far.sql
 
-echo 'Flagging tax lots within the FEMA floodplain'
-psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/flood_flag.sql
-echo 'Adding in geometries that are in the DTM but not in RPAD'
-psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/dtmgeoms.sql
-psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/geomclean.sql
-echo 'Populating PLUTO tags and version fields '
-psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/plutomapid.sql
-psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/versions.sql
+# echo 'Populating building class for condos lots and land use field'
+# docker exec pluto psql -U $DBUSER -d $DBNAME -f sql/bldgclass.sql
+# docker exec pluto psql -U $DBUSER -d $DBNAME -f sql/landuse.sql
+
+# echo 'Flagging tax lots within the FEMA floodplain'
+# docker exec pluto psql -U $DBUSER -d $DBNAME -f sql/flood_flag.sql
+# echo 'Adding in geometries that are in the DTM but not in RPAD'
+# docker exec pluto psql -U $DBUSER -d $DBNAME -f sql/dtmgeoms.sql
+# docker exec pluto psql -U $DBUSER -d $DBNAME -f sql/geomclean.sql
+# echo 'Populating PLUTO tags and version fields '
+# docker exec pluto psql -U $DBUSER -d $DBNAME -f sql/plutomapid.sql
+# docker exec pluto psql -U $DBUSER -d $DBNAME -f sql/versions.sql
