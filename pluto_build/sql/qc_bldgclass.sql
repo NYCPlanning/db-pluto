@@ -12,6 +12,6 @@ CREATE TABLE qc_bldgclass AS (
 	ORDER BY bldgcl
 );
 
-\copy (SELECT * FROM qc_bldgclass) TO '/prod/db-pluto/pluto_build/output/qc_bldgclass.csv' DELIMITER ',' CSV HEADER;
+\copy (SELECT * FROM qc_bldgclass) TO 'output/qc_bldgclass.csv' DELIMITER ',' CSV HEADER;
 
 DROP TABLE IF EXISTS qc_bldgclass;
