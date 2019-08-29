@@ -1,5 +1,6 @@
 -- assign the prime BBL to each PTS collapsed record
 -- assign prime bbl for condo records
+-- billingbbl is coming from pluto_input_geocodes
 UPDATE pluto_rpad_geo
 SET primebbl = billingbbl
 WHERE billingbbl IS NOT NULL AND billingbbl <> '0000000000';

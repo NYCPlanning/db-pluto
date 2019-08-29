@@ -94,6 +94,3 @@ SET BORO = b.boro,
 	AP_DATE = appt_date
 FROM pluto_pts b
 WHERE a.bbl::text=b.parid::text;
-
-ALTER TABLE dof_pts_propmaster 
-RENAME bbl TO boroughblocklot;

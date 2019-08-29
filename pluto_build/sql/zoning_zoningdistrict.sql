@@ -12,9 +12,9 @@ WITH validdtm AS (
   FROM pluto a
   WHERE ST_GeometryType(ST_MakeValid(a.geom)) = 'ST_MultiPolygon' AND a.bbl LIKE '1%'),
 validzones AS (
-  SELECT a.zonedist, a.geom 
+  SELECT a.zonedist,  ST_MakeValid(a.wkb_geometry) as geom
   FROM dcp_zoningdistricts a
-  WHERE ST_GeometryType(ST_MakeValid(a.geom)) = 'ST_MultiPolygon'),
+  WHERE ST_GeometryType(ST_MakeValid(a.wkb_geometry)) = 'ST_MultiPolygon'),
 lotzoneper AS (
 SELECT p.bbl, n.zonedist
  , (ST_Area(CASE 
@@ -52,9 +52,9 @@ WITH validdtm AS (
   FROM pluto a
   WHERE ST_GeometryType(ST_MakeValid(a.geom)) = 'ST_MultiPolygon' AND a.bbl LIKE '2%'),
 validzones AS (
-  SELECT a.zonedist, a.geom 
+  SELECT a.zonedist,  ST_MakeValid(a.wkb_geometry) as geom
   FROM dcp_zoningdistricts a
-  WHERE ST_GeometryType(ST_MakeValid(a.geom)) = 'ST_MultiPolygon'),
+  WHERE ST_GeometryType(ST_MakeValid(a.wkb_geometry)) = 'ST_MultiPolygon'),
 lotzoneper AS (
 SELECT p.bbl, n.zonedist
  , (ST_Area(CASE 
@@ -92,9 +92,9 @@ WITH validdtm AS (
   FROM pluto a
   WHERE ST_GeometryType(ST_MakeValid(a.geom)) = 'ST_MultiPolygon' AND a.bbl LIKE '3%'),
 validzones AS (
-  SELECT a.zonedist, a.geom 
+  SELECT a.zonedist,  ST_MakeValid(a.wkb_geometry) as geom
   FROM dcp_zoningdistricts a
-  WHERE ST_GeometryType(ST_MakeValid(a.geom)) = 'ST_MultiPolygon'),
+  WHERE ST_GeometryType(ST_MakeValid(a.wkb_geometry)) = 'ST_MultiPolygon'),
 lotzoneper AS (
 SELECT p.bbl, n.zonedist
  , (ST_Area(CASE 
@@ -132,9 +132,9 @@ WITH validdtm AS (
   FROM pluto a
   WHERE ST_GeometryType(ST_MakeValid(a.geom)) = 'ST_MultiPolygon' AND a.bbl LIKE '4%'),
 validzones AS (
-  SELECT a.zonedist, ST_MakeValid(a.geom) as geom 
+  SELECT a.zonedist, ST_MakeValid(a.wkb_geometry) as geom 
   FROM dcp_zoningdistricts a
-  WHERE ST_GeometryType(ST_MakeValid(a.geom)) = 'ST_MultiPolygon'),
+  WHERE ST_GeometryType(ST_MakeValid(a.wkb_geometry)) = 'ST_MultiPolygon'),
 lotzoneper AS (
 SELECT p.bbl, n.zonedist
  , (ST_Area(CASE 
@@ -172,9 +172,9 @@ WITH validdtm AS (
   FROM pluto a
   WHERE ST_GeometryType(ST_MakeValid(a.geom)) = 'ST_MultiPolygon' AND a.bbl LIKE '5%'),
 validzones AS (
-  SELECT a.zonedist, a.geom 
+  SELECT a.zonedist,  ST_MakeValid(a.wkb_geometry) as geom 
   FROM dcp_zoningdistricts a
-  WHERE ST_GeometryType(ST_MakeValid(a.geom)) = 'ST_MultiPolygon'),
+  WHERE ST_GeometryType(ST_MakeValid(a.wkb_geometry)) = 'ST_MultiPolygon'),
 lotzoneper AS (
 SELECT p.bbl, n.zonedist,
   (ST_Area(CASE 
@@ -275,7 +275,7 @@ DROP TABLE lotzoneperorder;
 -- validzones AS (
 --   SELECT a.zonedist, a.geom 
 --   FROM dcp_zoningdistricts a
---   WHERE ST_GeometryType(ST_MakeValid(a.geom)) = 'ST_MultiPolygon')
+--   WHERE ST_GeometryType(ST_MakeValid(a.wkb_geometry)) = 'ST_MultiPolygon')
 -- SELECT a.bbl, b.zonedist
 -- FROM validdtm a, validzones b
 -- WHERE ST_DWithin(a.geom::geography, b.geom::geography, 7));
