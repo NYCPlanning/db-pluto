@@ -12,5 +12,5 @@ CREATE TABLE pluto_temp_qc_notgeocoded AS (
 	ORDER BY bbl
 );
 
-\copy (SELECT * FROM pluto_temp_qc_notgeocoded) TO '/prod/db-pluto/pluto_build/output/qc_notgeocoded.csv' DELIMITER ',' CSV HEADER;
+\copy (SELECT * FROM pluto_temp_qc_notgeocoded) TO 'output/qc_notgeocoded.csv' DELIMITER ',' CSV HEADER;
 DROP TABLE IF EXISTS pluto_temp_qc_notgeocoded;

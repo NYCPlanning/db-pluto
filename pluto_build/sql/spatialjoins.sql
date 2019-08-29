@@ -1,7 +1,7 @@
 -- if a lot did not get assigned service areas through Geosupport assign service areas spatially
 
-DROP INDEX dcp_censusblocks_gix;
-CREATE INDEX dcp_censusblocks_gix ON dcp_censusblocks USING GIST (geom);
+-- DROP INDEX dcp_censusblocks_gix;
+-- CREATE INDEX dcp_censusblocks_gix ON dcp_censusblocks USING GIST (wkb_geometry);
 
 UPDATE pluto a
 SET xcoord = NULL
@@ -13,7 +13,7 @@ WHERE a.ycoord !~ '[0-9]';
 UPDATE pluto a
 SET cd = b.borocd
 FROM dcp_cdboundaries b
-WHERE ST_Within(ST_Transform(ST_SetSRID(ST_MakePoint(a.xcoord::double precision,a.ycoord::double precision),2263), 4326),b.geom)
+WHERE ST_Within(ST_Transform(ST_SetSRID(ST_MakePoint(a.xcoord::double precision,a.ycoord::double precision),2263), 4326),b.wkb_geometry)
 AND a.cd IS NULL
 AND a.xcoord IS NOT NULL;
 
@@ -21,56 +21,56 @@ UPDATE pluto a
 SET ct2010 = LEFT(b.ct2010,4)||'.'||RIGHT(b.ct2010,2),
 tract2010 = LEFT(b.ct2010,4)||'.'||RIGHT(b.ct2010,2)
 FROM dcp_censustracts b
-WHERE ST_Within(ST_Transform(ST_SetSRID(ST_MakePoint(a.xcoord::double precision,a.ycoord::double precision),2263), 4326),b.geom)
+WHERE ST_Within(ST_Transform(ST_SetSRID(ST_MakePoint(a.xcoord::double precision,a.ycoord::double precision),2263), 4326),b.wkb_geometry)
 AND (a.ct2010 IS NULL OR a.ct2010 = ' ')
 AND a.xcoord IS NOT NULL;
 
 UPDATE pluto a
 SET cb2010 = b.cb2010
 FROM dcp_censusblocks b
-WHERE ST_Within(ST_Transform(ST_SetSRID(ST_MakePoint(a.xcoord::double precision,a.ycoord::double precision),2263), 4326),b.geom)
+WHERE ST_Within(ST_Transform(ST_SetSRID(ST_MakePoint(a.xcoord::double precision,a.ycoord::double precision),2263), 4326),b.wkb_geometry)
 AND a.cb2010 IS NULL
 AND a.xcoord IS NOT NULL;
 
 UPDATE pluto a
 SET schooldist = b.schooldist
 FROM dcp_school_districts b
-WHERE ST_Within(ST_Transform(ST_SetSRID(ST_MakePoint(a.xcoord::double precision,a.ycoord::double precision),2263), 4326),b.geom)
+WHERE ST_Within(ST_Transform(ST_SetSRID(ST_MakePoint(a.xcoord::double precision,a.ycoord::double precision),2263), 4326),b.wkb_geometry)
 AND a.schooldist IS NULL
 AND a.xcoord IS NOT NULL;
 
 UPDATE pluto a
 SET council = ltrim(b.coundist::text, '0')
 FROM dcp_councildistricts b
-WHERE ST_Within(ST_Transform(ST_SetSRID(ST_MakePoint(a.xcoord::double precision,a.ycoord::double precision),2263), 4326),b.geom)
+WHERE ST_Within(ST_Transform(ST_SetSRID(ST_MakePoint(a.xcoord::double precision,a.ycoord::double precision),2263), 4326),b.wkb_geometry)
 AND a.council IS NULL
 AND a.xcoord IS NOT NULL;
 
 UPDATE pluto a
 SET firecomp = b.firecotype||lpad(b.fireconum::text,3,'0')
 FROM dcp_firecompanies b
-WHERE ST_Within(ST_Transform(ST_SetSRID(ST_MakePoint(a.xcoord::double precision,a.ycoord::double precision),2263), 4326),b.geom)
+WHERE ST_Within(ST_Transform(ST_SetSRID(ST_MakePoint(a.xcoord::double precision,a.ycoord::double precision),2263), 4326),b.wkb_geometry)
 AND a.firecomp IS NULL
 AND a.xcoord IS NOT NULL;
 
 UPDATE pluto a
 SET policeprct = b.precinct
 FROM dcp_policeprecincts b
-WHERE ST_Within(ST_Transform(ST_SetSRID(ST_MakePoint(a.xcoord::double precision,a.ycoord::double precision),2263), 4326),b.geom)
+WHERE ST_Within(ST_Transform(ST_SetSRID(ST_MakePoint(a.xcoord::double precision,a.ycoord::double precision),2263), 4326),b.wkb_geometry)
 AND a.policeprct IS NULL
 AND a.xcoord IS NOT NULL;
 
 UPDATE pluto a
 SET healthcenterdistrict = b.hcentdist
 FROM dcp_healthcenters b
-WHERE ST_Within(ST_Transform(ST_SetSRID(ST_MakePoint(a.xcoord::double precision,a.ycoord::double precision),2263), 4326),b.geom)
+WHERE ST_Within(ST_Transform(ST_SetSRID(ST_MakePoint(a.xcoord::double precision,a.ycoord::double precision),2263), 4326),b.wkb_geometry)
 AND a.healthcenterdistrict IS NULL
 AND a.xcoord IS NOT NULL;
 
 UPDATE pluto a
 SET healtharea = b.healtharea
 FROM dcp_healthareas b
-WHERE ST_Within(ST_Transform(ST_SetSRID(ST_MakePoint(a.xcoord::double precision,a.ycoord::double precision),2263), 4326),b.geom)
+WHERE ST_Within(ST_Transform(ST_SetSRID(ST_MakePoint(a.xcoord::double precision,a.ycoord::double precision),2263), 4326),b.wkb_geometry)
 AND a.healtharea IS NULL
 AND a.xcoord IS NOT NULL;
 

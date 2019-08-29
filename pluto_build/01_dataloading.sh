@@ -10,8 +10,8 @@ PUBLISH=$2
      && docker run -itd --name=$DB_CONTAINER_NAME\
             -v `pwd`:/home/pluto_build\
             -w /home/pluto_build\
-            --shm-size=1g\
-            --cpus=2\
+            --shm-size=2g\
+            --cpus=4\
             --env-file .env\
             -p 3484:5432\
             mdillon/postgis
@@ -90,13 +90,13 @@ if [ "$GEOCODE" == "yes" ]; then
 
     docker exec $DB_CONTAINER_NAME psql -h localhost -U postgres -c "
         ALTER TABLE pluto_input_geocodes
-            ADD wkb_geometry geometry(Geometry,4326);
+            ADD COLUMN IF NOT EXISTS wkb_geometry geometry(Geometry,4326);
 
         UPDATE pluto_input_geocodes
         SET wkb_geometry = ST_SetSRID(ST_Point(longitude::DOUBLE PRECISION,
                             latitude::DOUBLE PRECISION), 4326),
-            xcoord = ST_X(ST_TRANSFORM(wkb_geometry, 2263)),
-            ycoord = ST_Y(ST_TRANSFORM(wkb_geometry, 2263))
+            xcoord = ST_X(ST_TRANSFORM(wkb_geometry, 2263))::integer,
+            ycoord = ST_Y(ST_TRANSFORM(wkb_geometry, 2263))::integer
         ;
     "
     if [ "$PUBLISH" == "yes" ]; then

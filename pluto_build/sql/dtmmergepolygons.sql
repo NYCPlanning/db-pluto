@@ -12,29 +12,29 @@ FROM pluto_condo
 WHERE bbl=condo_base
 AND condo_bill IS NOT NULL;
 
--- create merged geometries for condo records
+-- create merged wkb_geometryetries for condo records
 DROP TABLE IF EXISTS pluto_dtm_condosmerged;
 CREATE TABLE pluto_dtm_condosmerged AS (
-SELECT primebbl, ST_Union(geom) geom
+SELECT primebbl, ST_Union(wkb_geometry) wkb_geometry
 FROM pluto_dtm
 WHERE primebbl IS NOT NULL
 GROUP BY primebbl);
--- create merged geometries for non-condo records
+-- create merged wkb_geometryetries for non-condo records
 DROP TABLE IF EXISTS pluto_dtm_noncondosmerged;
 CREATE TABLE pluto_dtm_noncondosmerged AS (
-SELECT bbl, ST_Union(geom) geom
+SELECT bbl, ST_Union(wkb_geometry) wkb_geometry
 FROM pluto_dtm
 WHERE bbl IS NOT NULL
 AND primebbl IS NULL
--- AND st_isvalidreason(geom) <> 'IllegalArgumentException: Invalid number of points in LinearRing found 3 - must be 0 or >= 4'
+-- AND st_isvalidreason(wkb_geometry) <> 'IllegalArgumentException: Invalid number of points in LinearRing found 3 - must be 0 or >= 4'
 GROUP BY bbl);
 -- merge condo and non condo records into one table
 DROP TABLE IF EXISTS pluto_dtm;
 CREATE TABLE pluto_dtm AS(
-	SELECT primebbl as bbl, 'Y' as condo, geom
+	SELECT primebbl as bbl, 'Y' as condo, wkb_geometry
 	FROM pluto_dtm_condosmerged
 	UNION ALL
-	SELECT bbl, NULL as condo, geom
+	SELECT bbl, NULL as condo, wkb_geometry
 	FROM pluto_dtm_noncondosmerged);
 -- merge condo and non condo records into one table
 DROP TABLE IF EXISTS pluto_dtm_condosmerged;

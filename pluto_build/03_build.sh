@@ -8,7 +8,8 @@ start=$(date +'%T')
 
 echo "Starting to build PLUTO"
 # docker exec pluto psql -U $DBUSER -d $DBNAME -f sql/pts_clean.sql
-docker exec pluto psql -U $DBUSER -d $DBNAME -f sql/create_rpad_geo.sql
+# docker exec pluto psql -U $DBUSER -d $DBNAME -f sql/create_rpad_geo.sql
+## no longer needed
 # docker exec pluto psql -U $DBUSER -d $DBNAME -f sql/geocode_nones.sql
 
 # echo 'Reporting records that did not get geocoded...'
@@ -58,7 +59,7 @@ docker exec pluto psql -U $DBUSER -d $DBNAME -f sql/create_rpad_geo.sql
 # docker exec pluto psql -U $DBUSER -d $DBNAME -f sql/address.sql
 # docker exec pluto psql -U $DBUSER -d $DBNAME -f sql/sanitboro.sql
 
-# echo 'Create base DTM'
+# # echo 'Create base DTM'
 # docker exec pluto psql -U $DBUSER -d $DBNAME -f sql/dedupecondotable.sql
 # docker exec pluto psql -U $DBUSER -d $DBNAME -f sql/dtmmergepolygons.sql
 # docker exec pluto psql -U $DBUSER -d $DBNAME -f sql/plutogeoms.sql
@@ -67,15 +68,15 @@ docker exec pluto psql -U $DBUSER -d $DBNAME -f sql/create_rpad_geo.sql
 
 # docker exec pluto psql -U $DBUSER -d $DBNAME -f sql/spatialindex.sql
 # echo 'Computing zoning fields'
-# docker exec pluto psql -U $DBUSER -d $DBNAME -f sql/zoning_zoningdistrict.sql
-# docker exec pluto psql -U $DBUSER -d $DBNAME -f sql/zoning_commercialoverlay.sql
-# docker exec pluto psql -U $DBUSER -d $DBNAME -f sql/zoning_specialdistrict.sql
-# docker exec pluto psql -U $DBUSER -d $DBNAME -f sql/zoning_limitedheight.sql
-# docker exec pluto psql -U $DBUSER -d $DBNAME -f sql/zoning_zonemap.sql
-# docker exec pluto psql -U $DBUSER -d $DBNAME -f sql/zoning_parks.sql
-# docker exec pluto psql -U $DBUSER -d $DBNAME -f sql/zoning_correctdups.sql
-# docker exec pluto psql -U $DBUSER -d $DBNAME -f sql/zoning_correctgaps.sql
-# docker exec pluto psql -U $DBUSER -d $DBNAME -f sql/zoning_splitzone.sql
+docker exec pluto psql -U $DBUSER -d $DBNAME -f sql/zoning_zoningdistrict.sql
+docker exec pluto psql -U $DBUSER -d $DBNAME -f sql/zoning_commercialoverlay.sql
+docker exec pluto psql -U $DBUSER -d $DBNAME -f sql/zoning_specialdistrict.sql
+docker exec pluto psql -U $DBUSER -d $DBNAME -f sql/zoning_limitedheight.sql
+docker exec pluto psql -U $DBUSER -d $DBNAME -f sql/zoning_zonemap.sql
+docker exec pluto psql -U $DBUSER -d $DBNAME -f sql/zoning_parks.sql
+docker exec pluto psql -U $DBUSER -d $DBNAME -f sql/zoning_correctdups.sql
+docker exec pluto psql -U $DBUSER -d $DBNAME -f sql/zoning_correctgaps.sql
+docker exec pluto psql -U $DBUSER -d $DBNAME -f sql/zoning_splitzone.sql
 # echo 'Filling in FAR values'
 # docker exec pluto psql -U $DBUSER -d $DBNAME -f sql/far.sql
 
