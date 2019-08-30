@@ -21,37 +21,40 @@ ON a.boro||a.tb||a.tl=b.borough||lpad(b.block,5,'0')||lpad(b.lot,4,'0')
 
 ALTER TABLE pluto_rpad_geo
 	RENAME communitydistrict TO cd;
+
 ALTER TABLE pluto_rpad_geo 
 	RENAME censustract2010 TO ct2010;
+
 ALTER TABLE pluto_rpad_geo 
 	RENAME censusblock2010 TO cb2010;
+
 ALTER TABLE pluto_rpad_geo 
 	RENAME communityschooldistrict TO schooldist;
+
 ALTER TABLE pluto_rpad_geo 
 	RENAME citycouncildistrict TO council;
+
 ALTER TABLE pluto_rpad_geo 
 	RENAME firecompanynumber TO firecomp;
+
 ALTER TABLE pluto_rpad_geo 
 	RENAME policeprecinct TO policeprct;
+
 ALTER TABLE pluto_rpad_geo
 	RENAME numberofexistingstructures TO numberOfExistingStructuresOnLot;
+
 ALTER TABLE pluto_rpad_geo 
 	RENAME sanitationcollectionscheduling TO sanitsub;
+	
 ALTER TABLE pluto_rpad_geo 
 	RENAME taxmapnumbersectionandvolume TO taxmap;
 
 ALTER TABLE pluto_rpad_geo 
-	ADD sanboro text, 
 	ADD sanitdistrict text,
 	ADD ap_datef text;
 
 UPDATE pluto_rpad_geo
-	SET sanboro = LEFT(sanitationdistrict,1)	
-	WHERE sanitationdistrict IS NOT NULL;
-
-UPDATE pluto_rpad_geo
-	SET sanitdistrict = RIGHT(sanitationdistrict,2)
-	WHERE sanitationdistrict IS NOT NULL;
+	SET sanitdistrict = sanitationdistrict;
 
 UPDATE pluto_rpad_geo
 	SET bbl = borough||lpad(block,5,'0')||lpad(lot,4,'0');
@@ -91,7 +94,7 @@ WITH geoms AS (
 	FROM pluto_rpad_geo a
 	WHERE a.longitude IS NOT NULL)
 UPDATE pluto_rpad_geo a
-SET xcoord = ST_X(ST_TRANSFORM(geom, 2263))::integer,
-ycoord = ST_Y(ST_TRANSFORM(geom, 2263))::integer
+SET xcoord = ST_X(ST_TRANSFORM(b.geom, 2263))::integer,
+ycoord = ST_Y(ST_TRANSFORM(b.geom, 2263))::integer
 FROM geoms b
 WHERE a.bbl = b.bbl;
