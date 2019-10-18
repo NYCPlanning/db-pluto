@@ -2,7 +2,7 @@
 -- compute the lot area from the geometry in sq feet
 
 -- Insert old and new values into tracking table
-INSERT INTO pluto_input_corrections b
+INSERT INTO pluto_corrections b
 SELECT DISTINCT a.bbl, 
 	'lotarea' as field, 
 	a.lotarea as old_value, 
@@ -10,11 +10,14 @@ SELECT DISTINCT a.bbl,
 FROM pluto a
 WHERE a.lotarea = '0' 
 	AND a.geom IS NOT NULL
-	AND a.bbl NOT IN (SELECT bbl FROM pluto_input_corrections WHERE field = 'lotarea');
+	AND a.bbl NOT IN (SELECT bbl FROM pluto_corrections WHERE field = 'lotarea');
 	
 -- Apply correction
-UPDATE pluto
-SET lotarea = round(ST_Area(ST_Transform(geom,2263)))::text,
+UPDATE pluto a
+SET lotarea = b.new_value,
 	dcpedited = 't'
-WHERE lotarea = '0' 
-	AND geom IS NOT NULL;
+FROM pluto_corrections b
+WHERE a.bbl = b.bbl
+	AND b.field = 'lotarea'
+	AND a.lotarea = '0' 
+	AND a.geom IS NOT NULL;

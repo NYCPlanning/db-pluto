@@ -1,6 +1,6 @@
 -- create table for tracking dcp edits
-DROP TABLE IF EXISTS pluto_input_corrections CASCADE;
-CREATE TABLE pluto_input_corrections (
+DROP TABLE IF EXISTS pluto_corrections CASCADE;
+CREATE TABLE pluto_corrections (
 	bbl text,
 	field text,
 	old_value text, 
