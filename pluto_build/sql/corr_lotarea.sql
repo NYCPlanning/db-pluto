@@ -2,7 +2,7 @@
 -- compute the lot area from the geometry in sq feet
 
 -- Insert old and new values into tracking table
-INSERT INTO pluto_corrections b
+INSERT INTO pluto_corrections
 SELECT DISTINCT a.bbl, 
 	'lotarea' as field, 
 	a.lotarea as old_value, 

@@ -11,7 +11,7 @@ WHERE a.ownername = b.old_value
 
 -- Apply correction to PLUTO
 UPDATE pluto a
-SET ownername = b.newownername,
+SET ownername = b.new_value,
 	dcpedited = 't'
 FROM pluto_input_corrections b
 WHERE a.ownername = b.old_value
