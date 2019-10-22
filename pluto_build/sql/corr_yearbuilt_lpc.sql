@@ -1,33 +1,21 @@
--- Take the year built from lpc_historic_districts
--- Insert new records into pluto_input_corrections for year built from LPC data
-INSERT INTO pluto_input_corrections
-WITH lpcyears AS (
-SELECT bbl, 
-	min(yearbuilt::numeric)::text as yearbuilt
-FROM lpc_historic_districts
-WHERE yearbuilt::numeric > 0
-GROUP BY bbl)
+-- Take the year built from researched lpc_historic_districts table
+-- Insert records into pluto_corrections for year built from LPC data
+INSERT INTO pluto_corrections
 SELECT DISTINCT a.bbl, 
 	'yearbuilt' as field, 
 	a.yearbuilt as old_value, 
-	b.yearbuilt as new_value
-FROM pluto a, lpcyears b
+	b.new_value as new_value
+FROM pluto a, pluto_input_research b
 WHERE a.bbl = b.bbl
-	AND a.yearbuilt<>b.yearbuilt
-	AND a.bbl NOT IN (SELECT bbl FROM pluto_input_corrections WHERE field = 'yearbuilt');
+	AND a.yearbuilt=b.old_value
+	AND b.field = 'yearbuilt'
+	AND a.bbl NOT IN (SELECT bbl FROM pluto_corrections WHERE field = 'yearbuilt');
 
--- Update records in pluto_input_corrections for year built from LPC data
-WITH lpcyears AS (
-SELECT bbl, 
-	min(yearbuilt::numeric)::text as yearbuilt
-FROM lpc_historic_districts
-WHERE yearbuilt::numeric > 0
-GROUP BY bbl)
-
-UPDATE pluto_input_corrections a
-SET new_value = b.yearbuilt
-FROM lpcyears b
+-- Apply correction to PLUTO
+UPDATE pluto a
+SET yearbuilt = b.new_value,
+	dcpedited = 't'
+FROM pluto_corrections b
 WHERE a.bbl = b.bbl
-	AND a.field = 'yearbuilt'
-	AND a.new_value<>b.yearbuilt
-	AND b.yearbuilt::numeric > 0;
+	AND b.field = 'yearbuilt'
+	AND a.yearbuilt=b.old_value;

@@ -9,5 +9,9 @@ DBNAME=$(cat $REPOLOC/pluto.config.json | jq -r '.DBNAME')
 DBUSER=$(cat $REPOLOC/pluto.config.json | jq -r '.DBUSER')
 
 start=$(date +'%T')
-echo "Starting to generate corrections for PLUTO"
+psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/corr_create.sql
+
+echo "Applying corrections to PLUTO"
+psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/corr_lotarea.sql
 psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/corr_yearbuilt_lpc.sql
+psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/corr_ownername_city.sql
