@@ -13,18 +13,20 @@ def ETL(geocode):
     importer.import_table(schema_name='dcp_zoningmapindex')
     importer.import_table(schema_name='lpc_historic_districts')
     importer.import_table(schema_name='lpc_landmarks')
+
     # for spatial joins
     importer.import_table(schema_name='dcp_cdboundaries')
     importer.import_table(schema_name='dcp_censustracts')
     importer.import_table(schema_name='dcp_censusblocks')
     importer.import_table(schema_name='dcp_school_districts')
     importer.import_table(schema_name='dcp_councildistricts')
-    # importer.import_table(schema_name='doitt_zipcodes')
+    importer.import_table(schema_name='doitt_zipcodeboundaries')
     importer.import_table(schema_name='dcp_firecompanies')
     importer.import_table(schema_name='dcp_policeprecincts')
     importer.import_table(schema_name='dcp_healthareas')
     importer.import_table(schema_name='dcp_healthcenters')
     importer.import_table(schema_name='dsny_frequencies')
+    importer.import_table(schema_name='dcp_pluto')
 
     # ## Other_datasets - PULLING FROM FTP or PLUTO GitHub repo
     importer.import_table(schema_name='dcp_zoning_maxfar')
