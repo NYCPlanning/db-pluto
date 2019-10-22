@@ -1,3 +1,8 @@
 /pluto_build/data/ftp
-.env
+*.env
 *.gz
+*/.ipynb_checkpoints/*
+.ipynb_checkpoints
+*/__pycache__/*
+*.DS_Store
+pluto_build/output/pluto.csv

@@ -10,8 +10,7 @@ PUBLISH=$2
      && docker run -itd --name=$DB_CONTAINER_NAME\
             -v `pwd`:/home/pluto_build\
             -w /home/pluto_build\
-            --shm-size=2g\
-            --cpus=4\
+            --shm-size=4g\
             --env-file .env\
             -p 3484:5432\
             mdillon/postgis
@@ -33,10 +32,6 @@ docker run --rm\
             -w /home/python\
             --env-file .env\
             sptkl/cook:latest python3 dataloading.py $GEOCODE
-
-# Do a pg_dump for backup
-echo 'backup input db to output/pluto.gz'
-docker exec pluto pg_dump -d postgres -U postgres | gzip > output/pluto.gz
 
 # if yes, then geocode, if no skip
 if [ "$GEOCODE" == "yes" ]; then
