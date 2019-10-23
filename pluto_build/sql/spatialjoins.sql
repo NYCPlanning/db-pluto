@@ -22,7 +22,7 @@ SET ct2010 = LEFT(b.ct2010,4)||'.'||RIGHT(b.ct2010,2),
 tract2010 = LEFT(b.ct2010,4)||'.'||RIGHT(b.ct2010,2)
 FROM dcp_censustracts b
 WHERE ST_Within(ST_Transform(ST_SetSRID(ST_MakePoint(a.xcoord::double precision,a.ycoord::double precision),2263), 4326),b.geom)
-AND (a.ct2010 IS NULL OR a.ct2010 = ' ' OR a.ct2010::numeric = 0)
+AND (a.ct2010 IS NULL OR a.ct2010::numeric = 0)
 AND a.xcoord IS NOT NULL;
 
 UPDATE pluto a
@@ -80,4 +80,11 @@ sanitsub = RIGHT(schedulecode,2)
 FROM dsny_frequencies b
 WHERE ST_Within(ST_Transform(ST_SetSRID(ST_MakePoint(a.xcoord::double precision,a.ycoord::double precision),2263), 4326),b.geom)
 AND (a.sanitsub IS NULL OR a.sanitsub = ' ')
+AND a.xcoord IS NOT NULL;
+
+UPDATE pluto a
+SET zipcode = b.zipcode
+FROM doitt_zipcodeboundaries b
+WHERE ST_Within(ST_Transform(ST_SetSRID(ST_MakePoint(a.xcoord::double precision,a.ycoord::double precision),2263), 4326),b.wkb_geometry)
+AND a.zipcode IS NULL
 AND a.xcoord IS NOT NULL;
