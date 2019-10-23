@@ -13,7 +13,12 @@ PUBLISH=$2
             --shm-size=4g\
             --env-file .env\
             -p 3484:5432\
-            mdillon/postgis
+            mdillon/postgis postgres -c work_mem=2GB\
+                                    -c max_wal_size=50GB\
+                                    -c shared_buffers=2GB\
+                                    -c max_parallel_workers_per_gather=4\
+                                    -c autovacuum_max_workers=4\
+                                    -c checkpoint_timeout=30min
 
 ## Wait for database to get ready, this might take 5 seconds of trys
 docker start $DB_CONTAINER_NAME
@@ -42,7 +47,7 @@ if [ "$GEOCODE" == "yes" ]; then
                 -w /home/python\
                 --env-file .env\
                 --network=host\
-                sptkl/docker-geosupport:19b2 bash -c "pip install pandas sqlalchemy psycopg2-binary; python3 geocode.py"
+                sptkl/docker-geosupport:19c bash -c "pip install pandas sqlalchemy psycopg2-binary; python3 geocode.py"
 
     docker exec $DB_CONTAINER_NAME psql -h localhost -U postgres -c "
     DROP TABLE IF EXISTS pluto_input_geocodes;

@@ -27,6 +27,7 @@ def ETL(geocode):
     importer.import_table(schema_name='dcp_healthcenters')
     importer.import_table(schema_name='dsny_frequencies')
     importer.import_table(schema_name='dcp_pluto')
+    importer.import_table(schema_name='dcp_mappluto', versoin='18v2_1')
 
     # ## Other_datasets - PULLING FROM FTP or PLUTO GitHub repo
     importer.import_table(schema_name='dcp_zoning_maxfar')
