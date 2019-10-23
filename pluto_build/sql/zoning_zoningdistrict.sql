@@ -25,6 +25,24 @@ DROP TABLE lotzoneperorderbk;
 DROP TABLE lotzoneperorderqn;
 DROP TABLE lotzoneperordersi;
 
+WITH new_order AS(
+  SELECT bbl, zonedist, ROW_NUMBER()
+  OVER(PARTITION BY bbl ORDER BY priority ASC) AS row_number
+    FROM (
+      SELECT * FROM lotzoneperorder
+      WHERE bbl in(SELECT bbl from(
+        SELECT bbl, MAX(segbblgeom) - MIN(segbblgeom) as diff 
+        FROM lotzoneperorder 
+        WHERE perbblgeom >= 10
+        group by bbl
+      ) a WHERE diff > 0 and diff < 0.01))a 
+      JOIN zonedist_priority 
+      USING (zonedist))
+UPDATE lotzoneperorder
+SET row_number = new_order.row_number
+FROM new_order
+WHERE lotzoneperorder.bbl = new_order.bbl 
+  AND lotzoneperorder.zonedist = new_order.zonedist; 
 
 -- update each of zoning district fields
 -- only say that a lot is within a zoning district if
