@@ -4,7 +4,7 @@
 -- a district is only assigned if more than 10% of the district covers the lot
 -- OR more than a specified area of the lot if covered by the district
 
-DROP TABLE commoverlayperorder;
+DROP TABLE IF EXISTS commoverlayperorder;
 CREATE TABLE commoverlayperorder AS (
 WITH 
 commoverlayper AS (
