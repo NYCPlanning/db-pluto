@@ -1,6 +1,7 @@
 /pluto_build/data/ftp
 *.env
 *.gz
+*.zip
 */.ipynb_checkpoints/*
 .ipynb_checkpoints
 */__pycache__/*

@@ -1,19 +1,19 @@
 -- Take the owner name from the normalized list
 -- Insert records into pluto_input_corrections
-INSERT INTO pluto_input_corrections
-SELECT DISTINCT a.bbl, 
+INSERT INTO pluto_input_research
+SELECT DISTINCT a.bbl::text, 
 	'ownername' as field, 
 	a.ownername as old_value, 
 	b.new_value as new_value
 FROM pluto a, pluto_input_research b
 WHERE a.ownername = b.old_value
-	AND a.bbl NOT IN (SELECT bbl FROM pluto_input_corrections WHERE field = 'ownername');
+	AND a.bbl NOT IN (SELECT bbl FROM pluto_input_research WHERE field = 'ownername');
 
 -- Apply correction to PLUTO
 UPDATE pluto a
 SET ownername = b.new_value,
 	dcpedited = 't'
-FROM pluto_input_corrections b
+FROM pluto_input_research b
 WHERE a.ownername = b.old_value
 AND b.field = 'ownername';
 
