@@ -27,16 +27,25 @@ WHERE geom IS NULL;
 -- WHERE appbbl IS NULL
 -- AND geom IS NOT NULL;
 
-UPDATE pluto a
-SET plutomapid = '4'
-FROM dof_shoreline_union b
-WHERE a.geom IS NOT NULL
-AND ST_Within(a.geom, b.geom)
-AND plutomapid = '1';
+-- UPDATE pluto a
+-- SET plutomapid = '4'
+-- FROM dof_shoreline_union b
+-- WHERE a.geom IS NOT NULL
+-- AND ST_Within(a.geom, b.geom)
+-- AND plutomapid = '1';
+
+-- UPDATE pluto a
+-- SET plutomapid = '5'
+-- FROM dof_shoreline_union b
+-- WHERE a.geom IS NOT NULL
+-- AND ST_Within(a.geom, b.geom)
+-- AND plutomapid = '3';
 
 UPDATE pluto a
-SET plutomapid = '5'
+SET plutomapid = (CASE 
+                      WHEN plutomapid = '3' THEN '5',
+                      WHEN plutomapid = '1' THEN '4'
+                 END)
 FROM dof_shoreline_union b
-WHERE a.geom IS NOT NULL
-AND ST_Within(a.geom, b.geom)
-AND plutomapid = '3';
+WHERE a.geom&&b.geom
+AND ST_Within(a.geom, b.geom);
