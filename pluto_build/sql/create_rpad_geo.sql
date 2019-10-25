@@ -1,6 +1,6 @@
 -- getting distinct BBLs FROM raw data
-ALTER TABLE pluto_input_geocodes
-RENAME bbl to geo_bbl;
+-- ALTER TABLE pluto_input_geocodes
+-- RENAME bbl to geo_bbl;
 
 DROP TABLE IF EXISTS pluto_rpad_geo;
 CREATE TABLE pluto_rpad_geo AS (
