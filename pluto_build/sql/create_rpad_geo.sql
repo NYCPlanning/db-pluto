@@ -58,30 +58,12 @@ UPDATE pluto_rpad_geo
 
 UPDATE pluto_rpad_geo
 	SET bbl = borough||lpad(block,5,'0')||lpad(lot,4,'0');
-
--- UPDATE pluto_rpad_geo
--- SET housenum_lo = NULL
--- WHERE housenum_lo = ' ';
-
--- UPDATE pluto_rpad_geo
--- SET street_name = NULL
--- WHERE street_name = ' ';
--- -- no longer need to do this because feet and inches are no longer split out
--- -- append the fraction of feet as a decimal place to feet for the 4 fields
--- UPDATE pluto_rpad_geo
--- SET lfft = lfft||'.'||lfin,
--- 	bfft = bfft||'.'||bfin,
--- 	bdft = bdft||'.'||bdin;
+    
 
 UPDATE pluto_rpad_geo
 	SET lfft = round(lfft::numeric, 2)::text,
 		bfft = round(bfft::numeric, 2)::text,
 		bdft = round(bdft::numeric, 2)::text;
--- -- no longer need to do this because feet and inches are no longer split out
--- -- do seperately for ldft because of Acre
--- UPDATE pluto_rpad_geo
--- SET ldft = ldft||'.'||ldin
--- WHERE ldft <> 'ACRE';
 
 UPDATE pluto_rpad_geo
 	SET ldft = round(ldft::numeric, 2)::text
