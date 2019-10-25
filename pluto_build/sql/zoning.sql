@@ -1,3 +1,28 @@
+UPDATE pluto a
+SET ltdheight = lhlbl
+FROM limitedheightperorder b
+WHERE a.bbl=b.bbl 
+AND perbblgeom >= 10;
+DROP TABLE IF EXISTS limitedheightperorder;
+
+UPDATE pluto a
+SET overlay1 = overlay
+FROM commoverlayperorder b
+WHERE a.bbl=b.bbl 
+AND row_number = 1
+AND (perbblgeom >= 10
+  OR perzonegeom >= 50);
+
+UPDATE pluto a
+SET overlay2 = overlay
+FROM commoverlayperorder b
+WHERE a.bbl=b.bbl 
+AND row_number = 2
+AND (perbblgeom >= 10
+  OR perzonegeom >= 50);
+
+DROP TABLE commoverlayperorder;
+
 -- add in zoning information from dcp_zoning_taxlot database
 UPDATE pluto a
 SET 
