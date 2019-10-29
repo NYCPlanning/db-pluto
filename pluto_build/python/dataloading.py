@@ -12,7 +12,6 @@ def ETL(geocode):
 
     importer.import_table(schema_name='dcp_edesignation')
     importer.import_table(schema_name='dcas_facilities_colp')
-    importer.import_table(schema_name='dcp_zoningmapindex')
     importer.import_table(schema_name='lpc_historic_districts')
     importer.import_table(schema_name='lpc_landmarks')
 
