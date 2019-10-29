@@ -77,5 +77,5 @@ if __name__ == "__main__":
     geocode=sys.argv[1]
     con = create_engine(os.getenv('BUILD_ENGINE'))
     df = pd.read_csv('https://raw.githubusercontent.com/NYCPlanning/db-pluto/dev/pluto_build/data/pluto_input_research.csv', index_col=False, dtype=str)
-    df.to_sql(con=con, name='pluto_input_research', if_exists='replace')
+    df.to_sql(con=con, name='pluto_input_research', if_exists='replace', index=False)
     ETL(geocode)
