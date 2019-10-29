@@ -15,6 +15,7 @@ PUBLISH=$2
             -p 3484:5432\
             mdillon/postgis postgres -c work_mem=2GB\
                                     -c max_wal_size=50GB\
+                                    -c min_wal_size=2GB\
                                     -c shared_buffers=2GB\
                                     -c max_parallel_workers_per_gather=4\
                                     -c autovacuum_max_workers=4\
