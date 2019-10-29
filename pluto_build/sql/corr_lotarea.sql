@@ -21,3 +21,9 @@ WHERE a.bbl = b.bbl
 	AND b.field = 'lotarea'
 	AND a.lotarea = '0' 
 	AND a.geom IS NOT NULL;
+	
+-- recalculate builtfar
+UPDATE pluto
+SET builtfar = round(bldgarea::numeric / lotarea::numeric, 2)
+WHERE lotarea <> '0' AND lotarea IS NOT NULL
+AND bbl IN (SELECT bbl FROM pluto_corrections WHERE field = 'lotarea');
