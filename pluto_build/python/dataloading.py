@@ -1,6 +1,8 @@
 from cook import Importer
 import os
 import sys
+import pandas as pd
+from sqlalchemy import create_engine
 
 def ETL(geocode):
     RECIPE_ENGINE = os.environ.get('RECIPE_ENGINE', '')
@@ -10,7 +12,6 @@ def ETL(geocode):
 
     importer.import_table(schema_name='dcp_edesignation')
     importer.import_table(schema_name='dcas_facilities_colp')
-    importer.import_table(schema_name='dcp_zoningmapindex')
     importer.import_table(schema_name='lpc_historic_districts')
     importer.import_table(schema_name='lpc_landmarks')
 
@@ -27,7 +28,7 @@ def ETL(geocode):
     importer.import_table(schema_name='dcp_healthcenters')
     importer.import_table(schema_name='dsny_frequencies')
     importer.import_table(schema_name='dcp_pluto')
-    importer.import_table(schema_name='dcp_mappluto', versoin='18v2_1')
+    importer.import_table(schema_name='dcp_mappluto')
 
     # ## Other_datasets - PULLING FROM FTP or PLUTO GitHub repo
     importer.import_table(schema_name='dcp_zoning_maxfar')
@@ -73,4 +74,7 @@ def ETL(geocode):
 
 if __name__ == "__main__":
     geocode=sys.argv[1]
+    con = create_engine(os.getenv('BUILD_ENGINE'))
+    df = pd.read_csv('https://raw.githubusercontent.com/NYCPlanning/db-pluto/dev/pluto_build/data/pluto_input_research.csv', index_col=False, dtype=str)
+    df.to_sql(con=con, name='pluto_input_research', if_exists='replace', index=False)
     ETL(geocode)

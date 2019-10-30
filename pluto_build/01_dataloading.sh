@@ -15,7 +15,11 @@ PUBLISH=$2
             -p 3484:5432\
             mdillon/postgis postgres -c work_mem=2GB\
                                     -c max_wal_size=50GB\
+                                    -c min_wal_size=2GB\
                                     -c shared_buffers=2GB\
+                                    -c parallel_tuple_cost=0.01\
+                                    -c parallel_setup_cost=10\
+                                    -c max_worker_processes=8\
                                     -c max_parallel_workers_per_gather=4\
                                     -c autovacuum_max_workers=4\
                                     -c checkpoint_timeout=30min
@@ -36,7 +40,7 @@ docker run --rm\
             -v `pwd`/python:/home/python\
             -w /home/python\
             --env-file .env\
-            sptkl/cook:latest python3 dataloading.py $GEOCODE
+            sptkl/cook:latest python3 fastloading.py $GEOCODE
 
 # if yes, then geocode, if no skip
 if [ "$GEOCODE" == "yes" ]; then
