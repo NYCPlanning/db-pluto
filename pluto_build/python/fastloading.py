@@ -74,7 +74,7 @@ if __name__ == "__main__":
             'dcp_specialpurpose', 
             'dcp_specialpurposesubdistricts', 
             'dcp_zoningmapamendments', 
-            'dcp_zoningmapindex ', 
+            'dcp_zoningmapindex', 
 
             # FEMA 2007 and preliminary 2015 100 year flood zones 
             'fema_firms2007_100yr', 

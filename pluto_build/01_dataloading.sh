@@ -40,7 +40,7 @@ docker run --rm\
             -v `pwd`/python:/home/python\
             -w /home/python\
             --env-file .env\
-            sptkl/cook:latest python3 dataloading.py $GEOCODE
+            sptkl/cook:latest python3 fastloading.py $GEOCODE
 
 # if yes, then geocode, if no skip
 if [ "$GEOCODE" == "yes" ]; then
