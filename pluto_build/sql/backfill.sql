@@ -5,7 +5,7 @@ RENAME COLUMN wkb_geometry TO geom;
 UPDATE pluto a
 SET lotarea = b.lotarea
 FROM dcp_mappluto b
-WHERE a.bbl=b.bbl::bigint:text
+WHERE a.bbl=b.bbl::bigint::text
 AND a.lotarea = '0'
 AND b.lotarea <> 0
 AND (((ST_Area(ST_Transform(a.geom,2263))::numeric - ST_Area(ST_Transform(b.geom,2263))::numeric) / ST_Area(ST_Transform(b.geom,2263))::numeric) < 5 
@@ -16,7 +16,7 @@ UPDATE pluto a
 SET lotfront = b.lotfront,
 	lotdepth = b.lotdepth
 FROM dcp_mappluto b
-WHERE a.bbl=b.bbl::bigint:text
+WHERE a.bbl=b.bbl::bigint::text
 AND a.lotfront::numeric = 0
 AND a.lotdepth::numeric = 0
 AND (b.lotfront::numeric > 0 OR b.lotdepth > 0)
@@ -27,7 +27,7 @@ UPDATE pluto a
 SET bldgfront = b.bldgfront,
 	bldgdepth = b.bldgdepth
 FROM dcp_mappluto b
-WHERE a.bbl=b.bbl::bigint:text
+WHERE a.bbl=b.bbl::bigint::text
 AND a.bldgfront::numeric = 0
 AND a.bldgdepth::numeric = 0
 AND (b.bldgfront::numeric > 0 OR b.bldgdepth::numeric > 0)
@@ -44,7 +44,7 @@ WHERE lotarea <> '0' AND lotarea IS NOT NULL;
 UPDATE pluto a
 SET irrlotcode = b.irrlotcode
 FROM dcp_mappluto b
-WHERE a.bbl=b.bbl::bigint:text
+WHERE a.bbl=b.bbl::bigint::text
 AND a.lotfront::numeric = b.lotfront::numeric
 AND a.lotdepth::numeric = b.lotdepth::numeric
 AND b.irrlotcode = 'Y';
@@ -66,14 +66,14 @@ WHERE yearalter2::numeric < 1600;
 UPDATE pluto a
 SET zipcode = b.zipcode
 FROM dcp_mappluto b
-WHERE a.bbl=b.bbl::bigint:text
+WHERE a.bbl=b.bbl::bigint::text
 AND length(b.zipcode::text) = 5
 AND a.zipcode IS NULL;
 
 UPDATE pluto a
 SET zipcode = b.zipcode
 FROM dcp_mappluto b
-WHERE a.bbl=b.bbl::bigint:text
+WHERE a.bbl=b.bbl::bigint::text
 AND (a.zipcode::numeric<>b.zipcode::numeric)
 AND length(b.zipcode::text) = 5;
 

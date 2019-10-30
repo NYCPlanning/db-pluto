@@ -1,4 +1,4 @@
-#!/bin/bash
+# #!/bin/bash
 # load config
 DBNAME='postgres'
 DBUSER='postgres'
@@ -67,7 +67,7 @@ docker exec pluto psql -U $DBUSER -d $DBNAME -f sql/geomclean.sql
 docker exec pluto psql -U $DBUSER -d $DBNAME -f sql/shorelineclip.sql
 docker exec pluto psql -U $DBUSER -d $DBNAME -f sql/spatialindex.sql
 
-# echo '\nComputing zoning fields \e[32m'
+echo '\nComputing zoning fields \e[32m'
 docker exec pluto psql -U $DBUSER -d $DBNAME -f sql/zoning_create_priority.sql&
 docker exec pluto psql -U $DBUSER -d $DBNAME -f sql/zoning_zoningdistrict_mn.sql&
 docker exec pluto psql -U $DBUSER -d $DBNAME -f sql/zoning_zoningdistrict_qn.sql&

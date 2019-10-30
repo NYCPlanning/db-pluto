@@ -27,16 +27,63 @@ WHERE geom IS NULL;
 -- WHERE appbbl IS NULL
 -- AND geom IS NOT NULL;
 
+-- UPDATE pluto a
+-- SET plutomapid = '4'
+-- FROM dof_shoreline_union b
+-- WHERE a.geom IS NOT NULL
+-- AND ST_Within(a.geom, b.geom)
+-- AND plutomapid = '1';
+
+-- UPDATE pluto a
+-- SET plutomapid = '5'
+-- FROM dof_shoreline_union b
+-- WHERE a.geom IS NOT NULL
+-- AND ST_Within(a.geom, b.geom)
+-- AND plutomapid = '3';
+
+DROP TABLE IF EXISTS dof_shoreline_subdivide;
+CREATE TABLE dof_shoreline_subdivide as (
+     select ST_SubDivide(ST_MakeValid(geom), 10) as geom
+    from dof_shoreline_union);
+DROP INDEX IF EXISTS shore_subdivide_idx;
+CREATE INDEX shore_subdivide_idx on dof_shoreline_subdivide USING GIST(geom);
+
+WITH 
+pluto_shore_intersection as (
+	select a.bbl as bbl, a.geom as pluto_geom, b.geom as geom
+	from pluto a, dof_shoreline_subdivide b
+	where a.plutomapid = '1' 
+        and a.geom IS NOT NULL
+        and a.geom&&ST_MakeValid(b.geom) 
+        and ST_intersects(a.geom, ST_MakeValid(b.geom))),
+new_shoreline as (
+    select st_union(geom) as geom
+    from pluto_shore_intersection),
+pluto_within as (
+	select a.bbl as bbl, a.pluto_geom as geom 
+	from pluto_shore_intersection a, new_shoreline b
+	where ST_within(a.pluto_geom, b.geom))
 UPDATE pluto a
 SET plutomapid = '4'
-FROM dof_shoreline_union b
-WHERE a.geom IS NOT NULL
-AND ST_Within(a.geom, b.geom)
-AND plutomapid = '1';
+FROM pluto_within b
+WHERE a.bbl = b.bbl;
 
+WITH 
+pluto_shore_intersection as (
+	select a.bbl as bbl, a.geom as pluto_geom, b.geom as geom
+	from pluto a, dof_shoreline_subdivide b
+	where a.plutomapid = '3' 
+        and a.geom IS NOT NULL
+        and a.geom&&ST_MakeValid(b.geom) 
+        and ST_intersects(a.geom, ST_MakeValid(b.geom))),
+new_shoreline as (
+    select st_union(geom) as geom
+    from pluto_shore_intersection),
+pluto_within as (
+	select a.bbl as bbl, a.pluto_geom as geom 
+	from pluto_shore_intersection a, new_shoreline b
+	where ST_within(a.pluto_geom, b.geom))
 UPDATE pluto a
 SET plutomapid = '5'
-FROM dof_shoreline_union b
-WHERE a.geom IS NOT NULL
-AND ST_Within(a.geom, b.geom)
-AND plutomapid = '3';
+FROM pluto_within b
+WHERE a.bbl = b.bbl;
