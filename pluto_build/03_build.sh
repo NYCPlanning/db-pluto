@@ -1,4 +1,4 @@
-# #!/bin/bash
+#!/bin/sh
 # load config
 DBNAME='postgres'
 DBUSER='postgres'
@@ -96,8 +96,8 @@ docker exec pluto psql -U $DBUSER -d $DBNAME -f sql/landuse.sql
 echo '\nFlagging tax lots within the FEMA floodplain \e[32m'
 docker exec pluto psql -U $DBUSER -d $DBNAME -f sql/flood_flag.sql
 
-echo '\nBackfilling'
-docker exec pluto psql -U $DBUSER -d $DBNAME -f sql/backfill.sql
+# echo '\nBackfilling'
+# docker exec pluto psql -U $DBUSER -d $DBNAME -f sql/backfill.sql
 
 echo '\nAdding in geometries that are in the DTM but not in RPAD'
 docker exec pluto psql -U $DBUSER -d $DBNAME -f sql/dtmgeoms.sql
