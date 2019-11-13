@@ -13,5 +13,5 @@ psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/corr_create.sql
 
 echo "Applying corrections to PLUTO"
 psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/corr_lotarea.sql
-psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/corr_yearbuilt_lpc.sql
+# psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/corr_yearbuilt_lpc.sql
 psql -U $DBUSER -d $DBNAME -f $REPOLOC/pluto_build/sql/corr_ownername_city.sql
