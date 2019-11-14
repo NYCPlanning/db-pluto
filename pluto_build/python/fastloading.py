@@ -22,10 +22,14 @@ def ETL(table):
     importer.import_table(schema_name=table)
 
 if __name__ == "__main__":
-    geocode=sys.argv[1]
+#     geocode=sys.argv[1]
     con = create_engine(os.getenv('BUILD_ENGINE'))
+    os.system('echo "loading pluto_input_research ..."')
     df = pd.read_csv('https://raw.githubusercontent.com/NYCPlanning/db-pluto/dev/pluto_build/data/pluto_input_research.csv', index_col=False, dtype=str)
     df.to_sql(con=con, name='pluto_input_research', if_exists='replace', index=False)
+    os.system('echo "loading pluto_input_corrections ..."')
+    df = pd.read_csv('https://raw.githubusercontent.com/NYCPlanning/db-pluto/dev/pluto_build/data/pluto_input_corrections.csv', index_col=False, dtype=str)
+    df.to_sql(con=con, name='pluto_input_corrections', if_exists='replace', index=False)
 
     tables = ['dcp_edesignation', 
             'dcas_facilities_colp', 
@@ -53,7 +57,7 @@ if __name__ == "__main__":
             'pluto_input_landuse_bldgclass', 
             'pluto_input_condo_bldgclass', 
             'pluto_pts', 
-            'pluto_input_geocodes', 
+            'pluto_input_geocodes',
 
              # raw CAMA data from DOF
             'pluto_input_cama_dof', 
@@ -84,4 +88,4 @@ if __name__ == "__main__":
     with Pool(processes=cpu_count()) as pool:
         pool.map(ETL, tables)
 
-    GEO(geocode)
+#     GEO(geocode)
