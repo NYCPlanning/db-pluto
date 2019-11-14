@@ -2,6 +2,10 @@
 ALTER TABLE pluto_input_geocodes
 RENAME bbl to geo_bbl;
 
+UPDATE pluto_input_geocodes
+SET xcoord = ST_X(ST_TRANSFORM(geom, 2263))::integer,
+    ycoord = ST_Y(ST_TRANSFORM(geom, 2263))::integer;
+
 DROP TABLE IF EXISTS pluto_rpad_geo;
 CREATE TABLE pluto_rpad_geo AS (
 WITH pluto_rpad_rownum AS (
