@@ -1,6 +1,6 @@
 -- Take the owner name from the normalized list
 -- Insert records into pluto_input_corrections
-INSERT INTO pluto_input_corrections
+INSERT INTO pluto_corrections
 SELECT DISTINCT a.bbl, 
 	'ownername' as field, 
 	a.ownername as old_value, 
@@ -13,7 +13,7 @@ WHERE a.ownername = b.old_value
 UPDATE pluto a
 SET ownername = b.new_value,
 	dcpedited = 't'
-FROM pluto_input_corrections b
+FROM pluto_corrections b
 WHERE a.ownername = b.old_value
 AND b.field = 'ownername';
 

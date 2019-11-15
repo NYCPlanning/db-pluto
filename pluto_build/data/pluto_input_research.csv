@@ -92,3 +92,6 @@ bbl,field,old_value,new_value,reason
 ,ownername,NYCT,NYC TRANSIT AUTHORITY,city agency normalized
 ,ownername,NYC OCME,NYC OFFICE OF THE CHIEF MEDICAL EXAMINER,city agency normalized
 ,ownername,DEPT OF ENVIRONMENTAL PROTECTION,NYC DEPARTMENT OF ENVIRONMENTAL PROTECTION,city agency normalized
+1013450031,yearbuilt,1939,1958,DCP researched year
+3053000045,lotarea,46700,24974,DCP researched lot area
+2033570016,lotarea,2252,4576,DCP researched lot area
