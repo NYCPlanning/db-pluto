@@ -28,3 +28,5 @@ docker exec pluto psql -U $DBUSER -d $DBNAME  -c "\COPY (SELECT * FROM pluto) TO
 rm -f output/pluto_w_corrections.zip
 zip output/pluto_w_corrections.zip output/pluto_w_corrections.csv
 rm -f output/pluto_w_corrections.csv
+
+docker exec pluto psql -U $DBUSER -d $DBNAME  -c "\COPY (SELECT * FROM pluto_corrections) TO 'output/pluto_corrections.csv' DELIMITER ',' CSV HEADER;"
