@@ -25,5 +25,6 @@ docker exec pluto bash -c '
 echo "Exporting pluto csv and shapefile"
 docker exec pluto psql -U $DBUSER -d $DBNAME  -c "\COPY (SELECT * FROM pluto) TO 'output/pluto_w_corrections.csv' DELIMITER ',' CSV HEADER;"
 
+rm -f output/pluto_w_corrections.zip
 zip output/pluto_w_corrections.zip output/pluto_w_corrections.csv
 rm -f output/pluto_w_corrections.csv
