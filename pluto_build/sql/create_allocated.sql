@@ -139,12 +139,12 @@ FROM primesums b
 WHERE a.bbl=b.primebbl;
 
 -- fill in missing attributes from supplementary table (temp solution)
--- UPDATE pluto_allocated a
--- SET lotarea = b.landsize,
--- 	numfloors = b.story,
--- 	yearbuilt = b.yearbuilt
--- FROM pluto_input_condolot_descriptiveattributes b
--- WHERE a.bbl = b.parid
--- AND a.lotarea::numeric = 0 
--- AND a.numfloors::numeric = 0 
--- AND a.yearbuilt::numeric = 0;
+UPDATE pluto_allocated a
+SET lotarea = b.landsize,
+	numfloors = b.story,
+	yearbuilt = b.yearbuilt
+FROM pluto_input_condolot_descriptiveattributes b
+WHERE a.bbl = b.parid
+AND a.lotarea::numeric = 0 
+AND a.numfloors::numeric = 0 
+AND a.yearbuilt::numeric = 0;
