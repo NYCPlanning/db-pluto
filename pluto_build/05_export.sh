@@ -10,9 +10,11 @@ DBUSER=postgres
 echo "Exporting pluto csv and shapefile"
 docker exec pluto psql -U $DBUSER -d $DBNAME  -c "\COPY (SELECT * FROM pluto) TO 'output/pluto.csv' DELIMITER ',' CSV HEADER;"
 
+rm output/pluto.zip
 zip output/pluto.zip output/pluto.csv
 rm -f output/pluto.csv
 
+rm output/mappluto.zip
 docker exec pluto pgsql2shp -u $DBUSER -f output/mappluto $DBNAME "SELECT ST_Transform(geom, 2263) FROM pluto WHERE geom IS NOT NULL"
 zip output/mappluto.zip output/mappluto*
 rm -f output/mappluto.cpg

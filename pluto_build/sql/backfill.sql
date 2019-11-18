@@ -82,8 +82,8 @@ ALTER TABLE pluto
 DROP COLUMN mappluto_f;
 
 -- # Create table where areas were updated based on 18v2.1 values
--- DROP TABLE IF EXISTS pluto_backfill18v21;
--- CREATE TABLE pluto_backfill18v21 AS (
+-- DROP TABLE IF EXISTS pluto_backfill;
+-- CREATE TABLE pluto_backfill AS (
 -- SELECT a.bbl, a.lotarea, b.lotarea as lotareaprev, c.lotarea as lotarea18v21, a.lotfront, b.lotfront as lotfrontprev, c.lotfront as lotfront18v21, a.lotdepth, b.lotdepth as lotdepthprev, c.lotdepth as lotdepth18v21, a.bldgfront, b.bldgfront as bldgfrontprev, c.bldgfront as bldgfront18v21, a.bldgdepth, b.bldgdepth as bldgdepthprev, c.bldgdepth as bldgdepth18v21, a.builtfar
 -- FROM pluto a, pluto_19v1backup b, dcp_mappluto c
 -- WHERE a.bbl=b.bbl AND a.bbl||'.00'=c.bbl::text

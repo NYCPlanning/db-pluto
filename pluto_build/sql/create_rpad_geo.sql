@@ -4,7 +4,10 @@ RENAME bbl to geo_bbl;
 
 UPDATE pluto_input_geocodes
 SET xcoord = ST_X(ST_TRANSFORM(geom, 2263))::integer,
-    ycoord = ST_Y(ST_TRANSFORM(geom, 2263))::integer;
+    ycoord = ST_Y(ST_TRANSFORM(geom, 2263))::integer,
+    censustract2010 = (CASE 
+                       WHEN censustract2010::numeric = 0 THEN NULL
+                       ELSE censustract2010 END);
 
 DROP TABLE IF EXISTS pluto_rpad_geo;
 CREATE TABLE pluto_rpad_geo AS (
