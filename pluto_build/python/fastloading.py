@@ -5,16 +5,6 @@ import pandas as pd
 from sqlalchemy import create_engine
 from multiprocessing import Pool, cpu_count
 
-def GEO(geocode):
-    RECIPE_ENGINE = os.environ.get('RECIPE_ENGINE', '')
-    BUILD_ENGINE=os.environ.get('BUILD_ENGINE', '')
-    importer = Importer(RECIPE_ENGINE, BUILD_ENGINE)
-    # Geocoded RPAD data
-    if geocode == 'no':
-        importer.import_table(schema_name='pluto_input_geocodes')
-    else: 
-        pass
-
 def ETL(table): 
     RECIPE_ENGINE = os.environ.get('RECIPE_ENGINE', '')
     BUILD_ENGINE=os.environ.get('BUILD_ENGINE', '')
@@ -22,14 +12,10 @@ def ETL(table):
     importer.import_table(schema_name=table)
 
 if __name__ == "__main__":
-#     geocode=sys.argv[1]
     con = create_engine(os.getenv('BUILD_ENGINE'))
     os.system('echo "loading pluto_input_research ..."')
     df = pd.read_csv('https://raw.githubusercontent.com/NYCPlanning/db-pluto/dev/pluto_build/data/pluto_input_research.csv', index_col=False, dtype=str)
     df.to_sql(con=con, name='pluto_input_research', if_exists='replace', index=False)
-    os.system('echo "loading pluto_input_corrections ..."')
-    df = pd.read_csv('https://raw.githubusercontent.com/NYCPlanning/db-pluto/dev/pluto_build/data/pluto_input_corrections.csv', index_col=False, dtype=str)
-    df.to_sql(con=con, name='pluto_input_corrections', if_exists='replace', index=False)
 
     tables = ['dcp_edesignation', 
             'dcas_facilities_colp', 
@@ -87,5 +73,3 @@ if __name__ == "__main__":
 
     with Pool(processes=cpu_count()) as pool:
         pool.map(ETL, tables)
-
-#     GEO(geocode)
