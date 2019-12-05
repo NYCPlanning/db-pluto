@@ -101,42 +101,55 @@ AND b.condo_number IS NOT NULL
 AND b.condo_number <> '0';
 
 -- populate the fields that where values are aggregated
--- Building area
-WITH bldgareasums AS (
-SELECT SUM(b.gross_sqft::numeric) AS bldgareasum, 
-	primebbl
-	FROM pluto_rpad_geo b
-	WHERE b.tl NOT LIKE '75%'
-	AND b.condo_number IS NOT NULL
-	AND b.condo_number <> '0'
-	GROUP BY primebbl)
-UPDATE pluto_allocated a
-SET bldgarea = bldgareasum
-FROM bldgareasums b
-WHERE a.bbl=b.primebbl;
-
--- $ fields
+-- for records regular lots and groups with units BBLs (condos)
 WITH primesums AS (
-	SELECT primebbl,
+SELECT primebbl,
 	SUM(coop_apts::integer) as unitsres,
 	SUM(units::integer) as unitstotal,
 	SUM(curavl_act::double precision) as assessland,
 	SUM(curavt_act::double precision) as assesstot,
-	-- field no longer exists
-	-- SUM(curexl_act::double precision) as exemptland,
-	SUM(curext_act::double precision) as exempttot
-	FROM pluto_rpad_geo
+	-- SUM(curexl_act::double precision) as exemptland, -- field no longer exists
+	SUM(curext_act::double precision) as exempttot,
+	SUM(b.gross_sqft::numeric) AS bldgareasum
+	FROM pluto_rpad_geo b
+	WHERE b.tl NOT LIKE '75%'
 	GROUP BY primebbl)
-
 UPDATE pluto_allocated a
 SET unitsres = b.unitsres,
 	unitstotal = b.unitstotal,
 	assessland = b.assessland,
 	assesstot = b.assesstot,
 	-- exemptland = b.exemptland,
-	exempttot = b.exempttot
+	exempttot = b.exempttot,
+	bldgarea = b.bldgareasum
 FROM primesums b
 WHERE a.bbl=b.primebbl;
+
+-- for condo records without units BBLs (condos)
+WITH primesums AS (
+	SELECT primebbl,
+	SUM(coop_apts::integer) as unitsres,
+	SUM(units::integer) as unitstotal,
+	SUM(curavl_act::double precision) as assessland,
+	SUM(curavt_act::double precision) as assesstot,
+	-- SUM(curexl_act::double precision) as exemptland, -- field no longer exists
+	SUM(curext_act::double precision) as exempttot,
+	SUM(b.gross_sqft::numeric) AS bldgareasum, 
+	COUNT(*) 
+	FROM pluto_rpad_geo b
+	WHERE RIGHT(primebbl,4) LIKE '75%'
+	GROUP BY primebbl)
+UPDATE pluto_allocated a
+SET unitsres = b.unitsres,
+	unitstotal = b.unitstotal,
+	assessland = b.assessland,
+	assesstot = b.assesstot,
+	-- exemptland = b.exemptland,
+	exempttot = b.exempttot,
+	bldgarea = b.bldgareasum
+FROM primesums b
+WHERE a.bbl=b.primebbl 
+AND count = 1);
 
 -- fill in missing attributes from supplementary table (temp solution)
 UPDATE pluto_allocated a
