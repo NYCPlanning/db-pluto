@@ -4,11 +4,13 @@
 -- CREATE INDEX dcp_censusblocks_gix ON dcp_censusblocks USING GIST (geom);
 
 -- make the x /y coordinate the centroid of the lot
--- where x/ y did not come from 
+-- where x/ y did not come from Geosupport
 UPDATE pluto a
-SET xcoord = ST_X(ST_Centroid(ST_Transform(geom,2263)));
+SET xcoord = ST_X(ST_Centroid(ST_Transform(geom,2263)))
+WHERE xcoord IS NULL;
 UPDATE pluto a
-SET ycoord = ST_Y(ST_Centroid(ST_Transform(geom,2263)));
+SET ycoord = ST_Y(ST_Centroid(ST_Transform(geom,2263)))
+WHERE ycoord IS NULL;
 
 UPDATE pluto a
 SET cd = b.borocd
