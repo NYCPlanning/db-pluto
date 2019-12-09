@@ -30,7 +30,6 @@ docker exec pluto psql -U $DBUSER -d $DBNAME -f sql/allocated.sql
 
 echo '\nAdding on spatial data attributes \e[32m'
 docker exec pluto psql -U $DBUSER -d $DBNAME -f sql/geocodes.sql
-docker exec pluto psql -U $DBUSER -d $DBNAME -f sql/spatialjoins.sql
 # clean up numeric fields
 docker exec pluto psql -U $DBUSER -d $DBNAME -f sql/numericfields.sql
 docker exec pluto psql -U $DBUSER -d $DBNAME -f sql/condono.sql
@@ -57,7 +56,6 @@ docker exec pluto psql -U $DBUSER -d $DBNAME -f sql/irrlotcode.sql
 
 echo '\nAdding DCP data attributes \e[32m'
 docker exec pluto psql -U $DBUSER -d $DBNAME -f sql/address.sql
-docker exec pluto psql -U $DBUSER -d $DBNAME -f sql/sanitboro.sql
 
 echo '\nCreate base DTM \e[32m'
 docker exec pluto psql -U $DBUSER -d $DBNAME -f sql/dedupecondotable.sql
@@ -85,7 +83,6 @@ docker exec pluto psql -U $DBUSER -d $DBNAME -f sql/zoning_correctdups.sql
 docker exec pluto psql -U $DBUSER -d $DBNAME -f sql/zoning_correctgaps.sql
 docker exec pluto psql -U $DBUSER -d $DBNAME -f sql/zoning_splitzone.sql
 
-
 echo '\nFilling in FAR values \e[32m'
 docker exec pluto psql -U $DBUSER -d $DBNAME -f sql/far.sql
 
@@ -93,14 +90,18 @@ echo '\nPopulating building class for condos lots and land use field \e[32m'
 docker exec pluto psql -U $DBUSER -d $DBNAME -f sql/bldgclass.sql
 docker exec pluto psql -U $DBUSER -d $DBNAME -f sql/landuse.sql
 
-echo '\nFlagging tax lots within the FEMA floodplain \e[32m'
-docker exec pluto psql -U $DBUSER -d $DBNAME -f sql/flood_flag.sql
-
 echo '\nAdding in geometries that are in the DTM but not in RPAD'
 docker exec pluto psql -U $DBUSER -d $DBNAME -f sql/dtmgeoms.sql
 docker exec pluto psql -U $DBUSER -d $DBNAME -f sql/geomclean.sql
 
+echo '\nFlagging tax lots within the FEMA floodplain \e[32m'
+docker exec pluto psql -U $DBUSER -d $DBNAME -f sql/flood_flag.sql
+echo '\nAssigning political values with spatial join \e[32m'
+docker exec pluto psql -U $DBUSER -d $DBNAME -f sql/spatialjoins.sql
 docker exec pluto psql -U $DBUSER -d $DBNAME -f sql/spatialjoins_centroid.sql
+# clean up numeric fields
+docker exec pluto psql -U $DBUSER -d $DBNAME -f sql/numericfields_geom.sql
+docker exec pluto psql -U $DBUSER -d $DBNAME -f sql/sanitboro.sql
 docker exec pluto psql -U $DBUSER -d $DBNAME -f sql/latlong.sql
 
 
