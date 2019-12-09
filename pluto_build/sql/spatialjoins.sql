@@ -81,3 +81,10 @@ FROM dsny_frequencies b
 WHERE ST_Within(ST_Transform(ST_SetSRID(ST_MakePoint(a.xcoord::double precision,a.ycoord::double precision),2263), 4326),b.wkb_geometry)
 AND (a.sanitsub IS NULL OR a.sanitsub = ' ')
 AND a.xcoord IS NOT NULL;
+
+UPDATE pluto a
+SET zipcode = b.zipcode
+FROM doitt_zipcodeboundaries b
+WHERE ST_Within(ST_Transform(ST_SetSRID(ST_MakePoint(a.xcoord::double precision,a.ycoord::double precision),2263), 4326),b.wkb_geometry)
+AND a.zipcode IS NULL
+AND a.xcoord IS NOT NULL;
