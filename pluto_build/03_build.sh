@@ -100,6 +100,10 @@ echo '\nAdding in geometries that are in the DTM but not in RPAD'
 docker exec pluto psql -U $DBUSER -d $DBNAME -f sql/dtmgeoms.sql
 docker exec pluto psql -U $DBUSER -d $DBNAME -f sql/geomclean.sql
 
+docker exec pluto psql -U $DBUSER -d $DBNAME -f sql/spatialjoins_centroid.sql
+docker exec pluto psql -U $DBUSER -d $DBNAME -f sql/latlong.sql
+
+
 echo '\nPopulating PLUTO tags and version fields \e[32m'
 docker exec pluto psql -U $DBUSER -d $DBNAME -f sql/plutomapid.sql
 docker exec pluto psql -U $DBUSER -d $DBNAME -f sql/versions.sql
