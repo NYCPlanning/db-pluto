@@ -75,6 +75,8 @@ CREATE TABLE pluto (
 	Tract2010 text,
 	XCoord text,
 	YCoord text,
+	Latitude text,
+	Longitude text,
 	ZoneMap text,
 	ZMCode text,
 	Sanborn text,
