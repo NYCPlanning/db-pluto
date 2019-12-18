@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 # load config
 DBNAME='postgres'
 DBUSER='postgres'
@@ -30,7 +30,6 @@ docker exec pluto psql -U $DBUSER -d $DBNAME -f sql/allocated.sql
 
 echo '\nAdding on spatial data attributes \e[32m'
 docker exec pluto psql -U $DBUSER -d $DBNAME -f sql/geocodes.sql
-docker exec pluto psql -U $DBUSER -d $DBNAME -f sql/spatialjoins.sql
 # clean up numeric fields
 docker exec pluto psql -U $DBUSER -d $DBNAME -f sql/numericfields.sql
 docker exec pluto psql -U $DBUSER -d $DBNAME -f sql/condono.sql
@@ -57,7 +56,6 @@ docker exec pluto psql -U $DBUSER -d $DBNAME -f sql/irrlotcode.sql
 
 echo '\nAdding DCP data attributes \e[32m'
 docker exec pluto psql -U $DBUSER -d $DBNAME -f sql/address.sql
-docker exec pluto psql -U $DBUSER -d $DBNAME -f sql/sanitboro.sql
 
 echo '\nCreate base DTM \e[32m'
 docker exec pluto psql -U $DBUSER -d $DBNAME -f sql/dedupecondotable.sql
@@ -67,7 +65,7 @@ docker exec pluto psql -U $DBUSER -d $DBNAME -f sql/geomclean.sql
 docker exec pluto psql -U $DBUSER -d $DBNAME -f sql/shorelineclip.sql
 docker exec pluto psql -U $DBUSER -d $DBNAME -f sql/spatialindex.sql
 
-# echo '\nComputing zoning fields \e[32m'
+echo '\nComputing zoning fields \e[32m'
 docker exec pluto psql -U $DBUSER -d $DBNAME -f sql/zoning_create_priority.sql&
 docker exec pluto psql -U $DBUSER -d $DBNAME -f sql/zoning_zoningdistrict_mn.sql&
 docker exec pluto psql -U $DBUSER -d $DBNAME -f sql/zoning_zoningdistrict_qn.sql&
@@ -85,7 +83,6 @@ docker exec pluto psql -U $DBUSER -d $DBNAME -f sql/zoning_correctdups.sql
 docker exec pluto psql -U $DBUSER -d $DBNAME -f sql/zoning_correctgaps.sql
 docker exec pluto psql -U $DBUSER -d $DBNAME -f sql/zoning_splitzone.sql
 
-
 echo '\nFilling in FAR values \e[32m'
 docker exec pluto psql -U $DBUSER -d $DBNAME -f sql/far.sql
 
@@ -93,16 +90,49 @@ echo '\nPopulating building class for condos lots and land use field \e[32m'
 docker exec pluto psql -U $DBUSER -d $DBNAME -f sql/bldgclass.sql
 docker exec pluto psql -U $DBUSER -d $DBNAME -f sql/landuse.sql
 
-echo '\nFlagging tax lots within the FEMA floodplain \e[32m'
-docker exec pluto psql -U $DBUSER -d $DBNAME -f sql/flood_flag.sql
-
-echo '\nBackfilling'
-docker exec pluto psql -U $DBUSER -d $DBNAME -f sql/backfill.sql
-
 echo '\nAdding in geometries that are in the DTM but not in RPAD'
 docker exec pluto psql -U $DBUSER -d $DBNAME -f sql/dtmgeoms.sql
 docker exec pluto psql -U $DBUSER -d $DBNAME -f sql/geomclean.sql
 
+echo '\nFlagging tax lots within the FEMA floodplain \e[32m'
+docker exec pluto psql -U $DBUSER -d $DBNAME -f sql/flood_flag.sql
+echo '\nAssigning political values with spatial join \e[32m'
+docker exec pluto psql -U $DBUSER -d $DBNAME -f sql/spatialjoins.sql
+docker exec pluto psql -U $DBUSER -d $DBNAME -f sql/spatialjoins_centroid.sql
+# clean up numeric fields
+docker exec pluto psql -U $DBUSER -d $DBNAME -f sql/numericfields_geom.sql
+docker exec pluto psql -U $DBUSER -d $DBNAME -f sql/sanitboro.sql
+docker exec pluto psql -U $DBUSER -d $DBNAME -f sql/latlong.sql
+
+
 echo '\nPopulating PLUTO tags and version fields \e[32m'
 docker exec pluto psql -U $DBUSER -d $DBNAME -f sql/plutomapid.sql
 docker exec pluto psql -U $DBUSER -d $DBNAME -f sql/versions.sql
+
+docker exec pluto bash -c '
+        TABLE_NAME=19v2_wo_corrections
+        echo $TABLE_NAME
+        pg_dump -t pluto --no-owner -U postgres -d postgres | psql $EDM_DATA
+        psql $EDM_DATA -c "DROP INDEX idx_pluto_bbl;";
+        psql $EDM_DATA -c "DROP INDEX pbbl_ix;";
+        psql $EDM_DATA -c "DROP INDEX pluto_gix;";
+        psql $EDM_DATA -c "CREATE SCHEMA IF NOT EXISTS dcp_pluto;";
+        psql $EDM_DATA -c "ALTER TABLE pluto SET SCHEMA dcp_pluto;";
+        psql $EDM_DATA -c "DROP TABLE IF EXISTS dcp_pluto.\"$TABLE_NAME\";";
+        psql $EDM_DATA -c "ALTER TABLE dcp_pluto.pluto RENAME TO \"$TABLE_NAME\";";
+    '
+echo '\nBackfilling'
+# docker exec pluto psql -U $DBUSER -d $DBNAME -f sql/backfill.sql
+
+# docker exec pluto bash -c '
+#         TABLE_NAME=19v2_wo_corrections_backfill
+#         echo $TABLE_NAME
+#         pg_dump -t pluto --no-owner -U postgres -d postgres | psql $EDM_DATA
+#         psql $EDM_DATA -c "DROP INDEX idx_pluto_bbl;";
+#         psql $EDM_DATA -c "DROP INDEX pbbl_ix;";
+#         psql $EDM_DATA -c "DROP INDEX pluto_gix;";
+#         psql $EDM_DATA -c "CREATE SCHEMA IF NOT EXISTS dcp_pluto;";
+#         psql $EDM_DATA -c "ALTER TABLE pluto SET SCHEMA dcp_pluto;";
+#         psql $EDM_DATA -c "DROP TABLE IF EXISTS dcp_pluto.\"$TABLE_NAME\";";
+#         psql $EDM_DATA -c "ALTER TABLE dcp_pluto.pluto RENAME TO \"$TABLE_NAME\";";
+#     '

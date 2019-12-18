@@ -1,6 +1,6 @@
 -- manually set the version of PLUTO and the versions of the source datasets
 UPDATE pluto 
-SET version = '19v1',
+SET version = '19v2',
 	rpaddate = '07/06/2019',
 	dcasdate = '11/15/2018',
 	zoningdate = '07/29/2019',
