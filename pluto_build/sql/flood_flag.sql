@@ -10,7 +10,7 @@ WITH floodplain AS (
 UPDATE pluto a
 SET firm07_flag = '1'
 FROM floodplain b
-WHERE ST_Intersects(a.geom,b.geom);
+WHERE a.geom&&b.geom AND ST_Intersects(a.geom,b.geom);
 
 -- for 2015 p floodplain
 WITH floodplain AS (
@@ -21,4 +21,4 @@ WITH floodplain AS (
 UPDATE pluto a
 SET pfirm15_flag = '1'
 FROM floodplain b
-WHERE ST_Intersects(a.geom,b.geom);
+WHERE a.geom&&b.geom AND ST_Intersects(a.geom,b.geom);
