@@ -1,138 +1,113 @@
 #!/bin/sh
-# load config
-DBNAME='postgres'
-DBUSER='postgres'
+if [ -f .env ]
+then
+  export $(cat .env | sed 's/#.*//g' | xargs)
+fi
 
 echo "\nStarting to build PLUTO ... \e[32m"
-docker exec pluto psql -U $DBUSER -d $DBNAME -f sql/preprocessing.sql
-docker exec pluto psql -U $DBUSER -d $DBNAME -f sql/pts_clean.sql
-docker exec pluto psql -U $DBUSER -d $DBNAME -f sql/create_rpad_geo.sql
+psql $BUILD_ENGINE -f sql/preprocessing.sql
+psql $BUILD_ENGINE -f sql/pts_clean.sql
+psql $BUILD_ENGINE -f sql/create_rpad_geo.sql
 
 echo '\nReporting records that did not get geocoded... \e[32m'
-docker exec pluto psql -U $DBUSER -d $DBNAME -f sql/geocode_notgeocoded.sql
+psql $BUILD_ENGINE -f sql/geocode_notgeocoded.sql
 
 echo '\nMaking DCP edits to RPAD... \e[32m'
-docker exec pluto psql -U $DBUSER -d $DBNAME -f sql/zerovacantlots.sql
-docker exec pluto psql -U $DBUSER -d $DBNAME -f sql/lotarea.sql
-docker exec pluto psql -U $DBUSER -d $DBNAME -f sql/primebbl.sql
-docker exec pluto psql -U $DBUSER -d $DBNAME -f sql/apdate.sql
+psql $BUILD_ENGINE -f sql/zerovacantlots.sql
+psql $BUILD_ENGINE -f sql/lotarea.sql
+psql $BUILD_ENGINE -f sql/primebbl.sql
+psql $BUILD_ENGINE -f sql/apdate.sql
 
 echo '\nCreating table that aggregates condo data and is used to build PLUTO... \e[32m'
-docker exec pluto psql -U $DBUSER -d $DBNAME -f sql/create_allocated.sql
-docker exec pluto psql -U $DBUSER -d $DBNAME -f sql/yearbuiltalt.sql
+psql $BUILD_ENGINE -f sql/create_allocated.sql
+psql $BUILD_ENGINE -f sql/yearbuiltalt.sql
 
 echo '\nCreating base PLUTO table \e[32m'
-docker exec pluto psql -U $DBUSER -d $DBNAME -f sql/create.sql
-docker exec pluto psql -U $DBUSER -d $DBNAME -f sql/bbl.sql
+psql $BUILD_ENGINE -f sql/create.sql
+psql $BUILD_ENGINE -f sql/bbl.sql
 
 echo '\nAdding on RPAD data attributes \e[32m'
-docker exec pluto psql -U $DBUSER -d $DBNAME -f sql/allocated.sql
+psql $BUILD_ENGINE -f sql/allocated.sql
 
 echo '\nAdding on spatial data attributes \e[32m'
-docker exec pluto psql -U $DBUSER -d $DBNAME -f sql/geocodes.sql
+psql $BUILD_ENGINE -f sql/geocodes.sql
 # clean up numeric fields
-docker exec pluto psql -U $DBUSER -d $DBNAME -f sql/numericfields.sql
-docker exec pluto psql -U $DBUSER -d $DBNAME -f sql/condono.sql
+psql $BUILD_ENGINE -f sql/numericfields.sql
+psql $BUILD_ENGINE -f sql/condono.sql
 
 echo '\nAdding on CAMA data attributes \e[32m'
-docker exec pluto psql -U $DBUSER -d $DBNAME -f sql/landuse.sql
-docker exec pluto psql -U $DBUSER -d $DBNAME -f sql/create_cama_primebbl.sql
-docker exec pluto psql -U $DBUSER -d $DBNAME -f sql/cama_bsmttype.sql
-docker exec pluto psql -U $DBUSER -d $DBNAME -f sql/cama_lottype.sql
-docker exec pluto psql -U $DBUSER -d $DBNAME -f sql/cama_proxcode.sql
-docker exec pluto psql -U $DBUSER -d $DBNAME -f sql/cama_bldgarea_1.sql
-docker exec pluto psql -U $DBUSER -d $DBNAME -f sql/cama_bldgarea_2.sql
-docker exec pluto psql -U $DBUSER -d $DBNAME -f sql/cama_bldgarea_3.sql
-docker exec pluto psql -U $DBUSER -d $DBNAME -f sql/cama_bldgarea_4.sql
-docker exec pluto psql -U $DBUSER -d $DBNAME -f sql/cama_easements.sql
+psql $BUILD_ENGINE -f sql/landuse.sql
+psql $BUILD_ENGINE -f sql/create_cama_primebbl.sql
+psql $BUILD_ENGINE -f sql/cama_bsmttype.sql
+psql $BUILD_ENGINE -f sql/cama_lottype.sql
+psql $BUILD_ENGINE -f sql/cama_proxcode.sql
+psql $BUILD_ENGINE -f sql/cama_bldgarea_1.sql
+psql $BUILD_ENGINE -f sql/cama_bldgarea_2.sql
+psql $BUILD_ENGINE -f sql/cama_bldgarea_3.sql
+psql $BUILD_ENGINE -f sql/cama_bldgarea_4.sql
+psql $BUILD_ENGINE -f sql/cama_easements.sql
 
 echo '\nAdding on data attributes from other sources \e[32m'
-docker exec pluto psql -U $DBUSER -d $DBNAME -f sql/lpc.sql
-docker exec pluto psql -U $DBUSER -d $DBNAME -f sql/edesignation.sql
-docker exec pluto psql -U $DBUSER -d $DBNAME -f sql/ownertype.sql
+psql $BUILD_ENGINE -f sql/lpc.sql
+psql $BUILD_ENGINE -f sql/edesignation.sql
+psql $BUILD_ENGINE -f sql/ownertype.sql
 
 echo '\nTransform RPAD data attributes \e[32m'
-docker exec pluto psql -U $DBUSER -d $DBNAME -f sql/irrlotcode.sql
+psql $BUILD_ENGINE -f sql/irrlotcode.sql
 
 echo '\nAdding DCP data attributes \e[32m'
-docker exec pluto psql -U $DBUSER -d $DBNAME -f sql/address.sql
+psql $BUILD_ENGINE -f sql/address.sql
 
 echo '\nCreate base DTM \e[32m'
-docker exec pluto psql -U $DBUSER -d $DBNAME -f sql/dedupecondotable.sql
-docker exec pluto psql -U $DBUSER -d $DBNAME -f sql/dtmmergepolygons.sql
-docker exec pluto psql -U $DBUSER -d $DBNAME -f sql/plutogeoms.sql
-docker exec pluto psql -U $DBUSER -d $DBNAME -f sql/geomclean.sql
-docker exec pluto psql -U $DBUSER -d $DBNAME -f sql/shorelineclip.sql
-docker exec pluto psql -U $DBUSER -d $DBNAME -f sql/spatialindex.sql
+psql $BUILD_ENGINE -f sql/dedupecondotable.sql
+psql $BUILD_ENGINE -f sql/dtmmergepolygons.sql
+psql $BUILD_ENGINE -f sql/plutogeoms.sql
+psql $BUILD_ENGINE -f sql/geomclean.sql
+psql $BUILD_ENGINE -f sql/shorelineclip.sql
+psql $BUILD_ENGINE -f sql/spatialindex.sql
 
 echo '\nComputing zoning fields \e[32m'
-docker exec pluto psql -U $DBUSER -d $DBNAME -f sql/zoning_create_priority.sql&
-docker exec pluto psql -U $DBUSER -d $DBNAME -f sql/zoning_zoningdistrict_mn.sql&
-docker exec pluto psql -U $DBUSER -d $DBNAME -f sql/zoning_zoningdistrict_qn.sql&
-docker exec pluto psql -U $DBUSER -d $DBNAME -f sql/zoning_zoningdistrict_si.sql&
-docker exec pluto psql -U $DBUSER -d $DBNAME -f sql/zoning_zoningdistrict_bk.sql&
-docker exec pluto psql -U $DBUSER -d $DBNAME -f sql/zoning_zoningdistrict_bx.sql
+psql $BUILD_ENGINE -f sql/zoning_create_priority.sql&
+psql $BUILD_ENGINE -f sql/zoning_zoningdistrict_mn.sql&
+psql $BUILD_ENGINE -f sql/zoning_zoningdistrict_qn.sql&
+psql $BUILD_ENGINE -f sql/zoning_zoningdistrict_si.sql&
+psql $BUILD_ENGINE -f sql/zoning_zoningdistrict_bk.sql&
+psql $BUILD_ENGINE -f sql/zoning_zoningdistrict_bx.sql
 wait
-docker exec pluto psql -U $DBUSER -d $DBNAME -f sql/zoning_zoningdistrict.sql
-docker exec pluto psql -U $DBUSER -d $DBNAME -f sql/zoning_commercialoverlay.sql
-docker exec pluto psql -U $DBUSER -d $DBNAME -f sql/zoning_specialdistrict.sql
-docker exec pluto psql -U $DBUSER -d $DBNAME -f sql/zoning_limitedheight.sql
-docker exec pluto psql -U $DBUSER -d $DBNAME -f sql/zoning_zonemap.sql
-docker exec pluto psql -U $DBUSER -d $DBNAME -f sql/zoning_parks.sql
-docker exec pluto psql -U $DBUSER -d $DBNAME -f sql/zoning_correctdups.sql
-docker exec pluto psql -U $DBUSER -d $DBNAME -f sql/zoning_correctgaps.sql
-docker exec pluto psql -U $DBUSER -d $DBNAME -f sql/zoning_splitzone.sql
+psql $BUILD_ENGINE -f sql/zoning_zoningdistrict.sql
+psql $BUILD_ENGINE -f sql/zoning_commercialoverlay.sql
+psql $BUILD_ENGINE -f sql/zoning_specialdistrict.sql
+psql $BUILD_ENGINE -f sql/zoning_limitedheight.sql
+psql $BUILD_ENGINE -f sql/zoning_zonemap.sql
+psql $BUILD_ENGINE -f sql/zoning_parks.sql
+psql $BUILD_ENGINE -f sql/zoning_correctdups.sql
+psql $BUILD_ENGINE -f sql/zoning_correctgaps.sql
+psql $BUILD_ENGINE -f sql/zoning_splitzone.sql
 
 echo '\nFilling in FAR values \e[32m'
-docker exec pluto psql -U $DBUSER -d $DBNAME -f sql/far.sql
+psql $BUILD_ENGINE -f sql/far.sql
 
 echo '\nPopulating building class for condos lots and land use field \e[32m'
-docker exec pluto psql -U $DBUSER -d $DBNAME -f sql/bldgclass.sql
-docker exec pluto psql -U $DBUSER -d $DBNAME -f sql/landuse.sql
+psql $BUILD_ENGINE -f sql/bldgclass.sql
+psql $BUILD_ENGINE -f sql/landuse.sql
 
 echo '\nAdding in geometries that are in the DTM but not in RPAD'
-docker exec pluto psql -U $DBUSER -d $DBNAME -f sql/dtmgeoms.sql
-docker exec pluto psql -U $DBUSER -d $DBNAME -f sql/geomclean.sql
+psql $BUILD_ENGINE -f sql/dtmgeoms.sql
+psql $BUILD_ENGINE -f sql/geomclean.sql
 
 echo '\nFlagging tax lots within the FEMA floodplain \e[32m'
-docker exec pluto psql -U $DBUSER -d $DBNAME -f sql/flood_flag.sql
+psql $BUILD_ENGINE -f sql/flood_flag.sql
 echo '\nAssigning political values with spatial join \e[32m'
-docker exec pluto psql -U $DBUSER -d $DBNAME -f sql/spatialjoins.sql
-docker exec pluto psql -U $DBUSER -d $DBNAME -f sql/spatialjoins_centroid.sql
+psql $BUILD_ENGINE -f sql/spatialjoins.sql
+psql $BUILD_ENGINE -f sql/spatialjoins_centroid.sql
 # clean up numeric fields
-docker exec pluto psql -U $DBUSER -d $DBNAME -f sql/numericfields_geom.sql
-docker exec pluto psql -U $DBUSER -d $DBNAME -f sql/sanitboro.sql
-docker exec pluto psql -U $DBUSER -d $DBNAME -f sql/latlong.sql
-
+psql $BUILD_ENGINE -f sql/numericfields_geomfields.sql
+psql $BUILD_ENGINE -f sql/sanitboro.sql
+psql $BUILD_ENGINE -f sql/latlong.sql
 
 echo '\nPopulating PLUTO tags and version fields \e[32m'
-docker exec pluto psql -U $DBUSER -d $DBNAME -f sql/plutomapid.sql
-docker exec pluto psql -U $DBUSER -d $DBNAME -f sql/versions.sql
+psql $BUILD_ENGINE -f sql/plutomapid.sql
+psql $BUILD_ENGINE -f sql/versions.sql
 
-docker exec pluto bash -c '
-        TABLE_NAME=19v2_wo_corrections
-        echo $TABLE_NAME
-        pg_dump -t pluto --no-owner -U postgres -d postgres | psql $EDM_DATA
-        psql $EDM_DATA -c "DROP INDEX idx_pluto_bbl;";
-        psql $EDM_DATA -c "DROP INDEX pbbl_ix;";
-        psql $EDM_DATA -c "DROP INDEX pluto_gix;";
-        psql $EDM_DATA -c "CREATE SCHEMA IF NOT EXISTS dcp_pluto;";
-        psql $EDM_DATA -c "ALTER TABLE pluto SET SCHEMA dcp_pluto;";
-        psql $EDM_DATA -c "DROP TABLE IF EXISTS dcp_pluto.\"$TABLE_NAME\";";
-        psql $EDM_DATA -c "ALTER TABLE dcp_pluto.pluto RENAME TO \"$TABLE_NAME\";";
-    '
 echo '\nBackfilling'
-# docker exec pluto psql -U $DBUSER -d $DBNAME -f sql/backfill.sql
-
-# docker exec pluto bash -c '
-#         TABLE_NAME=19v2_wo_corrections_backfill
-#         echo $TABLE_NAME
-#         pg_dump -t pluto --no-owner -U postgres -d postgres | psql $EDM_DATA
-#         psql $EDM_DATA -c "DROP INDEX idx_pluto_bbl;";
-#         psql $EDM_DATA -c "DROP INDEX pbbl_ix;";
-#         psql $EDM_DATA -c "DROP INDEX pluto_gix;";
-#         psql $EDM_DATA -c "CREATE SCHEMA IF NOT EXISTS dcp_pluto;";
-#         psql $EDM_DATA -c "ALTER TABLE pluto SET SCHEMA dcp_pluto;";
-#         psql $EDM_DATA -c "DROP TABLE IF EXISTS dcp_pluto.\"$TABLE_NAME\";";
-#         psql $EDM_DATA -c "ALTER TABLE dcp_pluto.pluto RENAME TO \"$TABLE_NAME\";";
-#     '
+psql $BUILD_ENGINE -f sql/backfill.sql
