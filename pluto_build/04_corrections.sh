@@ -1,13 +1,10 @@
 #!/bin/bash
-DBNAME='postgres'
-DBUSER='postgres'
-
-docker exec pluto psql -U $DBUSER -d $DBNAME -f sql/corr_create.sql
+psql $BUILD_ENGINE -f sql/corr_create.sql
 
 echo "Applying corrections to PLUTO"
-docker exec pluto psql -U $DBUSER -d $DBNAME -f sql/corr_lotarea.sql
-docker exec pluto psql -U $DBUSER -d $DBNAME -f sql/corr_yearbuilt_lpc.sql
-docker exec pluto psql -U $DBUSER -d $DBNAME -f sql/corr_ownername_city.sql
+psql $BUILD_ENGINE -f sql/corr_lotarea.sql
+psql $BUILD_ENGINE -f sql/corr_yearbuilt_lpc.sql
+psql $BUILD_ENGINE -f sql/corr_ownername_city.sql
 
 docker exec pluto bash -c '
         TABLE_NAME=19v2_w_corrections
@@ -23,10 +20,10 @@ docker exec pluto bash -c '
     '
     
 echo "Exporting pluto csv and shapefile"
-docker exec pluto psql -U $DBUSER -d $DBNAME  -c "\COPY (SELECT * FROM pluto) TO 'output/pluto_w_corrections.csv' DELIMITER ',' CSV HEADER;"
+psql $BUILD_ENGINE  -c "\COPY (SELECT * FROM pluto) TO 'output/pluto_w_corrections.csv' DELIMITER ',' CSV HEADER;"
 
 rm -f output/pluto_w_corrections.zip
 zip output/pluto_w_corrections.zip output/pluto_w_corrections.csv
 rm -f output/pluto_w_corrections.csv
 
-docker exec pluto psql -U $DBUSER -d $DBNAME  -c "\COPY (SELECT * FROM pluto_corrections) TO 'output/pluto_corrections.csv' DELIMITER ',' CSV HEADER;"
+psql $BUILD_ENGINE  -c "\COPY (SELECT * FROM pluto_corrections) TO 'output/pluto_corrections.csv' DELIMITER ',' CSV HEADER;"
