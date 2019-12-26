@@ -158,3 +158,12 @@ def create_plot(df0, df1, column_group, title_name='', v0=version_0, v1=version_
     plt.ylabel('difference')
     plt.title(title_name, fontsize='xx-large')
     plt.show()
+    
+def create_df_pct(sql, version_curr, version_prev, condition, con):
+    df = pd.read_sql(
+            sql=sql.format(version_curr, version_prev, condition), 
+            con=con)
+    total = df.loc[0, 'total']
+    df_pct = df.loc[0, df.columns != 'total']/total
+    df_pct['total'] = total
+    return df_pct
