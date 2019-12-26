@@ -18,7 +18,7 @@ docker exec pluto bash -c '
         psql $EDM_DATA -c "DROP TABLE IF EXISTS dcp_pluto.\"$TABLE_NAME\";";
         psql $EDM_DATA -c "ALTER TABLE dcp_pluto.pluto RENAME TO \"$TABLE_NAME\";";
     '
-    
+
 echo "Exporting pluto csv and shapefile"
 psql $BUILD_ENGINE  -c "\COPY (SELECT * FROM pluto) TO 'output/pluto_w_corrections.csv' DELIMITER ',' CSV HEADER;"
 
