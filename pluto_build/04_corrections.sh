@@ -5,6 +5,7 @@ echo "Applying corrections to PLUTO"
 psql $BUILD_ENGINE -f sql/corr_lotarea.sql
 psql $BUILD_ENGINE -f sql/corr_yearbuilt_lpc.sql
 psql $BUILD_ENGINE -f sql/corr_ownername_city.sql
+psql $BUILD_ENGINE -f sql/remove_unitlots.sql
 
 docker exec pluto bash -c '
         TABLE_NAME=19v2_w_corrections
