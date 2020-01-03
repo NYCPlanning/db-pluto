@@ -32,7 +32,7 @@ WITH new_order AS(
       SELECT * FROM lotzoneperorder
       WHERE bbl in(SELECT bbl from(
         SELECT bbl, MAX(segbblgeom) - MIN(segbblgeom) as diff 
-        FROM lotzoneperorder 
+        FROM lotzoneperorder
         WHERE perbblgeom >= 10
         group by bbl
       ) a WHERE diff > 0 and diff < 0.01))a 
@@ -54,6 +54,16 @@ FROM lotzoneperorder b
 WHERE a.bbl=b.bbl 
 AND row_number = 1
 AND perbblgeom >= 10;
+
+-- if the largest zoning district is under 10% of entire lot 
+-- (e.g. water front lots) 
+-- then assign the largest zoning district to be zonedist1
+UPDATE pluto a
+SET zonedist1 = zonedist
+FROM lotzoneperorder b
+WHERE a.bbl=b.bbl 
+  AND a.zonedist1 is null
+  AND row_number = 1;
 
 UPDATE pluto a
 SET zonedist2 = zonedist
@@ -77,7 +87,7 @@ AND row_number = 4
 AND perbblgeom >= 10;
 
 -- drop the area table
-DROP TABLE lotzoneperorder;
+-- DROP TABLE lotzoneperorder;
 
 -- for lots without a zoningdistrict1
 -- assign the zoning district that is 
