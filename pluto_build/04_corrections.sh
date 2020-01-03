@@ -5,6 +5,7 @@ echo "Applying corrections to PLUTO"
 psql $BUILD_ENGINE -f sql/corr_lotarea.sql
 psql $BUILD_ENGINE -f sql/corr_yearbuilt_lpc.sql
 psql $BUILD_ENGINE -f sql/corr_ownername_city.sql
+psql $BUILD_ENGINE -f sql/remove_unitlots.sql
 
 docker exec pluto bash -c '
         TABLE_NAME=19v2_w_corrections
@@ -18,7 +19,7 @@ docker exec pluto bash -c '
         psql $EDM_DATA -c "DROP TABLE IF EXISTS dcp_pluto.\"$TABLE_NAME\";";
         psql $EDM_DATA -c "ALTER TABLE dcp_pluto.pluto RENAME TO \"$TABLE_NAME\";";
     '
-    
+
 echo "Exporting pluto csv and shapefile"
 psql $BUILD_ENGINE  -c "\COPY (SELECT * FROM pluto) TO 'output/pluto_w_corrections.csv' DELIMITER ',' CSV HEADER;"
 
