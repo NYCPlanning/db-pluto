@@ -6,28 +6,35 @@ INSERT INTO pluto_corrections
 SELECT DISTINCT a.bbl, 
 	'lotarea' as field, 
 	a.lotarea as old_value, 
-	round(ST_Area(ST_Transform(a.geom,2263)))::text as new_value
+	round(ST_Area(ST_Transform(a.geom,2263)))::text as new_value,
+	'1' as type,
+	'Zero lot area' as reason,
+	a.version as version
 FROM pluto a
 WHERE a.lotarea = '0' 
 	AND a.geom IS NOT NULL
 	AND a.bbl NOT IN (SELECT bbl FROM pluto_corrections WHERE field = 'lotarea');
-	
--- Apply correction
-UPDATE pluto a
-SET lotarea = b.new_value,
-	dcpedited = 't'
-FROM pluto_corrections b
-WHERE a.bbl = b.bbl
-	AND b.field = 'lotarea'
-	AND a.lotarea = '0' 
-	AND a.geom IS NOT NULL;
+
+-- -- Redundant code	
+-- -- Apply correction
+-- UPDATE pluto a
+-- SET lotarea = b.new_value,
+-- 	dcpedited = 't'
+-- FROM pluto_corrections b
+-- WHERE a.bbl = b.bbl
+-- 	AND b.field = 'lotarea'
+-- 	AND a.lotarea = '0' 
+-- 	AND a.geom IS NOT NULL;
 
 -- Take researched lot area values from the research table
 INSERT INTO pluto_corrections
 SELECT DISTINCT a.bbl, 
 	'lotarea' as field, 
 	a.lotarea as old_value, 
-	b.new_value as new_value
+	b.new_value as new_value,
+	b.type as type,
+	b.reason as reason,
+	b.version as version
 FROM pluto a, pluto_input_research b
 WHERE a.bbl = b.bbl
 	AND a.lotarea::numeric=b.old_value::numeric
