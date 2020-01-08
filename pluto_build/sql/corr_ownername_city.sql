@@ -4,7 +4,10 @@ INSERT INTO pluto_corrections
 SELECT DISTINCT a.bbl, 
 	'ownername' as field, 
 	a.ownername as old_value, 
-	b.new_value as new_value
+	b.new_value as new_value,
+	b.type as type,
+	b.reason as reason,
+	b.version as version
 FROM pluto a, pluto_input_research b
 WHERE a.ownername = b.old_value
 	AND a.bbl NOT IN (SELECT bbl FROM pluto_input_corrections WHERE field = 'ownername');

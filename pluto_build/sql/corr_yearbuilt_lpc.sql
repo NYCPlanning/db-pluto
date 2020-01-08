@@ -4,7 +4,10 @@ INSERT INTO pluto_corrections
 SELECT DISTINCT a.bbl, 
 	'yearbuilt' as field, 
 	a.yearbuilt as old_value, 
-	b.new_value as new_value
+	b.new_value as new_value,
+	b.type as type,
+	b.reason as reason,
+	b.version as version
 FROM pluto a, pluto_input_research b
 WHERE a.bbl = b.bbl
 	AND a.yearbuilt=b.old_value
