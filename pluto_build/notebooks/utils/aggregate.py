@@ -28,13 +28,13 @@ def create_aggregate(version_0, version_1, version_2, condition, con, sql, title
     df1['version'] = version_1
     df2 = pd.read_sql(sql=sql.format(version_2, condition), con=con)
     df2['version'] = version_2
-    summary = pd.concat([df0,df1, df2], sort=False)
+    summary = pd.concat([df2,df1, df0], sort=False)
     summary.index = summary.version
     summary_pct = summary.iloc[:, :-1].pct_change()
     
     plt.figure(figsize=(15, 10))
-    plt.plot(range(16), summary_pct.iloc[1, :], color = 'red', label=f'{version_0} - {version_1}')
-    plt.plot(range(16), summary_pct.iloc[2, :], color = 'blue', label=f'{version_1} - {version_2}')
+    plt.plot(range(16), summary_pct.iloc[2, :], color = 'red', label=f'{version_0} - {version_1}')
+    plt.plot(range(16), summary_pct.iloc[1, :], color = 'blue', label=f'{version_1} - {version_2}')
     plt.hlines(0, 16, 0) #0 reference line
     plt.xticks(range(16), summary_pct.columns, rotation=70)
     plt.title(title)
