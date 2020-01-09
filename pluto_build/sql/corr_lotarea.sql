@@ -3,7 +3,8 @@
 
 -- Insert old and new values into tracking table
 INSERT INTO pluto_corrections
-SELECT DISTINCT a.bbl, 
+SELECT DISTINCT 
+	a.bbl as bbl, 
 	'lotarea' as field, 
 	a.lotarea as old_value, 
 	round(ST_Area(ST_Transform(a.geom,2263)))::text as new_value,

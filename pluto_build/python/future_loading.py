@@ -32,9 +32,17 @@ def ETL(schema_name, version='latest'):
 if __name__ == "__main__":
     con = create_engine(os.getenv('BUILD_ENGINE'))
     os.system('echo "loading pluto_input_research ..."')
-    df = pd.read_csv('https://raw.githubusercontent.com/NYCPlanning/db-pluto/dev/pluto_build/data/pluto_input_research.csv', 
+    df = pd.read_csv('https://raw.githubusercontent.com/NYCPlanning/db-pluto/future/pluto_build/data/pluto_input_research.csv', 
                         index_col=False, dtype=str)
+    df.columns = [i.lower() for i in df.columns]
     df.to_sql(con=con, name='pluto_input_research', 
+                if_exists='replace', index=False)
+    
+    os.system('echo "loading pluto_corrections ..."')
+    df = pd.read_csv('https://raw.githubusercontent.com/NYCPlanning/db-pluto/future/pluto_build/output/pluto_corrections.csv', 
+                        index_col=False, dtype=str)
+    df.columns = [i.lower() for i in df.columns]
+    df.to_sql(con=con, name='pluto_corrections', 
                 if_exists='replace', index=False)
 
     tables = ['dcp_edesignation', 
@@ -91,5 +99,5 @@ if __name__ == "__main__":
             'fema_pfirms2015_100yr', 
             'pluto_input_condolot_descriptiveattributes']
 
-    with Pool(processes=cpu_count()) as pool:
-        pool.map(ETL, tables)
+    # with Pool(processes=cpu_count()) as pool:
+    #     pool.map(ETL, tables)

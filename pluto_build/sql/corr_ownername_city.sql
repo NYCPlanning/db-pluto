@@ -10,7 +10,7 @@ SELECT DISTINCT a.bbl,
 	b.version as version
 FROM pluto a, pluto_input_research b
 WHERE a.ownername = b.old_value
-	AND a.bbl NOT IN (SELECT bbl FROM pluto_input_corrections WHERE field = 'ownername');
+	AND a.bbl NOT IN (SELECT bbl FROM pluto_corrections WHERE field = 'ownername');
 
 -- Apply correction to PLUTO
 UPDATE pluto a
