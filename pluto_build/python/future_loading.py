@@ -11,23 +11,19 @@ from multiprocessing import Pool, cpu_count
 load_dotenv(find_dotenv())
 
 def ETL(schema_name, version='latest'):
-    url=f'{os.environ["GATEWAY"]}/migrate'
-    RECIPE_ENGINE=os.environ['RECIPE_ENGINE']
+    url=f'{os.environ["GATEWAY"]}/import'
     BUILD_ENGINE=os.environ['BUILD_ENGINE']
 
-    x = requests.post(url, json = 
-                    {"src_engine": f"{RECIPE_ENGINE}",
-                    "dst_engine": f"{BUILD_ENGINE}",
-                    "src_schema_name": f"{schema_name}",
-                    "dst_schema_name": "public",
-                    "src_version": f"{version}",
-                    "dst_version": f"{schema_name}"})
-
-    r = json.loads(x.text)
-    if r['status'] == 'success': 
-        print(f'{schema_name} is loaded ...')
-    else: 
-        print(f'{schema_name} failed to load ...')
+    x = requests.post(url, data = json.dumps(
+        {'connection': {
+            'build_engine': BUILD_ENGINE
+            }, 
+        'config':{
+            'schema_name': schema_name, 
+            'version': version
+            }
+        }))
+    print(f'{schema_name} {x.text}')
 
 if __name__ == "__main__":
     con = create_engine(os.getenv('BUILD_ENGINE'))
@@ -99,5 +95,5 @@ if __name__ == "__main__":
             'fema_pfirms2015_100yr', 
             'pluto_input_condolot_descriptiveattributes']
 
-    # with Pool(processes=cpu_count()) as pool:
-    #     pool.map(ETL, tables)
+    with Pool(processes=cpu_count()) as pool:
+        pool.map(ETL, tables)

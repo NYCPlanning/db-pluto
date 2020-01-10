@@ -10,7 +10,7 @@ SET notes = '1'
 FROM dcp_zoningmapamendments b
 WHERE b.project_na = 'Inwood Rezoning'
 AND ST_Intersects(a.geom,b.geom)
-AND (bbl <> '1022552000' 
-	OR bbl <> '1022550001'
-	OR bbl <> '1021890001'
-	OR bbl <> '1021970001');
+AND bbl != '1022552000' 
+AND bbl != '1022550001'
+AND bbl != '1021890001'
+AND bbl != '1021970001';
