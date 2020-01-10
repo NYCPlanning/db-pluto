@@ -90,15 +90,7 @@ SELECT
     sum(case when a.sanitdistrict is null then 1 else 0 end) as sanitdistrict,
     sum(case when a.healthcenterdistrict is null then 1 else 0 end) as healthcenterdistrict,
     sum(case when a.firm07_flag is null then 1 else 0 end) as firm07_flag,
-    sum(case when a.pfirm15_flag is null then 1 else 0 end) as pfirm15_flag,
-    sum(case when a.rpaddate is null then 1 else 0 end) as rpaddate,
-    sum(case when a.dcasdate is null then 1 else 0 end) as dcasdate,
-    sum(case when a.zoningdate is null then 1 else 0 end) as zoningdate,
-    sum(case when a.landmkdate is null then 1 else 0 end) as landmkdate,
-    sum(case when a.basempdate is null then 1 else 0 end) as basempdate,
-    sum(case when a.masdate is null then 1 else 0 end) as masdate,
-    sum(case when a.polidate is null then 1 else 0 end) as polidate,
-    sum(case when a.edesigdate is null then 1 else 0 end) as edesigdate
+    sum(case when a.pfirm15_flag is null then 1 else 0 end) as pfirm15_flag
 FROM {} a
 {}
 '''
