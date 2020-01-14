@@ -31,3 +31,4 @@ zip output/pluto_w_corrections.zip output/pluto_w_corrections.csv
 rm -f output/pluto_w_corrections.csv
 
 psql $BUILD_ENGINE  -c "\COPY (SELECT * FROM pluto_corrections) TO 'output/pluto_corrections.csv' DELIMITER ',' CSV HEADER;"
+psql $BUILD_ENGINE  -c "\COPY (SELECT * FROM pluto_removed_records) TO 'output/pluto_removed_records.csv' DELIMITER ',' CSV HEADER;"
