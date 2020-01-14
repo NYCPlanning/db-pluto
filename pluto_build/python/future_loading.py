@@ -44,8 +44,7 @@ if __name__ == "__main__":
     tables = ['dcp_edesignation', 
             'dcas_facilities_colp', 
             'lpc_historic_districts', 
-            'lpc_landmarks', 
-
+            'lpc_landmarks',
             # for spatial joins
             'dcp_cdboundaries', 
             'dcp_censustracts', 
