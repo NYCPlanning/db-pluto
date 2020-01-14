@@ -30,6 +30,7 @@ ALTER TABLE dcp_zoningmapamendments RENAME wkb_geometry to geom;
 ALTER TABLE dcp_zoningmapindex RENAME wkb_geometry to geom;
 ALTER TABLE fema_firms2007_100yr RENAME wkb_geometry to geom;
 ALTER TABLE fema_pfirms2015_100yr RENAME wkb_geometry to geom;
+ALTER TABLE doitt_zipcodeboundaries RENAME wkb_geometry to geom;
 ALTER TABLE pluto_input_condolot_descriptiveattributes RENAME wkb_geometry to geom;
 
 DROP TABLE IF EXISTS pluto_input_geocodes_tmp;
