@@ -94,5 +94,5 @@ if __name__ == "__main__":
             'fema_pfirms2015_100yr', 
             'pluto_input_condolot_descriptiveattributes']
 
-    with Pool(processes=cpu_count()) as pool:
-        pool.map(ETL, tables)
+    # with Pool(processes=cpu_count()) as pool:
+    #     pool.map(ETL, tables)
