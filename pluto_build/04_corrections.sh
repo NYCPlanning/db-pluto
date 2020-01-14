@@ -15,6 +15,7 @@ psql $BUILD_ENGINE -f sql/corr_dropoldrecords.sql
 psql $BUILD_ENGINE -f sql/remove_unitlots.sql
 
 psql $BUILD_ENGINE  -c "\COPY (SELECT * FROM pluto_corrections) TO 'output/pluto_corrections.csv' DELIMITER ',' CSV HEADER;"
+psql $BUILD_ENGINE  -c "\COPY (SELECT * FROM pluto_removed_records) TO 'output/pluto_removed_records.csv' DELIMITER ',' CSV HEADER;"
 
 curl -d "{
     \"src_engine\":\"${BUILD_ENGINE}\",
