@@ -4,18 +4,18 @@ then
   export $(cat .env | sed 's/#.*//g' | xargs)
 fi
 
-# psql $BUILD_ENGINE -f sql/corr_create.sql
+psql $BUILD_ENGINE -f sql/corr_create.sql
 
-# # echo "Applying corrections to PLUTO"
-# psql $BUILD_ENGINE -f sql/corr_lotarea.sql
-# psql $BUILD_ENGINE -f sql/corr_yearbuilt_lpc.sql
-# psql $BUILD_ENGINE -f sql/corr_ownername_city.sql
-# psql $BUILD_ENGINE -f sql/corr_inwoodrezoning.sql
-# psql $BUILD_ENGINE -f sql/corr_dropoldrecords.sql
-# psql $BUILD_ENGINE -f sql/remove_unitlots.sql
+# echo "Applying corrections to PLUTO"
+psql $BUILD_ENGINE -f sql/corr_lotarea.sql
+psql $BUILD_ENGINE -f sql/corr_yearbuilt_lpc.sql
+psql $BUILD_ENGINE -f sql/corr_ownername_city.sql
+psql $BUILD_ENGINE -f sql/corr_inwoodrezoning.sql
+psql $BUILD_ENGINE -f sql/corr_dropoldrecords.sql
+psql $BUILD_ENGINE -f sql/remove_unitlots.sql
 
-# psql $BUILD_ENGINE  -c "\COPY (SELECT * FROM pluto_corrections) TO 'output/pluto_corrections.csv' DELIMITER ',' CSV HEADER;"
-# psql $BUILD_ENGINE  -c "\COPY (SELECT * FROM pluto_removed_records) TO 'output/pluto_removed_records.csv' DELIMITER ',' CSV HEADER;"
+psql $BUILD_ENGINE  -c "\COPY (SELECT * FROM pluto_corrections) TO 'output/pluto_corrections.csv' DELIMITER ',' CSV HEADER;"
+psql $BUILD_ENGINE  -c "\COPY (SELECT * FROM pluto_removed_records) TO 'output/pluto_removed_records.csv' DELIMITER ',' CSV HEADER;"
 
 curl -d "{
     \"src_engine\":\"${BUILD_ENGINE}\",
