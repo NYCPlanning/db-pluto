@@ -1,7 +1,10 @@
 -- assigning lot type
 -- remove 0s (Not Available) and 5 (none of the other types)
--- select lowest lot type value for record where bldgnum is 1
-WITH dcpcamavals AS(
+-- select lowest lot type value for record where bldgnum is 1	
+
+UPDATE pluto a
+SET lottype = b.lottype
+FROM (
 	SELECT DISTINCT bbl,
 	lottype
 	FROM (
@@ -12,12 +15,8 @@ WITH dcpcamavals AS(
   		WHERE lottype <> '0' 
 		AND lottype <> '5'
 		AND bldgnum = '1') x
-	WHERE x.row_number = 1)	
-
-UPDATE pluto a
-SET lottype = dcpcamavals.lottype
-FROM dcpcamavals
-WHERE a.bbl = dcpcamavals.bbl;
+	WHERE x.row_number = 1) b
+WHERE a.bbl = b.bbl;
 
 -- update lots with lot type value of 5
 UPDATE pluto a

@@ -28,7 +28,7 @@ CREATE TABLE pluto_allocated (
 	appbbl text,
 	appdate text,
 	address text
-);
+) WITH (parallel_workers=10);
 
 INSERT INTO pluto_allocated (
 	bbl

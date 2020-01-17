@@ -18,27 +18,32 @@ SET residfar = b.residfar
 FROM dcp_zoning_maxfar b
 WHERE split_part(a.zonedist1, '/', 1)=b.zonedist
 AND a.residfar IS NULL;
+
 UPDATE pluto a
 SET commfar = b.commfar
 FROM dcp_zoning_maxfar b
 WHERE split_part(a.zonedist1, '/', 1)=b.zonedist
 AND a.commfar IS NULL;
+
 UPDATE pluto a
 SET facilfar = b.facilfar
 FROM dcp_zoning_maxfar b
 WHERE split_part(a.zonedist1, '/', 1)=b.zonedist
 AND a.facilfar IS NULL;
 -- zoning district 1 with / second part 
+
 UPDATE pluto a
 SET residfar = b.residfar
 FROM dcp_zoning_maxfar b
 WHERE split_part(a.zonedist1, '/', 2)=b.zonedist
 AND a.residfar IS NULL;
+
 UPDATE pluto a
 SET commfar = b.commfar
 FROM dcp_zoning_maxfar b
 WHERE split_part(a.zonedist1, '/', 2)=b.zonedist
 AND a.commfar IS NULL;
+
 UPDATE pluto a
 SET facilfar = b.facilfar
 FROM dcp_zoning_maxfar b
@@ -51,11 +56,13 @@ SET residfar = b.residfar
 FROM dcp_zoning_maxfar b
 WHERE a.zonedist2=b.zonedist
 AND a.residfar IS NULL;
+
 UPDATE pluto a
 SET commfar = b.commfar
 FROM dcp_zoning_maxfar b
 WHERE a.zonedist2=b.zonedist
 AND a.commfar IS NULL;
+
 UPDATE pluto a
 SET facilfar = b.facilfar
 FROM dcp_zoning_maxfar b
@@ -67,27 +74,32 @@ SET residfar = b.residfar
 FROM dcp_zoning_maxfar b
 WHERE split_part(a.zonedist2, '/', 1)=b.zonedist
 AND a.residfar IS NULL;
+
 UPDATE pluto a
 SET commfar = b.commfar
 FROM dcp_zoning_maxfar b
 WHERE split_part(a.zonedist2, '/', 1)=b.zonedist
 AND a.commfar IS NULL;
+
 UPDATE pluto a
 SET facilfar = b.facilfar
 FROM dcp_zoning_maxfar b
 WHERE split_part(a.zonedist2, '/', 1)=b.zonedist
 AND a.facilfar IS NULL;
+
 -- zoning district 2 with / second part 
 UPDATE pluto a
 SET residfar = b.residfar
 FROM dcp_zoning_maxfar b
 WHERE split_part(a.zonedist2, '/', 2)=b.zonedist
 AND a.residfar IS NULL;
+
 UPDATE pluto a
 SET commfar = b.commfar
 FROM dcp_zoning_maxfar b
 WHERE split_part(a.zonedist2, '/', 2)=b.zonedist
 AND a.commfar IS NULL;
+
 UPDATE pluto a
 SET facilfar = b.facilfar
 FROM dcp_zoning_maxfar b
@@ -100,43 +112,51 @@ SET residfar = b.residfar
 FROM dcp_zoning_maxfar b
 WHERE a.zonedist3=b.zonedist
 AND a.residfar IS NULL;
+
 UPDATE pluto a
 SET commfar = b.commfar
 FROM dcp_zoning_maxfar b
 WHERE a.zonedist3=b.zonedist
 AND a.commfar IS NULL;
+
 UPDATE pluto a
 SET facilfar = b.facilfar
 FROM dcp_zoning_maxfar b
 WHERE a.zonedist3=b.zonedist
 AND a.facilfar IS NULL;
+
 -- zoning district 3 with / first part 
 UPDATE pluto a
 SET residfar = b.residfar
 FROM dcp_zoning_maxfar b
 WHERE split_part(a.zonedist3, '/', 1)=b.zonedist
 AND a.residfar IS NULL;
+
 UPDATE pluto a
 SET commfar = b.commfar
 FROM dcp_zoning_maxfar b
 WHERE split_part(a.zonedist3, '/', 1)=b.zonedist
 AND a.commfar IS NULL;
+
 UPDATE pluto a
 SET facilfar = b.facilfar
 FROM dcp_zoning_maxfar b
 WHERE split_part(a.zonedist3, '/', 1)=b.zonedist
 AND a.facilfar IS NULL;
+
 -- zoning district 3 with / second part 
 UPDATE pluto a
 SET residfar = b.residfar
 FROM dcp_zoning_maxfar b
 WHERE split_part(a.zonedist3, '/', 2)=b.zonedist
 AND a.residfar IS NULL;
+
 UPDATE pluto a
 SET commfar = b.commfar
 FROM dcp_zoning_maxfar b
 WHERE split_part(a.zonedist3, '/', 2)=b.zonedist
 AND a.commfar IS NULL;
+
 UPDATE pluto a
 SET facilfar = b.facilfar
 FROM dcp_zoning_maxfar b
@@ -148,10 +168,12 @@ UPDATE pluto a
 SET residfar = 0
 WHERE a.residfar IS NULL
 OR a.residfar = '-';
+
 UPDATE pluto a
 SET commfar = 0
 WHERE a.commfar IS NULL
 OR a.commfar = '-';
+
 UPDATE pluto a
 SET facilfar = 0
 WHERE a.facilfar IS NULL
@@ -160,7 +182,9 @@ OR a.facilfar = '-';
 -- make values numeric
 UPDATE pluto a
 SET residfar = residfar::double precision;
+
 UPDATE pluto a
 SET commfar = commfar::double precision;
+
 UPDATE pluto a
 SET facilfar = facilfar::double precision;

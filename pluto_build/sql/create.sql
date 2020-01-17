@@ -99,4 +99,4 @@ CREATE TABLE pluto (
 	MASDate text,
 	PoliDate text,
 	EDesigDate text
-);
+) WITH (parallel_workers=10);

@@ -26,15 +26,15 @@ mkdir -p $(pwd)/output &&
           cd -;}
         cd -;}
 
-# Pluto
-mkdir -p $(pwd)/output/pluto &&
-        cd $(pwd)/output/pluto {
-          rm -f pluto_$VERSION.zip
-          psql $BUILD_ENGINE -c "\COPY (SELECT * FROM pluto) TO '$(pwd)/pluto.csv' DELIMITER ',' CSV HEADER;"
-          zip pluto_$VERSION.zip pluto.csv
-          curl -X POST $GATEWAY/upload\
-                -F file=@pluto_$VERSION.zip\
-                -F key=$DATE/pluto_$VERSION.zip\
-                -F acl=public-read
-          rm -f pluto.csv
-        cd -;}
+# # Pluto
+# mkdir -p $(pwd)/output/pluto &&
+#         cd $(pwd)/output/pluto {
+#           rm -f pluto_$VERSION.zip
+#           psql $BUILD_ENGINE -c "\COPY (SELECT * FROM pluto) TO '$(pwd)/pluto.csv' DELIMITER ',' CSV HEADER;"
+#           zip pluto_$VERSION.zip pluto.csv
+#           curl -X POST $GATEWAY/upload\
+#                 -F file=@pluto_$VERSION.zip\
+#                 -F key=$DATE/pluto_$VERSION.zip\
+#                 -F acl=public-read
+#           rm -f pluto.csv
+#         cd -;}

@@ -45,9 +45,17 @@ CREATE TABLE dof_pts_propmaster (
 	AP_EASE text,
 	AP_DATE text,
 	PRIMEBBL text);
+
+ALTER TABLE pluto_pts
+SET (parallel_workers=10);
+
 -- insert unique ids
 INSERT INTO dof_pts_propmaster (BBL)
 SELECT DISTINCT parid FROM pluto_pts;
+
+ALTER TABLE dof_pts_propmaster
+SET (parallel_workers=10);
+
 -- insert values
 UPDATE dof_pts_propmaster a
 SET BORO = b.boro,

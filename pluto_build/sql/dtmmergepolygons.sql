@@ -4,6 +4,8 @@ CREATE TABLE pluto_dtm AS(
 SELECT * FROM dof_dtm);
 ALTER TABLE pluto_dtm ADD COLUMN primebbl text;
 
+ALTER TABLE pluto_dtm
+SET (parallel_workers=10);
 -- Set the prime bbl as the billing bbl for condo lots
 -- using the pluto condo table
 UPDATE pluto_dtm

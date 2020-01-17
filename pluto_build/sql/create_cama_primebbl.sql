@@ -1,3 +1,4 @@
+
 DROP TABLE IF EXISTS pluto_input_cama;
 CREATE TABLE pluto_input_cama AS (
 SELECT a.*, b.billingbbl
@@ -6,6 +7,8 @@ LEFT JOIN pluto_input_geocodes b
 ON LEFT(a.bbl,10)=b.borough||lpad(b.block,5,'0')||lpad(b.lot,4,'0')
 );
 
+ALTER TABLE pluto_input_cama
+SET (parallel_workers=10);
 -- test logic to mimic pts logic
 -- DROP TABLE IF EXISTS pluto_input_cama;
 -- CREATE TABLE pluto_input_cama AS (

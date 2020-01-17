@@ -5,25 +5,25 @@
 -- OR the majority of the district is within the lot
 -- split and process by borough to improve processing time
 -- join each of the boro tables into one table
-DROP TABLE IF EXISTS lotzoneperorder;
-CREATE TABLE lotzoneperorder AS (
-  SELECT * FROM lotzoneperordermn
-  UNION
-  SELECT * FROM lotzoneperorderbx
-  UNION
-  SELECT * FROM lotzoneperorderbk
-  UNION
-  SELECT * FROM lotzoneperorderqn
-  UNION
-  SELECT * FROM lotzoneperordersi
-);
+-- DROP TABLE IF EXISTS lotzoneperorder;
+-- CREATE TABLE lotzoneperorder AS (
+--   SELECT * FROM lotzoneperordermn
+--   UNION
+--   SELECT * FROM lotzoneperorderbx
+--   UNION
+--   SELECT * FROM lotzoneperorderbk
+--   UNION
+--   SELECT * FROM lotzoneperorderqn
+--   UNION
+--   SELECT * FROM lotzoneperordersi
+-- );
 
--- drop each of the boro tables
-DROP TABLE lotzoneperordermn;
-DROP TABLE lotzoneperorderbx;
-DROP TABLE lotzoneperorderbk;
-DROP TABLE lotzoneperorderqn;
-DROP TABLE lotzoneperordersi;
+-- -- drop each of the boro tables
+-- DROP TABLE lotzoneperordermn;
+-- DROP TABLE lotzoneperorderbx;
+-- DROP TABLE lotzoneperorderbk;
+-- DROP TABLE lotzoneperorderqn;
+-- DROP TABLE lotzoneperordersi;
 
 WITH new_order AS(
   SELECT bbl, zonedist, ROW_NUMBER()
