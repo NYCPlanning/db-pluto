@@ -20,7 +20,6 @@ ALTER TABLE pluto_input_condo_bldgclass RENAME wkb_geometry to geom;
 ALTER TABLE pluto_input_geocodes RENAME wkb_geometry to geom;
 ALTER TABLE dof_dtm RENAME wkb_geometry to geom;
 ALTER TABLE dof_shoreline RENAME wkb_geometry to geom;
-ALTER TABLE dof_condo RENAME wkb_geometry to geom;
 ALTER TABLE dcp_commercialoverlay RENAME wkb_geometry to geom;
 ALTER TABLE dcp_limitedheight RENAME wkb_geometry to geom;
 ALTER TABLE dcp_zoningdistricts RENAME wkb_geometry to geom;
