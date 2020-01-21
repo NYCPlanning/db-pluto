@@ -1,4 +1,5 @@
 /pluto_build/data/ftp
+/pluto_build/output/mappluto/
 *.env
 *.gz
 *.zip
