@@ -44,8 +44,7 @@ if __name__ == "__main__":
     tables = ['dcp_edesignation', 
             'dcas_facilities_colp', 
             'lpc_historic_districts', 
-            'lpc_landmarks', 
-
+            'lpc_landmarks',
             # for spatial joins
             'dcp_cdboundaries', 
             'dcp_censustracts', 
@@ -95,5 +94,5 @@ if __name__ == "__main__":
             'fema_pfirms2015_100yr', 
             'pluto_input_condolot_descriptiveattributes']
 
-    with Pool(processes=cpu_count()) as pool:
-        pool.map(ETL, tables)
+    # with Pool(processes=cpu_count()) as pool:
+    #     pool.map(ETL, tables)
