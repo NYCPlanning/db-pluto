@@ -81,17 +81,5 @@ AND length(b.zipcode::text) = 5;
 ALTER TABLE pluto
 DROP COLUMN mappluto_f;
 
--- # Create table where areas were updated based on 18v2.1 values
--- DROP TABLE IF EXISTS pluto_backfill;
--- CREATE TABLE pluto_backfill AS (
--- SELECT a.bbl, a.lotarea, b.lotarea as lotareaprev, c.lotarea as lotarea18v21, a.lotfront, b.lotfront as lotfrontprev, c.lotfront as lotfront18v21, a.lotdepth, b.lotdepth as lotdepthprev, c.lotdepth as lotdepth18v21, a.bldgfront, b.bldgfront as bldgfrontprev, c.bldgfront as bldgfront18v21, a.bldgdepth, b.bldgdepth as bldgdepthprev, c.bldgdepth as bldgdepth18v21, a.builtfar
--- FROM pluto a, pluto_19v1backup b, dcp_mappluto c
--- WHERE a.bbl=b.bbl AND a.bbl||'.00'=c.bbl::text
--- AND((a.lotarea::numeric > 0 AND b.lotarea::numeric = 0)
--- OR (a.lotfront::numeric > 0 AND b.lotfront::numeric = 0)
--- OR (a.lotdepth::numeric > 0 AND b.lotdepth::numeric = 0)
--- OR (a.bldgfront::numeric > 0 AND b.bldgfront::numeric = 0)
--- OR (a.bldgdepth::numeric > 0 AND b.bldgdepth::numeric = 0)
--- ));
-
--- \copy (SELECT * FROM pluto_backfill18v21) TO '/prod/db-pluto/pluto_build/output/pluto_backfill18v21.csv' DELIMITER ',' CSV HEADER;
+-- create replica
+select * into pluto_original from pluto; 

@@ -6,7 +6,7 @@ fi
 
 psql $BUILD_ENGINE -f sql/corr_create.sql
 
-echo "Applying corrections to PLUTO"
+# echo "Applying corrections to PLUTO"
 psql $BUILD_ENGINE -f sql/corr_lotarea.sql
 psql $BUILD_ENGINE -f sql/corr_yearbuilt_lpc.sql
 psql $BUILD_ENGINE -f sql/corr_ownername_city.sql
