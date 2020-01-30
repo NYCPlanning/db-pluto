@@ -67,13 +67,8 @@ psql $BUILD_ENGINE -f sql/shorelineclip.sql
 psql $BUILD_ENGINE -f sql/spatialindex.sql
 
 echo '\nComputing zoning fields \e[32m'
-psql $BUILD_ENGINE -f sql/zoning_create_priority.sql&
-psql $BUILD_ENGINE -f sql/zoning_zoningdistrict_mn.sql&
-psql $BUILD_ENGINE -f sql/zoning_zoningdistrict_qn.sql&
-psql $BUILD_ENGINE -f sql/zoning_zoningdistrict_si.sql&
-psql $BUILD_ENGINE -f sql/zoning_zoningdistrict_bk.sql&
-psql $BUILD_ENGINE -f sql/zoning_zoningdistrict_bx.sql
-wait
+psql $BUILD_ENGINE -f sql/zoning_create_priority.sql
+psql $BUILD_ENGINE -f sql/zoning_zoningdistrict_create.sql
 psql $BUILD_ENGINE -f sql/zoning_zoningdistrict.sql
 psql $BUILD_ENGINE -f sql/zoning_commercialoverlay.sql
 psql $BUILD_ENGINE -f sql/zoning_specialdistrict.sql
