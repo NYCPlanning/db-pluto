@@ -17,6 +17,7 @@ psql $BUILD_ENGINE -f sql/remove_unitlots.sql
 psql $BUILD_ENGINE  -c "\COPY (SELECT * FROM pluto_corrections) TO 'output/pluto_corrections.csv' DELIMITER ',' CSV HEADER;"
 psql $BUILD_ENGINE  -c "\COPY (SELECT * FROM pluto_removed_records) TO 'output/pluto_removed_records.csv' DELIMITER ',' CSV HEADER;"
 
+# Migrate table
 curl -d "{
     \"src_engine\":\"${BUILD_ENGINE}\",
     \"dst_engine\": \"${EDM_DATA}\",
@@ -27,3 +28,10 @@ curl -d "{
     }"\
     -H "Content-Type: application/json"\
     -X POST $GATEWAY/migrate
+
+# Run qaqc
+docker run --rm\
+    -v `pwd`/python/qaqc:/home/qaqc\
+    -w /home/qaqc\
+    --env-file .env\
+    sptkl/cook:latest python3 qaqc.py
