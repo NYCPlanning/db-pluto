@@ -2,7 +2,7 @@ from sql import mismatch_sql, aggregate_sql, null_sql
 from sqlalchemy import create_engine
 import os
 
-def run_mismatch(v1, v2, engine, condo='FALSE'):
+def run_mismatch(v1, v2, engine, condo):
     if condo == 'TRUE':
             sql = mismatch_sql.format(v1, v2, condo, "WHERE right(bbl, 4) LIKE '75%%'")
     else:
@@ -13,7 +13,7 @@ def run_mismatch(v1, v2, engine, condo='FALSE'):
         {sql};
     ''')
 
-def handle_null(v, engine, condo='FALSE'):
+def run_null(v, engine, condo):
     # Finalize SQL query
     if condo == 'TRUE':
         sql = null_sql.format(v, condo, "WHERE right(bbl, 4) LIKE '75%%'")
@@ -25,7 +25,7 @@ def handle_null(v, engine, condo='FALSE'):
     {sql};
     ''')
 
-def run_aggregate(v, engine, condo='FALSE'): 
+def run_aggregate(v, engine, condo): 
     # Finalize SQL query
     if condo == 'TRUE':
         sql = aggregate_sql.format(v, condo, "WHERE right(bbl, 4) LIKE '75%%'")
@@ -47,9 +47,9 @@ if __name__ == "__main__":
     # For all
     run_mismatch(v1, v2, engine, condo='FALSE')
     run_aggregate(v1, engine, condo='FALSE')
-    handle_null(v1, engine, condo='FALSE')
+    run_null(v1, engine, condo='FALSE')
 
     # For condo
     run_mismatch(v1, v2, engine, condo='TRUE')
     run_aggregate(v1, engine, condo='TRUE')
-    handle_null(v1, engine, condo='TRUE')
+    run_null(v1, engine, condo='TRUE')
