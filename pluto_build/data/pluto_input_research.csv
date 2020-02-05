@@ -26219,3 +26219,14 @@ bbl,field,old_value,new_value,Type,reason,version
 1008280053,yearalter2,1996,0,2,LPC year built,20v1
 1005250034,yearalter2,2008,0,2,LPC year built,20v1
 1011660060,yearalter2,2008,0,2,LPC year built,20v1
+4002390001,CD,402,401,2,CD correction,20v2
+4002390130,CD,402,401,2,CD correction,20v2
+4010270150,CD,401,403,2,CD correction,20v2
+3011170002,CD,307,355,2,CD correction,20v2
+1019570140,CD,110,109,2,CD correction,20v2
+4025540055,CD,405,402,2,CD correction,20v2
+4025750018,CD,405,402,2,CD correction,20v2
+2030190100,CD,203,209,2,CD correction,20v2
+4064531000,CD,407,408,2,CD correction,20v2
+3072080280,CD,315,313,2,CD correction,20v2
+3072330210,CD,315,313,2,CD correction,20v2
