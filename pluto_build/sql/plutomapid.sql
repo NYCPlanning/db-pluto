@@ -45,8 +45,8 @@ DROP TABLE IF EXISTS dof_shoreline_subdivide;
 CREATE TABLE dof_shoreline_subdivide as (
      select ST_SubDivide(ST_MakeValid(geom), 10) as geom
     from dof_shoreline_union);
-DROP INDEX IF EXISTS shore_subdivide_idx;
-CREATE INDEX shore_subdivide_idx on dof_shoreline_subdivide USING GIST(geom);
+-- DROP INDEX IF EXISTS shore_subdivide_idx;
+-- CREATE INDEX shore_subdivide_idx on dof_shoreline_subdivide USING GIST(geom);
 
 WITH 
 pluto_shore_intersection as (
