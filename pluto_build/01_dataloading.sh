@@ -20,4 +20,3 @@ docker run --rm\
             -w /home/python\
             --env-file .env\
             sptkl/cook:latest python3 fastloading.py
-# python3 python/future_loading.py
