@@ -1,7 +1,4 @@
 -- # Update lot area with lot area value from 18v2.1
-ALTER TABLE dcp_mappluto 
-RENAME COLUMN wkb_geometry TO geom;
-
 UPDATE pluto a
 SET lotarea = b.lotarea
 FROM dcp_mappluto b
@@ -82,4 +79,5 @@ ALTER TABLE pluto
 DROP COLUMN mappluto_f;
 
 -- create replica
+DROP TABLE IF EXISTS pluto_original;
 select * into pluto_original from pluto; 
