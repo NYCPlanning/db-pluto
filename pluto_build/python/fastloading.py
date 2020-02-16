@@ -20,14 +20,8 @@ if __name__ == "__main__":
     df.to_sql(con=con, name='pluto_input_research', 
                 if_exists='replace', index=False)
     
-    os.system('echo "loading pluto_corrections ..."')
-    df = pd.read_csv('https://raw.githubusercontent.com/NYCPlanning/db-pluto/future/pluto_build/output/pluto_corrections.csv', 
-                        index_col=False, dtype=str)
-    df.columns = [i.lower() for i in df.columns]
-    df.to_sql(con=con, name='pluto_corrections', 
-                if_exists='replace', index=False)
-    
-    tables = ['dcp_edesignation', 
+    tables = ['pluto_corrections',
+            'dcp_edesignation', 
             'dcas_facilities_colp', 
             'lpc_historic_districts', 
             'lpc_landmarks', 

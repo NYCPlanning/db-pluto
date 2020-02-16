@@ -8,14 +8,14 @@ URL="$GATEWAY/upload"
 DATE=$(date "+%Y-%m-%d")
 
 # mappluto
-mkdir -p $(pwd)/output && 
+mkdir -p $(pwd)/output/mappluto && 
         cd $(pwd)/output {
 #           pgsql2shp -u $BUILD_USER -h $BUILD_HOST -p $BUILD_PORT -f mappluto $BUILD_DB "SELECT ST_Transform(geom, 2263) FROM pluto WHERE geom IS NOT NULL"
           ogr2ogr -f "ESRI Shapefile" mappluto PG:"dbname='$BUILD_DB' user='$BUILD_USER' host='$BUILD_HOST' port='$BUILD_PORT'"\
                   -sql "SELECT ST_Transform(geom, 2263), bbl FROM pluto WHERE geom IS NOT NULL"\
                   -a_srs 'EPSG:2263'\
                   -nln 'mappluto'
-          cd $(pwd)/output/mappluto {
+          cd mappluto {
             rm -f mappluto_$VERSION.zip
             zip mappluto_$VERSION.zip mappluto.*
             curl -X POST $GATEWAY/upload\
@@ -23,8 +23,8 @@ mkdir -p $(pwd)/output &&
                   -F key=$DATE/mappluto_$VERSION.zip\
                   -F acl=public-read
             rm -f mappluto.*
-          cd -;}
-        cd -;}
+        cd ..;}
+      cd ..;}
 
 # Pluto
 mkdir -p $(pwd)/output/pluto &&
@@ -37,4 +37,4 @@ mkdir -p $(pwd)/output/pluto &&
                 -F key=$DATE/pluto_$VERSION.zip\
                 -F acl=public-read
           rm -f pluto.csv
-        cd -;}
+        cd ..;}

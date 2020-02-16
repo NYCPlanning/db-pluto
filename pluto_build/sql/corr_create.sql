@@ -16,8 +16,8 @@
 ALTER TABLE pluto
 ADD COLUMN dcpedited text;
 
--- ALTER TABLE pluto_corrections
--- ADD COLUMN version text;
+ALTER TABLE pluto_corrections 
+DROP COLUMN IF EXISTS v; 
 
--- ALTER TABLE pluto_corrections
--- ADD COLUMN type text;
+ALTER TABLE pluto_corrections 
+DROP COLUMN IF EXISTS ogc_fid;
