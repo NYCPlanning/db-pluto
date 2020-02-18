@@ -11,7 +11,7 @@ jobs:
       RECIPE_ENGINE: ${{ secrets.RECIPE_ENGINE }}
       BUILD_ENGINE: ${{ secrets.BUILD_ENGINE }}
     steps:
-      - uses: actions/checkout@master
+      - uses: actions/checkout@future
       - name: dataloading ...
         working-directory: pluto_build
         run: |
@@ -26,7 +26,7 @@ jobs:
       BUILD_ENGINE: ${{ secrets.BUILD_ENGINE }}
       EDM_DATA: ${{ secrets.EDM_DATA }}
     steps:
-      - uses: actions/checkout@master
+      - uses: actions/checkout@future
       - name: building...
         working-directory: pluto_build
         run: |
@@ -54,7 +54,7 @@ jobs:
       AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
       AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
     steps:
-      - uses: actions/checkout@master
+      - uses: actions/checkout@future
       - name: archive to spaces
         working-directory: pluto_build
         shell: sh
@@ -84,7 +84,7 @@ jobs:
     env:
       EDM_DATA: ${{ secrets.EDM_DATA }}
     steps:
-      - uses: actions/checkout@master
+      - uses: actions/checkout@future
       - name: qaqc ...
         working-directory: pluto_build
         run: |
