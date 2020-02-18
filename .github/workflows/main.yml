@@ -6,12 +6,12 @@ jobs:
   _01_dataloading:
     container:
       image: sptkl/cook:latest
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     env:
       RECIPE_ENGINE: ${{ secrets.RECIPE_ENGINE }}
       BUILD_ENGINE: ${{ secrets.BUILD_ENGINE }}
     steps:
-      - uses: actions/checkout@future
+      - uses: actions/checkout@v1
       - name: dataloading ...
         working-directory: pluto_build
         run: |
@@ -20,13 +20,13 @@ jobs:
     needs: _01_dataloading
     container: 
       image: mdillon/postgis:latest
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     env:
       RECIPE_ENGINE: ${{ secrets.RECIPE_ENGINE }}
       BUILD_ENGINE: ${{ secrets.BUILD_ENGINE }}
       EDM_DATA: ${{ secrets.EDM_DATA }}
     steps:
-      - uses: actions/checkout@future
+      - uses: actions/checkout@v1
       - name: building...
         working-directory: pluto_build
         run: |
@@ -48,13 +48,13 @@ jobs:
     container: 
       image: minio/mc
       options: --entrypoint=/bin/sh
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     env:
       AWS_S3_ENDPOINT: ${{ secrets.AWS_S3_ENDPOINT }}
       AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
       AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
     steps:
-      - uses: actions/checkout@future
+      - uses: actions/checkout@v1
       - name: archive to spaces
         working-directory: pluto_build
         shell: sh
@@ -65,7 +65,7 @@ jobs:
           mc cp -r output spaces/edm-publishing/db-pluto/$DATE
 #   _04_get_artifacts:
 #     needs: _03_archive_output
-#     runs-on: ubuntu-latest
+#     runs-on: self-hosted
 #     setps:
 #       - name: clean ups
 #         working-directory: pluto_build
@@ -80,11 +80,11 @@ jobs:
     needs: _03_archive_output
     container:
       image: sptkl/cook:latest
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     env:
       EDM_DATA: ${{ secrets.EDM_DATA }}
     steps:
-      - uses: actions/checkout@future
+      - uses: actions/checkout@v1
       - name: qaqc ...
         working-directory: pluto_build
         run: |
