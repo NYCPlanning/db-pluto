@@ -4,6 +4,11 @@ then
   export $(cat .env | sed 's/#.*//g' | xargs)
 fi
 
+if [ -f versions.env ]
+then
+  export $(cat versions.env | sed 's/#.*//g' | xargs)
+fi
+
 echo "\nStarting to build PLUTO ... \e[32m"
 psql $BUILD_ENGINE -f sql/preprocessing.sql
 psql $BUILD_ENGINE -f sql/pts_clean.sql
