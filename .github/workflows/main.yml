@@ -3,15 +3,93 @@ name: CI
 on: [push]
 
 jobs:
-  build:
-
+  _01_dataloading:
+    container:
+      image: sptkl/cook:latest
     runs-on: ubuntu-latest
-
+    env:
+      RECIPE_ENGINE: ${{ secrets.RECIPE_ENGINE }}
+      BUILD_ENGINE: ${{ secrets.BUILD_ENGINE }}
     steps:
-    - uses: actions/checkout@v2
-    - name: Run a one-line script
-      run: echo Hello, world!
-    - name: Run a multi-line script
-      run: |
-        echo Add other actions to build,
-        echo test, and deploy your project.
+      - uses: actions/checkout@master
+      - name: dataloading ...
+        working-directory: pluto_build
+        run: |
+          python3 python/fastloading.py
+  _02_build:
+    needs: _01_dataloading
+    container: 
+      image: mdillon/postgis:latest
+    runs-on: ubuntu-latest
+    env:
+      RECIPE_ENGINE: ${{ secrets.RECIPE_ENGINE }}
+      BUILD_ENGINE: ${{ secrets.BUILD_ENGINE }}
+      EDM_DATA: ${{ secrets.EDM_DATA }}
+    steps:
+      - uses: actions/checkout@master
+      - name: building...
+        working-directory: pluto_build
+        run: |
+          mkdir -p output
+          apt update && apt install -y zip
+          time ./02_build.sh | tee output/02_build.log
+      - name: corrections
+        shell: bash
+        working-directory: pluto_build
+        run: | 
+          time ./03_corrections.sh | tee output/03_corrections.log
+      - name: archive
+        shell: bash
+        working-directory: pluto_build
+        run: |
+          time ./04_archive.sh | tee output/04_archive.log
+  _03_archive_output:
+    needs: _02_build
+    container: 
+      image: minio/mc
+      options: --entrypoint=/bin/sh
+    runs-on: ubuntu-latest
+    env:
+      AWS_S3_ENDPOINT: ${{ secrets.AWS_S3_ENDPOINT }}
+      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+    steps:
+      - uses: actions/checkout@master
+      - name: archive to spaces
+        working-directory: pluto_build
+        shell: sh
+        run: |
+          DATE=$(date "+%Y-%m-%d")
+          mc config host add spaces $AWS_S3_ENDPOINT $AWS_ACCESS_KEY_ID $AWS_SECRET_ACCESS_KEY --api S3v4
+          mc cp -r output spaces/edm-publishing/db-pluto/latest
+          mc cp -r output spaces/edm-publishing/db-pluto/$DATE
+  _04_get_artifacts:
+    needs: _03_archive_output
+    runs-on: ubuntu-latest
+    setps:
+      - name: clean ups
+        working-directory: pluto_build
+        run: | 
+          rm -rf mappluto
+          rm -rf pluto
+      - uses: actions/upload-artifact@v1
+          with:
+            name: output
+            path: pluto_build/output
+  _05_qaqc: 
+    needs: _03_archive_output
+    container:
+      image: sptkl/cook:latest
+    runs-on: ubuntu-latest
+    env:
+      EDM_DATA: ${{ secrets.EDM_DATA }}
+    steps:
+      - uses: actions/checkout@master
+      - name: qaqc ...
+        working-directory: pluto_build
+        run: |
+          if [ -f versions.env ]
+          then
+            export $(cat versions.env | sed 's/#.*//g' | xargs)
+          fi
+          python3 python/qaqc/qaqc.py
