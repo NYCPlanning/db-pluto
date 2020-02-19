@@ -1,3 +1,4 @@
+#!/bin/sh
 if [ -f versions.env ]
 then
   export $(cat versions.env | sed 's/#.*//g' | xargs)
