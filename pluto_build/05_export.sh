@@ -9,7 +9,7 @@ then
 fi
 
 apt update 
-apt install -y zip
+apt install -y zip curl
 
 source ./url_parse.sh $BUILD_ENGINE
 # mappluto
