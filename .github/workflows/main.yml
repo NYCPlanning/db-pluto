@@ -77,7 +77,7 @@ jobs:
           mc cp -r output spaces/edm-publishing/db-pluto/latest
           mc cp -r output spaces/edm-publishing/db-pluto/$DATE
   _05_qaqc: 
-    needs: _03_archive_output
+    needs: _04_archive_output
     container:
       image: sptkl/cook:latest
     runs-on: self-hosted
