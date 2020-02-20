@@ -1,5 +1,5 @@
 #!/bin/sh
-if [ -f versions.env ]
+if [ -f version.env ]
 then
   export $(cat versions.env | sed 's/#.*//g' | xargs)
 fi
