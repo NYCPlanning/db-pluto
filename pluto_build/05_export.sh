@@ -22,13 +22,22 @@ mkdir -p output/mappluto &&
       rm -f mappluto_$VERSION.zip
       zip mappluto_$VERSION.zip mappluto.*
       rm -f mappluto.*
+      pwd 
+      ls -l
     )
 
+pwd 
+ls output
 # Pluto
 mkdir -p output/pluto &&
-        (cd output/pluto
-          rm -f pluto_$VERSION.zip
-          psql $BUILD_ENGINE -c "\COPY (SELECT * FROM pluto) TO STDOUT DELIMITER ',' CSV HEADER;" > pluto.csv
-          zip pluto_$VERSION.zip pluto.csv
-          rm -f pluto.csv
-        )
+  (cd output/pluto
+    rm -f pluto_$VERSION.zip
+    psql $BUILD_ENGINE -c "\COPY (SELECT * FROM pluto) TO STDOUT DELIMITER ',' CSV HEADER;" > pluto.csv
+    zip pluto_$VERSION.zip pluto.csv
+    rm -f pluto.csv
+    pwd 
+    ls -l
+  )
+
+pwd 
+ls output
