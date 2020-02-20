@@ -70,7 +70,7 @@ jobs:
       - uses: actions/checkout@v2
       - name: archive to spaces
         working-directory: pluto_build
-        shell: sh
+        shell: bash
         run: |
           DATE=$(date "+%Y-%m-%d")
           mc config host add spaces $AWS_S3_ENDPOINT $AWS_ACCESS_KEY_ID $AWS_SECRET_ACCESS_KEY --api S3v4
