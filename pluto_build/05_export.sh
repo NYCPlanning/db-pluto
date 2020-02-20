@@ -16,7 +16,7 @@ mkdir -p output
 source ./url_parse.sh $BUILD_ENGINE
 # mappluto
 mkdir -p output/mappluto &&
-  ( output/mappluto
+  (cd output/mappluto
     pgsql2shp -u $BUILD_USER -h $BUILD_HOST -p $BUILD_PORT -f mappluto $BUILD_DB \
       "SELECT ST_Transform(geom, 2263) FROM pluto WHERE geom IS NOT NULL"
       rm -f mappluto_$VERSION.zip
