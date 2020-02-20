@@ -56,7 +56,7 @@ jobs:
       - name: create shapefile
         working-directory: pluto_build
         run: ./05_export.sh
-  _04_archive_output:
+   _04_archive_output:
     needs: _03_export
     container: 
       image: minio/mc
