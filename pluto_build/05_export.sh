@@ -3,10 +3,13 @@ if [ -f .env ]
 then
   export $(cat .env | sed 's/#.*//g' | xargs)
 fi
-
-URL="$GATEWAY/upload"
-DATE=$(date "+%Y-%m-%d")
-
+if [ -f versions.env ]
+then
+  export $(cat .env | sed 's/#.*//g' | xargs)
+fi
+# URL="$GATEWAY/upload"
+# DATE=$(date "+%Y-%m-%d")
+source ./url_parse.sh $BUILD_ENGINE
 # mappluto
 mkdir -p output/mappluto && 
         cd (output
