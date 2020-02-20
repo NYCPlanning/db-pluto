@@ -47,6 +47,7 @@ jobs:
           name: logs
           path: pluto_build/output
   _03_export:
+    needs: _02_build
     container: 
       image: mdillon/postgis:latest
     runs-on: self-hosted
