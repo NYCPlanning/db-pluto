@@ -1,24 +1,49 @@
 name: CI
 
-on:
-  push:
-    branches: future
+on: [push]
+
 jobs:
-  _01_dataloading:
-    container:
-      image: sptkl/cook:latest
-    runs-on: self-hosted
-    env:
-      RECIPE_ENGINE: ${{ secrets.RECIPE_ENGINE }}
-      BUILD_ENGINE: ${{ secrets.BUILD_ENGINE }}
-    steps:
-      - uses: actions/checkout@v1
-      - name: dataloading ...
-        working-directory: pluto_build
-        run: |
-          python3 python/fastloading.py
-  _02_build:
-    needs: _01_dataloading
+  # _01_dataloading:
+  #   container:
+  #     image: sptkl/cook:latest
+  #   runs-on: self-hosted
+  #   env:
+  #     RECIPE_ENGINE: ${{ secrets.RECIPE_ENGINE }}
+  #     BUILD_ENGINE: ${{ secrets.BUILD_ENGINE }}
+  #   steps:
+  #     - uses: actions/checkout@v1
+  #     - name: dataloading ...
+  #       working-directory: pluto_build
+  #       run: |
+  #         python3 python/fastloading.py
+  # _02_build:
+  #   needs: _01_dataloading
+  #   container: 
+  #     image: mdillon/postgis:latest
+  #   runs-on: self-hosted
+  #   env:
+  #     RECIPE_ENGINE: ${{ secrets.RECIPE_ENGINE }}
+  #     BUILD_ENGINE: ${{ secrets.BUILD_ENGINE }}
+  #     EDM_DATA: ${{ secrets.EDM_DATA }}
+  #   steps:
+  #     - uses: actions/checkout@v1
+  #     - name: building...
+  #       working-directory: pluto_build
+  #       run: |
+  #         mkdir -p output
+  #         apt update && apt install -y zip
+  #         ./02_build.sh | tee output/02_build.log
+  #     - name: corrections
+  #       shell: bash
+  #       working-directory: pluto_build
+  #       run: | 
+  #         ./03_corrections.sh | tee output/03_corrections.log
+  #     - name: archive
+  #       shell: bash
+  #       working-directory: pluto_build
+  #       run: |
+  #         ./04_archive.sh | tee output/04_archive.log
+   _03_export:
     container: 
       image: mdillon/postgis:latest
     runs-on: self-hosted
@@ -27,25 +52,12 @@ jobs:
       BUILD_ENGINE: ${{ secrets.BUILD_ENGINE }}
       EDM_DATA: ${{ secrets.EDM_DATA }}
     steps:
-      - uses: actions/checkout@v1
-      - name: building...
+      - uses: actions/checkout@v2
+      - name: create shapefile
         working-directory: pluto_build
-        run: |
-          mkdir -p output
-          apt update && apt install -y zip
-          ./02_build.sh | tee output/02_build.log
-      - name: corrections
-        shell: bash
-        working-directory: pluto_build
-        run: | 
-          ./03_corrections.sh | tee output/03_corrections.log
-      - name: archive
-        shell: bash
-        working-directory: pluto_build
-        run: |
-          ./04_archive.sh | tee output/04_archive.log
-  _03_archive_output:
-    needs: _02_build
+        run: ./05_export.sh
+  _04_archive_output:
+    needs: _03_export
     container: 
       image: minio/mc
       options: --entrypoint=/bin/sh
@@ -55,7 +67,7 @@ jobs:
       AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
       AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v2
       - name: archive to spaces
         working-directory: pluto_build
         shell: sh
@@ -64,7 +76,7 @@ jobs:
           mc config host add spaces $AWS_S3_ENDPOINT $AWS_ACCESS_KEY_ID $AWS_SECRET_ACCESS_KEY --api S3v4
           mc cp -r output spaces/edm-publishing/db-pluto/latest
           mc cp -r output spaces/edm-publishing/db-pluto/$DATE
-  _04_qaqc: 
+  _05_qaqc: 
     needs: _03_archive_output
     container:
       image: sptkl/cook:latest
@@ -72,7 +84,7 @@ jobs:
     env:
       EDM_DATA: ${{ secrets.EDM_DATA }}
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v2
       - name: qaqc ...
         working-directory: pluto_build
         run: |
