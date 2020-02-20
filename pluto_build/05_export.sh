@@ -7,11 +7,9 @@ if [ -f version.env ]
 then
   export $(cat version.env | sed 's/#.*//g' | xargs)
 fi
-# URL="$GATEWAY/upload"
-# DATE=$(date "+%Y-%m-%d")
+
 apt update 
 apt install -y zip
-mkdir -p output
 
 source ./url_parse.sh $BUILD_ENGINE
 # mappluto
@@ -22,12 +20,8 @@ mkdir -p output/mappluto &&
       rm -f mappluto_$VERSION.zip
       zip mappluto_$VERSION.zip mappluto.*
       rm -f mappluto.*
-      pwd 
-      ls -l
     )
 
-pwd 
-ls output
 # Pluto
 mkdir -p output/pluto &&
   (cd output/pluto
@@ -35,9 +29,12 @@ mkdir -p output/pluto &&
     psql $BUILD_ENGINE -c "\COPY (SELECT * FROM pluto) TO STDOUT DELIMITER ',' CSV HEADER;" > pluto.csv
     zip pluto_$VERSION.zip pluto.csv
     rm -f pluto.csv
-    pwd 
-    ls -l
   )
 
-pwd 
-ls output
+curl -O https://dl.min.io/client/mc/release/linux-amd64/mc
+chmod +x mc
+
+DATE=$(date "+%Y-%m-%d")
+./mc config host add spaces $AWS_S3_ENDPOINT $AWS_ACCESS_KEY_ID $AWS_SECRET_ACCESS_KEY --api S3v4
+./mc cp -r output spaces/edm-publishing/db-pluto/latest
+./mc cp -r output spaces/edm-publishing/db-pluto/$DATE
