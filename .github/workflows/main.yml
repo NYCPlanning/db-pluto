@@ -90,6 +90,6 @@ jobs:
         run: |
           if [ -f version.env ]
           then
-            export $(cat versions.env | sed 's/#.*//g' | xargs)
+            export $(cat version.env | sed 's/#.*//g' | xargs)
           fi
           python3 python/qaqc/qaqc.py

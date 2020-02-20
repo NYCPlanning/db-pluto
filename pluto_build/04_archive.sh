@@ -1,7 +1,7 @@
 #!/bin/sh
 if [ -f version.env ]
 then
-  export $(cat versions.env | sed 's/#.*//g' | xargs)
+  export $(cat version.env | sed 's/#.*//g' | xargs)
 fi
 if [ -f .env ]
 then

@@ -6,7 +6,7 @@ fi
 
 if [ -f version.env ]
 then
-  export $(cat versions.env | sed 's/#.*//g' | xargs)
+  export $(cat version.env | sed 's/#.*//g' | xargs)
 fi
 
 echo "\nStarting to build PLUTO ... \e[32m"
