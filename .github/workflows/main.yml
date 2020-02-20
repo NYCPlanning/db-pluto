@@ -3,46 +3,49 @@ name: CI
 on: [push]
 
 jobs:
-  # _01_dataloading:
-  #   container:
-  #     image: sptkl/cook:latest
-  #   runs-on: self-hosted
-  #   env:
-  #     RECIPE_ENGINE: ${{ secrets.RECIPE_ENGINE }}
-  #     BUILD_ENGINE: ${{ secrets.BUILD_ENGINE }}
-  #   steps:
-  #     - uses: actions/checkout@v1
-  #     - name: dataloading ...
-  #       working-directory: pluto_build
-  #       run: |
-  #         python3 python/fastloading.py
-  # _02_build:
-  #   needs: _01_dataloading
-  #   container: 
-  #     image: mdillon/postgis:latest
-  #   runs-on: self-hosted
-  #   env:
-  #     RECIPE_ENGINE: ${{ secrets.RECIPE_ENGINE }}
-  #     BUILD_ENGINE: ${{ secrets.BUILD_ENGINE }}
-  #     EDM_DATA: ${{ secrets.EDM_DATA }}
-  #   steps:
-  #     - uses: actions/checkout@v1
-  #     - name: building...
-  #       working-directory: pluto_build
-  #       run: |
-  #         mkdir -p output
-  #         apt update && apt install -y zip
-  #         ./02_build.sh | tee output/02_build.log
-  #     - name: corrections
-  #       shell: bash
-  #       working-directory: pluto_build
-  #       run: | 
-  #         ./03_corrections.sh | tee output/03_corrections.log
-  #     - name: archive
-  #       shell: bash
-  #       working-directory: pluto_build
-  #       run: |
-  #         ./04_archive.sh | tee output/04_archive.log
+  _01_dataloading:
+    container:
+      image: sptkl/cook:latest
+    runs-on: self-hosted
+    env:
+      RECIPE_ENGINE: ${{ secrets.RECIPE_ENGINE }}
+      BUILD_ENGINE: ${{ secrets.BUILD_ENGINE }}
+    steps:
+      - uses: actions/checkout@v2
+      - name: dataloading ...
+        working-directory: pluto_build
+        run: |
+          python3 python/fastloading.py
+  _02_build:
+    needs: _01_dataloading
+    container: 
+      image: mdillon/postgis:latest
+    runs-on: self-hosted
+    env:
+      RECIPE_ENGINE: ${{ secrets.RECIPE_ENGINE }}
+      BUILD_ENGINE: ${{ secrets.BUILD_ENGINE }}
+      EDM_DATA: ${{ secrets.EDM_DATA }}
+    steps:
+      - uses: actions/checkout@v2
+      - name: building...
+        working-directory: pluto_build
+        run: |
+          ./02_build.sh | tee output/02_build.log
+      - name: corrections
+        shell: bash
+        working-directory: pluto_build
+        run: | 
+          ./03_corrections.sh | tee output/03_corrections.log
+      - name: archive
+        shell: bash
+        working-directory: pluto_build
+        run: |
+          ./04_archive.sh | tee output/04_archive.log
+      - name: Upload build logs
+        uses: actions/upload-artifact@v1
+        with:
+          name: logs
+          path: pluto_build/output
   _03_export:
     container: 
       image: mdillon/postgis:latest

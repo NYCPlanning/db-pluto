@@ -12,6 +12,12 @@ apt update
 apt install -y zip curl
 
 source ./url_parse.sh $BUILD_ENGINE
+mkdir -p output && (
+  cd output 
+  psql $BUILD_ENGINE  -c "\COPY (SELECT * FROM pluto_corrections) TO STDOUT DELIMITER ',' CSV HEADER;" > output/pluto_corrections.csv
+  psql $BUILD_ENGINE  -c "\COPY (SELECT * FROM pluto_removed_records) TO STDOUT DELIMITER ',' CSV HEADER;" > output/pluto_removed_records.csv
+)
+
 # mappluto
 mkdir -p output/mappluto &&
   (cd output/mappluto
