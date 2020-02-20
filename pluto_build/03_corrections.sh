@@ -15,8 +15,8 @@ psql $BUILD_ENGINE -f sql/corr_inwoodrezoning.sql
 psql $BUILD_ENGINE -f sql/corr_dropoldrecords.sql
 psql $BUILD_ENGINE -f sql/remove_unitlots.sql
 
-psql $BUILD_ENGINE  -c "\COPY (SELECT * FROM pluto_corrections) TO STDOUT DELIMITER ',' CSV HEADER;" > output/pluto_corrections.csv
-psql $BUILD_ENGINE  -c "\COPY (SELECT * FROM pluto_removed_records) TO STDOUT DELIMITER ',' CSV HEADER;" > output/pluto_removed_records.csv
+# psql $BUILD_ENGINE  -c "\COPY (SELECT * FROM pluto_corrections) TO STDOUT DELIMITER ',' CSV HEADER;" > output/pluto_corrections.csv
+# psql $BUILD_ENGINE  -c "\COPY (SELECT * FROM pluto_removed_records) TO STDOUT DELIMITER ',' CSV HEADER;" > output/pluto_removed_records.csv
 
 # # Run qaqc
 # docker run --rm\
