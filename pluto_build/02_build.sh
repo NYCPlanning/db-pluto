@@ -11,6 +11,7 @@ fi
 echo "\nStarting to build PLUTO ... \e[32m"
 psql $BUILD_ENGINE -f sql/preprocessing.sql
 psql $BUILD_ENGINE -f sql/pts_clean.sql
+psql $BUILD_ENGINE -c "DROP TABLE pluto_pts;"
 psql $BUILD_ENGINE -f sql/create_rpad_geo.sql
 
 echo '\nReporting records that did not get geocoded... \e[32m'
@@ -42,6 +43,8 @@ psql $BUILD_ENGINE -f sql/condono.sql
 echo '\nAdding on CAMA data attributes \e[32m'
 psql $BUILD_ENGINE -f sql/landuse.sql
 psql $BUILD_ENGINE -f sql/create_cama_primebbl.sql
+psql $BUILD_ENGINE -c "DROP TABLE pluto_input_cama_dof;"
+
 psql $BUILD_ENGINE -f sql/cama_bsmttype.sql
 psql $BUILD_ENGINE -f sql/cama_lottype.sql
 psql $BUILD_ENGINE -f sql/cama_proxcode.sql
@@ -50,6 +53,7 @@ psql $BUILD_ENGINE -f sql/cama_bldgarea_2.sql
 psql $BUILD_ENGINE -f sql/cama_bldgarea_3.sql
 psql $BUILD_ENGINE -f sql/cama_bldgarea_4.sql
 psql $BUILD_ENGINE -f sql/cama_easements.sql
+psql $BUILD_ENGINE -c "DROP TABLE pluto_input_geocodes;"
 
 echo '\nAdding on data attributes from other sources \e[32m'
 psql $BUILD_ENGINE -f sql/lpc.sql
@@ -82,6 +86,7 @@ psql $BUILD_ENGINE -f sql/zoning_parks.sql
 psql $BUILD_ENGINE -f sql/zoning_correctdups.sql
 psql $BUILD_ENGINE -f sql/zoning_correctgaps.sql
 psql $BUILD_ENGINE -f sql/zoning_splitzone.sql
+psql $BUILD_ENGINE -c "DROP TABLE dof_dtm;"
 
 echo '\nFilling in FAR values \e[32m'
 psql $BUILD_ENGINE -f sql/far.sql
