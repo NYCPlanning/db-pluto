@@ -1,8 +1,7 @@
 name: CI
 
-on:
-  push:
-    branches: future
+on: [push]
+
 jobs:
   _01_dataloading:
     container:
@@ -12,7 +11,7 @@ jobs:
       RECIPE_ENGINE: ${{ secrets.RECIPE_ENGINE }}
       BUILD_ENGINE: ${{ secrets.BUILD_ENGINE }}
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v2
       - name: dataloading ...
         working-directory: pluto_build
         run: |
@@ -27,12 +26,10 @@ jobs:
       BUILD_ENGINE: ${{ secrets.BUILD_ENGINE }}
       EDM_DATA: ${{ secrets.EDM_DATA }}
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v2
       - name: building...
         working-directory: pluto_build
         run: |
-          mkdir -p output
-          apt update && apt install -y zip
           ./02_build.sh | tee output/02_build.log
       - name: corrections
         shell: bash
@@ -44,40 +41,42 @@ jobs:
         working-directory: pluto_build
         run: |
           ./04_archive.sh | tee output/04_archive.log
-  _03_archive_output:
+      - name: Upload build logs
+        uses: actions/upload-artifact@v1
+        with:
+          name: logs
+          path: pluto_build/output
+  _03_export:
     needs: _02_build
     container: 
-      image: minio/mc
-      options: --entrypoint=/bin/sh
+      image: mdillon/postgis:latest
     runs-on: self-hosted
     env:
+      RECIPE_ENGINE: ${{ secrets.RECIPE_ENGINE }}
+      BUILD_ENGINE: ${{ secrets.BUILD_ENGINE }}
+      EDM_DATA: ${{ secrets.EDM_DATA }}
       AWS_S3_ENDPOINT: ${{ secrets.AWS_S3_ENDPOINT }}
       AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
       AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
     steps:
-      - uses: actions/checkout@v1
-      - name: archive to spaces
+      - uses: actions/checkout@v2
+      - name: create shapefile
         working-directory: pluto_build
-        shell: sh
-        run: |
-          DATE=$(date "+%Y-%m-%d")
-          mc config host add spaces $AWS_S3_ENDPOINT $AWS_ACCESS_KEY_ID $AWS_SECRET_ACCESS_KEY --api S3v4
-          mc cp -r output spaces/edm-publishing/db-pluto/latest
-          mc cp -r output spaces/edm-publishing/db-pluto/$DATE
-  _04_qaqc: 
-    needs: _03_archive_output
+        run: ./05_export.sh
+  _04_qaqc:
+    needs: _03_export
     container:
       image: sptkl/cook:latest
     runs-on: self-hosted
     env:
       EDM_DATA: ${{ secrets.EDM_DATA }}
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v2
       - name: qaqc ...
         working-directory: pluto_build
         run: |
-          if [ -f versions.env ]
+          if [ -f version.env ]
           then
-            export $(cat versions.env | sed 's/#.*//g' | xargs)
+            export $(cat version.env | sed 's/#.*//g' | xargs)
           fi
           python3 python/qaqc/qaqc.py
