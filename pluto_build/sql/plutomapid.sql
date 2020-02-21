@@ -7,7 +7,7 @@
 -- Shoreline File but NOT in PLUTO.
 -- 4 In PLUTO Data File and in DOF Modified DTM File but NOT in
 -- DOF Modified DTM Tax Block and Lot Clipped to the Shoreline
--- File, therefore the tax lot is totally under water.
+-- File, therefore tshe tax lot is totally under water.
 -- 5 In DOF Modified DTM but NOT in PLUTO, therefore the tax lot
 -- is totally under water.
 
@@ -47,7 +47,7 @@ CREATE TABLE dof_shoreline_subdivide as (
     from dof_shoreline_union);
 
 SELECT pg_terminate_backend(pid) 
-FROM pg_stat_activity 
+FROM pg_stat_activity
 WHERE datname = 'postgres' 
 AND pid <> pg_backend_pid()  
 AND state in (  'idle');
