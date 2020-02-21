@@ -45,45 +45,73 @@ DROP TABLE IF EXISTS dof_shoreline_subdivide;
 CREATE TABLE dof_shoreline_subdivide as (
      select ST_SubDivide(ST_MakeValid(geom), 10) as geom
     from dof_shoreline_union);
--- DROP INDEX IF EXISTS shore_subdivide_idx;
--- CREATE INDEX shore_subdivide_idx on dof_shoreline_subdivide USING GIST(geom);
 
-WITH 
-pluto_shore_intersection as (
-	select a.bbl as bbl, a.geom as pluto_geom, b.geom as geom
-	from pluto a, dof_shoreline_subdivide b
-	where a.plutomapid = '1' 
-        and a.geom IS NOT NULL
-        and a.geom&&ST_MakeValid(b.geom) 
-        and ST_intersects(a.geom, ST_MakeValid(b.geom))),
-new_shoreline as (
-    select st_union(geom) as geom
-    from pluto_shore_intersection),
-pluto_within as (
-	select a.bbl as bbl, a.pluto_geom as geom 
-	from pluto_shore_intersection a, new_shoreline b
-	where ST_within(a.pluto_geom, b.geom))
 UPDATE pluto a
 SET plutomapid = '4'
-FROM pluto_within b
-WHERE a.bbl = b.bbl;
-
-WITH 
-pluto_shore_intersection as (
-	select a.bbl as bbl, a.geom as pluto_geom, b.geom as geom
+WHERE a.bbl in (
+select a.bbl from (
+    select a.bbl as bbl, st_union(b.geom) as geom
 	from pluto a, dof_shoreline_subdivide b
-	where a.plutomapid = '3' 
+	WHERE a.plutomapid = '1' 
         and a.geom IS NOT NULL
         and a.geom&&ST_MakeValid(b.geom) 
-        and ST_intersects(a.geom, ST_MakeValid(b.geom))),
-new_shoreline as (
-    select st_union(geom) as geom
-    from pluto_shore_intersection),
-pluto_within as (
-	select a.bbl as bbl, a.pluto_geom as geom 
-	from pluto_shore_intersection a, new_shoreline b
-	where ST_within(a.pluto_geom, b.geom))
+        and ST_intersects(a.geom, ST_MakeValid(b.geom))
+	group by a.bbl) a
+	join pluto b
+	on a.bbl=b.bbl
+	WHERE ST_within(b.geom, a.geom));
+
 UPDATE pluto a
 SET plutomapid = '5'
-FROM pluto_within b
-WHERE a.bbl = b.bbl;
+WHERE a.bbl in (
+select a.bbl from (
+    select a.bbl as bbl, st_union(b.geom) as geom
+	from pluto a, dof_shoreline_subdivide b
+	WHERE a.plutomapid = '3' 
+        and a.geom IS NOT NULL
+        and a.geom&&ST_MakeValid(b.geom) 
+        and ST_intersects(a.geom, ST_MakeValid(b.geom))
+	group by a.bbl) a
+	join pluto b
+	on a.bbl=b.bbl
+	WHERE ST_within(b.geom, a.geom));
+
+-- WITH 
+-- pluto_shore_intersection as (
+-- 	select a.bbl as bbl, a.geom as pluto_geom, b.geom as geom
+-- 	from pluto a, dof_shoreline_subdivide b
+-- 	where a.plutomapid = '1' 
+--         and a.geom IS NOT NULL
+--         and a.geom&&ST_MakeValid(b.geom) 
+--         and ST_intersects(a.geom, ST_MakeValid(b.geom))),
+-- new_shoreline as (
+--     select st_union(geom) as geom
+--     from pluto_shore_intersection),
+-- pluto_within as (
+-- 	select a.bbl as bbl, a.pluto_geom as geom 
+-- 	from pluto_shore_intersection a, new_shoreline b
+-- 	where ST_within(a.pluto_geom, b.geom))
+-- UPDATE pluto a
+-- SET plutomapid = '4'
+-- FROM pluto_within b
+-- WHERE a.bbl = b.bbl;
+
+-- WITH 
+-- pluto_shore_intersection as (
+-- 	select a.bbl as bbl, a.geom as pluto_geom, b.geom as geom
+-- 	from pluto a, dof_shoreline_subdivide b
+-- 	where a.plutomapid = '3' 
+--         and a.geom IS NOT NULL
+--         and a.geom&&ST_MakeValid(b.geom) 
+--         and ST_intersects(a.geom, ST_MakeValid(b.geom))),
+-- new_shoreline as (
+--     select st_union(geom) as geom
+--     from pluto_shore_intersection),
+-- pluto_within as (
+-- 	select a.bbl as bbl, a.pluto_geom as geom 
+-- 	from pluto_shore_intersection a, new_shoreline b
+-- 	where ST_within(a.pluto_geom, b.geom))
+-- UPDATE pluto a
+-- SET plutomapid = '5'
+-- FROM pluto_within b
+-- WHERE a.bbl = b.bbl;
