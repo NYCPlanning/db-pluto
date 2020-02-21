@@ -13,16 +13,6 @@ def ETL(table):
 
 if __name__ == "__main__":
     con = create_engine(os.getenv('BUILD_ENGINE'))
-    con.execute('''
-        DO $$ DECLARE
-            r RECORD;
-        BEGIN
-            FOR r IN (SELECT tablename FROM pg_tables WHERE schemaname = 'public' and tablename !='spatial_ref_sys') LOOP
-                EXECUTE 'DROP TABLE IF EXISTS ' || quote_ident(r.tablename) || ' CASCADE';
-            END LOOP;
-        END $$;
-    ''')
-
     os.system('echo "loading pluto_input_research ..."')
     df = pd.read_csv('https://raw.githubusercontent.com/NYCPlanning/db-pluto/future/pluto_build/data/pluto_input_research.csv', 
                         index_col=False, dtype=str)
