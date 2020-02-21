@@ -23,9 +23,10 @@ mkdir -p output/mappluto &&
   (cd output/mappluto
     pgsql2shp -u $BUILD_USER -h $BUILD_HOST -p $BUILD_PORT -f mappluto $BUILD_DB \
       "SELECT ST_Transform(geom, 2263) FROM pluto WHERE geom IS NOT NULL"
-      rm -f mappluto_$VERSION.zip
-      zip mappluto_$VERSION.zip mappluto.*
-      rm -f mappluto.*
+      # rm -f mappluto.zip
+      echo "$VERSION" > version.txt
+      zip mappluto.zip *
+      ls | grep -v mappluto.zip | xargs rm
     )
 
 # Pluto
@@ -33,8 +34,10 @@ mkdir -p output/pluto &&
   (cd output/pluto
     rm -f pluto_$VERSION.zip
     psql $BUILD_ENGINE -c "\COPY (SELECT * FROM pluto) TO STDOUT DELIMITER ',' CSV HEADER;" > pluto.csv
-    zip pluto_$VERSION.zip pluto.csv
-    rm -f pluto.csv
+    echo "$VERSION" > version.txt
+    echo "number of records: $(wc -l pluto.csv)" >> version.txt
+    zip pluto.zip *
+    ls | grep -v pluto.zip | xargs rm
   )
 
 curl -O https://dl.min.io/client/mc/release/linux-amd64/mc
