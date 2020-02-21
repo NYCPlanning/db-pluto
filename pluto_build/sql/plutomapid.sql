@@ -7,7 +7,7 @@
 -- Shoreline File but NOT in PLUTO.
 -- 4 In PLUTO Data File and in DOF Modified DTM File but NOT in
 -- DOF Modified DTM Tax Block and Lot Clipped to the Shoreline
--- File, therefore the tax lot is totally under water.
+-- File, therefore tshe tax lot is totally under water.
 -- 5 In DOF Modified DTM but NOT in PLUTO, therefore the tax lot
 -- is totally under water.
 
@@ -43,44 +43,44 @@ WHERE geom IS NULL;
 
 DROP TABLE IF EXISTS dof_shoreline_subdivide;
 CREATE TABLE dof_shoreline_subdivide as (
-     select ST_SubDivide(ST_MakeValid(geom)) as geom
+     select ST_SubDivide(ST_MakeValid(geom), 10) as geom
     from dof_shoreline_union);
 
 SELECT pg_terminate_backend(pid) 
-FROM pg_stat_activity 
+FROM pg_stat_activity
 WHERE datname = 'postgres' 
 AND pid <> pg_backend_pid()  
 AND state in (  'idle');
 
-UPDATE pluto a
-SET plutomapid = '4'
-WHERE a.bbl in (
-select a.bbl from (
-    select a.bbl as bbl, st_union(b.geom) as geom
-	from pluto a, dof_shoreline_subdivide b
-	WHERE a.plutomapid = '1' 
-        and a.geom IS NOT NULL
-        and a.geom&&ST_MakeValid(b.geom) 
-        and ST_intersects(a.geom, ST_MakeValid(b.geom))
-	group by a.bbl) a
-	join pluto b
-	on a.bbl=b.bbl
-	WHERE ST_within(b.geom, a.geom));
+-- UPDATE pluto a
+-- SET plutomapid = '4'
+-- WHERE a.bbl in (
+-- select a.bbl from (
+--     select a.bbl as bbl, st_union(b.geom) as geom
+-- 	from pluto a, dof_shoreline_subdivide b
+-- 	WHERE a.plutomapid = '1' 
+--         and a.geom IS NOT NULL
+--         and a.geom&&ST_MakeValid(b.geom) 
+--         and ST_intersects(a.geom, ST_MakeValid(b.geom))
+-- 	group by a.bbl) a
+-- 	join pluto b
+-- 	on a.bbl=b.bbl
+-- 	WHERE ST_within(b.geom, a.geom));
 
-UPDATE pluto a
-SET plutomapid = '5'
-WHERE a.bbl in (
-select a.bbl from (
-    select a.bbl as bbl, st_union(b.geom) as geom
-	from pluto a, dof_shoreline_subdivide b
-	WHERE a.plutomapid = '3' 
-        and a.geom IS NOT NULL
-        and a.geom&&ST_MakeValid(b.geom) 
-        and ST_intersects(a.geom, ST_MakeValid(b.geom))
-	group by a.bbl) a
-	join pluto b
-	on a.bbl=b.bbl
-	WHERE ST_within(b.geom, a.geom));
+-- UPDATE pluto a
+-- SET plutomapid = '5'
+-- WHERE a.bbl in (
+-- select a.bbl from (
+--     select a.bbl as bbl, st_union(b.geom) as geom
+-- 	from pluto a, dof_shoreline_subdivide b
+-- 	WHERE a.plutomapid = '3' 
+--         and a.geom IS NOT NULL
+--         and a.geom&&ST_MakeValid(b.geom) 
+--         and ST_intersects(a.geom, ST_MakeValid(b.geom))
+-- 	group by a.bbl) a
+-- 	join pluto b
+-- 	on a.bbl=b.bbl
+-- 	WHERE ST_within(b.geom, a.geom));
 
 -- WITH 
 -- pluto_shore_intersection as (
