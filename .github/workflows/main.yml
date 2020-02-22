@@ -41,6 +41,23 @@ jobs:
         if: "! contains(github.event.head_commit.message, '[skip build]')"
         run: |
           ./02_build.sh | tee output/02_build.log
+          exit 0
+      - name: plutomapid
+        working-directory: pluto_build
+        run: |
+          if [ -f version.env ]
+          then
+            export $(cat version.env | sed 's/#.*//g' | xargs)
+          fi
+          sleep 2m
+          echo '\nPopulating PLUTO tags and version fields \e[32m'
+          psql --single-transaction $BUILD_ENGINE -f sql/plutomapid.sql
+          psql $BUILD_ENGINE -f sql/plutomapid_1.sql
+          psql $BUILD_ENGINE -f sql/plutomapid_2.sql
+          psql $BUILD_ENGINE -c "UPDATE pluto SET version = '$VERSION'";
+          echo '\nBackfilling'
+          psql $BUILD_ENGINE -f sql/backfill.sql
+          exit 0
       - name: part2
         working-directory: pluto_build
         if: failure()
@@ -57,6 +74,7 @@ jobs:
           psql $BUILD_ENGINE -c "UPDATE pluto SET version = '$VERSION'";
           echo '\nBackfilling'
           psql $BUILD_ENGINE -f sql/backfill.sql
+          exit 0
       - name: corrections
         shell: bash
         working-directory: pluto_build
@@ -110,3 +128,4 @@ jobs:
             export $(cat version.env | sed 's/#.*//g' | xargs)
           fi
           python3 python/qaqc/qaqc.py
+          exit 0
