@@ -3,46 +3,46 @@ name: CI
 on: [push]
 
 jobs:
-  skip:
-    name: Build and test
-    runs-on: ubuntu-latest
-    if: "! contains(github.event.head_commit.message, '[skip ci]')"
-    steps:
-      - run: echo "${{ github.event.head_commit.message }}"
-  _01_dataloading:
-    needs: skip
-    if: "! contains(github.event.head_commit.message, '[skip dataloading]')"
-    container:
-      image: sptkl/cook:latest
-    runs-on: self-hosted
-    env:
-      RECIPE_ENGINE: ${{ secrets.RECIPE_ENGINE }}
-      BUILD_ENGINE: ${{ secrets.BUILD_ENGINE }}
-    steps:
-      - uses: actions/checkout@v2
-      - name: dataloading ...
-        working-directory: pluto_build
-        run: |
-          ./01_dataloading.sh
-          python3 python/fastloading.py
-  _02_build_part1:
-    needs: _01_dataloading
-    container: 
-      image: mdillon/postgis:latest
-    runs-on: self-hosted
-    env:
-      RECIPE_ENGINE: ${{ secrets.RECIPE_ENGINE }}
-      BUILD_ENGINE: ${{ secrets.BUILD_ENGINE }}
-      EDM_DATA: ${{ secrets.EDM_DATA }}
-    steps:
-      - uses: actions/checkout@v2
-      - name: building part 1...
-        working-directory: pluto_build
-        if: "! contains(github.event.head_commit.message, '[skip build]')"
-        run: |
-          ./02_build_part1.sh | tee output/02_build_part1.log
+  # skip:
+  #   name: Build and test
+  #   runs-on: ubuntu-latest
+  #   if: "! contains(github.event.head_commit.message, '[skip ci]')"
+  #   steps:
+  #     - run: echo "${{ github.event.head_commit.message }}"
+  # _01_dataloading:
+  #   needs: skip
+  #   if: "! contains(github.event.head_commit.message, '[skip dataloading]')"
+  #   container:
+  #     image: sptkl/cook:latest
+  #   runs-on: self-hosted
+  #   env:
+  #     RECIPE_ENGINE: ${{ secrets.RECIPE_ENGINE }}
+  #     BUILD_ENGINE: ${{ secrets.BUILD_ENGINE }}
+  #   steps:
+  #     - uses: actions/checkout@v2
+  #     - name: dataloading ...
+  #       working-directory: pluto_build
+  #       run: |
+  #         ./01_dataloading.sh
+  #         python3 python/fastloading.py
+  # _02_build_part1:
+  #   needs: _01_dataloading
+  #   container: 
+  #     image: mdillon/postgis:latest
+  #   runs-on: self-hosted
+  #   env:
+  #     RECIPE_ENGINE: ${{ secrets.RECIPE_ENGINE }}
+  #     BUILD_ENGINE: ${{ secrets.BUILD_ENGINE }}
+  #     EDM_DATA: ${{ secrets.EDM_DATA }}
+  #   steps:
+  #     - uses: actions/checkout@v2
+  #     - name: building part 1...
+  #       working-directory: pluto_build
+  #       if: "! contains(github.event.head_commit.message, '[skip build]')"
+  #       run: |
+  #         ./02_build_part1.sh | tee output/02_build_part1.log
   _02_build_part2:
-    needs: _02_build_part1
+    # needs: _02_build_part1
     container: 
       image: mdillon/postgis:latest
     runs-on: ubuntu-latest
