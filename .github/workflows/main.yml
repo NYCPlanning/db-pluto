@@ -25,7 +25,7 @@ jobs:
         run: |
           ./01_dataloading.sh
           python3 python/fastloading.py
-  _02_build:
+  _02_build_part1:
     needs: _01_dataloading
     container: 
       image: mdillon/postgis:latest
@@ -41,10 +41,28 @@ jobs:
         if: "! contains(github.event.head_commit.message, '[skip build]')"
         run: |
           ./02_build_part1.sh | tee output/02_build_part1.log
+  _02_build_part2:
+    needs: _02_build_part1
+    container: 
+      image: mdillon/postgis:latest
+    runs-on: ubuntu-latest
+    env:
+      RECIPE_ENGINE: ${{ secrets.RECIPE_ENGINE }}
+      BUILD_ENGINE: ${{ secrets.BUILD_ENGINE }}
+      EDM_DATA: ${{ secrets.EDM_DATA }}
+    steps:
+      - uses: actions/checkout@v2
       - name: building part 2...
         working-directory: pluto_build
         if: "! contains(github.event.head_commit.message, '[skip build]')"
         run: |
+          ./02_build_part2.sh | tee output/02_build_part2.log
+      - name: part2
+        working-directory: pluto_build
+        if: failure()
+        run: |
+          psql $BUILD_ENGINE -c "SELECT pg_cancel_backend(pid) FROM pg_stat_activity;"
+          psql $BUILD_ENGINE -c "VACUUM ANALYZE VERBOSE;"
           ./02_build_part2.sh | tee output/02_build_part2.log
       - name: corrections
         shell: bash
@@ -64,7 +82,7 @@ jobs:
           name: logs
           path: pluto_build/output
   _03_export:
-    needs: _02_build
+    needs: _02_build_part2
     if: "! contains(github.event.head_commit.message, '[skip export]')"
     container: 
       image: mdillon/postgis:latest
