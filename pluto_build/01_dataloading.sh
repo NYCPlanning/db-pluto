@@ -6,9 +6,6 @@ fi
 
 # ## load data into the pluto container
 psql $BUILD_ENGINE -c "
-SELECT pg_cancel_backend(pid) FROM pg_stat_activity WHERE state = 'active';
-SELECT pg_cancel_backend(pid) FROM pg_stat_activity WHERE state = 'idle';
-
 DO \$\$ DECLARE
     r RECORD;
 BEGIN

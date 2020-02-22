@@ -61,7 +61,6 @@ jobs:
         working-directory: pluto_build
         if: failure()
         run: |
-          psql $BUILD_ENGINE -c "SELECT pg_cancel_backend(pid) FROM pg_stat_activity;"
           psql $BUILD_ENGINE -c "VACUUM ANALYZE VERBOSE;"
           ./02_build_part2.sh | tee output/02_build_part2.log
       - name: corrections
