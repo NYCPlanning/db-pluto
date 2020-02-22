@@ -42,10 +42,8 @@ WHERE geom IS NULL;
 -- AND plutomapid = '3';
 
 DROP TABLE IF EXISTS dof_shoreline_subdivide;
-CREATE TABLE dof_shoreline_subdivide as (
-     select ST_SubDivide(ST_MakeValid(geom), 10) as geom
-    from dof_shoreline_union);
-
+select ST_SubDivide(ST_MakeValid(geom), 100) as geom into dof_shoreline_subdivide  
+from dof_shoreline_union
 -- UPDATE pluto a
 -- SET plutomapid = '4'
 -- WHERE a.bbl in (
