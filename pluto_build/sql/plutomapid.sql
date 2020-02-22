@@ -46,8 +46,6 @@ CREATE TABLE dof_shoreline_subdivide as (
      select ST_SubDivide(ST_MakeValid(geom), 10) as geom
     from dof_shoreline_union);
 
-VACUUM ANALYZE VERBOSE;
-
 -- UPDATE pluto a
 -- SET plutomapid = '4'
 -- WHERE a.bbl in (
