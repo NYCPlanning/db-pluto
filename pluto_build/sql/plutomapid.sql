@@ -46,11 +46,7 @@ CREATE TABLE dof_shoreline_subdivide as (
      select ST_SubDivide(ST_MakeValid(geom), 10) as geom
     from dof_shoreline_union);
 
-SELECT pg_terminate_backend(pid) 
-FROM pg_stat_activity
-WHERE datname = 'postgres' 
-AND pid <> pg_backend_pid()  
-AND state in (  'idle');
+VACUUM ANALYZE VERBOSE;
 
 -- UPDATE pluto a
 -- SET plutomapid = '4'

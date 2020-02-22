@@ -36,11 +36,16 @@ jobs:
       EDM_DATA: ${{ secrets.EDM_DATA }}
     steps:
       - uses: actions/checkout@v2
-      - name: building...
+      - name: building part 1...
         working-directory: pluto_build
         if: "! contains(github.event.head_commit.message, '[skip build]')"
         run: |
-          ./02_build.sh | tee output/02_build.log
+          ./02_build_part1.sh | tee output/02_build_part1.log
+      - name: building part 2...
+        working-directory: pluto_build
+        if: "! contains(github.event.head_commit.message, '[skip build]')"
+        run: |
+          ./02_build_part2.sh | tee output/02_build_part2.log
       - name: corrections
         shell: bash
         working-directory: pluto_build
