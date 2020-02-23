@@ -20,7 +20,7 @@ jobs:
       BUILD_ENGINE: ${{ secrets.BUILD_ENGINE }}
     steps:
       - uses: actions/checkout@v2
-      - name: dataloading ...
+      - name: dataloading ..
         working-directory: pluto_build
         run: |
           ./01_dataloading.sh
