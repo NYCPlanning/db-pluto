@@ -8,6 +8,6 @@
 */__pycache__/*
 __pycache__/
 *.DS_Store
-pluto_build/output/
+pluto_build/output/*.csv
 *.log
 __pycache__/

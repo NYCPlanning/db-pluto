@@ -41,25 +41,9 @@ jobs:
         shell: bash
         if: "! contains(github.event.head_commit.message, '[skip build]')"
         run: |
+          mkdir -p output
           ./02_build.sh | tee output/02_build.log
           echo $?
-      - name: part2
-        working-directory: pluto_build
-        shell: bash
-        if: failure()
-        run: |
-          if [ -f version.env ]
-          then
-            export $(cat version.env | sed 's/#.*//g' | xargs)
-          fi
-          sleep 2m
-          echo '\nPopulating PLUTO tags and version fields \e[32m'
-          psql $BUILD_ENGINE -1 -f sql/plutomapid.sql
-          psql $BUILD_ENGINE -1 -f sql/plutomapid_1.sql
-          psql $BUILD_ENGINE -1 -f sql/plutomapid_2.sql
-          psql $BUILD_ENGINE -1 -c "UPDATE pluto SET version = '$VERSION'"
-          echo '\nBackfilling'
-          psql $BUILD_ENGINE -1 -f sql/backfill.sql
       - name: corrections
         shell: bash
         working-directory: pluto_build
