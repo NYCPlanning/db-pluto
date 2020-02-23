@@ -1,6 +1,8 @@
 # PLUTO and MapPLUTO ![CI](https://github.com/NYCPlanning/db-pluto/workflows/CI/badge.svg)
 
 Please note that we're still working on this repo as we optimize the build processes, update the sources for the raw data inputs, and implement better technologies.  We're excited that PLUTO users can now look under the hood and begin exploring how PLUTO is built and each of its individual fields are calculated. If you have suggestions or find any problems, please open an issue, or if you have questions please reach out to us directly.
++ [MapPLUTO](https://edm-publishing.nyc3.digitaloceanspaces.com/db-pluto/latest/output/mappluto/mappluto.zip)
++ [PLUTO](https://edm-publishing.nyc3.cdn.digitaloceanspaces.com/db-pluto/latest/output/pluto/pluto.zip)
 
 ## __About PLUTO__
 
