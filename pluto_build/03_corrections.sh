@@ -24,3 +24,4 @@ psql $BUILD_ENGINE -f sql/remove_unitlots.sql
 #     -w /home/qaqc\
 #     --env-file .env\
 #     sptkl/cook:latest python3 qaqc.py
+exit 0

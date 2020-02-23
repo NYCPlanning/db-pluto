@@ -1,8 +1,4 @@
 -- if a lot did not get assigned service areas through Geosupport assign service areas spatially
-
--- DROP INDEX dcp_censusblocks_gix;
--- CREATE INDEX dcp_censusblocks_gix ON dcp_censusblocks USING GIST (geom);
-
 -- make the x /y coordinate the centroid of the lot
 -- where x/ y did not come from Geosupport
 UPDATE pluto a

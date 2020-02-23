@@ -17,3 +17,4 @@ psql $EDM_DATA -c "
     ALTER TABLE pluto SET SCHEMA dcp_pluto;
     DROP TABLE IF EXISTS dcp_pluto.\"$VERSION\";
     ALTER TABLE dcp_pluto.pluto RENAME TO \"$VERSION\";";
+exit 0

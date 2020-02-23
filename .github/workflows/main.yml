@@ -20,7 +20,7 @@ jobs:
       BUILD_ENGINE: ${{ secrets.BUILD_ENGINE }}
     steps:
       - uses: actions/checkout@v2
-      - name: dataloading ...
+      - name: dataloading ..
         working-directory: pluto_build
         run: |
           ./01_dataloading.sh
@@ -36,11 +36,14 @@ jobs:
       EDM_DATA: ${{ secrets.EDM_DATA }}
     steps:
       - uses: actions/checkout@v2
-      - name: building...
+      - name: building ...
         working-directory: pluto_build
+        shell: bash
         if: "! contains(github.event.head_commit.message, '[skip build]')"
         run: |
+          mkdir -p output
           ./02_build.sh | tee output/02_build.log
+          echo $?
       - name: corrections
         shell: bash
         working-directory: pluto_build
@@ -94,3 +97,4 @@ jobs:
             export $(cat version.env | sed 's/#.*//g' | xargs)
           fi
           python3 python/qaqc/qaqc.py
+          exit 0
