@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 if [ -f .env ]
 then
   export $(cat .env | sed 's/#.*//g' | xargs)
@@ -111,11 +111,12 @@ psql $BUILD_ENGINE -f sql/sanitboro.sql
 psql $BUILD_ENGINE -f sql/latlong.sql
 
 echo '\nPopulating PLUTO tags and version fields \e[32m'
-psql --single-transaction $BUILD_ENGINE -f sql/plutomapid.sql
-# psql $BUILD_ENGINE -f sql/plutomapid_1.sql
-# psql $BUILD_ENGINE -f sql/plutomapid_2.sql
-# psql $BUILD_ENGINE -c "UPDATE pluto SET version = '$VERSION'";
+psql $BUILD_ENGINE -v ON_ERROR_STOP=1 -f sql/plutomapid.sql
+psql $BUILD_ENGINE -v ON_ERROR_STOP=1 -f sql/plutomapid_1.sql
+psql $BUILD_ENGINE -v ON_ERROR_STOP=1 -f sql/plutomapid_2.sql
+psql $BUILD_ENGINE -v ON_ERROR_STOP=1 -c "UPDATE pluto SET version = '$VERSION';"
 
-# echo '\nBackfilling'
-# psql $BUILD_ENGINE -f sql/backfill.sql
+echo '\nBackfilling'
+psql $BUILD_ENGINE -v ON_ERROR_STOP=1 -f sql/backfill.sql
+
 exit 0

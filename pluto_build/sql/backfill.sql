@@ -76,7 +76,7 @@ AND length(b.zipcode::text) = 5;
 
 -- # Drop column
 ALTER TABLE pluto
-DROP COLUMN mappluto_f;
+DROP COLUMN IF EXISTS mappluto_f;
 
 -- -- create replica
 -- DROP TABLE IF EXISTS pluto_original;
