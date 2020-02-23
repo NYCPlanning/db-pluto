@@ -29,7 +29,7 @@ jobs:
     needs: _01_dataloading
     container: 
       image: mdillon/postgis:latest
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     env:
       RECIPE_ENGINE: ${{ secrets.RECIPE_ENGINE }}
       BUILD_ENGINE: ${{ secrets.BUILD_ENGINE }}
