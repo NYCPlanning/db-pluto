@@ -3,9 +3,6 @@
 -- the order zoning maps are assigned is based on which map covers the majority of the lot
 -- a map is only assigned if more than 10% of the map covers the lot
 -- OR more than a specified area of the lot if covered by the map
-DROP INDEX dcp_zoningmapindex_gix;
-CREATE INDEX dcp_zoningmapindex_gix ON dcp_zoningmapindex USING GIST (geom);
-
 DROP TABLE zoningmapperorder;
 CREATE TABLE zoningmapperorder AS (
 WITH 
