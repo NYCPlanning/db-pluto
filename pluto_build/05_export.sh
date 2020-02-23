@@ -48,6 +48,6 @@ DATE=$(date "+%Y-%m-%d")
 ./mc rm -r --force spaces/edm-publishing/db-pluto/latest
 ./mc rm -r --force spaces/edm-publishing/db-pluto/$DATE
 ./mc cp -r output spaces/edm-publishing/db-pluto/latest
-./mc cp -r output spaces/edm-publishing/db-pluto/$
+./mc cp -r output spaces/edm-publishing/db-pluto/$DATE
 
 exit 0
