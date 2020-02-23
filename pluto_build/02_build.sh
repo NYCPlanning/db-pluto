@@ -119,4 +119,5 @@ psql $BUILD_ENGINE -v ON_ERROR_STOP=1 -c "UPDATE pluto SET version = '$VERSION';
 echo '\nBackfilling'
 psql $BUILD_ENGINE -v ON_ERROR_STOP=1 -f sql/backfill.sql
 
+echo '\nDone'
 exit 0
