@@ -8,15 +8,23 @@ then
   export $(cat version.env | sed 's/#.*//g' | xargs)
 fi
 
+DATE=$(date "+%Y-%m-%d")
 apt update 
 apt install -y zip curl
 
 source ./url_parse.sh $BUILD_ENGINE
-mkdir -p output && (
-  cd output 
-  psql $BUILD_ENGINE  -c "\COPY (SELECT * FROM pluto_corrections) TO STDOUT DELIMITER ',' CSV HEADER;" > output/pluto_corrections.csv
-  psql $BUILD_ENGINE  -c "\COPY (SELECT * FROM pluto_removed_records) TO STDOUT DELIMITER ',' CSV HEADER;" > output/pluto_removed_records.csv
-)
+
+mkdir -p output && 
+  (cd output 
+    echo "version: $VERSION" > version.txt
+    echo "date: $DATE" >> version.txt
+    psql $BUILD_ENGINE  -c "\COPY (SELECT * FROM pluto_corrections) TO STDOUT DELIMITER ',' CSV HEADER;" > pluto_corrections.csv
+    echo "pluto_corrections #records: $(wc -l pluto_corrections.csv)" >> version.txt
+    psql $BUILD_ENGINE  -c "\COPY (SELECT * FROM pluto_removed_records) TO STDOUT DELIMITER ',' CSV HEADER;" > pluto_removed_records.csv
+    echo "pluto_removed_records #records: $(wc -l pluto_corrections.csv)" >> version.txt
+    zip pluto_corrections.zip *
+    ls | grep -v pluto_corrections.zip | xargs rm
+  )
 
 # mappluto
 mkdir -p output/mappluto &&
@@ -43,7 +51,6 @@ mkdir -p output/pluto &&
 curl -O https://dl.min.io/client/mc/release/linux-amd64/mc
 chmod +x mc
 
-DATE=$(date "+%Y-%m-%d")
 ./mc config host add spaces $AWS_S3_ENDPOINT $AWS_ACCESS_KEY_ID $AWS_SECRET_ACCESS_KEY --api S3v4
 ./mc rm -r --force spaces/edm-publishing/db-pluto/latest
 ./mc rm -r --force spaces/edm-publishing/db-pluto/$DATE
