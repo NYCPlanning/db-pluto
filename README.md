@@ -40,11 +40,8 @@ We want to make PLUTO most useful and accurate for its users, so open an [issue]
 
 Run the scripts in pluto_build in order:
 
-#### `sh 01_dataloading.sh <yes/no> <yes/no>`
+#### `sh 01_dataloading.sh`
 load all input data into build environment, note you have to run the scripts with the following options: 
-1. `sh 01_dataloading.sh no no` --> no regeocoding pts and no publishing
-2.  `sh 01_dataloading.sh yes no` --> regeocode loaded pts but no publishing
-3. `sh 01_dataloading.sh yes yes` --> regeocode loaded pts and publish the new `pluto_input_geocodes` to recipe database
 
 #### `sh 02_qaqc.sh (deprecated)`
 Check for new building classes and zero or missing condo numbers.  New building classes need to be added to pluto_input_landuse_bldgclass.csv
