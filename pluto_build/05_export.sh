@@ -19,9 +19,9 @@ mkdir -p output &&
     echo "version: $VERSION" > version.txt
     echo "date: $DATE" >> version.txt
     psql $BUILD_ENGINE  -c "\COPY (SELECT * FROM pluto_corrections) TO STDOUT DELIMITER ',' CSV HEADER;" > pluto_corrections.csv
-    echo "pluto_corrections #records: $(wc -l pluto_corrections.csv)" >> version.txt
+    echo "$(wc -l pluto_corrections.csv)" >> version.txt
     psql $BUILD_ENGINE  -c "\COPY (SELECT * FROM pluto_removed_records) TO STDOUT DELIMITER ',' CSV HEADER;" > pluto_removed_records.csv
-    echo "pluto_removed_records #records: $(wc -l pluto_corrections.csv)" >> version.txt
+    echo "$(wc -l pluto_removed_records.csv)" >> version.txt
     zip pluto_corrections.zip *
     ls | grep -v pluto_corrections.zip | xargs rm
   )
@@ -29,9 +29,9 @@ mkdir -p output &&
 # mappluto
 mkdir -p output/mappluto &&
   (cd output/mappluto
-    pgsql2shp -u $BUILD_USER -h $BUILD_HOST -p $BUILD_PORT -f mappluto $BUILD_DB \
+    pgsql2shp -u $BUILD_USER -h $BUILD_HOST -p $BUILD_PORT -P $BUILD_PWD -f mappluto $BUILD_DB \
       "SELECT ST_Transform(geom, 2263) FROM pluto WHERE geom IS NOT NULL"
-      # rm -f mappluto.zip
+      rm -f mappluto.zip
       echo "$VERSION" > version.txt
       zip mappluto.zip *
       ls | grep -v mappluto.zip | xargs rm
@@ -40,10 +40,10 @@ mkdir -p output/mappluto &&
 # Pluto
 mkdir -p output/pluto &&
   (cd output/pluto
-    rm -f pluto_$VERSION.zip
+    rm -f pluto.zip
     psql $BUILD_ENGINE -c "\COPY (SELECT * FROM pluto) TO STDOUT DELIMITER ',' CSV HEADER;" > pluto.csv
     echo "$VERSION" > version.txt
-    echo "number of records: $(wc -l pluto.csv)" >> version.txt
+    echo "$(wc -l pluto.csv)" >> version.txt
     zip pluto.zip *
     ls | grep -v pluto.zip | xargs rm
   )
