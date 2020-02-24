@@ -1,9 +1,12 @@
 # PLUTO and MapPLUTO ![CI](https://github.com/NYCPlanning/db-pluto/workflows/CI/badge.svg)
 
 Please note that we're still working on this repo as we optimize the build processes, update the sources for the raw data inputs, and implement better technologies.  We're excited that PLUTO users can now look under the hood and begin exploring how PLUTO is built and each of its individual fields are calculated. If you have suggestions or find any problems, please open an issue, or if you have questions please reach out to us directly.
-+ [MapPLUTO](https://edm-publishing.nyc3.digitaloceanspaces.com/db-pluto/latest/output/mappluto/mappluto.zip)
-+ [PLUTO](https://edm-publishing.nyc3.cdn.digitaloceanspaces.com/db-pluto/latest/output/pluto/pluto.zip)
 
++ [PLUTO](https://edm-publishing.nyc3.cdn.digitaloceanspaces.com/db-pluto/latest/output/pluto/pluto.zip)
++ [MapPLUTO](https://edm-publishing.nyc3.digitaloceanspaces.com/db-pluto/latest/output/mappluto/mappluto.zip)
++ [PLUTO Corrections](https://edm-publishing.nyc3.cdn.digitaloceanspaces.com/db-pluto/latest/output/pluto_corrections.zip)
+
+(Note: for official publication of PLUTO related data products, please check [Bytes of the Big Apple](https://www1.nyc.gov/site/planning/data-maps/open-data.page))
 ## __About PLUTO__
 
 The Primary Land Use Tax Lot Output (PLUTO) **reports tax lot and building characteristics, and geographic/political/administrative districts at the tax lot level** from data maintained by the Department of City Planning (DCP), Department of Finance (DOF), Department of Citywide Administrative Services (DCAS), and Landmarks Preservation Commission (LPC).
