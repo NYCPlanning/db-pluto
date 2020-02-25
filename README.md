@@ -6,7 +6,7 @@ Please note that we're still working on this repo as we optimize the build proce
 + [MapPLUTO](https://edm-publishing.nyc3.digitaloceanspaces.com/db-pluto/latest/output/mappluto/mappluto.zip)
 + [PLUTO Corrections](https://edm-publishing.nyc3.cdn.digitaloceanspaces.com/db-pluto/latest/output/pluto_corrections.zip)
 
-(Note: for official publication of PLUTO related data products, please check [Bytes of the Big Apple](https://www1.nyc.gov/site/planning/data-maps/open-data.page))
+Please go to NYC Planning's [Bytes of the Big Apple](https://www1.nyc.gov/site/planning/data-maps/open-data.page) to download the offical versions of PLUTO and MapPLUTO
 ## __About PLUTO__
 
 The Primary Land Use Tax Lot Output (PLUTO) **reports tax lot and building characteristics, and geographic/political/administrative districts at the tax lot level** from data maintained by the Department of City Planning (DCP), Department of Finance (DOF), Department of Citywide Administrative Services (DCAS), and Landmarks Preservation Commission (LPC).
@@ -26,12 +26,6 @@ We want to make PLUTO most useful and accurate for its users, so open an [issue]
 
 ## __How to build PLUTO__
 
-### Prerequisites:
-
-1. Docker
-
-2. zip
-
 ### Development workflow
 
 #### Fill in .env files according to `example.env`
@@ -40,22 +34,20 @@ We want to make PLUTO most useful and accurate for its users, so open an [issue]
 
 Run the scripts in pluto_build in order:
 
-#### `sh 01_dataloading.sh`
-load all input data into build environment, note you have to run the scripts with the following options: 
+#### `./01_dataloading.sh`
+load all input data into build environment
 
-#### `sh 02_qaqc.sh (deprecated)`
-Check for new building classes and zero or missing condo numbers.  New building classes need to be added to pluto_input_landuse_bldgclass.csv
-
-#### `sh 03_build.sh`
-
+#### `./02_build.sh`
 Build PLUTO and MapPLUTO.
 
-#### `sh 05_export.sh`
+#### `./03_corrections.sh`
+Apply pluto research corrections
 
-Export PLUTO and unclipped MapPLUTO.
+#### `./04_archive.sh`
+Archive output to EDM_DATA
 
-Please go to NYC Planning's [Bytes of the Big Apple](https://www1.nyc.gov/site/planning/data-maps/open-data.page) to download the offical versions of PLUTO and MapPLUTO
+#### `./05_export.sh`
+Export PLUTO csv, MapPLUTO shapefile and pluto_corrections file
 
 #### QAQC
-
-Please check pluto_build/notebooks for QAQC results, pacakges involded: `pandas, sqlalchemy, matplotlib`
+Please refer to the qaqc web application for cross version comparisons
