@@ -2,9 +2,9 @@
 
 Please note that we're still working on this repo as we optimize the build processes, update the sources for the raw data inputs, and implement better technologies.  We're excited that PLUTO users can now look under the hood and begin exploring how PLUTO is built and each of its individual fields are calculated. If you have suggestions or find any problems, please open an issue, or if you have questions please reach out to us directly.
 
-+ [PLUTO](https://edm-publishing.nyc3.cdn.digitaloceanspaces.com/db-pluto/latest/output/pluto/pluto.zip)
++ [PLUTO](https://edm-publishing.nyc3.digitaloceanspaces.com/db-pluto/latest/output/pluto/pluto.zip)
 + [MapPLUTO](https://edm-publishing.nyc3.digitaloceanspaces.com/db-pluto/latest/output/mappluto/mappluto.zip)
-+ [PLUTO Corrections](https://edm-publishing.nyc3.cdn.digitaloceanspaces.com/db-pluto/latest/output/pluto_corrections.zip)
++ [PLUTO Corrections](https://edm-publishing.nyc3.digitaloceanspaces.com/db-pluto/latest/output/pluto_corrections.zip)
 
 Please go to NYC Planning's [Bytes of the Big Apple](https://www1.nyc.gov/site/planning/data-maps/open-data.page) to download the offical versions of PLUTO and MapPLUTO
 ## __About PLUTO__
