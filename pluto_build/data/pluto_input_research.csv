@@ -26246,6 +26246,8 @@ bbl,field,old_value,new_value,Type,reason,version
 1002317503,numfloors,27,5,2,numfloors correction,20v2
 5037550011,numfloors,23,3,2,numfloors correction,20v2
 5029770021,numfloors,22,3,2,numfloors correction,20v2
+3057410033,numfloors,21,0,2,numfloors correction,20v2
+4058937502,numfloors,21,4,2,numfloors correction,20v2
 4050427503,numfloors,13,4,2,numfloors correction,20v2
 1014910048,numfloors,5,26,2,numfloors correction,20v2
 1012420055,numfloors,2,18,2,numfloors correction,20v2
