@@ -58,9 +58,7 @@ mkdir -p output/pluto &&
           bbl,condono,tract2010,xcoord,ycoord,latitude,longitude,
           zonemap,zmcode,sanborn,taxmap,edesignum,appbbl,appdate,
           plutomapid,version,sanitdistrict,healthcenterdistrict,
-          firm07_flag,pfirm15_flag,rpaddate,dcasdate,zoningdate,
-          landmkdate,basempdate,masdate,polidate,
-          edesigdate,geom,dcpedited,notes FROM pluto
+          firm07_flag,pfirm15_flag,dcpedited,notes FROM pluto
           ) TO STDOUT DELIMITER ',' CSV HEADER;" > pluto.csv
     echo "$VERSION" > version.txt
     echo "$(wc -l pluto.csv)" >> version.txt
