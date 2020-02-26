@@ -9,7 +9,7 @@ jobs:
     if: "contains(github.event.head_commit.message, '[cama]')"
     steps:
       - run: echo "${{ github.event.head_commit.message }}"
-  process_pts:
+  process_cama:
     needs: skip
     container:
       image: sptkl/docker-geosupport:latest

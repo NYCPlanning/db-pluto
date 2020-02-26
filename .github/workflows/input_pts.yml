@@ -33,6 +33,9 @@ jobs:
         shell: bash
         run: |
           # create temporary location
+          TABLE_NAME="pluto_pts"
+          DATE=$(date "+%Y/%m/%d")
+
           mkdir -p /tmp/pts && (cd /tmp/pts
 
               mc cp minio/pts/PTS_Propmast.gz .
