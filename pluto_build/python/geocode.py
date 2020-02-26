@@ -141,6 +141,6 @@ if __name__ == '__main__':
             ycoord = ST_Y(ST_TRANSFORM(wkb_geometry, 2263));
     ''')
     engine.execute(f'''DROP VIEW IF EXISTS pluto_input_geocodes.latest CASCADE;''')
-    engine.execute(f'''CREATE VIEW pluto_input_geocodes.lates as (
+    engine.execute(f'''CREATE VIEW pluto_input_geocodes.latest as (
                         SELECT '{date.today().strftime("%Y/%m/%d")}' as v, * 
                         FROM {table_name};''')
