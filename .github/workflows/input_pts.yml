@@ -30,10 +30,10 @@ jobs:
           apt update
           apt install -y postgresql-client-common postgresql-client
       - name: process pts
-        shell: sh
+        shell: bash
         run: |
           # create temporary location
-          mkdir -p /tmp/pts && cd /tmp/pts && { 
+          mkdir -p /tmp/pts && (cd /tmp/pts
 
               mc cp minio/pts/PTS_Propmast.gz .
               gunzip PTS_Propmast.gz
@@ -61,9 +61,9 @@ jobs:
               CURTAXFLAG text);"
               psql $RECIPE_ENGINE -c "\COPY $TABLE_NAME.\"$DATE\" FROM 'pluto_pts.txt' WITH NULL AS '' DELIMITER E'\t' quote '\"' CSV HEADER;"
               psql $RECIPE_ENGINE -c "DROP VIEW IF EXISTS $TABLE_NAME.latest CASCADE"
-              psql $RECIPE_ENGINE -c "CREATE VIEW $TABLE_NAME.latest as (SELECT '$DATE' as v, * FROM $TABLE_NAME.\"$DATE\"";
-              cd -; }
-              
+              psql $RECIPE_ENGINE -c "CREATE VIEW $TABLE_NAME.latest as (SELECT '$DATE' as v, * FROM $TABLE_NAME.\"$DATE\")";
+            )
+
           - name: geocode pts
             working-directory: pluto_build/python
             run: python3 geocode.py

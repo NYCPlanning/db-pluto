@@ -29,7 +29,7 @@ jobs:
           mc config host add minio $MINIO_S3_ENDPOINT $MINIO_ACCESS_KEY_ID $MINIO_SECRET_ACCESS_KEY --api S3v4
           apt update
           apt install -y postgresql-client-common postgresql-client
-      - name: process pts
+      - name: process CAMA
         shell: sh
         run: |
           DATE=$(date "+%Y/%m/%d")
@@ -58,5 +58,5 @@ jobs:
               psql $RECIPE_ENGINE -c "CREATE TABLE $TABLE_NAME.\"$DATE\" ( BBL text, PARCELCARD text, BLDGNUM text, BLDGCLASS text, PRIMARYUSECODE text, DEVELOPMENTNAME text, STREETTYPE text, LOTTYPE text, RESIDAREA text, OFFICEAREA text, RETAILAREA text, GARAGEAREA text, STORAGEAREA text, FACTORYAREA text, OTHERAREA text, GROSSAREA text, OWNERAREA text, GROSSVOLUME text, COMMERCIALAREA text, PROXCODE text, BSMNT_TYPE text, BSMNTGRADIENT text, BSMNTAREA text, FIRSTFLOORAREA text, SECONDFLOORAREA text, UPPERFLOORAREA text, PARTRESFLOORAREA text, UNFINISHEDFLOORAREA text, FINISHEDFLOORAREA text, NONRESIDFLOORAREA text, RESIDCONSTRTYPE text, COMMERCIALCONSTRTYPE text, CONDOMAINCONSTRTYPE text, CONDOUNITSCONSTRTYPE text );"
               psql $RECIPE_ENGINE -c "\COPY $TABLE_NAME.\"$DATE\" FROM '$TABLE_NAME.txt' WITH NULL AS '' DELIMITER '|' CSV HEADER;"
               psql $RECIPE_ENGINE -c "DROP VIEW IF EXISTS $TABLE_NAME.latest CASCADE"
-              psql $RECIPE_ENGINE -c "CREATE VIEW $TABLE_NAME.latest as (SELECT '$DATE' as v, * FROM $TABLE_NAME.\"$DATE\"";
+              psql $RECIPE_ENGINE -c "CREATE VIEW $TABLE_NAME.latest as (SELECT '$DATE' as v, * FROM $TABLE_NAME.\"$DATE\")";
               cd -; }
