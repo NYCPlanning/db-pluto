@@ -16,7 +16,7 @@ def exporter(df, table_name, con=build_engine,
 
     # # Create table
     create = f'''
-    DROP TABLE IF EXISTS {table_name};
+    DROP TABLE IF EXISTS {table_name} CASCADE;
     CREATE TABLE {table_name} (
         {column_definitions}
     );

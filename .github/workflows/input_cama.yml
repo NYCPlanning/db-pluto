@@ -30,13 +30,13 @@ jobs:
           apt update
           apt install -y postgresql-client-common postgresql-client
       - name: process CAMA
-        shell: sh
+        shell: bash
         run: |
           DATE=$(date "+%Y/%m/%d")
           TABLE_NAME="pluto_input_cama_dof"
 
           # create temporary location
-          mkdir -p /tmp/cama && cd /tmp/cama  && {
+          mkdir -p /tmp/cama && (cd /tmp/cama
               # copy to directory
               mc cp minio/cama/CAMA.txt $TABLE_NAME.txt
               
@@ -54,9 +54,9 @@ jobs:
               sed -i 's/\"//g' $TABLE_NAME.txt
 
               psql $RECIPE_ENGINE -c "CREATE SCHEMA IF NOT EXISTS $TABLE_NAME;"
-              psql $RECIPE_ENGINE -c "DROP TABLE IF EXISTS $TABLE_NAME.\"$DATE\";"
+              psql $RECIPE_ENGINE -c "DROP TABLE IF EXISTS $TABLE_NAME.\"$DATE\" CASCADE;"
               psql $RECIPE_ENGINE -c "CREATE TABLE $TABLE_NAME.\"$DATE\" ( BBL text, PARCELCARD text, BLDGNUM text, BLDGCLASS text, PRIMARYUSECODE text, DEVELOPMENTNAME text, STREETTYPE text, LOTTYPE text, RESIDAREA text, OFFICEAREA text, RETAILAREA text, GARAGEAREA text, STORAGEAREA text, FACTORYAREA text, OTHERAREA text, GROSSAREA text, OWNERAREA text, GROSSVOLUME text, COMMERCIALAREA text, PROXCODE text, BSMNT_TYPE text, BSMNTGRADIENT text, BSMNTAREA text, FIRSTFLOORAREA text, SECONDFLOORAREA text, UPPERFLOORAREA text, PARTRESFLOORAREA text, UNFINISHEDFLOORAREA text, FINISHEDFLOORAREA text, NONRESIDFLOORAREA text, RESIDCONSTRTYPE text, COMMERCIALCONSTRTYPE text, CONDOMAINCONSTRTYPE text, CONDOUNITSCONSTRTYPE text );"
               psql $RECIPE_ENGINE -c "\COPY $TABLE_NAME.\"$DATE\" FROM '$TABLE_NAME.txt' WITH NULL AS '' DELIMITER '|' CSV HEADER;"
-              psql $RECIPE_ENGINE -c "DROP VIEW IF EXISTS $TABLE_NAME.latest CASCADE"
+              psql $RECIPE_ENGINE -c "DROP VIEW IF EXISTS $TABLE_NAME.latest;"
               psql $RECIPE_ENGINE -c "CREATE VIEW $TABLE_NAME.latest as (SELECT '$DATE' as v, * FROM $TABLE_NAME.\"$DATE\")";
-              cd -; }
+            )
