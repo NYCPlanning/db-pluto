@@ -12,7 +12,7 @@ def exporter(df, table_name, con,
     db_connection = psycopg2_connect(con.url)
     db_cursor = db_connection.cursor()
     str_buffer = io.StringIO() 
-    column_definitions = ','.join([f'"{c}" text' for c in df.columns])
+    column_definitions = ','.join([f'{c.lower()} text' for c in df.columns])
 
     # # Create table
     create = f'''
