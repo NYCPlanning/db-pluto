@@ -5,7 +5,7 @@ import psycopg2
 import logging
 import os
 
-def exporter(df, table_name, con=engine, 
+def exporter(df, table_name, con, 
             sep='~', null=''):
 
     # psycopg2 connections
