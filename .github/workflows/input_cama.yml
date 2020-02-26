@@ -1,4 +1,4 @@
-name: CI
+name: CAMA Processing
 
 on: [push]
 
@@ -16,7 +16,6 @@ jobs:
     runs-on: self-hosted
     env:
       RECIPE_ENGINE: ${{ secrets.RECIPE_ENGINE }}
-      BUILD_ENGINE: ${{ secrets.BUILD_ENGINE }}
       MINIO_S3_ENDPOINT: ${{ secrets.MINIO_S3_ENDPOINT }}
       MINIO_ACCESS_KEY_ID: ${{ secrets.MINIO_ACCESS_KEY_ID }}
       MINIO_SECRET_ACCESS_KEY: ${{ secrets.MINIO_SECRET_ACCESS_KEY }}
