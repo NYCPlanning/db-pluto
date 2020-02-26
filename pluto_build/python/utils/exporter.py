@@ -1,11 +1,11 @@
-from .engines import build_engine, edm_engine, psycopg2_connect
+from .engines import psycopg2_connect
 from sqlalchemy.types import TEXT
 import io
 import psycopg2
 import logging
 import os
 
-def exporter(df, table_name, con=build_engine, 
+def exporter(df, table_name, con=engine, 
             sep='~', null=''):
 
     # psycopg2 connections
