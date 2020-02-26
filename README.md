@@ -7,6 +7,7 @@ Please note that we're still working on this repo as we optimize the build proce
 + [PLUTO Corrections](https://edm-publishing.nyc3.digitaloceanspaces.com/db-pluto/latest/output/pluto_corrections.zip)
 
 Please go to NYC Planning's [Bytes of the Big Apple](https://www1.nyc.gov/site/planning/data-maps/open-data.page) to download the offical versions of PLUTO and MapPLUTO
+
 ## __About PLUTO__
 
 The Primary Land Use Tax Lot Output (PLUTO) **reports tax lot and building characteristics, and geographic/political/administrative districts at the tax lot level** from data maintained by the Department of City Planning (DCP), Department of Finance (DOF), Department of Citywide Administrative Services (DCAS), and Landmarks Preservation Commission (LPC).
@@ -24,33 +25,23 @@ Lean more about PLUTO, its idiosyncrasies and limitations in [PLUTO's metadata](
 
 We want to make PLUTO most useful and accurate for its users, so open an [issue](https://github.com/NYCPlanning/db-pluto/issues) to report an error or suggest how we can improve PLUTO.
 
-## __How to build PLUTO__
+## __Instructions__
 
-### Development workflow
+#### I. Build PLUTO Through CI
+1. just create a new push to the repo and a build will be triggered
+2. if you would like to skip a build, include `[skip ci]` in your commit message
+3. If you would like to update PTS, geocoded PTS and CAMA, in order to trigger data ingestion for them, include `[pts]` or `[cama]` or both (`[pts] [cama]`) to trigger a data ingestion workflow
 
-#### Fill in .env files according to `example.env`
+#### II. Build PLUTO on Your Own Machine
+1. make sure you have [__Docker__](https://docs.docker.com/install/), [__psql__](https://packages.debian.org/sid/postgresql-client-common) installed
+2. `./01_dataloading.sh` : load all input data into build environment
+3.  `./02_build.sh` : Build PLUTO and MapPLUTO.
+4.  `./03_corrections.sh` : Apply pluto research corrections
+5.  `./04_archive.sh` : Archive output to EDM_DATA
+6.  `./05_export.sh` : Export PLUTO csv, MapPLUTO shapefile and pluto_corrections file
 
-#### Build PLUTO
-
-Run the scripts in pluto_build in order:
-
-#### `./01_dataloading.sh`
-load all input data into build environment
-
-#### `./02_build.sh`
-Build PLUTO and MapPLUTO.
-
-#### `./03_corrections.sh`
-Apply pluto research corrections
-
-#### `./04_archive.sh`
-Archive output to EDM_DATA
-
-#### `./05_export.sh`
-Export PLUTO csv, MapPLUTO shapefile and pluto_corrections file
-
-#### QAQC
+#### III. QAQC
 Please refer to the qaqc web application for cross version comparisons
 
-#### ESRI-fy
+#### IV. SRI-fy
 Please note that the GIS team has a seperate processing script that takes in the raw pluto output and makes it ESRI compatiable, please refer to the [gis-mappluto-convert](https://github.com/NYCPlanning/gis-mappluto-convert) repository
