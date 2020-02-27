@@ -43,5 +43,5 @@ We want to make PLUTO most useful and accurate for its users, so open an [issue]
 #### III. QAQC
 Please refer to the qaqc web application for cross version comparisons
 
-#### IV. SRI-fy
+#### IV. ESRI-fy
 Please note that the GIS team has a seperate processing script that takes in the raw pluto output and makes it ESRI compatiable, please refer to the [gis-mappluto-convert](https://github.com/NYCPlanning/gis-mappluto-convert) repository
