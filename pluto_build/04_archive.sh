@@ -11,7 +11,6 @@ fi
 pg_dump -t pluto $BUILD_ENGINE | psql $EDM_DATA
 psql $EDM_DATA -c "
     DROP INDEX idx_pluto_bbl;
-    DROP INDEX pbbl_ix;
     DROP INDEX pluto_gix;
     CREATE SCHEMA IF NOT EXISTS dcp_pluto;
     ALTER TABLE pluto SET SCHEMA dcp_pluto;

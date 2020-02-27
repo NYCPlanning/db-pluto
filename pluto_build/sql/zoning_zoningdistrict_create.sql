@@ -7,6 +7,8 @@ WHERE ST_GeometryType(ST_MakeValid(a.geom)) = 'ST_MultiPolygon');
 ALTER TABLE validdtm
 SET (parallel_workers=30);
 
+VACUUM ANALYZE validdtm;
+
 DROP TABLE IF EXISTS validzones;
 CREATE TABLE validzones AS (
 SELECT a.zonedist, ST_MakeValid(a.geom) as geom  
@@ -15,6 +17,8 @@ WHERE ST_GeometryType(ST_MakeValid(a.geom)) = 'ST_MultiPolygon');
 
 ALTER TABLE validzones
 SET (parallel_workers=30);
+
+VACUUM ANALYZE validzones;
 
 DROP TABLE IF EXISTS lotzoneper;
 CREATE TABLE lotzoneper AS (
@@ -42,6 +46,7 @@ CREATE TABLE lotzoneper AS (
 ALTER TABLE lotzoneper
 SET (parallel_workers=30);
 
+VACUUM ANALYZE lotzoneper;
 
 DROP TABLE IF EXISTS lotzoneperorder; 
 CREATE TABLE lotzoneperorder AS (
