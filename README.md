@@ -28,8 +28,8 @@ We want to make PLUTO most useful and accurate for its users, so open an [issue]
 ## __Instructions__
 
 #### I. Build PLUTO Through CI
-1. just create a new push to the repo and a build will be triggered
-2. if you would like to skip a build, include `[skip ci]` in your commit message
+1. just create a new push to the repo and a build will be triggered if `[build]` in included your commit message
+2. Make sure you have the correct version info and the previous version info in the `version.env` file
 3. If you would like to update PTS, geocoded PTS and CAMA, in order to trigger data ingestion for them, include `[pts]` or `[cama]` or both (`[pts] [cama]`) to trigger a data ingestion workflow
 
 #### II. Build PLUTO on Your Own Machine
