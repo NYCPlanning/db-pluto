@@ -112,6 +112,8 @@ psql $BUILD_ENGINE -f sql/latlong.sql
 
 echo '\nPopulating PLUTO tags and version fields \e[32m'
 psql $BUILD_ENGINE -v ON_ERROR_STOP=1 -f sql/plutomapid.sql
+psql $BUILD_ENGINE -c "VACUUM ANALYZE pluto;" & 
+psql $BUILD_ENGINE -c "VACUUM ANALYZE dof_shoreline_subdivide;"
 psql $BUILD_ENGINE -v ON_ERROR_STOP=1 -f sql/plutomapid_1.sql
 psql $BUILD_ENGINE -v ON_ERROR_STOP=1 -f sql/plutomapid_2.sql
 psql $BUILD_ENGINE -v ON_ERROR_STOP=1 -c "UPDATE pluto SET version = '$VERSION';"
