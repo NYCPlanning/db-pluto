@@ -1,4 +1,5 @@
-# PLUTO and MapPLUTO ![CI](https://github.com/NYCPlanning/db-pluto/workflows/CI/badge.svg)
+# PLUTO and MapPLUTO 
+![GitHub release (latest SemVer)](https://img.shields.io/github/v/release/NYCPlanning/db-pluto?label=version) ![GitHub Workflow Status](https://img.shields.io/github/workflow/status/NYCPlanning/db-pluto/CI?label=CI) ![GitHub Workflow Status](https://img.shields.io/github/workflow/status/NYCPlanning/db-pluto/CAMA%20Processing?label=CAMA) ![GitHub Workflow Status](https://img.shields.io/github/workflow/status/NYCPlanning/db-pluto/PTS%20processing?label=PTS)
 
 Please note that we're still working on this repo as we optimize the build processes, update the sources for the raw data inputs, and implement better technologies.  We're excited that PLUTO users can now look under the hood and begin exploring how PLUTO is built and each of its individual fields are calculated. If you have suggestions or find any problems, please open an issue, or if you have questions please reach out to us directly.
 
@@ -28,8 +29,8 @@ We want to make PLUTO most useful and accurate for its users, so open an [issue]
 ## __Instructions__
 
 #### I. Build PLUTO Through CI
-1. just create a new push to the repo and a build will be triggered
-2. if you would like to skip a build, include `[skip ci]` in your commit message
+1. just create a new push to the repo and a build will be triggered if `[build]` in included your commit message
+2. Make sure you have the correct version info and the previous version info in the `version.env` file
 3. If you would like to update PTS, geocoded PTS and CAMA, in order to trigger data ingestion for them, include `[pts]` or `[cama]` or both (`[pts] [cama]`) to trigger a data ingestion workflow
 
 #### II. Build PLUTO on Your Own Machine
@@ -43,5 +44,5 @@ We want to make PLUTO most useful and accurate for its users, so open an [issue]
 #### III. QAQC
 Please refer to the qaqc web application for cross version comparisons
 
-#### IV. SRI-fy
+#### IV. ESRI-fy
 Please note that the GIS team has a seperate processing script that takes in the raw pluto output and makes it ESRI compatiable, please refer to the [gis-mappluto-convert](https://github.com/NYCPlanning/gis-mappluto-convert) repository
