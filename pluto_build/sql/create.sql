@@ -86,7 +86,7 @@ CREATE TABLE pluto (
 	APPDate text,
 	MAPPLUTO_F text,
 	PLUTOMapID text,
-	Version text,
+	Version text DEFAULT :'version',
 	SanitDistrict text,
 	HealthCenterDistrict text,
 	FIRM07_FLAG text,

@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 if [ -f .env ]
 then
   export $(cat .env | sed 's/#.*//g' | xargs)
@@ -28,7 +28,7 @@ psql $BUILD_ENGINE -f sql/create_allocated.sql
 psql $BUILD_ENGINE -f sql/yearbuiltalt.sql
 
 echo '\nCreating base PLUTO table \e[32m'
-psql $BUILD_ENGINE -f sql/create.sql
+psql $BUILD_ENGINE -v version=$VERSION -f sql/create.sql
 psql $BUILD_ENGINE -f sql/bbl.sql
 
 echo '\nAdding on RPAD data attributes \e[32m'
@@ -116,7 +116,6 @@ psql $BUILD_ENGINE -c "VACUUM ANALYZE pluto;" &
 psql $BUILD_ENGINE -c "VACUUM ANALYZE dof_shoreline_subdivide;"
 psql $BUILD_ENGINE -v ON_ERROR_STOP=1 -f sql/plutomapid_1.sql
 psql $BUILD_ENGINE -v ON_ERROR_STOP=1 -f sql/plutomapid_2.sql
-psql $BUILD_ENGINE -v ON_ERROR_STOP=1 -c "UPDATE pluto SET version = '$VERSION';"
 
 echo '\nBackfilling'
 psql $BUILD_ENGINE -v ON_ERROR_STOP=1 -f sql/backfill.sql
