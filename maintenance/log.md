@@ -2,6 +2,7 @@
 
 ## 2020/03/17 -- Molly
 + Build 20v2
++ First attempt failed, data loading and data change detection in wrong order
 
 ## 2020/03/16 -- Molly
 + CAMA PTS processing for 20v2
