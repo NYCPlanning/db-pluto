@@ -1,4 +1,5 @@
 -- After geocoding, where values are none set values to NULL
+-- this script is no longer needed 
 UPDATE pluto_rpad_geo
 SET bbl = NULL 
 WHERE bbl = 'none';

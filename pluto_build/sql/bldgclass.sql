@@ -109,7 +109,7 @@ bldgclass AS (
         ORDER BY bldgcl) AS row_number 
       FROM (
             SELECT DISTINCT a.boro||a.tb||a.tl AS bbl,a.bldgcl 
-            FROM pluto_rpad a
+            FROM pluto_rpad_geo a
             RIGHT JOIN z7s b
             ON b.bbl = a.boro||a.tb||a.tl) x )
 SELECT bbl, bldgcl

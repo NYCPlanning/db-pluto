@@ -7,7 +7,7 @@
 -- Shoreline File but NOT in PLUTO.
 -- 4 In PLUTO Data File and in DOF Modified DTM File but NOT in
 -- DOF Modified DTM Tax Block and Lot Clipped to the Shoreline
--- File, therefore the tax lot is totally under water.
+-- File, therefore tshe tax lot is totally under water.
 -- 5 In DOF Modified DTM but NOT in PLUTO, therefore the tax lot
 -- is totally under water.
 
@@ -27,16 +27,20 @@ WHERE geom IS NULL;
 -- WHERE appbbl IS NULL
 -- AND geom IS NOT NULL;
 
-UPDATE pluto a
-SET plutomapid = '4'
-FROM dof_shoreline_union b
-WHERE a.geom IS NOT NULL
-AND ST_Within(a.geom, b.geom)
-AND plutomapid = '1';
+-- UPDATE pluto a
+-- SET plutomapid = '4'
+-- FROM dof_shoreline_union b
+-- WHERE a.geom IS NOT NULL
+-- AND ST_Within(a.geom, b.geom)
+-- AND plutomapid = '1';
 
-UPDATE pluto a
-SET plutomapid = '5'
-FROM dof_shoreline_union b
-WHERE a.geom IS NOT NULL
-AND ST_Within(a.geom, b.geom)
-AND plutomapid = '3';
+-- UPDATE pluto a
+-- SET plutomapid = '5'
+-- FROM dof_shoreline_union b
+-- WHERE a.geom IS NOT NULL
+-- AND ST_Within(a.geom, b.geom)
+-- AND plutomapid = '3';
+
+DROP TABLE IF EXISTS dof_shoreline_subdivide;
+select ST_SubDivide(ST_MakeValid(geom), 100) as geom into dof_shoreline_subdivide  
+from dof_shoreline_union;

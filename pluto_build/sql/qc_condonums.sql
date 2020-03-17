@@ -9,6 +9,6 @@
 		 AND (condo_number = '0' OR condo_number IS NULL OR condo_number = ' ')
 		 );
  
- \copy (SELECT * FROM qc_condonums) TO '/prod/db-pluto/pluto_build/output/qc_condonums.csv' DELIMITER ',' CSV HEADER;
+ \copy (SELECT * FROM qc_condonums) TO 'output/qc_condonums.csv' DELIMITER ',' CSV HEADER;
 
 DROP TABLE qc_condonums;
