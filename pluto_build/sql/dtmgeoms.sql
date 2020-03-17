@@ -1,9 +1,5 @@
 -- index the bbl fields
-DROP INDEX pbbl_ix;
-DROP INDEX dbbl_ix;
-CREATE INDEX pbbl_ix
-ON pluto (bbl);
-
+DROP INDEX IF EXISTS dbbl_ix;
 CREATE INDEX dbbl_ix
 ON pluto_dtm (bbl);
 
@@ -39,7 +35,7 @@ SELECT b.bbl,
 	FROM notinpluto b
 ;
 
-DROP TABLE pluto_dtm;
+-- DROP TABLE pluto_dtm;
 
 -- add values in fields that cannot be NULL
 UPDATE pluto

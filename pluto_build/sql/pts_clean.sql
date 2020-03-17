@@ -47,7 +47,7 @@ CREATE TABLE dof_pts_propmaster (
 	PRIMEBBL text);
 -- insert unique ids
 INSERT INTO dof_pts_propmaster (BBL)
-SELECT DISTINCT parid FROM pts;
+SELECT DISTINCT parid FROM pluto_pts;
 -- insert values
 UPDATE dof_pts_propmaster a
 SET BORO = b.boro,
@@ -92,7 +92,5 @@ SET BORO = b.boro,
 	AP_LOT = appt_lot,
 	AP_EASE = appt_ease,
 	AP_DATE = appt_date
-FROM pts b
-WHERE a.bbl::text=b.parid::text
--- AND parid NOT IN (SELECT parid FROM pts_patch)
-;
+FROM pluto_pts b
+WHERE a.bbl::text=b.parid::text;
