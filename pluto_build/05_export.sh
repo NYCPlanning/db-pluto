@@ -24,6 +24,7 @@ mkdir -p output &&
     echo "$(wc -l pluto_removed_records.csv)" >> version.txt
     zip pluto_corrections.zip *
     ls | grep -v pluto_corrections.zip | xargs rm
+    psql $BUILD_ENGINE  -c "\COPY (SELECT * FROM source_data_versions) TO STDOUT DELIMITER ',' CSV HEADER;" > source_data_versions.csv
   )
 
 # mappluto
