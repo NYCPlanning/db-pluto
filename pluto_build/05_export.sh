@@ -73,7 +73,9 @@ chmod +x mc
 ./mc config host add spaces $AWS_S3_ENDPOINT $AWS_ACCESS_KEY_ID $AWS_SECRET_ACCESS_KEY --api S3v4
 ./mc rm -r --force spaces/edm-publishing/db-pluto/latest
 ./mc rm -r --force spaces/edm-publishing/db-pluto/$DATE
+./mc rm -r --force spaces/edm-publishing/db-pluto/$VERSION
 ./mc cp -r output spaces/edm-publishing/db-pluto/latest
 ./mc cp -r output spaces/edm-publishing/db-pluto/$DATE
+./mc cp -r output spaces/edm-publishing/db-pluto/$VERSION
 
 exit 0
