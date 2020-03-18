@@ -1,5 +1,9 @@
 # Build Logs
 
+## 2020/03/18 -- Molly
++ Build 20v2
++ Uses current market values
+
 ## 2020/03/17 -- Molly
 + Build 20v2
 + First attempt failed, data loading and data change detection in wrong order
