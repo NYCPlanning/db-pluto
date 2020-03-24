@@ -1,5 +1,9 @@
 # Build Logs
 
+## 2020/03/24 -- Molly
++ Build 20v2
++ Uses current actual values, not market values
+
 ## 2020/03/18 -- Molly
 + Build 20v2
 + Uses current market values
