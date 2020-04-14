@@ -16,4 +16,7 @@ psql $EDM_DATA -c "
     ALTER TABLE pluto SET SCHEMA dcp_pluto;
     DROP TABLE IF EXISTS dcp_pluto.\"$VERSION\";
     ALTER TABLE dcp_pluto.pluto RENAME TO \"$VERSION\";";
+
+# qaqc
+psql $EDM_DATA -v VERSION=$VERSION -f sql/qaqc_expected.sql
 exit 0
