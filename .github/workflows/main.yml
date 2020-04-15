@@ -11,7 +11,7 @@ jobs:
       - run: echo "${{ github.event.head_commit.message }}"
   build:
     needs: skip
-    runs-on: self-hosted
+    runs-on:  ubuntu-latest
     env:
       RECIPE_ENGINE: ${{ secrets.RECIPE_ENGINE }}
       BUILD_ENGINE: ${{ secrets.BUILD_ENGINE }}
