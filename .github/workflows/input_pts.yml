@@ -12,7 +12,7 @@ jobs:
   process_pts:
     needs: skip
     container:
-      image: sptkl/docker-geosupport:latest
+      image: nycplanning/docker-geosupport:latest
     runs-on: self-hosted
     env:
       RECIPE_ENGINE: ${{ secrets.RECIPE_ENGINE }}

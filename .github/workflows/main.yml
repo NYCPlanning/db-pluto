@@ -12,7 +12,7 @@ jobs:
   _01_dataloading:
     needs: skip
     container:
-      image: sptkl/cook:latest
+      image: nycplanning/cook:latest
     runs-on: self-hosted
     env:
       RECIPE_ENGINE: ${{ secrets.RECIPE_ENGINE }}
@@ -127,7 +127,7 @@ jobs:
         working-directory: pluto_build
         run: | 
           ./03_corrections.sh | tee output/03_corrections.log
-      - name: archive
+      - name: Archive and QAQC
         shell: bash
         working-directory: pluto_build
         run: |
@@ -154,21 +154,3 @@ jobs:
       - name: create shapefile
         working-directory: pluto_build
         run: ./05_export.sh
-  _04_qaqc:
-    needs: _03_export
-    container:
-      image: sptkl/cook:latest
-    runs-on: self-hosted
-    env:
-      EDM_DATA: ${{ secrets.EDM_DATA }}
-    steps:
-      - uses: actions/checkout@v2
-      - name: qaqc ...
-        working-directory: pluto_build
-        run: |
-          if [ -f version.env ]
-          then
-            export $(cat version.env | sed 's/#.*//g' | xargs)
-          fi
-          python3 python/qaqc/qaqc.py
-          exit 0
