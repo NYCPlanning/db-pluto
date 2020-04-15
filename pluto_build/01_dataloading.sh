@@ -4,7 +4,7 @@ then
   export $(cat .env | sed 's/#.*//g' | xargs)
 fi
 
-## load data into the pluto container
+## DROP all tables
 psql $BUILD_ENGINE -c "
 DO \$\$ DECLARE
     r RECORD;
@@ -14,9 +14,13 @@ BEGIN
     END LOOP;
 END \$\$;
 "
-# docker run --rm\
-#             --network=host\
-#             -v `pwd`/python:/home/python\
-#             -w /home/python\
-#             --env-file .env\
-#             sptkl/cook:latest python3 fastloading.py
+## load data into the pluto db
+docker run --rm\
+    -v $(pwd)/python:/home/python\
+    -w /home/python\
+    -e BUILD_ENGINE=$BUILD_ENGINE\
+    -e RECIPE_ENGINE=$RECIPE_ENGINE\
+    sptkl/cook:latest python3 fastloading.py
+
+# Create data version table 
+ psql $BUILD_ENGINE -f sql/source_data_versions.sql
