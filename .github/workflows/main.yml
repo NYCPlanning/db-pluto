@@ -22,9 +22,8 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: install dependencies
-        run: |
-          mc config host add spaces $AWS_S3_ENDPOINT $AWS_ACCESS_KEY_ID $AWS_SECRET_ACCESS_KEY --api S3v4
-          
+        run: ./setup.sh
+
       - name: dataloading ..
         working-directory: pluto_build
         shell: bash
@@ -43,9 +42,7 @@ jobs:
       - name: Archive and QAQC
         shell: bash
         working-directory: pluto_build
-        run: |
-          mkdir -p output
-          ./04_archive.sh
+        run: ./04_archive.sh
       
       - name: create shapefile
         working-directory: pluto_build
