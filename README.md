@@ -7,6 +7,7 @@ Please note that we're still working on this repo as we optimize the build proce
 + [PLUTO](https://edm-publishing.nyc3.digitaloceanspaces.com/db-pluto/latest/output/pluto/pluto.zip)
 + [MapPLUTO](https://edm-publishing.nyc3.digitaloceanspaces.com/db-pluto/latest/output/mappluto/mappluto.zip)
 + [PLUTO Corrections](https://edm-publishing.nyc3.digitaloceanspaces.com/db-pluto/latest/output/pluto_corrections.zip)
++ [Source Data Versions](https://edm-publishing.nyc3.digitaloceanspaces.com/db-pluto/latest/output/source_data_versions.csv)
 
 Please go to NYC Planning's [Bytes of the Big Apple](https://www1.nyc.gov/site/planning/data-maps/open-data.page) to download the offical versions of PLUTO and MapPLUTO
 

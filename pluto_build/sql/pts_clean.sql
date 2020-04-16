@@ -80,9 +80,12 @@ SET BORO = b.boro,
 	BDFT = REPLACE(bld_dep, '+', '')::double precision,
 	EXT = bld_ext,
 	IRREG = lot_irreg,
-	CURAVL_ACT = REPLACE(pyactland, '+', '')::double precision,
-	CURAVT_ACT = REPLACE(pyacttot, '+', '')::double precision,
-	CUREXT_ACT = REPLACE(pyactextot, '+', '')::double precision,
+	CURAVL_ACT = REPLACE(curactland, '+', '')::double precision,
+	-- pyactland
+	CURAVT_ACT = REPLACE(curacttot, '+', '')::double precision,
+	-- pyacttot
+	CUREXT_ACT = REPLACE(curactextot, '+', '')::double precision,
+	-- pyactextot
 	YRBUILT = b.yrbuilt,
 	YRALT1 = b.yralt1,
 	YRALT2 = b.yralt2,
