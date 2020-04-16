@@ -9,10 +9,8 @@ then
 fi
 
 DATE=$(date "+%Y-%m-%d")
-apt update 
-apt install -y zip curl
 
-source ./url_parse.sh $BUILD_ENGINE
+source ./urlparse.sh $BUILD_ENGINE
 
 mkdir -p output && 
   (cd output 
@@ -24,13 +22,14 @@ mkdir -p output &&
     echo "$(wc -l pluto_removed_records.csv)" >> version.txt
     zip pluto_corrections.zip *
     ls | grep -v pluto_corrections.zip | xargs rm
+    psql $BUILD_ENGINE  -c "\COPY (SELECT * FROM source_data_versions) TO STDOUT DELIMITER ',' CSV HEADER;" > source_data_versions.csv
   )
 
 # mappluto
 mkdir -p output/mappluto &&
   (cd output/mappluto
     pgsql2shp -u $BUILD_USER -h $BUILD_HOST -p $BUILD_PORT -P $BUILD_PWD -f mappluto $BUILD_DB \
-      "SELECT ST_Transform(geom, 2263) FROM pluto WHERE geom IS NOT NULL"
+      "SELECT ST_Transform(geom, 2263), bbl FROM pluto WHERE geom IS NOT NULL"
       rm -f mappluto.zip
       echo "$VERSION" > version.txt
       zip mappluto.zip *
@@ -66,13 +65,10 @@ mkdir -p output/pluto &&
     ls | grep -v pluto.zip | xargs rm
   )
 
-curl -O https://dl.min.io/client/mc/release/linux-amd64/mc
-chmod +x mc
-
-./mc config host add spaces $AWS_S3_ENDPOINT $AWS_ACCESS_KEY_ID $AWS_SECRET_ACCESS_KEY --api S3v4
-./mc rm -r --force spaces/edm-publishing/db-pluto/latest
-./mc rm -r --force spaces/edm-publishing/db-pluto/$DATE
-./mc cp -r output spaces/edm-publishing/db-pluto/latest
-./mc cp -r output spaces/edm-publishing/db-pluto/$DATE
-
+mc rm -r --force spaces/edm-publishing/db-pluto/latest
+mc rm -r --force spaces/edm-publishing/db-pluto/$DATE
+mc rm -r --force spaces/edm-publishing/db-pluto/$VERSION
+mc cp -r output spaces/edm-publishing/db-pluto/latest
+mc cp -r output spaces/edm-publishing/db-pluto/$DATE
+mc cp -r output spaces/edm-publishing/db-pluto/$VERSION
 exit 0
