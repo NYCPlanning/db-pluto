@@ -10,7 +10,7 @@ fi
 
 DATE=$(date "+%Y-%m-%d")
 
-source ./url_parse.sh $BUILD_ENGINE
+source ./urlparse.sh $BUILD_ENGINE
 
 mkdir -p output && 
   (cd output 

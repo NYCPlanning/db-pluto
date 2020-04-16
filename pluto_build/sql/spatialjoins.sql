@@ -89,4 +89,5 @@ WHERE ST_Within(a.centroid, b.geom)
 AND a.zipcode IS NULL
 AND a.xcoord IS NOT NULL;
 
-ALTER TABLE pluto DROP COLUMN IF EXISTS centroid;
+ALTER TABLE pluto 
+DROP COLUMN IF EXISTS centroid;
