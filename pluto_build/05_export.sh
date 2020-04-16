@@ -9,8 +9,6 @@ then
 fi
 
 DATE=$(date "+%Y-%m-%d")
-apt update 
-apt install -y zip curl
 
 source ./url_parse.sh $BUILD_ENGINE
 
@@ -67,15 +65,10 @@ mkdir -p output/pluto &&
     ls | grep -v pluto.zip | xargs rm
   )
 
-curl -O https://dl.min.io/client/mc/release/linux-amd64/mc
-chmod +x mc
-
-./mc config host add spaces $AWS_S3_ENDPOINT $AWS_ACCESS_KEY_ID $AWS_SECRET_ACCESS_KEY --api S3v4
-./mc rm -r --force spaces/edm-publishing/db-pluto/latest
-./mc rm -r --force spaces/edm-publishing/db-pluto/$DATE
-./mc rm -r --force spaces/edm-publishing/db-pluto/$VERSION
-./mc cp -r output spaces/edm-publishing/db-pluto/latest
-./mc cp -r output spaces/edm-publishing/db-pluto/$DATE
-./mc cp -r output spaces/edm-publishing/db-pluto/$VERSION
-
+mc rm -r --force spaces/edm-publishing/db-pluto/latest
+mc rm -r --force spaces/edm-publishing/db-pluto/$DATE
+mc rm -r --force spaces/edm-publishing/db-pluto/$VERSION
+mc cp -r output spaces/edm-publishing/db-pluto/latest
+mc cp -r output spaces/edm-publishing/db-pluto/$DATE
+mc cp -r output spaces/edm-publishing/db-pluto/$VERSION
 exit 0
