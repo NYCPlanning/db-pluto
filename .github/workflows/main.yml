@@ -11,7 +11,7 @@ jobs:
       - run: echo "${{ github.event.head_commit.message }}"
   build:
     needs: skip
-    runs-on:  ubuntu-latest
+    runs-on: self-hosted
     env:
       RECIPE_ENGINE: ${{ secrets.RECIPE_ENGINE }}
       BUILD_ENGINE: ${{ secrets.BUILD_ENGINE }}
@@ -39,29 +39,30 @@ jobs:
           chmod +x mc
           sudo mv ./mc /usr/bin
           mc config host add spaces $AWS_S3_ENDPOINT $AWS_ACCESS_KEY_ID $AWS_SECRET_ACCESS_KEY --api S3v4
+      
       - name: dataloading ..
         working-directory: pluto_build
         shell: bash
-        run: |
-          ./01_dataloading.sh
+        run: ./01_dataloading.sh
+      
       - name: building ...
         working-directory: pluto_build
         shell: bash
-        run: |
-          ./02_build.sh
+        run: ./02_build.sh
+      
       - name: apply corrections
         shell: bash
         working-directory: pluto_build
-        run: | 
-          ./03_corrections.sh
+        run: ./03_corrections.sh
+      
       - name: Archive and QAQC
         shell: bash
         working-directory: pluto_build
         run: |
           mkdir -p output
           ./04_archive.sh
+      
       - name: create shapefile
         working-directory: pluto_build
         shell: bash
-        run: |
-          ./05_export.sh
+        run: ./05_export.sh
