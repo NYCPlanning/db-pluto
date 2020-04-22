@@ -5,7 +5,7 @@
 + no new pluto research is included
 + fresh new PTS and CAMA loaded `2020/04/06`
 + updated dsny_frequencies
-+ zoning features are loaded `2020/03/31` and their publication date is `2020/03/26`
++ zoning features are updated `2020/03/31`
 
 ## 2020/03/24 -- Molly
 + Build 20v2
