@@ -29,6 +29,7 @@ mkdir -p output &&
 mkdir -p output/mappluto &&
   (cd output/mappluto
     pgsql2shp -u $BUILD_USER -h $BUILD_HOST -p $BUILD_PORT -P $BUILD_PWD -f mappluto $BUILD_DB \
+      # "SELECT * FROM export_pluto WHERE geom IS NOT NULL"
       "SELECT ST_Transform(geom, 2263), bbl FROM pluto WHERE geom IS NOT NULL"
       rm -f mappluto.zip
       echo "$VERSION" > version.txt
