@@ -1,4 +1,4 @@
-mismatch_sql = '''
+mismatch_sql = """
 INSERT INTO dcp_pluto.qaqc_mismatch (
 SELECT
     '{0} - {1}' as pair, 
@@ -101,9 +101,9 @@ SELECT
 INNER JOIN dcp_pluto."{1}" b
 USING (bbl)
 {3})
-'''
+"""
 
-null_sql = '''
+null_sql = """
 INSERT INTO dcp_pluto.qaqc_null (
 SELECT
     '{0}' as v, 
@@ -205,9 +205,9 @@ SELECT
     sum(case when a.edesigdate is null then 1 else 0 end) as edesigdate
 FROM dcp_pluto."{0}" a
 {2})
-'''
+"""
 
-aggregate_sql = '''
+aggregate_sql = """
 INSERT INTO dcp_pluto.qaqc_aggregate (
 SELECT  '{0}' as v, 
 	    {1} as condo,
@@ -229,4 +229,4 @@ SELECT  '{0}' as v,
         sum(PFIRM15_FLAG::numeric)::bigint as PFIRM15_FLAG
 FROM dcp_pluto."{0}"
 {2})
-'''
+"""
