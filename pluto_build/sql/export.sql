@@ -96,16 +96,16 @@ FROM pluto;
 DROP TABLE IF EXISTS mappluto_unclipped;
 SELECT 
 	a.*, 
-	b.geom_2263 as geom
+	st_makevalid(b.geom_2263) as geom
 INTO mappluto_unclipped
 FROM export_pluto a, pluto_geom b
 WHERE b.geom_2263 IS NOT NULL
 AND a.bbl::bigint = b.bbl::bigint;
 
 DROP TABLE IF EXISTS mappluto;
-SELECT 
+SELECT
 	a.*, 
-	b.clipped_2263 as geom
+	st_makevalid(b.clipped_2263) as geom
 INTO mappluto
 FROM export_pluto a, pluto_geom b
 WHERE b.clipped_2263 IS NOT NULL

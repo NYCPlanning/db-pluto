@@ -35,7 +35,7 @@ subdivided_union as (
 clipped as (
 	SELECT
         a.bbl::bigint,
-        ST_Difference(a.geom_4326, b.geom) as geom
+        ST_Multi(ST_CollectionExtract(ST_Difference(a.geom_4326, b.geom), 3)) as geom
 	FROM pluto_geom_tmp a, subdivided_union b
 	WHERE a.bbl::bigint = b.bbl::bigint)
 select 
