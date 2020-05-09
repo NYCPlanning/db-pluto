@@ -1,16 +1,66 @@
--- create mappluto file
-DROP TABLE IF EXISTS dof_shoreline_union;
-CREATE TABLE dof_shoreline_union AS
-SELECT ST_Union(geom) as geom
-FROM dof_shoreline;
+DROP TABLE IF EXISTS shoreline_bbl;
+SELECT DISTINCT bbl::bigint 
+INTO shoreline_bbl
+FROM pluto a, dof_shoreline_subdivide b
+WHERE st_intersects(a.geom, b.geom);
 
--- DROP TABLE IF EXISTS mappluto_clipped;
--- CREATE TABLE mappluto_clipped AS (
--- 	SELECT * FROM pluto
--- 	WHERE geom IS NOT NULL);
+DROP TABLE IF EXISTS pluto_geom_tmp;
+SELECT 
+	bbl, 
+	ST_Transform(a.geom, 2263) as geom_2263,
+	a.geom as geom_4326,
+	(case when bbl in 
+	 	(SELECT bbl FROM shoreline_bbl)
+	then 1 else 0 END) shoreline
+INTO pluto_geom_tmp
+FROM pluto a;
 
--- -- clip mappluto to shoreline -- really slow
--- UPDATE mappluto_clipped a
--- SET geom = ST_Difference(a.geom, b.geom)
--- FROM dof_shoreline b
--- WHERE a.geom && b.geom;
+DROP TABLE IF EXISTS pluto_geom;
+WITH
+subdivided as (
+	SELECT 
+        a.bbl, 
+        b.geom
+	FROM pluto_geom_tmp a, dof_shoreline_subdivide b
+	WHERE shoreline = 1
+	AND st_intersects(a.geom_4326, b.geom)),
+subdivided_union as (
+	SELECT 
+        bbl, 
+        st_union(geom) as geom
+	FROM subdivided
+	group by bbl),
+clipped as (
+	SELECT
+        a.bbl,
+        ST_Difference(a.geom_4326, b.geom) as geom
+	FROM pluto_geom_tmp a, subdivided_union b
+	WHERE a.bbl = b.bbl)
+select 
+	a.bbl,
+	a.geom_2263,
+	a.geom_4326,
+	COALESCE(b.geom, a.geom_4326) as clipped_4326,
+	COALESCE(st_transform(b.geom, 2263), a.geom_2263) as clipped_2263
+INTO pluto_geom
+FROM pluto_geom_tmp a
+left join clipped b
+on a.bbl=b.bbl;
+
+DROP TABLE IF EXISTS mappluto_unclipped;
+SELECT 
+	a.*, 
+	b.geom_2263 as geom
+INTO mappluto_unclipped
+FROM export_pluto a, pluto_geom b
+WHERE b.geom_2263 IS NOT NULL
+AND a.bbl = b.bbl;
+
+DROP TABLE IF EXISTS mappluto;
+SELECT 
+	a.*, 
+	b.clipped_2263 as geom
+INTO mappluto
+FROM export_pluto a, pluto_geom b
+WHERE b.clipped_2263 IS NOT NULL
+AND a.bbl = b.bbl;

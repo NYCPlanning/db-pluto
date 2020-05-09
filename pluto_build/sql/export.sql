@@ -1,4 +1,4 @@
-DROP TABLE IF EXISTS export_pluto;
+DROP TABLE IF EXISTS pluto_export;
 SELECT
 	borough::varchar(2),
 	block::integer,
@@ -70,7 +70,7 @@ SELECT
 	CommFAR::double precision,
 	FacilFAR::double precision,
 	BoroCode::smallint,
-	BBL::double precision,
+	BBL::bigint,
 	CondoNo::smallint,
 	Tract2010::varchar(7),
 	round(XCoord::numeric)::integer as XCoord,
@@ -90,6 +90,5 @@ SELECT
 	latitude::double precision,
 	Longitude::double precision,
 	Notes::varchar(20),
-	ST_Transform(geom, 2263) as geom
-INTO export_pluto
+INTO pluto_export
 FROM pluto;
