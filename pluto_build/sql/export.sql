@@ -1,4 +1,4 @@
-DROP TABLE IF EXISTS pluto_export;
+DROP TABLE IF EXISTS export_pluto;
 SELECT
 	borough::varchar(2),
 	block::integer,
@@ -89,6 +89,24 @@ SELECT
 	DCPEdited::varchar(3),
 	latitude::double precision,
 	Longitude::double precision,
-	Notes::varchar(20),
-INTO pluto_export
+	Notes::varchar(20)
+INTO export_pluto
 FROM pluto;
+
+DROP TABLE IF EXISTS mappluto_unclipped;
+SELECT 
+	a.*, 
+	b.geom_2263 as geom
+INTO mappluto_unclipped
+FROM export_pluto a, pluto_geom b
+WHERE b.geom_2263 IS NOT NULL
+AND a.bbl::bigint = b.bbl::bigint;
+
+DROP TABLE IF EXISTS mappluto;
+SELECT 
+	a.*, 
+	b.clipped_2263 as geom
+INTO mappluto
+FROM export_pluto a, pluto_geom b
+WHERE b.clipped_2263 IS NOT NULL
+AND a.bbl::bigint = b.bbl::bigint;

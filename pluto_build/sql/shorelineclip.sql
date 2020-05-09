@@ -9,33 +9,35 @@ SELECT
 	bbl, 
 	ST_Transform(a.geom, 2263) as geom_2263,
 	a.geom as geom_4326,
-	(case when bbl in 
-	 	(SELECT bbl FROM shoreline_bbl)
+	(case when bbl::bigint in 
+	 	(SELECT bbl::bigint FROM shoreline_bbl)
 	then 1 else 0 END) shoreline
 INTO pluto_geom_tmp
 FROM pluto a;
+
+DROP TABLE IF EXISTS shoreline_bbl;
 
 DROP TABLE IF EXISTS pluto_geom;
 WITH
 subdivided as (
 	SELECT 
-        a.bbl, 
+        a.bbl,
         b.geom
 	FROM pluto_geom_tmp a, dof_shoreline_subdivide b
 	WHERE shoreline = 1
 	AND st_intersects(a.geom_4326, b.geom)),
 subdivided_union as (
 	SELECT 
-        bbl, 
+        bbl::bigint, 
         st_union(geom) as geom
 	FROM subdivided
 	group by bbl),
 clipped as (
 	SELECT
-        a.bbl,
+        a.bbl::bigint,
         ST_Difference(a.geom_4326, b.geom) as geom
 	FROM pluto_geom_tmp a, subdivided_union b
-	WHERE a.bbl = b.bbl)
+	WHERE a.bbl::bigint = b.bbl::bigint)
 select 
 	a.bbl,
 	a.geom_2263,
@@ -45,22 +47,4 @@ select
 INTO pluto_geom
 FROM pluto_geom_tmp a
 left join clipped b
-on a.bbl=b.bbl;
-
-DROP TABLE IF EXISTS mappluto_unclipped;
-SELECT 
-	a.*, 
-	b.geom_2263 as geom
-INTO mappluto_unclipped
-FROM export_pluto a, pluto_geom b
-WHERE b.geom_2263 IS NOT NULL
-AND a.bbl = b.bbl;
-
-DROP TABLE IF EXISTS mappluto;
-SELECT 
-	a.*, 
-	b.clipped_2263 as geom
-INTO mappluto
-FROM export_pluto a, pluto_geom b
-WHERE b.clipped_2263 IS NOT NULL
-AND a.bbl = b.bbl;
+on a.bbl::bigint=b.bbl::bigint;

@@ -22,25 +22,10 @@ UPDATE pluto
 SET plutomapid = '2'
 WHERE geom IS NULL;
 
--- UPDATE pluto
--- SET plutomapid = '3'
--- WHERE appbbl IS NULL
--- AND geom IS NOT NULL;
-
--- UPDATE pluto a
--- SET plutomapid = '4'
--- FROM dof_shoreline_union b
--- WHERE a.geom IS NOT NULL
--- AND ST_Within(a.geom, b.geom)
--- AND plutomapid = '1';
-
--- UPDATE pluto a
--- SET plutomapid = '5'
--- FROM dof_shoreline_union b
--- WHERE a.geom IS NOT NULL
--- AND ST_Within(a.geom, b.geom)
--- AND plutomapid = '3';
-
 DROP TABLE IF EXISTS dof_shoreline_subdivide;
-select ST_SubDivide(ST_MakeValid(geom), 100) as geom into dof_shoreline_subdivide  
-from dof_shoreline_union;
+select ST_SubDivide(ST_MakeValid(geom), 100) as geom 
+into dof_shoreline_subdivide  
+from (
+    SELECT ST_Union(geom) as geom
+    FROM dof_shoreline
+) a;
