@@ -34,6 +34,6 @@ SET ext = NULL
 WHERE a.ext !~ '[A-Z]';
 
 UPDATE pluto a
-SET numbldgs = count
+SET numbldgs = count::text
 FROM pluto_input_numbldgs b
 WHERE a.bbl::bigint = b.bbl::bigint;
