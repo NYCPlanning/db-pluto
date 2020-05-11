@@ -1,0 +1,23 @@
+name: NumBldgs processing
+
+on: [push]
+
+jobs:
+  skip:
+    name: Build and test
+    runs-on: ubuntu-latest
+    if: "contains(github.event.head_commit.message, '[numbldgs]')"
+    steps:
+      - run: echo "${{ github.event.head_commit.message }}"
+  process_pts:
+    needs: skip
+    container:
+      image: nycplanning/docker-geosupport:latest
+    runs-on: self-hosted
+    env:
+      RECIPE_ENGINE: ${{ secrets.RECIPE_ENGINE }}
+    steps:
+      - uses: actions/checkout@v2
+      - name: get numbldgs
+        working-directory: pluto_build/python
+        run: python3 numbldgs.py
