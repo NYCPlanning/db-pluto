@@ -49,6 +49,38 @@ mkdir -p output/mappluto_unclipped &&
       ls | grep -v mappluto_unclipped.zip | xargs rm
     )
 
+# mappluto.gdb
+mkdir -p output/mappluto.gdb &&
+  (cd output/mappluto.gdb
+    docker run \
+      -v $(pwd):/data\
+      --user $UID\
+      --rm webmapp/gdal-docker:latest ogr2ogr -f "FileGDB" mappluto.gdb \
+        PG:"host=$BUILD_HOST user=$BUILD_USER port=$BUILD_PORT dbname=$BUILD_DB password=$BUILD_PWD" \
+        -sql "SELECT * FROM mappluto WHERE geom IS NOT NULL"\
+        -nlt MULTIPOLYGON
+      rm -f mappluto.gdb.zip
+      echo "$VERSION" > version.txt
+      zip mappluto.gdb.zip *
+      ls | grep -v mappluto.gdb.zip | xargs rm
+    )
+
+# mappluto_unclipped.gdb
+mkdir -p output/mappluto_unclipped.gdb &&
+  (cd output/mappluto_unclipped.gdb
+    docker run \
+      -v $(pwd):/data\
+      --user $UID\
+      --rm webmapp/gdal-docker:latest ogr2ogr -f "FileGDB" mappluto_unclipped.gdb \
+        PG:"host=$BUILD_HOST user=$BUILD_USER port=$BUILD_PORT dbname=$BUILD_DB password=$BUILD_PWD" \
+        -sql "SELECT * FROM mappluto_unclipped WHERE geom IS NOT NULL"\
+        -nlt MULTIPOLYGON
+      rm -f mappluto_unclipped.gdb.zip
+      echo "$VERSION" > version.txt
+      zip mappluto_unclipped.gdb.zip *
+      ls | grep -v mappluto_unclipped.gdb.zip | xargs rm
+    )
+
 # Pluto
 mkdir -p output/pluto &&
   (cd output/pluto
