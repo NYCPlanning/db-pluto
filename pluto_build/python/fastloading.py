@@ -59,6 +59,7 @@ if __name__ == "__main__":
         "fema_firms2007_100yr",
         "fema_pfirms2015_100yr",
         "pluto_input_condolot_descriptiveattributes",
+        "pluto_input_numbldgs"
     ]
 
     with Pool(processes=cpu_count()) as pool:
