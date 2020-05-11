@@ -61,7 +61,7 @@ mkdir -p output/mappluto.gdb &&
         -nlt MULTIPOLYGON
       rm -f mappluto.gdb.zip
       echo "$VERSION" > version.txt
-      zip mappluto.gdb.zip *
+      zip -r mappluto.gdb.zip mappluto.gdb
       rm -f mappluto.gdb
     )
 
@@ -77,7 +77,7 @@ mkdir -p output/mappluto_unclipped.gdb &&
         -nlt MULTIPOLYGON
       rm -f mappluto_unclipped.gdb.zip
       echo "$VERSION" > version.txt
-      zip mappluto_unclipped.gdb.zip *
+      zip -r mappluto_unclipped.gdb.zip mappluto_unclipped.gdb
       rm -f mappluto_unclipped.gdb
     )
 
