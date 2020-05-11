@@ -7,8 +7,8 @@ WHERE st_intersects(a.geom, b.geom);
 DROP TABLE IF EXISTS pluto_geom_tmp;
 SELECT 
 	bbl, 
-	ST_Transform(a.geom, 2263) as geom_2263,
-	a.geom as geom_4326,
+	st_makevalid(ST_Transform(a.geom, 2263)) as geom_2263,
+	st_makevalid(a.geom) as geom_4326,
 	(case when bbl::bigint in 
 	 	(SELECT bbl::bigint FROM shoreline_bbl)
 	then 1 else 0 END) shoreline
@@ -27,9 +27,9 @@ subdivided as (
 	WHERE shoreline = 1
 	AND st_intersects(a.geom_4326, b.geom)),
 subdivided_union as (
-	SELECT 
-        bbl::bigint, 
-        st_union(geom) as geom
+	SELECT
+        bbl::bigint,
+        st_makevalid(st_union(geom)) as geom
 	FROM subdivided
 	group by bbl),
 clipped as (
@@ -38,7 +38,7 @@ clipped as (
         ST_Multi(ST_CollectionExtract(ST_Difference(a.geom_4326, b.geom), 3)) as geom
 	FROM pluto_geom_tmp a, subdivided_union b
 	WHERE a.bbl::bigint = b.bbl::bigint)
-select 
+select
 	a.bbl,
 	a.geom_2263,
 	a.geom_4326,
