@@ -14,4 +14,5 @@ psql $BUILD_ENGINE -f sql/corr_communitydistrict.sql
 psql $BUILD_ENGINE -f sql/corr_inwoodrezoning.sql
 psql $BUILD_ENGINE -f sql/corr_dropoldrecords.sql
 psql $BUILD_ENGINE -f sql/remove_unitlots.sql
+
 exit 0

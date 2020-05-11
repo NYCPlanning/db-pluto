@@ -8,16 +8,14 @@ then
   export $(cat .env | sed 's/#.*//g' | xargs)
 fi
 
-pg_dump -t pluto $BUILD_ENGINE | psql $EDM_DATA
+pg_dump -t pluto $BUILD_ENGINE -O -c | psql $EDM_DATA
 psql $EDM_DATA -c "
-    DROP INDEX idx_pluto_bbl;
-    DROP INDEX pluto_gix;
     CREATE SCHEMA IF NOT EXISTS dcp_pluto;
     ALTER TABLE pluto SET SCHEMA dcp_pluto;
     DROP TABLE IF EXISTS dcp_pluto.\"$VERSION\";
     ALTER TABLE dcp_pluto.pluto RENAME TO \"$VERSION\";";
 
-QAQC EXPECTED VALUE ANALYSIS
+# QAQC EXPECTED VALUE ANALYSIS
 psql $EDM_DATA \
   -v VERSION=$VERSION \
   -f sql/qaqc_expected.sql &
