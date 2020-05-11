@@ -71,7 +71,6 @@ psql $BUILD_ENGINE -f sql/dedupecondotable.sql
 psql $BUILD_ENGINE -f sql/dtmmergepolygons.sql
 psql $BUILD_ENGINE -f sql/plutogeoms.sql
 psql $BUILD_ENGINE -f sql/geomclean.sql
-psql $BUILD_ENGINE -f sql/shorelineclip.sql
 psql $BUILD_ENGINE -f sql/spatialindex.sql
 
 echo 'Computing zoning fields'
@@ -116,6 +115,7 @@ psql $BUILD_ENGINE -c "VACUUM ANALYZE pluto;" &
 psql $BUILD_ENGINE -c "VACUUM ANALYZE dof_shoreline_subdivide;"
 psql $BUILD_ENGINE -v ON_ERROR_STOP=1 -f sql/plutomapid_1.sql
 psql $BUILD_ENGINE -v ON_ERROR_STOP=1 -f sql/plutomapid_2.sql
+psql $BUILD_ENGINE -f sql/shorelineclip.sql
 
 echo 'Backfilling'
 psql $BUILD_ENGINE -v ON_ERROR_STOP=1 -f sql/backfill.sql
