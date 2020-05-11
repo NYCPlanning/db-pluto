@@ -44,3 +44,12 @@ if __name__ == "__main__":
     dff = pd.DataFrame(it)
     table_name = f'pluto_input_numbldgs."{v}"'
     exporter(dff, table_name, con=engine, sep="~", null="")
+    
+    engine.execute(f"""DROP VIEW IF EXISTS pluto_input_numbldgs.latest;""")
+    engine.execute(
+        f"""CREATE VIEW pluto_input_numbldgs.latest as (
+                        SELECT '{v}' as v, bbl, count(*) 
+                        FROM {table_name}
+                        WHERE bbl IS NOT NULL
+                        GROUP BY bbl);"""
+    )
