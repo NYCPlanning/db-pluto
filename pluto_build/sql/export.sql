@@ -70,7 +70,7 @@ SELECT
 	CommFAR::double precision,
 	FacilFAR::double precision,
 	BoroCode::smallint,
-	BBL::bigint,
+	BBL::double precision,
 	CondoNo::smallint,
 	Tract2010::varchar(7),
 	round(XCoord::numeric)::integer as XCoord,
