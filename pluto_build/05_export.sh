@@ -11,9 +11,6 @@ fi
 DATE=$(date "+%Y-%m-%d")
 source ./urlparse.sh $BUILD_ENGINE
 
-echo 'Create Export'
-psql $BUILD_ENGINE -f sql/export.sql
-
 mkdir -p output && 
   (cd output 
     echo "version: $VERSION" > version.txt

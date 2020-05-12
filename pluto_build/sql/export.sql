@@ -110,3 +110,10 @@ INTO mappluto
 FROM export_pluto a, pluto_geom b
 WHERE b.clipped_2263 IS NOT NULL
 AND a.bbl::bigint = b.bbl::bigint;
+
+DROP TABLE IF EXISTS archive_pluto;
+SELECT a.*, b.clipped_4326 as geom
+INTO archive_pluto
+FROM export_pluto a
+LEFT JOIN pluto_geom b
+on a.bbl::bigint = b.bbl::bigint;
