@@ -62,7 +62,7 @@ mkdir -p output/mappluto.gdb &&
       rm -f mappluto.gdb.zip
       echo "$VERSION" > version.txt
       zip -r mappluto.gdb.zip mappluto.gdb
-      rm -f mappluto.gdb
+      rm -rf mappluto.gdb
     )
 
 # mappluto_unclipped.gdb
@@ -78,7 +78,7 @@ mkdir -p output/mappluto_unclipped.gdb &&
       rm -f mappluto_unclipped.gdb.zip
       echo "$VERSION" > version.txt
       zip -r mappluto_unclipped.gdb.zip mappluto_unclipped.gdb
-      rm -f mappluto_unclipped.gdb
+      rm -rf mappluto_unclipped.gdb
     )
 
 # Pluto
