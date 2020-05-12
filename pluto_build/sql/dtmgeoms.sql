@@ -16,7 +16,7 @@ INSERT INTO pluto (
 	borough,
 	block,
 	lot,
-	geom,
+	st_makevalid(st_multi(geom)),
 	plutomapid)
 SELECT b.bbl,
 	LEFT(b.bbl,1),
