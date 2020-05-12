@@ -13,8 +13,6 @@ psql $BUILD_ENGINE -f sql/export.sql
 
 pg_dump -t archive_pluto $BUILD_ENGINE -O -c | psql $EDM_DATA
 psql $EDM_DATA -c "
-    DROP INDEX idx_pluto_bbl;
-    DROP INDEX pluto_gix;
     CREATE SCHEMA IF NOT EXISTS dcp_pluto;
     ALTER TABLE archive_pluto SET SCHEMA dcp_pluto;
     DROP TABLE IF EXISTS dcp_pluto.\"$VERSION\";
