@@ -8,16 +8,17 @@ then
   export $(cat .env | sed 's/#.*//g' | xargs)
 fi
 
-pg_dump -t pluto $BUILD_ENGINE | psql $EDM_DATA
-psql $EDM_DATA -c "
-    DROP INDEX idx_pluto_bbl;
-    DROP INDEX pluto_gix;
-    CREATE SCHEMA IF NOT EXISTS dcp_pluto;
-    ALTER TABLE pluto SET SCHEMA dcp_pluto;
-    DROP TABLE IF EXISTS dcp_pluto.\"$VERSION\";
-    ALTER TABLE dcp_pluto.pluto RENAME TO \"$VERSION\";";
+echo 'Create Export'
+psql $BUILD_ENGINE -f sql/export.sql
 
-QAQC EXPECTED VALUE ANALYSIS
+pg_dump -t archive_pluto $BUILD_ENGINE -O -c | psql $EDM_DATA
+psql $EDM_DATA -c "
+    CREATE SCHEMA IF NOT EXISTS dcp_pluto;
+    ALTER TABLE archive_pluto SET SCHEMA dcp_pluto;
+    DROP TABLE IF EXISTS dcp_pluto.\"$VERSION\";
+    ALTER TABLE dcp_pluto.archive_pluto RENAME TO \"$VERSION\";";
+
+# QAQC EXPECTED VALUE ANALYSIS
 psql $EDM_DATA \
   -v VERSION=$VERSION \
   -f sql/qaqc_expected.sql &
@@ -28,7 +29,7 @@ psql $EDM_DATA \
   -v VERSION_PREV=$VERSION_PREV \
   -v CONDO='TRUE' \
   -v MAPPED='FALSE'\
-  -v CONDITION="WHERE right(bbl, 4) LIKE '75%%'" \
+  -v CONDITION="WHERE right(a.bbl::bigint::text, 4) LIKE '75%%'" \
   -f sql/qaqc_mismatch.sql &
 
 psql $EDM_DATA \
@@ -36,7 +37,7 @@ psql $EDM_DATA \
   -v VERSION_PREV=$VERSION_PREV \
   -v CONDO='TRUE' \
   -v MAPPED='TRUE'\
-  -v CONDITION="WHERE right(bbl, 4) LIKE '75%%' AND a.geom IS NOT NULL" \
+  -v CONDITION="WHERE right(a.bbl::bigint::text, 4) LIKE '75%%' AND a.geom IS NOT NULL" \
   -f sql/qaqc_mismatch.sql &
 
 psql $EDM_DATA \
@@ -60,14 +61,14 @@ psql $EDM_DATA \
   -v VERSION=$VERSION \
   -v CONDO='TRUE' \
   -v MAPPED='FALSE'\
-  -v CONDITION="WHERE right(bbl, 4) LIKE '75%%'" \
+  -v CONDITION="WHERE right(bbl::bigint::text, 4) LIKE '75%%'" \
   -f sql/qaqc_null.sql &
 
 psql $EDM_DATA \
   -v VERSION=$VERSION \
   -v CONDO='TRUE' \
   -v MAPPED='TRUE'\
-  -v CONDITION="WHERE right(bbl, 4) LIKE '75%%' AND a.geom IS NOT NULL" \
+  -v CONDITION="WHERE right(bbl::bigint::text, 4) LIKE '75%%' AND a.geom IS NOT NULL" \
   -f sql/qaqc_null.sql &
 
 psql $EDM_DATA \
@@ -89,14 +90,14 @@ psql $EDM_DATA \
   -v VERSION=$VERSION \
   -v CONDO='TRUE' \
   -v MAPPED='FALSE'\
-  -v CONDITION="WHERE right(bbl, 4) LIKE '75%%'" \
+  -v CONDITION="WHERE right(bbl::bigint::text, 4) LIKE '75%%'" \
   -f sql/qaqc_aggregate.sql &
 
 psql $EDM_DATA \
   -v VERSION=$VERSION \
   -v CONDO='TRUE' \
   -v MAPPED='TRUE'\
-  -v CONDITION="WHERE right(bbl, 4) LIKE '75%%' AND geom IS NOT NULL" \
+  -v CONDITION="WHERE right(bbl::bigint::text, 4) LIKE '75%%' AND geom IS NOT NULL" \
   -f sql/qaqc_aggregate.sql &
 
 psql $EDM_DATA \

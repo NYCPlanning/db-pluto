@@ -70,9 +70,8 @@ echo 'Create base DTM'
 psql $BUILD_ENGINE -f sql/dedupecondotable.sql
 psql $BUILD_ENGINE -f sql/dtmmergepolygons.sql
 psql $BUILD_ENGINE -f sql/plutogeoms.sql
-psql $BUILD_ENGINE -f sql/geomclean.sql
-psql $BUILD_ENGINE -f sql/shorelineclip.sql
 psql $BUILD_ENGINE -f sql/spatialindex.sql
+psql $BUILD_ENGINE -c "VACUUM ANALYZE pluto;"
 
 echo 'Computing zoning fields'
 psql $BUILD_ENGINE -f sql/zoning_create_priority.sql
@@ -87,21 +86,27 @@ psql $BUILD_ENGINE -f sql/zoning_correctdups.sql
 psql $BUILD_ENGINE -f sql/zoning_correctgaps.sql
 psql $BUILD_ENGINE -f sql/zoning_splitzone.sql
 psql $BUILD_ENGINE -c "DROP TABLE dof_dtm;"
+psql $BUILD_ENGINE -c "VACUUM ANALYZE pluto;"
 
 echo 'Filling in FAR values'
 psql $BUILD_ENGINE -f sql/far.sql
+psql $BUILD_ENGINE -c "VACUUM ANALYZE pluto;"
 
 echo 'Populating building class for condos lots and land use field'
 psql $BUILD_ENGINE -f sql/bldgclass.sql
 psql $BUILD_ENGINE -f sql/landuse.sql
+psql $BUILD_ENGINE -c "VACUUM ANALYZE pluto;"
 
 echo 'Adding in geometries that are in the DTM but not in RPAD'
 psql $BUILD_ENGINE -f sql/dtmgeoms.sql
-psql $BUILD_ENGINE -f sql/geomclean.sql
+psql $BUILD_ENGINE -c "VACUUM ANALYZE pluto;"
 
 echo 'Flagging tax lots within the FEMA floodplain'
 psql $BUILD_ENGINE -f sql/latlong.sql
 psql $BUILD_ENGINE -f sql/flood_flag.sql
+psql $BUILD_ENGINE -c "VACUUM ANALYZE pluto;"
+
+
 echo 'Assigning political values with spatial join'
 psql $BUILD_ENGINE -f sql/spatialjoins.sql
 psql $BUILD_ENGINE -f sql/spatialjoins_centroid.sql
@@ -109,6 +114,7 @@ psql $BUILD_ENGINE -f sql/spatialjoins_centroid.sql
 psql $BUILD_ENGINE -f sql/numericfields_geomfields.sql
 psql $BUILD_ENGINE -f sql/sanitboro.sql
 psql $BUILD_ENGINE -f sql/latlong.sql
+psql $BUILD_ENGINE -c "VACUUM ANALYZE pluto;"
 
 echo 'Populating PLUTO tags and version fields'
 psql $BUILD_ENGINE -v ON_ERROR_STOP=1 -f sql/plutomapid.sql
@@ -116,9 +122,11 @@ psql $BUILD_ENGINE -c "VACUUM ANALYZE pluto;" &
 psql $BUILD_ENGINE -c "VACUUM ANALYZE dof_shoreline_subdivide;"
 psql $BUILD_ENGINE -v ON_ERROR_STOP=1 -f sql/plutomapid_1.sql
 psql $BUILD_ENGINE -v ON_ERROR_STOP=1 -f sql/plutomapid_2.sql
+psql $BUILD_ENGINE -f sql/shorelineclip.sql
 
 echo 'Backfilling'
 psql $BUILD_ENGINE -v ON_ERROR_STOP=1 -f sql/backfill.sql
+psql $BUILD_ENGINE -c "VACUUM ANALYZE pluto;"
 
 echo 'Done'
 exit 0

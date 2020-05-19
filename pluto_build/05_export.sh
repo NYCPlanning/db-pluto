@@ -9,7 +9,6 @@ then
 fi
 
 DATE=$(date "+%Y-%m-%d")
-
 source ./urlparse.sh $BUILD_ENGINE
 
 mkdir -p output && 
@@ -29,11 +28,54 @@ mkdir -p output &&
 mkdir -p output/mappluto &&
   (cd output/mappluto
     pgsql2shp -u $BUILD_USER -h $BUILD_HOST -p $BUILD_PORT -P $BUILD_PWD -f mappluto $BUILD_DB \
-      "SELECT ST_Transform(geom, 2263), bbl FROM pluto WHERE geom IS NOT NULL"
+      "SELECT * from mappluto"
       rm -f mappluto.zip
       echo "$VERSION" > version.txt
       zip mappluto.zip *
       ls | grep -v mappluto.zip | xargs rm
+    )
+
+# mappluto_unclipped
+mkdir -p output/mappluto_unclipped &&
+  (cd output/mappluto_unclipped
+    pgsql2shp -u $BUILD_USER -h $BUILD_HOST -p $BUILD_PORT -P $BUILD_PWD -f mappluto_unclipped $BUILD_DB \
+      "SELECT * from mappluto_unclipped"
+      rm -f mappluto_unclipped.zip
+      echo "$VERSION" > version.txt
+      zip mappluto_unclipped.zip *
+      ls | grep -v mappluto_unclipped.zip | xargs rm
+    )
+
+# mappluto.gdb
+mkdir -p output/mappluto.gdb &&
+  (cd output/mappluto.gdb
+    docker run \
+      -v $(pwd):/data\
+      --user $UID\
+      --rm webmapp/gdal-docker:latest ogr2ogr -f "FileGDB" mappluto.gdb \
+        PG:"host=$BUILD_HOST user=$BUILD_USER port=$BUILD_PORT dbname=$BUILD_DB password=$BUILD_PWD" \
+        -sql "SELECT * FROM mappluto WHERE geom IS NOT NULL"\
+        -nlt MULTIPOLYGON
+      rm -f mappluto.gdb.zip
+      echo "$VERSION" > version.txt
+      zip -r mappluto.gdb.zip mappluto.gdb
+      rm -rf mappluto.gdb
+    )
+
+# mappluto_unclipped.gdb
+mkdir -p output/mappluto_unclipped.gdb &&
+  (cd output/mappluto_unclipped.gdb
+    docker run \
+      -v $(pwd):/data\
+      --user $UID\
+      --rm webmapp/gdal-docker:latest ogr2ogr -f "FileGDB" mappluto_unclipped.gdb \
+        PG:"host=$BUILD_HOST user=$BUILD_USER port=$BUILD_PORT dbname=$BUILD_DB password=$BUILD_PWD" \
+        -sql "SELECT * FROM mappluto_unclipped WHERE geom IS NOT NULL"\
+        -nlt MULTIPOLYGON
+      rm -f mappluto_unclipped.gdb.zip
+      echo "$VERSION" > version.txt
+      zip -r mappluto_unclipped.gdb.zip mappluto_unclipped.gdb
+      rm -rf mappluto_unclipped.gdb
     )
 
 # Pluto
@@ -41,7 +83,8 @@ mkdir -p output/pluto &&
   (cd output/pluto
     rm -f pluto.zip
     psql $BUILD_ENGINE -c "\COPY ( 
-          SELECT borough,block,lot,cd,ct2010,cb2010,schooldist,
+          SELECT
+          borough,block,lot,cd,ct2010,cb2010,schooldist,
           council,zipcode,firecomp,policeprct,healtharea,
           sanitboro,sanitsub,address,zonedist1,zonedist2,
           zonedist3,zonedist4,overlay1,overlay2,spdist1,
@@ -57,7 +100,7 @@ mkdir -p output/pluto &&
           bbl,condono,tract2010,xcoord,ycoord,latitude,longitude,
           zonemap,zmcode,sanborn,taxmap,edesignum,appbbl,appdate,
           plutomapid,version,sanitdistrict,healthcenterdistrict,
-          firm07_flag,pfirm15_flag,dcpedited,notes FROM pluto
+          firm07_flag,pfirm15_flag,dcpedited,notes FROM export_pluto
           ) TO STDOUT DELIMITER ',' CSV HEADER;" > pluto.csv
     echo "$VERSION" > version.txt
     echo "$(wc -l pluto.csv)" >> version.txt

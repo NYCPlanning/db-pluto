@@ -30,7 +30,7 @@ SELECT b.bbl,
 	END),
 	trim(leading '0' FROM SUBSTRING(b.bbl,2,5)),
 	trim(leading '0' FROM RIGHT(b.bbl, 4)),
-	b.geom,
+	st_makevalid(st_multi(b.geom)),
 	'3'
 	FROM notinpluto b
 ;
