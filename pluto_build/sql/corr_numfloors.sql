@@ -3,7 +3,7 @@
 INSERT INTO pluto_corrections
 SELECT DISTINCT a.bbl, 
 	'numfloors' as field, 
-	a.cd as old_value, 
+	a.numfloors as old_value, 
 	b.new_value as new_value,
 	b.type as type,
 	b.reason as reason,
@@ -16,7 +16,7 @@ WHERE a.bbl = b.bbl
 
 -- Apply correction to PLUTO
 UPDATE pluto a
-SET cd = b.new_value,
+SET numfloors = b.new_value,
 	dcpedited = 't'
 FROM pluto_corrections b
 WHERE a.bbl = b.bbl
