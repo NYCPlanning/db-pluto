@@ -26284,3 +26284,25 @@ bbl,field,old_value,new_value,Type,reason,version
 ,ownername,MTA B&T,MTA - BRIDGES AND TUNNELS,1,Normalized owner name,20v4
 ,ownername,NEW YORK CITY HLT HSPTL,NYC HEALTH AND HOSPITALS CORPORATION,1,Normalized owner name,20v4
 ,ownername,NYC DEPT OF HIGHWAYS,NYC DEPARTMENT OF TRANSPORTATION,1,Normalized owner name,20v4
+4097740166,numfloors,205,3,2,numfloors correction,20v4
+5036860056,numfloors,114,3,2,numfloors correction,20v4
+5012900096,numfloors,100,2,2,numfloors correction,20v4
+1001797507,numfloors,90,9,2,numfloors correction,20v4
+3067760018,numfloors,75,2,2,numfloors correction,20v4
+3074357501,numfloors,60,6,2,numfloors correction,20v4
+4020057503,numfloors,40,4,2,numfloors correction,20v4
+3045060019,numfloors,35,2,2,numfloors correction,20v4
+3051100145,numfloors,30,3,2,numfloors correction,20v4
+2040240014,numfloors,30,3,2,numfloors correction,20v4
+4101550069,numfloors,30,1,2,numfloors correction,20v4
+3051100144,numfloors,30,3,2,numfloors correction,20v4
+2046470096,numfloors,30,3,2,numfloors correction,20v4
+1002317503,numfloors,27,5,2,numfloors correction,20v4
+5037550011,numfloors,23,3,2,numfloors correction,20v4
+5029770021,numfloors,22,3,2,numfloors correction,20v4
+3057410033,numfloors,21,0,2,numfloors correction,20v4
+4058937502,numfloors,21,4,2,numfloors correction,20v4
+4050427503,numfloors,13,4,2,numfloors correction,20v4
+1014910048,numfloors,5,26,2,numfloors correction,20v4
+1012420055,numfloors,2,18,2,numfloors correction,20v4
+1004640006,numfloors,2,15,2,numfloors correction,20v4
