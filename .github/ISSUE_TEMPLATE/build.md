@@ -9,10 +9,10 @@ assignees: mgraber, SPTKL
 ---
 
 # Data loading
-- [ ] **dcp_edesignation (updated with zoning features)
-- [ ] **dcas_facilities_colp (updated twice a year)
-- [ ] **lpc_historic_districts (check date [here](https://data.cityofnewyork.us/Housing-Development/LPC-Individual-Landmark-and-Historic-District-Buil/7mgd-s57w))
-- [ ] **lpc_landmarks (check date [here](https://data.cityofnewyork.us/Housing-Development/Designated-and-Calendared-Buildings-and-Sites-Map-/jcj6-zji6)
+- [ ] **dcp_edesignation** (updated with zoning features)
+- [ ] **dcas_facilities_colp** (updated twice a year)
+- [ ] **lpc_historic_districts** (check date [here](https://data.cityofnewyork.us/Housing-Development/LPC-Individual-Landmark-and-Historic-District-Buil/7mgd-s57w))
+- [ ] **lpc_landmarks** (check date [here](https://data.cityofnewyork.us/Housing-Development/Designated-and-Calendared-Buildings-and-Sites-Map-/jcj6-zji6)
 > for spatial joins. Check [Bytes](https://www1.nyc.gov/site/planning/data-maps/open-data/districts-download-metadata.page) for the spatial boundaries
 - [ ] **dcp_cdboundaries** (updated quaterly, 19d, 20a e.g.)
 - [ ] **dcp_censustracts** (updated quaterly, 19d, 20a e.g.)
