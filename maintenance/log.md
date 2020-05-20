@@ -1,8 +1,9 @@
 # Build Logs
 
-## 2020/05/19 -- Baiyue
+## 2020/05/20 -- Baiyue
 + loading CAMA
 + loading PTS
++ updated all input sources, check [20v4 master issue](https://github.com/NYCPlanning/db-pluto/issues/156)
 
 ## 2020/04/21 -- Baiyue
 + Build 20v3
