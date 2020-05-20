@@ -1,4 +1,4 @@
--- Take the community district value from research table
+-- Take the numfloors value from research table
 -- Insert records into pluto_corrections
 INSERT INTO pluto_corrections
 SELECT DISTINCT a.bbl, 
@@ -10,7 +10,7 @@ SELECT DISTINCT a.bbl,
 	b.version as version
 FROM pluto a, pluto_input_research b
 WHERE a.bbl = b.bbl
-	AND a.cd=b.old_value
+	AND a.numfloors=b.old_value
 	AND b.field = 'numfloors'
 	AND a.bbl NOT IN (SELECT bbl FROM pluto_corrections WHERE field = 'numfloors');
 
