@@ -1,8 +1,5 @@
 #!/bin/bash
-if [ -f .env ]
-then
-  export $(cat .env | sed 's/#.*//g' | xargs)
-fi
+source bin/config.sh
 
 ## DROP all tables
 psql $BUILD_ENGINE -c "

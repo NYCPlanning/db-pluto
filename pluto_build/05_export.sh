@@ -1,82 +1,28 @@
 #!/bin/bash
-if [ -f .env ]
-then
-  export $(cat .env | sed 's/#.*//g' | xargs)
-fi
-if [ -f version.env ]
-then
-  export $(cat version.env | sed 's/#.*//g' | xargs)
-fi
-
-DATE=$(date "+%Y-%m-%d")
-source ./urlparse.sh $BUILD_ENGINE
+source bin/config.sh
 
 mkdir -p output && 
   (cd output 
     echo "version: $VERSION" > version.txt
     echo "date: $DATE" >> version.txt
-    psql $BUILD_ENGINE  -c "\COPY (SELECT * FROM pluto_corrections) TO STDOUT DELIMITER ',' CSV HEADER;" > pluto_corrections.csv
-    echo "$(wc -l pluto_corrections.csv)" >> version.txt
-    psql $BUILD_ENGINE  -c "\COPY (SELECT * FROM pluto_removed_records) TO STDOUT DELIMITER ',' CSV HEADER;" > pluto_removed_records.csv
-    echo "$(wc -l pluto_removed_records.csv)" >> version.txt
+    CSV_export pluto_corrections
+    CSV_export pluto_removed_records
     zip pluto_corrections.zip *
     ls | grep -v pluto_corrections.zip | xargs rm
-    psql $BUILD_ENGINE  -c "\COPY (SELECT * FROM source_data_versions) TO STDOUT DELIMITER ',' CSV HEADER;" > source_data_versions.csv
+    CSV_export source_data_versions
   )
 
 # mappluto
-mkdir -p output/mappluto &&
-  (cd output/mappluto
-    pgsql2shp -u $BUILD_USER -h $BUILD_HOST -p $BUILD_PORT -P $BUILD_PWD -f mappluto $BUILD_DB \
-      "SELECT * from mappluto"
-      rm -f mappluto.zip
-      echo "$VERSION" > version.txt
-      zip mappluto.zip *
-      ls | grep -v mappluto.zip | xargs rm
-    )
+SHP_export mappluto &
 
 # mappluto_unclipped
-mkdir -p output/mappluto_unclipped &&
-  (cd output/mappluto_unclipped
-    pgsql2shp -u $BUILD_USER -h $BUILD_HOST -p $BUILD_PORT -P $BUILD_PWD -f mappluto_unclipped $BUILD_DB \
-      "SELECT * from mappluto_unclipped"
-      rm -f mappluto_unclipped.zip
-      echo "$VERSION" > version.txt
-      zip mappluto_unclipped.zip *
-      ls | grep -v mappluto_unclipped.zip | xargs rm
-    )
+SHP_export mappluto_unclipped &
 
 # mappluto.gdb
-mkdir -p output/mappluto.gdb &&
-  (cd output/mappluto.gdb
-    docker run \
-      -v $(pwd):/data\
-      --user $UID\
-      --rm webmapp/gdal-docker:latest ogr2ogr -f "FileGDB" mappluto.gdb \
-        PG:"host=$BUILD_HOST user=$BUILD_USER port=$BUILD_PORT dbname=$BUILD_DB password=$BUILD_PWD" \
-        -sql "SELECT * FROM mappluto WHERE geom IS NOT NULL"\
-        -nlt MULTIPOLYGON
-      rm -f mappluto.gdb.zip
-      echo "$VERSION" > version.txt
-      zip -r mappluto.gdb.zip mappluto.gdb
-      rm -rf mappluto.gdb
-    )
+FGDB_export mappluto &
 
 # mappluto_unclipped.gdb
-mkdir -p output/mappluto_unclipped.gdb &&
-  (cd output/mappluto_unclipped.gdb
-    docker run \
-      -v $(pwd):/data\
-      --user $UID\
-      --rm webmapp/gdal-docker:latest ogr2ogr -f "FileGDB" mappluto_unclipped.gdb \
-        PG:"host=$BUILD_HOST user=$BUILD_USER port=$BUILD_PORT dbname=$BUILD_DB password=$BUILD_PWD" \
-        -sql "SELECT * FROM mappluto_unclipped WHERE geom IS NOT NULL"\
-        -nlt MULTIPOLYGON
-      rm -f mappluto_unclipped.gdb.zip
-      echo "$VERSION" > version.txt
-      zip -r mappluto_unclipped.gdb.zip mappluto_unclipped.gdb
-      rm -rf mappluto_unclipped.gdb
-    )
+FGDB_export mappluto_unclipped &
 
 # Pluto
 mkdir -p output/pluto &&
@@ -108,10 +54,10 @@ mkdir -p output/pluto &&
     ls | grep -v pluto.zip | xargs rm
   )
 
-mc rm -r --force spaces/edm-publishing/db-pluto/latest
-mc rm -r --force spaces/edm-publishing/db-pluto/$DATE
-mc rm -r --force spaces/edm-publishing/db-pluto/$VERSION
-mc cp -r output spaces/edm-publishing/db-pluto/latest
-mc cp -r output spaces/edm-publishing/db-pluto/$DATE
-mc cp -r output spaces/edm-publishing/db-pluto/$VERSION
+wait
+Upload latest & 
+Upload $DATE &
+Upload $VERSION &
+ 
+wait
 exit 0
