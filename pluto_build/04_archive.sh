@@ -1,12 +1,5 @@
 #!/bin/sh
-if [ -f version.env ]
-then
-  export $(cat version.env | sed 's/#.*//g' | xargs)
-fi
-if [ -f .env ]
-then
-  export $(cat .env | sed 's/#.*//g' | xargs)
-fi
+source bin/config.sh
 
 echo 'Create Export'
 psql $BUILD_ENGINE -f sql/export.sql

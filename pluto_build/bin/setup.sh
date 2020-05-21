@@ -1,13 +1,10 @@
 #!/bin/bash
-if [ -f .env ]
-then
-  export $(cat .env | sed 's/#.*//g' | xargs)
-fi
 
+function setup {
 sudo apt update
 sudo apt install -y curl zip
 
-sudo tee /etc/apt/sources.list.d/pgdg.list <<END
+sudo tee /etc/apt/sources.list.d/pgdg.list << END
 deb http://apt.postgresql.org/pub/repos/apt/ bionic-pgdg main
 END
 # get the signing key and import it
@@ -23,3 +20,5 @@ curl -O https://dl.min.io/client/mc/release/linux-amd64/mc
 chmod +x mc
 sudo mv ./mc /usr/bin
 mc config host add spaces $AWS_S3_ENDPOINT $AWS_ACCESS_KEY_ID $AWS_SECRET_ACCESS_KEY --api S3v4
+}
+register 'setup' 'init' 'install all dependencies' setup
