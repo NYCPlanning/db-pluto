@@ -1,8 +1,5 @@
 #!/bin/sh
-if [ -f .env ]
-then
-  export $(cat .env | sed 's/#.*//g' | xargs)
-fi
+source bin/config.sh
 
 psql $BUILD_ENGINE -f sql/corr_create.sql
 
