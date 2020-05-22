@@ -93,6 +93,10 @@ SELECT
 INTO export_pluto
 FROM pluto;
 
+ALTER TABLE export_pluto ALTER COLUMN borough SET NOT NULL;
+ALTER TABLE export_pluto ALTER COLUMN block SET NOT NULL;
+ALTER TABLE export_pluto ALTER COLUMN lot SET NOT NULL;
+
 DROP TABLE IF EXISTS mappluto_unclipped;
 SELECT 
 	a.borough as "Borough",
