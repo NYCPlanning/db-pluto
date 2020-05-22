@@ -4,8 +4,14 @@
 
 Please note that we're still working on this repo as we optimize the build processes, update the sources for the raw data inputs, and implement better technologies.  We're excited that PLUTO users can now look under the hood and begin exploring how PLUTO is built and each of its individual fields are calculated. If you have suggestions or find any problems, please open an issue, or if you have questions please reach out to us directly.
 
-+ [PLUTO](https://edm-publishing.nyc3.digitaloceanspaces.com/db-pluto/latest/output/pluto/pluto.zip)
-+ [MapPLUTO](https://edm-publishing.nyc3.digitaloceanspaces.com/db-pluto/latest/output/mappluto/mappluto.zip)
+### Main files: 
+Type | Shapefile | FileGDB | CSV
+-- | -- | -- | --
+Clipped | [Mappluto](https://edm-publishing.nyc3.digitaloceanspaces.com/db-pluto/latest/output/mappluto/mappluto.zip) | [Mappluto.gdb](https://edm-publishing.nyc3.digitaloceanspaces.com/db-pluto/latest/output/mappluto.gdb/mappluto.gdb.zip) | NA 
+Unclipped (Water Included) | [Mappluto_unclipped](https://edm-publishing.nyc3.digitaloceanspaces.com/db-pluto/latest/output/mappluto_unclipped/mappluto_unclipped.zip) | [Mappluto_unclipped.gdb](https://edm-publishing.nyc3.digitaloceanspaces.com/db-pluto/latest/output/mappluto_unclipped.gdb/mappluto_unclipped.gdb.zip) |  NA
+No Geometry |  NA | NA  | [Pluto.csv](https://edm-publishing.nyc3.digitaloceanspaces.com/db-pluto/latest/output/pluto/pluto.zip)
+
+### Additional resources:
 + [PLUTO Corrections](https://edm-publishing.nyc3.digitaloceanspaces.com/db-pluto/latest/output/pluto_corrections.zip)
 + [Source Data Versions](https://edm-publishing.nyc3.digitaloceanspaces.com/db-pluto/latest/output/source_data_versions.csv)
 + [QAQC Portal](https://edm-data-engineering.nycplanningdigital.com/)
