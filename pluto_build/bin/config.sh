@@ -37,18 +37,23 @@ function FGDB_export {
       rm -rf $@.gdb
     )
 }
+register 'export' 'gdb' 'export pluto.gdb' FGDB_export
 
 function SHP_export {
   mkdir -p output/$@ &&
     (cd output/$@
-      pgsql2shp -u $BUILD_USER -h $BUILD_HOST -p $BUILD_PORT -P $BUILD_PWD -f $@ $BUILD_DB \
-        "SELECT * from $@"
+      docker run \
+        -v $(pwd):/data\
+        --user $UID\
+        --rm webmapp/gdal-docker:latest ogr2ogr -f "ESRI Shapefile" $@.shp \
+          PG:"host=$BUILD_HOST user=$BUILD_USER port=$BUILD_PORT dbname=$BUILD_DB password=$BUILD_PWD" \
+          -nlt MULTIPOLYGON $@
         rm -f $@.zip
-        echo "$VERSION" > version.txt
         zip $@.zip *
         ls | grep -v $@.zip | xargs rm
       )
 }
+register 'export' 'shp' 'export pluto.shp' SHP_export
 
 function CSV_export {
   psql $BUILD_ENGINE  -c "\COPY (
