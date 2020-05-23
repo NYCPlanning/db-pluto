@@ -30,7 +30,7 @@ function FGDB_export {
       --user $UID\
       --rm webmapp/gdal-docker:latest ogr2ogr -progress -f "FileGDB" $@.gdb \
         PG:"host=$BUILD_HOST user=$BUILD_USER port=$BUILD_PORT dbname=$BUILD_DB password=$BUILD_PWD" \
-        -mapFieldType Integer64=Integer\
+        -mapFieldType Integer64=Real\
         -nlt MULTIPOLYGON $@
       rm -f $@.gdb.zip
       zip -r $@.gdb.zip $@.gdb
