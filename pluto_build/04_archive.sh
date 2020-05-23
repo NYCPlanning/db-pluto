@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 source bin/config.sh
 
 echo 'Create Export'
