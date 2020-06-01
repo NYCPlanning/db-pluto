@@ -4,6 +4,7 @@
 + loading CAMA
 + loading PTS
 + updated all input sources, check [20v4 master issue](https://github.com/NYCPlanning/db-pluto/issues/156)
++ rerun to test new database
 
 ## 2020/04/21 -- Baiyue
 + Build 20v3
