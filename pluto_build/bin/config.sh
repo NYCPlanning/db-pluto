@@ -1,6 +1,4 @@
 #!/bin/bash
-source cli.sh
-
 function set_env {
   for envfile in $@
   do
