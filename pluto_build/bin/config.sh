@@ -1,4 +1,5 @@
 #!/bin/bash
+source cli.sh
 
 function set_env {
   for envfile in $@
@@ -32,6 +33,13 @@ function FGDB_export {
         PG:"host=$BUILD_HOST user=$BUILD_USER port=$BUILD_PORT dbname=$BUILD_DB password=$BUILD_PWD" \
         -mapFieldType Integer64=Real\
         -nlt MULTIPOLYGON $@
+    docker run \
+      -v $(pwd):/data\
+      --user $UID\
+      --rm webmapp/gdal-docker:latest ogr2ogr -progress -f "FileGDB" $@.gdb \
+        PG:"host=$BUILD_HOST user=$BUILD_USER port=$BUILD_PORT dbname=$BUILD_DB password=$BUILD_PWD" \
+        -mapFieldType Integer64=Real\
+        -update -nlt NONE unmapped
       rm -f $@.gdb.zip
       zip -r $@.gdb.zip $@.gdb
       rm -rf $@.gdb
@@ -62,6 +70,11 @@ function Upload {
   mc rm -r --force spaces/edm-publishing/db-pluto/$@
   mc cp -r output spaces/edm-publishing/db-pluto/$@
 }
+
+function run {
+  psql $BUILD_ENGINE -f $1
+}
+register 'run' 'sql' 'run pluto sql script' run
 
 # Set Environmental variables
 set_env .env version.env
