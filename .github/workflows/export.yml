@@ -26,10 +26,10 @@ jobs:
         shell: bash
         run: ./pluto setup init
         
-      - name: Archive and QAQC
-        shell: bash
-        working-directory: pluto_build
-        run: ./04_archive.sh
+      # - name: Archive and QAQC
+      #   shell: bash
+      #   working-directory: pluto_build
+      #   run: ./04_archive.sh
       
       - name: create shapefile
         working-directory: pluto_build
