@@ -93,218 +93,6 @@ SELECT
 INTO export_pluto
 FROM pluto;
 
-DROP TABLE IF EXISTS mappluto_unclipped;
-SELECT 
-	a.borough as "Borough",
-	a.block as "Block",
-	a.lot as "Lot",
-	a.cd as "CD",
-	a.ct2010 as "CT2010",
-	a.cb2010 as "CB2010",
-	a.schooldist as "SchoolDist",
-	a.council as "Council",
-	a.zipcode as "ZipCode",
-	a.firecomp as "FireComp",
-	a.policeprct as "PolicePrct",
-	a.healthcenterdistrict as "HealthCenterDistrict",
-	a.healtharea as "HealthArea",
-	a.sanitboro as "Sanitboro",
-	a.sanitdistrict as "SanitDistrict",
-	a.sanitsub as "SanitSub",
-	a.address as "Address",
-	a.zonedist1 as "ZoneDist1",
-	a.zonedist2 as "ZoneDist2",
-	a.zonedist3 as "ZoneDist3",
-	a.zonedist4 as "ZoneDist4",
-	a.overlay1 as "Overlay1",
-	a.overlay2 as "Overlay2",
-	a.spdist1 as "SPDist1",
-	a.spdist2 as "SPDist2",
-	a.spdist3 as "SPDist3",
-	a.ltdheight as "LtdHeight",
-	a.splitzone as "SplitZone",
-	a.bldgclass as "BldgClass",
-	a.landuse as "LandUse",
-	a.easements as "Easements",
-	a.ownertype as "OwnerType",
-	a.ownername as "OwnerName",
-	a.lotarea as "LotArea",
-	a.bldgarea as "BldgArea",
-	a.comarea as "ComArea",
-	a.resarea as "ResArea",
-	a.officearea as "OfficeArea",
-	a.retailarea as "RetailArea",
-	a.garagearea as "GarageArea",
-	a.strgearea as "StrgeArea",
-	a.factryarea as "FactryArea",
-	a.otherarea as "OtherArea",
-	a.areasource as "AreaSource",
-	a.numbldgs as "NumBldgs",
-	a.numfloors as "NumFloors",
-	a.unitsres as "UnitsRes",
-	a.unitstotal as "UnitsTotal",
-	a.lotfront as "LotFront",
-	a.lotdepth as "LotDepth",
-	a.bldgfront as "BldgFront",
-	a.bldgdepth as "BldgDepth",
-	a.ext as "Ext",
-	a.proxcode as "ProxCode",
-	a.irrlotcode as "IrrLotCode",
-	a.lottype as "LotType",
-	a.bsmtcode as "BsmtCode",
-	a.assessland as "AssessLand",
-	a.assesstot as "AssessTot",
-	a.exempttot as "ExemptTot",
-	a.yearbuilt as "YearBuilt",
-	a.yearalter1 as "YearAlter1",
-	a.yearalter2 as "YearAlter2",
-	a.histdist as "HistDist",
-	a.landmark as "Landmark",
-	a.builtfar as "BuiltFAR",
-	a.residfar as "ResidFAR",
-	a.commfar as "CommFAR",
-	a.facilfar as "FacilFAR",
-	a.borocode as "BoroCode",
-	a.bbl as "BBL",
-	a.condono as "CondoNo",
-	a.tract2010 as "Tract2010",
-	a.xcoord as "XCoord",
-	a.ycoord as "YCoord",
-	a.zonemap as "ZoneMap",
-	a.zmcode as "ZMCode",
-	a.sanborn as "Sanborn",
-	a.taxmap as "TaxMap",
-	a.edesignum as "EDesigNum",
-	a.appbbl as "APPBBL",
-	a.appdate as "APPDate",
-	a.plutomapid as "PLUTOMapID",
-	a.firm07_flag as "FIRM07_FLAG",
-	a.pfirm15_flag as "PFIRM15_FLAG",
-	a.version as "Version",
-	a.dcpedited as "DCPEdited",
-	a.latitude as "Latitude",
-	a.longitude as "Longitude",
-	a.notes as "Notes",
-	round(st_length(b.geom_2263)::numeric,11)::numeric(19,7) as "Shape_Leng",
-	round(st_area(b.geom_2263)::numeric,11)::numeric(19,7) as "Shape_Area",
-	b.geom_2263 as geom
-INTO mappluto_unclipped
-FROM export_pluto a, pluto_geom b
-WHERE b.geom_2263 IS NOT NULL
-AND a.bbl::bigint = b.bbl::bigint;
-
-ALTER TABLE mappluto_unclipped ALTER COLUMN "Borough" SET NOT NULL;
-ALTER TABLE mappluto_unclipped ALTER COLUMN "Block" SET NOT NULL;
-ALTER TABLE mappluto_unclipped ALTER COLUMN "Lot" SET NOT NULL;
-ALTER TABLE mappluto_unclipped ALTER COLUMN "BBL" SET NOT NULL;
-ALTER TABLE mappluto_unclipped ALTER COLUMN "BoroCode" SET NOT NULL;
-
-DROP TABLE IF EXISTS mappluto;
-SELECT
-	a.borough as "Borough",
-	a.block as "Block",
-	a.lot as "Lot",
-	a.cd as "CD",
-	a.ct2010 as "CT2010",
-	a.cb2010 as "CB2010",
-	a.schooldist as "SchoolDist",
-	a.council as "Council",
-	a.zipcode as "ZipCode",
-	a.firecomp as "FireComp",
-	a.policeprct as "PolicePrct",
-	a.healthcenterdistrict as "HealthCenterDistrict",
-	a.healtharea as "HealthArea",
-	a.sanitboro as "Sanitboro",
-	a.sanitdistrict as "SanitDistrict",
-	a.sanitsub as "SanitSub",
-	a.address as "Address",
-	a.zonedist1 as "ZoneDist1",
-	a.zonedist2 as "ZoneDist2",
-	a.zonedist3 as "ZoneDist3",
-	a.zonedist4 as "ZoneDist4",
-	a.overlay1 as "Overlay1",
-	a.overlay2 as "Overlay2",
-	a.spdist1 as "SPDist1",
-	a.spdist2 as "SPDist2",
-	a.spdist3 as "SPDist3",
-	a.ltdheight as "LtdHeight",
-	a.splitzone as "SplitZone",
-	a.bldgclass as "BldgClass",
-	a.landuse as "LandUse",
-	a.easements as "Easements",
-	a.ownertype as "OwnerType",
-	a.ownername as "OwnerName",
-	a.lotarea as "LotArea",
-	a.bldgarea as "BldgArea",
-	a.comarea as "ComArea",
-	a.resarea as "ResArea",
-	a.officearea as "OfficeArea",
-	a.retailarea as "RetailArea",
-	a.garagearea as "GarageArea",
-	a.strgearea as "StrgeArea",
-	a.factryarea as "FactryArea",
-	a.otherarea as "OtherArea",
-	a.areasource as "AreaSource",
-	a.numbldgs as "NumBldgs",
-	a.numfloors as "NumFloors",
-	a.unitsres as "UnitsRes",
-	a.unitstotal as "UnitsTotal",
-	a.lotfront as "LotFront",
-	a.lotdepth as "LotDepth",
-	a.bldgfront as "BldgFront",
-	a.bldgdepth as "BldgDepth",
-	a.ext as "Ext",
-	a.proxcode as "ProxCode",
-	a.irrlotcode as "IrrLotCode",
-	a.lottype as "LotType",
-	a.bsmtcode as "BsmtCode",
-	a.assessland as "AssessLand",
-	a.assesstot as "AssessTot",
-	a.exempttot as "ExemptTot",
-	a.yearbuilt as "YearBuilt",
-	a.yearalter1 as "YearAlter1",
-	a.yearalter2 as "YearAlter2",
-	a.histdist as "HistDist",
-	a.landmark as "Landmark",
-	a.builtfar as "BuiltFAR",
-	a.residfar as "ResidFAR",
-	a.commfar as "CommFAR",
-	a.facilfar as "FacilFAR",
-	a.borocode as "BoroCode",
-	a.bbl as "BBL",
-	a.condono as "CondoNo",
-	a.tract2010 as "Tract2010",
-	a.xcoord as "XCoord",
-	a.ycoord as "YCoord",
-	a.zonemap as "ZoneMap",
-	a.zmcode as "ZMCode",
-	a.sanborn as "Sanborn",
-	a.taxmap as "TaxMap",
-	a.edesignum as "EDesigNum",
-	a.appbbl as "APPBBL",
-	a.appdate as "APPDate",
-	a.plutomapid as "PLUTOMapID",
-	a.firm07_flag as "FIRM07_FLAG",
-	a.pfirm15_flag as "PFIRM15_FLAG",
-	a.version as "Version",
-	a.dcpedited as "DCPEdited",
-	a.latitude as "Latitude",
-	a.longitude as "Longitude",
-	a.notes as "Notes",
-	round(st_length(b.clipped_2263)::numeric,11)::numeric(19,7) as "Shape_Leng",
-	round(st_area(b.clipped_2263)::numeric,11)::numeric(19,7) as "Shape_Area",
-	st_makevalid(b.clipped_2263) as geom
-INTO mappluto
-FROM export_pluto a, pluto_geom b
-WHERE b.clipped_2263 IS NOT NULL
-AND a.bbl::bigint = b.bbl::bigint;
-
-ALTER TABLE mappluto ALTER COLUMN "Borough" SET NOT NULL;
-ALTER TABLE mappluto ALTER COLUMN "Block" SET NOT NULL;
-ALTER TABLE mappluto ALTER COLUMN "Lot" SET NOT NULL;
-ALTER TABLE mappluto ALTER COLUMN "BBL" SET NOT NULL;
-ALTER TABLE mappluto ALTER COLUMN "BoroCode" SET NOT NULL;
-
 DROP TABLE IF EXISTS archive_pluto;
 SELECT a.*, b.clipped_4326 as geom
 INTO archive_pluto
@@ -316,17 +104,17 @@ DROP TABLE IF EXISTS unmapped;
 SELECT
 	a.borough as "Borough",
 	a.block as "Block",
-	a.lot as "Lot",
-	a.cd as "CD",
+	a.lot::smallint as "Lot",
+	a.cd::smallint as "CD",
 	a.ct2010 as "CT2010",
 	a.cb2010 as "CB2010",
 	a.schooldist as "SchoolDist",
-	a.council as "Council",
+	a.council::smallint as "Council",
 	a.zipcode as "ZipCode",
 	a.firecomp as "FireComp",
-	a.policeprct as "PolicePrct",
-	a.healthcenterdistrict as "HealthCenterDistrict",
-	a.healtharea as "HealthArea",
+	a.policeprct::smallint as "PolicePrct",
+	a.healthcenterdistrict::smallint as "HealthCenterDistrict",
+	a.healtharea::smallint as "HealthArea",
 	a.sanitboro as "Sanitboro",
 	a.sanitdistrict as "SanitDistrict",
 	a.sanitsub as "SanitSub",
@@ -344,7 +132,7 @@ SELECT
 	a.splitzone as "SplitZone",
 	a.bldgclass as "BldgClass",
 	a.landuse as "LandUse",
-	a.easements as "Easements",
+	a.easements::smallint as "Easements",
 	a.ownertype as "OwnerType",
 	a.ownername as "OwnerName",
 	a.lotarea as "LotArea",
@@ -374,9 +162,9 @@ SELECT
 	a.assessland as "AssessLand",
 	a.assesstot as "AssessTot",
 	a.exempttot as "ExemptTot",
-	a.yearbuilt as "YearBuilt",
-	a.yearalter1 as "YearAlter1",
-	a.yearalter2 as "YearAlter2",
+	a.yearbuilt::smallint as "YearBuilt",
+	a.yearalter1::smallint as "YearAlter1",
+	a.yearalter2::smallint as "YearAlter2",
 	a.histdist as "HistDist",
 	a.landmark as "Landmark",
 	a.builtfar as "BuiltFAR",
@@ -410,17 +198,9 @@ WHERE bbl::bigint in (
 	select bbl::bigint 
 	from pluto 
 	where geom is null);
+
 ALTER TABLE unmapped ALTER COLUMN "Borough" SET NOT NULL;
 ALTER TABLE unmapped ALTER COLUMN "Block" SET NOT NULL;
 ALTER TABLE unmapped ALTER COLUMN "Lot" SET NOT NULL;
 ALTER TABLE unmapped ALTER COLUMN "BBL" SET NOT NULL;
 ALTER TABLE unmapped ALTER COLUMN "BoroCode" SET NOT NULL;
-
-
-DROP TABLE IF EXISTS mappluto_sample;
-SELECT * INTO mappluto_sample FROM mappluto limit 5;
-ALTER TABLE mappluto_sample ALTER COLUMN "Borough" SET NOT NULL;
-ALTER TABLE mappluto_sample ALTER COLUMN "Block" SET NOT NULL;
-ALTER TABLE mappluto_sample ALTER COLUMN "Lot" SET NOT NULL;
-ALTER TABLE mappluto_sample ALTER COLUMN "BBL" SET NOT NULL;
-ALTER TABLE mappluto_sample ALTER COLUMN "BoroCode" SET NOT NULL;
