@@ -16,13 +16,14 @@ mkdir -p output &&
 SHP_export mappluto &
 
 # mappluto_unclipped
-SHP_export mappluto_unclipped &
+SHP_export mappluto_unclipped
 
+wait
 # mappluto.gdb
-FGDB_export mappluto &
+FGDB_export mappluto
 
 # mappluto_unclipped.gdb
-FGDB_export mappluto_unclipped &
+FGDB_export mappluto_unclipped
 
 # Pluto
 mkdir -p output/pluto &&
