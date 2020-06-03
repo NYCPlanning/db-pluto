@@ -29,6 +29,8 @@ function FGDB_export {
     docker run \
       -v $(pwd):/data\
       --user $UID\
+      -m 4g\
+      --memory-swap -1\
       --rm webmapp/gdal-docker:latest ogr2ogr -progress -f "FileGDB" $@.gdb \
         PG:"host=$BUILD_HOST user=$BUILD_USER port=$BUILD_PORT dbname=$BUILD_DB password=$BUILD_PWD" \
         -geomfield geom\
