@@ -12,18 +12,17 @@ mkdir -p output &&
     CSV_export source_data_versions
   )
 
-# mappluto
-SHP_export mappluto &
-
-# mappluto_unclipped
-SHP_export mappluto_unclipped
-
-wait
 # mappluto.gdb
 FGDB_export mappluto
 
 # mappluto_unclipped.gdb
 FGDB_export mappluto_unclipped
+
+# mappluto
+# SHP_export mappluto &
+
+# mappluto_unclipped
+# SHP_export mappluto_unclipped &
 
 # Pluto
 mkdir -p output/pluto &&
