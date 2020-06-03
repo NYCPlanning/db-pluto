@@ -45,21 +45,21 @@ SELECT
 	otherarea::numeric(10,0),
 	areasource::varchar(1),
 	numbldgs::numeric(10,0),
-	numfloors::numeric(19,9),
+	numfloors::numeric(19,7),
 	unitsres::numeric(10,0),
 	unitstotal::numeric(10,0),
-	lotfront::numeric(19,9),
-	lotdepth::numeric(19,9),
-	bldgfront::numeric(19,9),
-	bldgdepth::numeric(19,9),
+	lotfront::numeric(19,7),
+	lotdepth::numeric(19,7),
+	bldgfront::numeric(19,7),
+	bldgdepth::numeric(19,7),
 	ext::varchar(2),
 	proxcode::varchar(1),
 	irrlotcode::varchar(1),
 	lottype::varchar(1),
 	bsmtcode::varchar(1),
-	assessland::numeric(19,9),
-	assesstot::numeric(19,9),
-	exempttot::numeric(19,9),
+	assessland::numeric(19,5),
+	assesstot::numeric(19,5),
+	exempttot::numeric(19,5),
 	yearbuilt::numeric(5,0),
 	yearalter1::numeric(5,0),
 	yearalter2::numeric(5,0),
@@ -87,8 +87,8 @@ SELECT
 	PFIRM15_FLAG::varchar(1),
 	Version::varchar(6),
 	DCPEdited::varchar(3),
-	latitude::numeric(19,9),
-	Longitude::numeric(19,9),
+	latitude::numeric(19,7),
+	Longitude::numeric(19,7),
 	Notes::varchar(20)
 INTO export_pluto
 FROM pluto;
@@ -185,8 +185,8 @@ SELECT
 	a.latitude as "Latitude",
 	a.longitude as "Longitude",
 	a.notes as "Notes",
-	round(st_length(b.geom_2263)::numeric,11)::numeric(19,9) as "Shape_Leng",
-	round(st_area(b.geom_2263)::numeric,11)::numeric(19,9) as "Shape_Area",
+	round(st_length(b.geom_2263)::numeric,11)::numeric(19,7) as "Shape_Leng",
+	round(st_area(b.geom_2263)::numeric,11)::numeric(19,7) as "Shape_Area",
 	b.geom_2263 as geom
 INTO mappluto_unclipped
 FROM export_pluto a, pluto_geom b
@@ -291,8 +291,8 @@ SELECT
 	a.latitude as "Latitude",
 	a.longitude as "Longitude",
 	a.notes as "Notes",
-	round(st_length(b.clipped_2263)::numeric,11)::numeric(19,9) as "Shape_Leng",
-	round(st_area(b.clipped_2263)::numeric,11)::numeric(19,9) as "Shape_Area",
+	round(st_length(b.clipped_2263)::numeric,11)::numeric(19,7) as "Shape_Leng",
+	round(st_area(b.clipped_2263)::numeric,11)::numeric(19,7) as "Shape_Area",
 	st_makevalid(b.clipped_2263) as geom
 INTO mappluto
 FROM export_pluto a, pluto_geom b
