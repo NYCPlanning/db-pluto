@@ -9,8 +9,12 @@ mkdir -p output &&
     CSV_export pluto_removed_records
     zip pluto_corrections.zip *
     ls | grep -v pluto_corrections.zip | xargs rm
+  )
+
+mkdir -p output &&
+  (cd output
     CSV_export source_data_versions
-  ) &
+  )
 
 # mappluto.gdb
 FGDB_export mappluto_gdb &
