@@ -1,5 +1,8 @@
 # Build Logs
 
+## 2020/06/10 -- Baiyue
++ Error found in zoning features, rerun
+
 ## 2020/05/20 -- Baiyue
 + loading CAMA
 + loading PTS
