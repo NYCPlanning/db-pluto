@@ -41,6 +41,19 @@ mkdir -p output/pluto &&
     ls | grep -v pluto.zip | xargs rm
   )
 
+# BBL and Council info for DOF
+mkdir -p output/dof && 
+  (cd output/dof
+    rm -f bbl_council.zip
+    psql $BUILD_ENGINE -c "\COPY ( 
+          SELECT bbl, council FROM export_pluto
+          WHERE bbl is not null
+        ) TO STDOUT DELIMITER ',' CSV HEADER;" > bbl_council.csv
+    echo "$VERSION" > version.txt
+    zip bbl_council.zip *
+    ls | grep -v bbl_council.zip | xargs rm
+  )
+
 wait
 Upload latest & 
 Upload $DATE &
