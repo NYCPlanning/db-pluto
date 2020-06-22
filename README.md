@@ -12,6 +12,7 @@ Unclipped (Water Included) | [Mappluto_unclipped](https://edm-publishing.nyc3.di
 No Geometry |  NA | NA  | [Pluto.csv](https://edm-publishing.nyc3.digitaloceanspaces.com/db-pluto/latest/output/pluto/pluto.zip)
 
 ### Additional resources:
++ [DOF BBL Council export](https://edm-publishing.nyc3.digitaloceanspaces.com/db-pluto/latest/output/dof/bbl_council.zip)
 + [PLUTO Corrections](https://edm-publishing.nyc3.digitaloceanspaces.com/db-pluto/latest/output/pluto_corrections.zip)
 + [Source Data Versions](https://edm-publishing.nyc3.digitaloceanspaces.com/db-pluto/latest/output/source_data_versions.csv)
 + [QAQC Portal](https://edm-data-engineering.nycplanningdigital.com/)
