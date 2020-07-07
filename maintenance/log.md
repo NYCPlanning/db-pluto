@@ -2,7 +2,8 @@
 
 ## 2020/07/07 -- Baiyue
 + Loading PTS and CAMA
-+ using PropMast_ORE_T2021_FINAL.gz
++ ~~using PropMast_ORE_T2021_FINAL.gz~~ using the normal PTS_propmast.gz published on July 4th
++ running [numbldgs]
 
 ## 2020/06/10 -- Baiyue
 + Error found in zoning features, rerun
