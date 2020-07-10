@@ -63,6 +63,11 @@ echo 'Create base DTM'
 psql $BUILD_ENGINE -f sql/dedupecondotable.sql
 psql $BUILD_ENGINE -f sql/dtmmergepolygons.sql
 psql $BUILD_ENGINE -f sql/plutogeoms.sql
+
+echo 'Adding in geometries that are in the DTM but not in RPAD'
+psql $BUILD_ENGINE -f sql/dtmgeoms.sql
+psql $BUILD_ENGINE -c "VACUUM ANALYZE pluto;"
+
 psql $BUILD_ENGINE -f sql/spatialindex.sql
 psql $BUILD_ENGINE -c "VACUUM ANALYZE pluto;"
 
@@ -90,15 +95,10 @@ psql $BUILD_ENGINE -f sql/bldgclass.sql
 psql $BUILD_ENGINE -f sql/landuse.sql
 psql $BUILD_ENGINE -c "VACUUM ANALYZE pluto;"
 
-echo 'Adding in geometries that are in the DTM but not in RPAD'
-psql $BUILD_ENGINE -f sql/dtmgeoms.sql
-psql $BUILD_ENGINE -c "VACUUM ANALYZE pluto;"
-
 echo 'Flagging tax lots within the FEMA floodplain'
 psql $BUILD_ENGINE -f sql/latlong.sql
 psql $BUILD_ENGINE -f sql/flood_flag.sql
 psql $BUILD_ENGINE -c "VACUUM ANALYZE pluto;"
-
 
 echo 'Assigning political values with spatial join'
 psql $BUILD_ENGINE -f sql/spatialjoins.sql
