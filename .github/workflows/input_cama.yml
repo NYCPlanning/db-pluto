@@ -1,16 +1,12 @@
 name: CAMA Processing
 
-on: [push]
+on:
+  issues:
+    types: [opened, edited]
 
 jobs:
-  skip:
-    name: Build and test
-    runs-on: self-hosted
-    if: "contains(github.event.head_commit.message, '[cama]')"
-    steps:
-      - run: echo "${{ github.event.head_commit.message }}"
   process_cama:
-    needs: skip
+    if: contains(github.event.issue.title, '[cama]')
     container:
       image: nycplanning/docker-geosupport:latest
     runs-on: self-hosted
@@ -19,6 +15,7 @@ jobs:
       MINIO_S3_ENDPOINT: ${{ secrets.MINIO_S3_ENDPOINT }}
       MINIO_ACCESS_KEY_ID: ${{ secrets.MINIO_ACCESS_KEY_ID }}
       MINIO_SECRET_ACCESS_KEY: ${{ secrets.MINIO_SECRET_ACCESS_KEY }}
+
     steps:
       - uses: actions/checkout@v2
       - name: install minio ..
@@ -29,6 +26,7 @@ jobs:
           mc config host add minio $MINIO_S3_ENDPOINT $MINIO_ACCESS_KEY_ID $MINIO_SECRET_ACCESS_KEY --api S3v4
           apt update
           apt install -y postgresql-client-common postgresql-client
+
       - name: process CAMA
         shell: bash
         run: |
@@ -60,3 +58,16 @@ jobs:
               psql $RECIPE_ENGINE -c "DROP VIEW IF EXISTS $TABLE_NAME.latest;"
               psql $RECIPE_ENGINE -c "CREATE VIEW $TABLE_NAME.latest as (SELECT '$DATE' as v, * FROM $TABLE_NAME.\"$DATE\")";
             )
+                        
+      - name: Comment on Issue and Close Issue
+        if: success()
+        uses: peter-evans/close-issue@v1
+        with:
+          issue-number: ${{ github.event.issue.number }}
+          body: |
+            ## ${{ github.event.issue.title }} Is Successfully Updated! 🎉
+            
+            ### More Info
+            for more details, check https://github.com/NYCPlanning/db-pluto/actions/runs/${{ github.run_id }}
+          
+          reactions: laugh, rocket, hooray
