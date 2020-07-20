@@ -1,16 +1,12 @@
 name: NumBldgs processing
 
-on: [push]
+on:
+  issues:
+    types: [opened, edited]
 
 jobs:
-  skip:
-    name: Build and test
-    runs-on: ubuntu-latest
-    if: "contains(github.event.head_commit.message, '[numbldgs]')"
-    steps:
-      - run: echo "${{ github.event.head_commit.message }}"
   process_numbldgs:
-    needs: skip
+    if: contains(github.event.issue.title, '[numbldgs]')
     container:
       image: nycplanning/docker-geosupport:latest
     runs-on: self-hosted
@@ -18,6 +14,20 @@ jobs:
       RECIPE_ENGINE: ${{ secrets.RECIPE_ENGINE }}
     steps:
       - uses: actions/checkout@v2
+
       - name: get numbldgs
         working-directory: pluto_build/python
         run: python3 numbldgs.py
+
+      - name: Comment on Issue and Close Issue
+        if: success()
+        uses: peter-evans/close-issue@v1
+        with:
+          issue-number: ${{ github.event.issue.number }}
+          body: |
+            ## ${{ github.event.issue.title }} Is Successfully Updated! 🎉
+            
+            ### More Info
+            for more details, check https://github.com/NYCPlanning/db-pluto/actions/runs/${{ github.run_id }}
+          
+          reactions: laugh, rocket, hooray
