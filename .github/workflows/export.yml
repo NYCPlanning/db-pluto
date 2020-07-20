@@ -1,16 +1,13 @@
 name: Export
 
-on: [push]
+on:
+  push:
+  issues:
+    types: [opened, edited]
 
 jobs:
-  skip:
-    name: Should I skip?
-    runs-on: ubuntu-latest
-    if: "contains(github.event.head_commit.message, '[export]')"
-    steps:
-      - run: echo "not skipping! ${{ github.event.head_commit.message }}"
-  build:
-    needs: skip
+  Export:
+    if: contains(github.event.issue.title, '[cama]') && github.event.issue.author_association == 'MEMBER'
     runs-on: self-hosted
     env:
       RECIPE_ENGINE: ${{ secrets.RECIPE_ENGINE }}
@@ -35,3 +32,16 @@ jobs:
         working-directory: pluto_build
         shell: bash
         run: ./05_export.sh
+      
+      - name: Comment on Issue and Close Issue
+        if: success()
+        uses: peter-evans/close-issue@v1
+        with:
+          issue-number: ${{ github.event.issue.number }}
+          body: |
+            ## ${{ github.event.issue.title }} Is Successfully Updated! 🎉
+            
+            ### More Info
+            for more details, check https://github.com/NYCPlanning/db-pluto/actions/runs/${{ github.run_id }}
+          
+          reactions: laugh, rocket, hooray
