@@ -66,3 +66,16 @@ jobs:
       - name: geocode pts
         working-directory: pluto_build/python
         run: python3 geocode.py
+
+      - name: Comment on Issue and Close Issue
+        if: success()
+        uses: peter-evans/close-issue@v1
+        with:
+          issue-number: ${{ github.event.issue.number }}
+          body: |
+            ## ${{ github.event.issue.title }} Is Successfully Updated! 🎉
+            
+            ### More Info
+            for more details, check https://github.com/NYCPlanning/db-pluto/actions/runs/${{ github.run_id }}
+          
+          reactions: laugh, rocket, hooray
