@@ -1,16 +1,11 @@
 name: PTS processing
-
-on: [push]
+on:
+  issues:
+    types: [opened, edited]
 
 jobs:
-  skip:
-    name: Build and test
-    runs-on: ubuntu-latest
-    if: "contains(github.event.head_commit.message, '[pts]')"
-    steps:
-      - run: echo "${{ github.event.head_commit.message }}"
   process_pts:
-    needs: skip
+    if: contains(github.event.issue.title, '[pts]')
     container:
       image: nycplanning/docker-geosupport:latest
     runs-on: self-hosted
@@ -29,6 +24,7 @@ jobs:
           mc config host add minio $MINIO_S3_ENDPOINT $MINIO_ACCESS_KEY_ID $MINIO_SECRET_ACCESS_KEY --api S3v4
           apt update
           apt install -y postgresql-client-common postgresql-client
+
       - name: process pts
         shell: bash
         run: |
@@ -66,6 +62,7 @@ jobs:
               psql $RECIPE_ENGINE -c "DROP VIEW IF EXISTS $TABLE_NAME.latest;"
               psql $RECIPE_ENGINE -c "CREATE VIEW $TABLE_NAME.latest as (SELECT '$DATE' as v, * FROM $TABLE_NAME.\"$DATE\")";
             )
+          
       - name: geocode pts
         working-directory: pluto_build/python
         run: python3 geocode.py
