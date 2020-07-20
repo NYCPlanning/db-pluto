@@ -6,7 +6,7 @@ on:
 
 jobs:
   process_cama:
-    if: contains(github.event.issue.title, '[cama]')
+    if: contains(github.event.issue.title, '[cama]') && github.event.issue.author_association == 'MEMBER'
     container:
       image: nycplanning/docker-geosupport:latest
     runs-on: self-hosted

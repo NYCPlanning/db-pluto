@@ -6,7 +6,7 @@ on:
 
 jobs:
   process_numbldgs:
-    if: contains(github.event.issue.title, '[numbldgs]')
+    if: contains(github.event.issue.title, '[numbldgs]') && github.event.issue.author_association == 'MEMBER'
     container:
       image: nycplanning/docker-geosupport:latest
     runs-on: self-hosted
