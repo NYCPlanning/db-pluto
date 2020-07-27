@@ -24,8 +24,7 @@ WHERE a.bbl = b.billingbbl
 AND c.billingbbl = a.bbl;
 
 -- set building class for condo lots where there are multiple building class values
-DROP TABLE IF EXISTS bblsbldgclasslookup;
-CREATE TABLE bblsbldgclasslookup AS (
+CREATE TEMP TABLE bblsbldgclasslookup AS (
 WITH bldgclass AS (
   SELECT DISTINCT billingbbl,bldgcl, ROW_NUMBER()
       OVER (PARTITION BY billingbbl
@@ -51,8 +50,7 @@ SELECT DISTINCT billingbbl, type
 FROM bldgclassmed
 ORDER BY billingbbl,type);
 
-DROP TABLE IF EXISTS bblsbldgclass;
-CREATE TABLE bblsbldgclass AS(
+CREATE TEMP TABLE bblsbldgclass AS(
 SELECT billingbbl, string_agg(type, ', ') as type
 FROM bblsbldgclasslookup
 GROUP BY billingbbl);
@@ -87,8 +85,6 @@ SET bldgclass = 'RZ'
 FROM bblsbldgclass b
 WHERE a.bbl = b.billingbbl
 AND type = 'Ind, Res';
-DROP TABLE IF EXISTS bblsbldgclasslookup;
-DROP TABLE IF EXISTS bblsbldgclass;
 
 -- set the building class to Q0 
 -- where the zoning district is park and the building class is null or vacant
@@ -101,68 +97,70 @@ AND (bldgclass IS NULL OR bldgclass LIKE 'V%');
 -- where the building class is null or vacant
 -- and more than 10% of the lot is covered by a greenthumb garden
 -- or more than 25% of the garden is in a lot
-DROP TABLE IF EXISTS bblsbldgclasslookupgardens;
-CREATE TABLE bblsbldgclasslookupgardens 
+WITH
 gardenlayper AS (
-SELECT p.bbl, 
-  (ST_Area(CASE 
-    WHEN ST_CoveredBy(p.geom, n.geom) 
-    THEN p.geom 
-    ELSE 
-    ST_Multi(
-      ST_Intersection(p.geom,n.geom)
-      ) 
-    END)) as segbblgeom,
-  ST_Area(p.geom) as allbblgeom,
-  (ST_Area(CASE 
-    WHEN ST_CoveredBy(n.geom, p.geom) 
-    THEN n.geom 
-    ELSE 
-    ST_Multi(
-      ST_Intersection(n.geom,p.geom)
-      ) 
-    END)) as segzonegeom,
-  ST_Area(n.geom) as allzonegeom
- FROM pluto AS p 
-   INNER JOIN dpr_greenthumb AS n 
-    ON ST_Intersects(p.geom, n.geom)
-WHERE p.bldgclass LIKE 'V%' OR p.bldgclass IS NULL),
-SELECT bbl, segbblgeom, 
-  (segbblgeom/allbblgeom)*100 as perbblgeom, 
-  (segzonegeom/allzonegeom)*100 as pergardengeom
-FROM gardenlayper;
-
+  SELECT
+    p.bbl, 
+    (
+      ST_Area(
+        CASE WHEN ST_CoveredBy(p.geom, n.geom) 
+          THEN p.geom 
+          ELSE ST_Multi(ST_Intersection(p.geom,n.geom)) 
+        END
+      )
+    ) as segbblgeom,
+    ST_Area(p.geom) as allbblgeom,
+    (
+      ST_Area(
+        CASE WHEN ST_CoveredBy(n.geom, p.geom) 
+          THEN n.geom 
+          ELSE ST_Multi(ST_Intersection(n.geom,p.geom)) 
+        END
+      )
+    ) as segzonegeom,
+    ST_Area(n.geom) as allzonegeom
+  FROM pluto AS p 
+  INNER JOIN dpr_greenthumb AS n 
+  ON ST_Intersects(p.geom, n.geom)
+  WHERE p.bldgclass LIKE 'V%' OR p.bldgclass IS NULL
+),
+bblsbldgclasslookupgardens as (
+  SELECT 
+    bbl, 
+    segbblgeom, 
+    (segbblgeom/allbblgeom)*100 as perbblgeom, 
+    (segzonegeom/allzonegeom)*100 as pergardengeom
+  FROM gardenlayper
+)
 UPDATE pluto a
 SET bldgclass = 'QG'
 FROM bblsbldgclasslookupgardens b
 WHERE a.bbl = b.bbl
 AND (perbblgeom >= 10 
-OR pergardengeom >= 25)
-);
+OR pergardengeom >= 25);
 
 -- update Z7 values
-DROP TABLE IF EXISTS bblsbldgclasslookup;
-CREATE TABLE bblsbldgclasslookup AS (
-WITH z7s AS (
+WITH 
+z7s AS (
   SELECT bbl FROM pluto
-  WHERE bldgclass = 'Z7'),
+  WHERE bldgclass = 'Z7'
+),
 bldgclass AS (
-    SELECT DISTINCT bbl ,bldgcl, ROW_NUMBER()
-    OVER (PARTITION BY bbl
-        ORDER BY bldgcl) AS row_number 
-      FROM (
-            SELECT DISTINCT a.boro||a.tb||a.tl AS bbl,a.bldgcl 
-            FROM pluto_rpad_geo a
-            RIGHT JOIN z7s b
-            ON b.bbl = a.boro||a.tb||a.tl) x )
-SELECT bbl, bldgcl
-FROM bldgclass 
-WHERE row_number = 1);
-
+  SELECT DISTINCT bbl ,bldgcl, ROW_NUMBER()
+  OVER (PARTITION BY bbl ORDER BY bldgcl) AS row_number 
+  FROM (
+          SELECT DISTINCT a.boro||a.tb||a.tl AS bbl,a.bldgcl 
+          FROM pluto_rpad_geo a
+          RIGHT JOIN z7s b
+          ON b.bbl = a.boro||a.tb||a.tl) x 
+),
+bblsbldgclasslookup as (
+  SELECT bbl, bldgcl
+  FROM bldgclass 
+  WHERE row_number = 1
+) 
 UPDATE pluto a
 SET bldgclass = b.bldgcl
 FROM bblsbldgclasslookup b
 WHERE a.bbl = b.bbl
 AND a.bldgclass = 'Z7';
-
-DROP TABLE IF EXISTS bblsbldgclasslookup;
