@@ -37,6 +37,8 @@ CREATE TABLE source_data_versions as(
     union
         (SELECT 'dcp_mappluto' as schema_name, v from dcp_mappluto limit 1)
     union
+         (SELECT 'dpr_greenthumb' as schema_name, v from dpr_greenthumb limit 1)
+    union
         (SELECT 'dcp_zoning_maxfar' as schema_name, v from dcp_zoning_maxfar limit 1)
     union
         (SELECT 'pluto_input_bsmtcode' as schema_name, v from pluto_input_bsmtcode limit 1)

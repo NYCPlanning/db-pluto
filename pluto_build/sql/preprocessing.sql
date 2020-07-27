@@ -14,6 +14,7 @@ ALTER TABLE dcp_policeprecincts RENAME wkb_geometry to geom;
 ALTER TABLE dcp_healthareas RENAME wkb_geometry to geom;
 ALTER TABLE dcp_healthcenters RENAME wkb_geometry to geom;
 ALTER TABLE dsny_frequencies RENAME wkb_geometry to geom;
+ALTER TABLE dpr_greenthumb RENAME wkb_geometry to geom;
 ALTER TABLE dcp_zoning_maxfar RENAME wkb_geometry to geom;
 ALTER TABLE pluto_input_bsmtcode RENAME wkb_geometry to geom;
 ALTER TABLE pluto_input_landuse_bldgclass RENAME wkb_geometry to geom;
