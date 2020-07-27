@@ -32,6 +32,7 @@ if __name__ == "__main__":
         "dsny_frequencies",
         "dcp_pluto",
         "dcp_mappluto",
+        "dpr_greenthumb",
         # Other_datasets - PULLING FROM FTP or PLUTO GitHub repo
         "dcp_zoning_maxfar",
         "pluto_input_bsmtcode",

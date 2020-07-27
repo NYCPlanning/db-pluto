@@ -97,6 +97,49 @@ SET bldgclass = 'Q0'
 WHERE zonedist1 = 'PARK'
 AND (bldgclass IS NULL OR bldgclass LIKE 'V%');
 
+-- set the building class to QG 
+-- where the building class is null or vacant
+-- and more than 10% of the lot is covered by a greenthumb garden
+-- or more than 25% of the garden is in a lot
+DROP TABLE IF EXISTS bblsbldgclasslookupgardens;
+CREATE TABLE bblsbldgclasslookupgardens 
+gardenlayper AS (
+SELECT p.bbl, 
+  (ST_Area(CASE 
+    WHEN ST_CoveredBy(p.geom, n.geom) 
+    THEN p.geom 
+    ELSE 
+    ST_Multi(
+      ST_Intersection(p.geom,n.geom)
+      ) 
+    END)) as segbblgeom,
+  ST_Area(p.geom) as allbblgeom,
+  (ST_Area(CASE 
+    WHEN ST_CoveredBy(n.geom, p.geom) 
+    THEN n.geom 
+    ELSE 
+    ST_Multi(
+      ST_Intersection(n.geom,p.geom)
+      ) 
+    END)) as segzonegeom,
+  ST_Area(n.geom) as allzonegeom
+ FROM pluto AS p 
+   INNER JOIN dpr_greenthumb AS n 
+    ON ST_Intersects(p.geom, n.geom)
+WHERE p.bldgclass LIKE 'V%' OR p.bldgclass IS NULL),
+SELECT bbl, segbblgeom, 
+  (segbblgeom/allbblgeom)*100 as perbblgeom, 
+  (segzonegeom/allzonegeom)*100 as pergardengeom
+FROM gardenlayper;
+
+UPDATE pluto a
+SET bldgclass = 'QG'
+FROM bblsbldgclasslookupgardens b
+WHERE a.bbl = b.bbl
+AND (perbblgeom >= 10 
+OR pergardengeom >= 25)
+);
+
 -- update Z7 values
 DROP TABLE IF EXISTS bblsbldgclasslookup;
 CREATE TABLE bblsbldgclasslookup AS (

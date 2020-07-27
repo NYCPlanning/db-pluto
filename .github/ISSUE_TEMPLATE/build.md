@@ -27,6 +27,7 @@ assignees: mgraber, SPTKL
 - [ ] **dsny_frequencies** (**frequent** updates, check [here](https://data.cityofnewyork.us/City-Government/DSNY-Frequencies/gyhq-r8du))
 - [ ] **dcp_pluto** (last version of pluto, pull from bytes before new build)
 - [ ] **dcp_mappluto** (last version of pluto, pull from bytes before new build)
+- [ ] **dpr_greenthumb** (Not sure where this data set is coming from at this momment)
 > other_datasets 
 - [ ] **dcp_zoning_maxfar** (almost never updated)
 - [ ] **pluto_input_bsmtcode** (almost never updated)
