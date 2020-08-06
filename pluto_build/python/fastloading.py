@@ -13,7 +13,6 @@ def ETL(table):
 if __name__ == "__main__":
     tables = [
         "pluto_corrections",
-        "pluto_input_research",
         "dcp_edesignation",
         "dcas_facilities_colp",
         "lpc_historic_districts",
@@ -33,11 +32,7 @@ if __name__ == "__main__":
         "dcp_pluto",
         "dcp_mappluto",
         "dpr_greenthumb",
-        # Other_datasets - PULLING FROM FTP or PLUTO GitHub repo
-        "dcp_zoning_maxfar",
-        "pluto_input_bsmtcode",
-        "pluto_input_landuse_bldgclass",
-        "pluto_input_condo_bldgclass",
+        # Other_datasets - PULLING FROM FTP
         "pluto_pts",
         "pluto_input_geocodes",
         # raw CAMA data from DOF
@@ -58,9 +53,7 @@ if __name__ == "__main__":
         "dcp_zoningmapindex",
         # FEMA 2007 and preliminary 2015 100 year flood zones
         "fema_firms2007_100yr",
-        "fema_pfirms2015_100yr",
-        "pluto_input_condolot_descriptiveattributes",
-        "pluto_input_numbldgs"
+        "fema_pfirms2015_100yr"
     ]
 
     with Pool(processes=cpu_count()) as pool:
