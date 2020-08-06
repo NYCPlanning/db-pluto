@@ -29,10 +29,6 @@ assignees: mgraber, SPTKL
 - [ ] **dcp_mappluto** (last version of pluto, pull from bytes before new build)
 - [ ] **dpr_greenthumb** (Not sure where this data set is coming from at this momment)
 > other_datasets 
-- [ ] **dcp_zoning_maxfar** (almost never updated)
-- [ ] **pluto_input_bsmtcode** (almost never updated)
-- [ ] **pluto_input_landuse_bldgclass** (almost never updated)
-- [ ] **pluto_input_condo_bldgclass** (almost never updated)
 - [ ] **dof_dtm** (updated when generating Zoning tax lots, ignore)
 - [ ] **dof_shoreline** (updated when generating Zoning tax lots, ignore)
 - [ ] **dof_condo** (updated when generating Zoning tax lots, ignore)
@@ -45,10 +41,9 @@ assignees: mgraber, SPTKL
 - [ ] **dcp_zoningmapindex** (never updated, safe to ignore)
 - [ ] **fema_firms2007_100yr** (never updated, safe to ignore)
 - [ ] **fema_pfirms2015_100yr** (never updated, safe to ignore)
-- [ ] **pluto_input_condolot_descriptiveattributes** (never updated, safe to ignore)
 > computed
-- [ ] **pluto_corrections** (pulling from bytes, must update)
-- [ ] **pluto_input_research** (depends on if there's new research, must update)
+- [ ] **pluto_corrections** (pulling from bytes, must update in recipes)
+- [ ] **pluto_input_research** (just update the file in repo, no need to push to recipes)
 - [ ] **pluto_input_numbldgs** (computed when building footprints are updated, check [here](https://data.cityofnewyork.us/Housing-Development/Building-Footprints/nqwf-w8eh))
 - [ ] **pluto_pts** (pulled from SFTP)
 - [ ] **pluto_input_geocodes** (Generated with pts)
