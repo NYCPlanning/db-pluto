@@ -60,7 +60,54 @@ jobs:
               CURTAXFLAG text);"
               psql $RECIPE_ENGINE -c "\COPY $TABLE_NAME.\"$DATE\" FROM 'pluto_pts.txt' WITH NULL AS '' DELIMITER E'\t' quote '\"' CSV HEADER;"
               psql $RECIPE_ENGINE -c "DROP VIEW IF EXISTS $TABLE_NAME.latest;"
-              psql $RECIPE_ENGINE -c "CREATE VIEW $TABLE_NAME.latest as (SELECT '$DATE' as v, * FROM $TABLE_NAME.\"$DATE\")";
+              psql $RECIPE_ENGINE -c "CREATE VIEW $TABLE_NAME.latest as (
+                SELECT 
+                  '$DATE' as v,
+                  boro,
+                  block,
+                  lot,
+                  street_name,
+                  housenum_lo,
+                  housenum_hi,
+                  aptno,
+                  zip_code,
+                  bldg_class,
+                  ease,
+                  av_owner,
+                  land_area,
+                  gross_sqft,
+                  residential_area_gross,
+                  office_area_gross,
+                  retail_area_gross,
+                  garage_area,
+                  storage_area_gross,
+                  factory_area_gross,
+                  other_area_gross,
+                  num_bldgs,
+                  bld_story,
+                  coop_apts,
+                  units,
+                  lot_frt,
+                  lot_dep,
+                  bld_frt,
+                  bld_dep,
+                  bld_ext,
+                  lot_irreg,
+                  curactland,
+                  curacttot,
+                  curactextot,
+                  yrbuilt,
+                  yralt1,
+                  yralt2,
+                  condo_number,
+                  appt_boro,
+                  appt_block,
+                  appt_lot,
+                  appt_ease,
+                  appt_date,
+                  parid
+                FROM $TABLE_NAME.\"$DATE\"
+              )";
             )
           
       - name: geocode pts
