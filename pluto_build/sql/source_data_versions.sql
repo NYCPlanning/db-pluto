@@ -78,4 +78,6 @@ CREATE TABLE source_data_versions as(
         (SELECT 'fema_pfirms2015_100yr' as schema_name, v from fema_pfirms2015_100yr limit 1)
     union
         (SELECT 'pluto_input_condolot_descriptiveattributes' as schema_name, v from pluto_input_condolot_descriptiveattributes limit 1)
+    union
+        (SELECT 'doitt_buildingcentroids' as schema_name, v from pluto_input_numbldgs limit 1)
 ) a order by schema_name);
