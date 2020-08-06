@@ -3,14 +3,8 @@ name: CI
 on: [push]
 
 jobs:
-  skip:
-    name: Build and test
-    runs-on: ubuntu-latest
-    if: "contains(github.event.head_commit.message, '[build]')"
-    steps:
-      - run: echo "${{ github.event.head_commit.message }}"
   build:
-    needs: skip
+    if: "contains(github.event.head_commit.message, '[build]')"
     runs-on: self-hosted
     env:
       RECIPE_ENGINE: ${{ secrets.RECIPE_ENGINE }}
