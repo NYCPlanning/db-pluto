@@ -26308,3 +26308,4 @@ bbl,field,old_value,new_value,Type,reason,version
 5029770021,numfloors,22,2,2,numfloors correction,20v4
 5036860056,numfloors,114,2,2,numfloors correction,20v4
 5037550011,numfloors,23,2,2,numfloors correction,20v4
+1019570140,cd,110,109,2,Geosupport returns incorrect CD for boundary park -- addresses are across the street,20v5
