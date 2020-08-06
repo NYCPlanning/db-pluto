@@ -1,5 +1,4 @@
 -- change all wkb_geometry to geom
-ALTER TABLE dcp_mappluto RENAME COLUMN wkb_geometry TO geom;
 ALTER TABLE dcp_edesignation RENAME wkb_geometry to geom;
 ALTER TABLE dcas_facilities_colp RENAME wkb_geometry to geom;
 ALTER TABLE lpc_historic_districts RENAME wkb_geometry to geom;
@@ -15,10 +14,6 @@ ALTER TABLE dcp_healthareas RENAME wkb_geometry to geom;
 ALTER TABLE dcp_healthcenters RENAME wkb_geometry to geom;
 ALTER TABLE dsny_frequencies RENAME wkb_geometry to geom;
 ALTER TABLE dpr_greenthumb RENAME wkb_geometry to geom;
-ALTER TABLE dcp_zoning_maxfar RENAME wkb_geometry to geom;
-ALTER TABLE pluto_input_bsmtcode RENAME wkb_geometry to geom;
-ALTER TABLE pluto_input_landuse_bldgclass RENAME wkb_geometry to geom;
-ALTER TABLE pluto_input_condo_bldgclass RENAME wkb_geometry to geom;
 ALTER TABLE pluto_input_geocodes RENAME wkb_geometry to geom;
 ALTER TABLE dof_dtm RENAME wkb_geometry to geom;
 ALTER TABLE dof_shoreline RENAME wkb_geometry to geom;
@@ -33,16 +28,8 @@ ALTER TABLE fema_firms2007_100yr RENAME wkb_geometry to geom;
 ALTER TABLE fema_pfirms2015_100yr RENAME wkb_geometry to geom;
 ALTER TABLE doitt_zipcodeboundaries RENAME wkb_geometry to geom;
 
-ALTER TABLE pluto_input_research 
-DROP COLUMN IF EXISTS v;
-
-ALTER TABLE pluto_input_research 
-DROP COLUMN IF EXISTS ogc_fid;
-
 ALTER TABLE pluto_corrections 
-DROP COLUMN IF EXISTS v; 
-
-ALTER TABLE pluto_corrections 
+DROP COLUMN IF EXISTS v,
 DROP COLUMN IF EXISTS ogc_fid;
 
 DROP TABLE IF EXISTS pluto_input_geocodes_tmp;

@@ -69,6 +69,10 @@ function CSV_export {
   ) TO STDOUT DELIMITER ',' CSV HEADER;" > $@.csv
 }
 
+function imports_csv {
+   cat data/$1.csv | psql $BUILD_ENGINE -c "COPY $1 FROM STDIN DELIMITER ',' CSV HEADER;"
+}
+
 function Upload {
   mc rm -r --force spaces/edm-publishing/db-pluto/$@
   mc cp -r output spaces/edm-publishing/db-pluto/$@

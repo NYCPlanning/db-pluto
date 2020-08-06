@@ -117,9 +117,9 @@ psql $BUILD_ENGINE -v ON_ERROR_STOP=1 -f sql/plutomapid_1.sql
 psql $BUILD_ENGINE -v ON_ERROR_STOP=1 -f sql/plutomapid_2.sql
 psql $BUILD_ENGINE -f sql/shorelineclip.sql
 
-echo 'Backfilling'
-psql $BUILD_ENGINE -v ON_ERROR_STOP=1 -f sql/backfill.sql
-psql $BUILD_ENGINE -c "VACUUM ANALYZE pluto;"
+# echo 'Backfilling'
+# psql $BUILD_ENGINE -v ON_ERROR_STOP=1 -f sql/backfill.sql
+# psql $BUILD_ENGINE -c "VACUUM ANALYZE pluto;"
 
 echo 'Done'
 exit 0

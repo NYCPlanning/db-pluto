@@ -33,19 +33,7 @@ CREATE TABLE source_data_versions as(
     union
         (SELECT 'dsny_frequencies' as schema_name, v from dsny_frequencies limit 1)
     union
-        (SELECT 'dcp_pluto' as schema_name, v from dcp_pluto limit 1)
-    union
-        (SELECT 'dcp_mappluto' as schema_name, v from dcp_mappluto limit 1)
-    union
-         (SELECT 'dpr_greenthumb' as schema_name, v from dpr_greenthumb limit 1)
-    union
-        (SELECT 'dcp_zoning_maxfar' as schema_name, v from dcp_zoning_maxfar limit 1)
-    union
-        (SELECT 'pluto_input_bsmtcode' as schema_name, v from pluto_input_bsmtcode limit 1)
-    union
-        (SELECT 'pluto_input_landuse_bldgclass' as schema_name, v from pluto_input_landuse_bldgclass limit 1)
-    union
-        (SELECT 'pluto_input_condo_bldgclass' as schema_name, v from pluto_input_condo_bldgclass limit 1)
+        (SELECT 'dpr_greenthumb' as schema_name, v from dpr_greenthumb limit 1)
     union
         (SELECT 'pluto_pts' as schema_name, v from pluto_pts limit 1)
     union
@@ -76,8 +64,6 @@ CREATE TABLE source_data_versions as(
         (SELECT 'fema_firms2007_100yr' as schema_name, v from fema_firms2007_100yr limit 1)
     union
         (SELECT 'fema_pfirms2015_100yr' as schema_name, v from fema_pfirms2015_100yr limit 1)
-    union
-        (SELECT 'pluto_input_condolot_descriptiveattributes' as schema_name, v from pluto_input_condolot_descriptiveattributes limit 1)
     union
         (SELECT 'doitt_buildingcentroids' as schema_name, v from pluto_input_numbldgs limit 1)
 ) a order by schema_name);
