@@ -95,7 +95,7 @@ AND (bldgclass IS NULL OR bldgclass LIKE 'V%');
 
 -- set the building class to QG 
 -- where the building class is null or vacant
--- and more than 10% of the lot is covered by a greenthumb garden
+-- and more than 15% of the lot is covered by a greenthumb garden
 -- or more than 25% of the garden is in a lot
 WITH
 gardenlayper AS (
@@ -136,7 +136,7 @@ UPDATE pluto a
 SET bldgclass = 'QG'
 FROM bblsbldgclasslookupgardens b
 WHERE a.bbl = b.bbl
-AND (perbblgeom >= 10 
+AND (perbblgeom >= 15 
 OR pergardengeom >= 25);
 
 -- update Z7 values
