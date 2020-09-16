@@ -1,5 +1,8 @@
 # Build Logs
 
+## 2020/09/16 -- Molly
++ Load CAMA
+
 ## 2020/07/07 -- Baiyue
 + Loading PTS and CAMA
 + ~~using PropMast_ORE_T2021_FINAL.gz~~ using the normal PTS_propmast.gz published on July 4th
