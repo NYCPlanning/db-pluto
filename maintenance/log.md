@@ -2,6 +2,7 @@
 
 ## 2020/09/16 -- Molly
 + Load CAMA
++ Build 20v6 (without PTS update)
 
 ## 2020/07/07 -- Baiyue
 + Loading PTS and CAMA
