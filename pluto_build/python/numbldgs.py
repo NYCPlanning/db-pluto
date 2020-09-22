@@ -39,7 +39,7 @@ if __name__ == "__main__":
     ).fetchall()[0][0]
 
     with Pool(processes=cpu_count()) as pool:
-        it = pool.map(get_bbl, df.to_records("dict"), 100000)
+        it = pool.map(get_bbl, df.to_dict("records"), 100000)
 
     dff = pd.DataFrame(it)
     table_name = f'pluto_input_numbldgs."{v}"'
