@@ -5,7 +5,7 @@ on:
 
 jobs:
   process_pts:
-    if: contains(github.event.issue.title, '[pts]') && github.event.issue.author_association == 'CONTRIBUTOR'
+    if: contains(github.event.issue.title, '[pts]') && ( github.event.issue.author_association == 'CONTRIBUTOR' || github.event.issue.author_association == 'MEMBER' )
     container:
       image: nycplanning/docker-geosupport:latest
     runs-on: self-hosted
