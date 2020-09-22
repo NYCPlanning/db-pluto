@@ -1,6 +1,9 @@
 name: NumBldgs processing
 
 on:
+  push:
+    paths: 
+      - .github/workflows/input_numbldgs.yml
   issues:
     types: [opened, edited]
 
@@ -9,7 +12,7 @@ jobs:
     if: contains(github.event.issue.title, '[numbldgs]') && github.event.issue.author_association == 'CONTRIBUTOR'
     container:
       image: nycplanning/docker-geosupport:latest
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
     env:
       RECIPE_ENGINE: ${{ secrets.RECIPE_ENGINE }}
     steps:
