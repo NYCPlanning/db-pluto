@@ -13,7 +13,7 @@ sudo apt-key add ACCC4CF8.asc
 
 sudo apt update
 sudo apt install -y postgresql-client-11 gdal-bin
-sudo apt autoremove
+sudo apt autoremove -y
 rm ACCC4CF8.asc
 
 curl -O https://dl.min.io/client/mc/release/linux-amd64/mc
