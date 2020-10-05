@@ -95,7 +95,7 @@ SELECT
 	st_makevalid(b.:GEOM) as geom
 INTO :TABLE
 FROM export_pluto a, pluto_geom b
-WHERE b.:GEOM IS NOT NULL
+WHERE b.:GEOM IS NOT NULL AND NOT ST_IsEmpty(b.:GEOM)
 AND a.bbl::bigint = b.bbl::bigint;
 
 ALTER TABLE :TABLE ALTER COLUMN "Borough" SET NOT NULL;
