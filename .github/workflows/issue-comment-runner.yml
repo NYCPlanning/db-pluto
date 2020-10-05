@@ -6,7 +6,7 @@ on:
 
 jobs:
   build:
-    if: ${{ contains(github.event.issue.title, '[build]') && contains(github.event.comment.body, '[build]') && github.event.comment.author_association == 'MEMBER' }}
+    if: ${{ contains(github.event.issue.title, '[build]') && contains(github.event.comment.body, '[build]') && (github.event.comment.author == 'mgraber' || github.event.comment.author == 'SPTKL' || github.event.comment.author == 'AmandaDoyle')}}
     runs-on: self-hosted
     env:
       RECIPE_ENGINE: ${{ secrets.RECIPE_ENGINE }}
