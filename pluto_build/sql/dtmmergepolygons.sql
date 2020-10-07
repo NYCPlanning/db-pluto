@@ -22,7 +22,7 @@ GROUP BY primebbl);
 -- create merged geometries for non-condo records
 DROP TABLE IF EXISTS pluto_dtm_noncondosmerged;
 CREATE TABLE pluto_dtm_noncondosmerged AS (
-SELECT bbl, ST_Union(geom) geom
+SELECT bbl, ST_Union(ST_MakeValid(geom)) geom
 FROM pluto_dtm
 WHERE bbl IS NOT NULL
 AND primebbl IS NULL
