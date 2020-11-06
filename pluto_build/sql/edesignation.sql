@@ -13,4 +13,4 @@ WITH edesignation AS (
 UPDATE pluto a
 SET edesignum = b.enumber
 FROM edesignation b 
-WHERE a.bbl||'.00'=b.bbl::text;
+WHERE a.bbl=b.bbl::text;
