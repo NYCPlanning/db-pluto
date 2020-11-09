@@ -27,8 +27,6 @@ assignees: mgraber, SPTKL
 - [ ] **dcp_healthareas**  (updated quaterly, 19d, 20a e.g.)
 - [ ] **dcp_healthcenters**  (updated quaterly, 19d, 20a e.g.)
 - [ ] **dsny_frequencies** (**frequent** updates, check [here](https://data.cityofnewyork.us/City-Government/DSNY-Frequencies/gyhq-r8du))
-- [ ] **dcp_pluto** (last version of pluto, pull from bytes before new build)
-- [ ] **dcp_mappluto** (last version of pluto, pull from bytes before new build)
 - [ ] **dpr_greenthumb** (Not sure where this data set is coming from at this momment)
 > other_datasets 
 - [ ] **dof_dtm** (updated when generating Zoning tax lots, ignore)
