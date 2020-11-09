@@ -161,8 +161,11 @@ def parse_output(geo):
 
 if __name__ == "__main__":
     df = pd.read_sql(
-        """SELECT DISTINCT ON (boro, block, lot) boro, block, lot 
-                        from pluto_pts.latest""",
+    """
+        SELECT 
+            DISTINCT ON (boro, block, lot) boro, block, lot 
+        FROM pluto_pts.latest
+    """,
         con=engine,
     )
     # get the row number
@@ -175,13 +178,15 @@ if __name__ == "__main__":
 
     print("geocoding finished ...")
     result = pd.DataFrame(it)
+    del it
     print(result.head())
 
     table_name = f'pluto_input_geocodes."{date.today().strftime("%Y/%m/%d")}"'
     exporter(result, table_name, con=engine, sep="~", null="")
+    del result
 
     engine.execute(
-        f"""
+    f"""
         ALTER TABLE {table_name}
             ADD wkb_geometry geometry(Geometry,4326);
 
@@ -192,9 +197,17 @@ if __name__ == "__main__":
             ycoord = ST_Y(ST_TRANSFORM(wkb_geometry, 2263));
     """
     )
-    engine.execute(f"""DROP VIEW IF EXISTS pluto_input_geocodes.latest;""")
+
     engine.execute(
-        f"""CREATE VIEW pluto_input_geocodes.latest as (
-                        SELECT '{date.today().strftime("%Y/%m/%d")}' as v, * 
-                        FROM {table_name});"""
+    f"""
+        DROP VIEW IF EXISTS pluto_input_geocodes.latest;
+    """)
+    
+    engine.execute(
+    f"""
+        CREATE VIEW pluto_input_geocodes.latest as (
+            SELECT '{date.today().strftime("%Y/%m/%d")}' as v, * 
+            FROM {table_name}
+        );
+    """
     )

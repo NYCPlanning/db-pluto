@@ -28,7 +28,8 @@ def exporter(df, table_name, con, sep="~", null=""):
     df = df.replace(sep, null, regex=True)
     df.to_csv(str_buffer, sep=sep, header=True, index=False)
     str_buffer.seek(0)
-
+    del df
+    
     db_cursor.copy_expert(
         f"COPY {table_name} FROM STDIN WITH NULL AS '{null}' DELIMITER '{sep}' quote '\"' CSV HEADER",
         str_buffer,
