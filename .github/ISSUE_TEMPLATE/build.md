@@ -7,6 +7,8 @@ labels: ''
 assignees: mgraber, SPTKL
 
 ---
+# Update version name
+- [ ] https://github.com/NYCPlanning/db-pluto/blob/master/pluto_build/version.env
 
 # Data loading
 - [ ] **dcp_edesignation** (updated with zoning features)
