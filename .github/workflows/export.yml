@@ -7,7 +7,7 @@ on:
 
 jobs:
   Export:
-    if: contains(github.event.issue.title, '[cama]') && github.event.issue.author_association == 'MEMBER'
+    if: contains(github.event.issue.title, '[export]') && github.event.issue.author_association == 'MEMBER'
     runs-on: self-hosted
     env:
       RECIPE_ENGINE: ${{ secrets.RECIPE_ENGINE }}
