@@ -5,7 +5,7 @@ CREATE TABLE source_data_versions as(
     union
         (SELECT 'dcp_edesignation' as schema_name, v from dcp_edesignation limit 1)
     union
-        (SELECT 'dcas_facilities_colp' as schema_name, v from dcas_facilities_colp limit 1)
+        (SELECT 'dcp_colp' as schema_name, v from dcp_colp limit 1)
     union
         (SELECT 'lpc_historic_districts' as schema_name, v from lpc_historic_districts limit 1)
     union

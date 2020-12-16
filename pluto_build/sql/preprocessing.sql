@@ -1,6 +1,6 @@
 -- change all wkb_geometry to geom
 ALTER TABLE dcp_edesignation RENAME wkb_geometry to geom;
-ALTER TABLE dcas_facilities_colp RENAME wkb_geometry to geom;
+ALTER TABLE dcp_colp RENAME wkb_geometry to geom;
 ALTER TABLE lpc_historic_districts RENAME wkb_geometry to geom;
 ALTER TABLE lpc_landmarks RENAME wkb_geometry to geom;
 ALTER TABLE dcp_cdboundaries RENAME wkb_geometry to geom;
