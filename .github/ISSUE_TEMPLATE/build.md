@@ -27,7 +27,7 @@ assignees: mgraber, SPTKL
 - [ ] **dcp_healthareas**  (updated quaterly, 19d, 20a e.g.)
 - [ ] **dcp_healthcenters**  (updated quaterly, 19d, 20a e.g.)
 - [ ] **dsny_frequencies** (**frequent** updates, check [here](https://data.cityofnewyork.us/City-Government/DSNY-Frequencies/gyhq-r8du))
-- [ ] **dpr_greenthumb** (Not sure where this data set is coming from at this momment)
+- [ ] **dpr_greenthumb** (check [here](https://data.cityofnewyork.us/dataset/Greenthumb-Garden-Info/p78i-pat6/data))
 > other_datasets 
 - [ ] **dof_dtm** (updated when generating Zoning tax lots, ignore)
 - [ ] **dof_shoreline** (updated when generating Zoning tax lots, ignore)
