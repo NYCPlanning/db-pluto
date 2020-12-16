@@ -19,6 +19,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       RECIPE_ENGINE: ${{ secrets.RECIPE_ENGINE }}
+      API_TOKEN: ${{ secrets.API_TOKEN }}
     steps:
       - uses: actions/checkout@v2
 
