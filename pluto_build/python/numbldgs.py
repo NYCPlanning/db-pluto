@@ -3,14 +3,15 @@ from utils.exporter import exporter
 from geosupport import Geosupport, GeosupportError
 import requests
 from sqlalchemy import create_engine
-from datetime import date
+from datetime import datetime
 import pandas as pd
 import json
 import os
+import requests
+from io import StringIO
 
 g = Geosupport()
 engine = create_engine(os.getenv("RECIPE_ENGINE"))
-
 
 def get_bbl(inputs):
     BIN = inputs["bin"]
@@ -25,18 +26,20 @@ def get_bbl(inputs):
     bbl = geo["BOROUGH BLOCK LOT (BBL)"]["BOROUGH BLOCK LOT (BBL)"]
     return {"bin": BIN, "bbl": bbl}
 
+def get_bins():
+    # https://data.cityofnewyork.us/Housing-Development/Building-Footprints/nqwf-w8eh
+    url='https://data.cityofnewyork.us/resource/isce-xy3b.csv'
+    headers = {'X-App-Token':os.environ['API_TOKEN']}
+    params = {
+                '$select':'bin', 
+                '$limit':5000000000000
+            }
+    r = requests.get(f"{url}", headers=headers, params=params)
+    return pd.read_csv(StringIO(r.text), index_col=False, dtype=str)
 
 if __name__ == "__main__":
-    df = pd.read_sql(
-        f"""
-    select bin from doitt_buildingcentroids.latest
-    """,
-        engine,
-    )
-
-    v = engine.execute(
-        "select v from doitt_buildingcentroids.latest limit 1"
-    ).fetchall()[0][0]
+    df = get_bins()
+    v = datetime.today().strftime("%Y/%m/%d")
 
     with Pool(processes=cpu_count()) as pool:
         it = pool.map(get_bbl, df.to_dict("records"), 100000)
