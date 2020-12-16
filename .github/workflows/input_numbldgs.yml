@@ -16,7 +16,7 @@ jobs:
       )
     container:
       image: nycplanning/docker-geosupport:latest
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     env:
       RECIPE_ENGINE: ${{ secrets.RECIPE_ENGINE }}
       API_TOKEN: ${{ secrets.API_TOKEN }}
