@@ -15,7 +15,7 @@ if __name__ == "__main__":
         "pluto_corrections",
         "pluto_input_numbldgs",
         "dcp_edesignation",
-        "dcas_facilities_colp",
+        "dcp_colp",
         "lpc_historic_districts",
         "lpc_landmarks",
 
