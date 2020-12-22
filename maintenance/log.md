@@ -1,5 +1,8 @@
 # Build Logs
 
+## 2020/12/22 -- Molly
++ Loading PTS and CAMA
+
 ## 2020/09/16 -- Molly
 + Load CAMA
 + Build 20v6 (without PTS update)
