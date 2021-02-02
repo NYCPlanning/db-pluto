@@ -80,6 +80,11 @@ SET BORO = b.boro,
 	BDFT = REPLACE(bld_dep, '+', '')::double precision,
 	EXT = bld_ext,
 	IRREG = lot_irreg,
+	-- current values contain the most up to date public values.  
+	-- June to January current values have the Final value from the prior year.
+	-- January to May current values contain the Tentative values.
+	-- After May current values contain the Final values.
+After May 25th (the date the final roll is released)  it will contain the final values
 	CURAVL_ACT = REPLACE(curactland, '+', '')::double precision,
 	-- pyactland
 	CURAVT_ACT = REPLACE(curacttot, '+', '')::double precision,
