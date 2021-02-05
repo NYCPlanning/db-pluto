@@ -40,7 +40,7 @@ function cama {
         mc cp $NAME.sql spaces/edm-recipes/datasets/$NAME/latest/$NAME.sql
 
         # Tag table
-        psql $RECIPE_ENGINE -1 -v NAME=$NAME -v VERSION=$VERSION -f $DIR/sql/_tag_cama.sql
+        psql $RECIPE_ENGINE -1 -v NAME=$NAME -v VERSION=$VERSION -f $DIR/sql/_tag.sql
     )
     rm -rf /tmp/cama
 }
