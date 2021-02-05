@@ -1,19 +1,19 @@
 #!/bin/bash
 set -e
 
-function _ls {
+function ssh_ls {
     sftp -q -i ~/.ssh/ginger \
     $GINGER_USER@$GINGER_HOST << EOF
     ls $@
 EOF
 }
-register 'ssh' 'ls' 'ls in ssh' _ls
+register 'ssh' 'ls' 'ls in ssh' ssh_ls
 
 
-function _cmd {
+function ssh_cmd {
     sftp -q -i ~/.ssh/ginger \
     $GINGER_USER@$GINGER_HOST << EOF
     $@
 EOF
 }
-register 'ssh' 'cmd' 'any commands in ssh' _cmd
+register 'ssh' 'cmd' 'any commands in ssh' ssh_cmd
