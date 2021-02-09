@@ -44,7 +44,6 @@ jobs:
           sudo apt update && sudo apt install -y postgresql-client-common postgresql-client unzip
 
       - name: process pts
-        shell: bash
         working-directory: pluto_build
         run: ./pluto import pts
 
@@ -59,7 +58,6 @@ jobs:
           output_format: pgdump
 
       - name: geocode pts
-        shell: bash
         working-directory: pluto_build
         run: ./pluto geocode pts
       

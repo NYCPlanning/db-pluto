@@ -3,43 +3,43 @@ DIR=$(pwd)
 NAME="pluto_pts"
 
 function import_pts {
-# create temporary location
-VERSION=$(date "+%Y%m%d")
+   # create temporary location
+   VERSION=$(date "+%Y%m%d")
 
-mkdir -p $(pwd)/pts &&
-(
-cd $(pwd)/pts
+   mkdir -p $(pwd)/pts &&
+   (
+      cd $(pwd)/pts
 
-ssh_cmd get Prod_FromDOF/PTS_Propmast.gz .
-gunzip PTS_Propmast.gz
+      ssh_cmd get Prod_FromDOF/PTS_Propmast.gz .
+      gunzip PTS_Propmast.gz
 
-# remove last column of pts --> empty column
-cut -d$'\t' -f1-139 PTS_Propmast > pluto_pts.csv
+      # remove last column of pts --> empty column
+      cut -d$'\t' -f1-139 PTS_Propmast > pluto_pts.csv
 
-# remove spaces between delimiters
-sed -i 's/ *\t/\t/g' pluto_pts.csv
-sed -i 's/\"//g' pluto_pts.csv
+      # remove spaces between delimiters
+      sed -i 's/ *\t/\t/g' pluto_pts.csv
+      sed -i 's/\"//g' pluto_pts.csv
 
-# Check number of rows
-wc -l pluto_pts.csv
+      # Check number of rows
+      wc -l pluto_pts.csv
 
-# Check number of columns
-awk -F'\t' '{print NF; exit}' pluto_pts.csv
+      # Check number of columns
+      awk -F'\t' '{print NF; exit}' pluto_pts.csv
 
-# Load to psql
-cat pluto_pts.csv | psql $RECIPE_ENGINE -v NAME=$NAME -v VERSION=$VERSION -f $DIR/sql/_load_pts.sql
-rm pluto_pts.csv
+      # Load to psql
+      cat pluto_pts.csv | psql $RECIPE_ENGINE -v NAME=$NAME -v VERSION=$VERSION -f $DIR/sql/_load_pts.sql
+      rm pluto_pts.csv
 
-# Create Outputs in preparation for data library
-psql $RECIPE_ENGINE -1 -c "\COPY ( 
-SELECT * FROM $NAME ) TO stdout DELIMITER ',' CSV HEADER;" > pluto_pts.csv
-psql $RECIPE_ENGINE -1 -c "\COPY ( 
-SELECT DISTINCT ON (boro, block, lot) boro, block, lot 
-FROM $NAME ) TO stdout DELIMITER ',' CSV HEADER;" > geocode_input_pluto_pts.csv
+      # Create Outputs in preparation for data library
+      psql $RECIPE_ENGINE -1 -c "\COPY ( 
+      SELECT * FROM $NAME ) TO stdout DELIMITER ',' CSV HEADER;" > pluto_pts.csv
+      psql $RECIPE_ENGINE -1 -c "\COPY ( 
+      SELECT DISTINCT ON (boro, block, lot) boro, block, lot 
+      FROM $NAME ) TO stdout DELIMITER ',' CSV HEADER;" > geocode_input_pluto_pts.csv
 
-# Tag table
-psql $RECIPE_ENGINE -1 -v NAME=$NAME -v VERSION=$VERSION -f $DIR/sql/_tag.sql
-)
+      # Tag table
+      psql $RECIPE_ENGINE -1 -v NAME=$NAME -v VERSION=$VERSION -f $DIR/sql/_tag.sql
+   )
 }
 register 'import' 'pts' 'import pts' import_pts
 
