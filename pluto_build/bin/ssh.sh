@@ -5,7 +5,7 @@ function ssh_ls {
     ls $@
 EOF
 }
-
+register 'ssh' 'ls' 'ssh ls' ssh_ls 
 
 function ssh_cmd {
     sftp -q -i ~/.ssh/ginger \
@@ -13,3 +13,4 @@ function ssh_cmd {
     $@
 EOF
 }
+register 'ssh' 'cmd' 'ssh cmd' ssh_cmd 

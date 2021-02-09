@@ -41,6 +41,7 @@ function import_pts {
       psql $RECIPE_ENGINE -1 -v NAME=$NAME -v VERSION=$VERSION -f $DIR/sql/_tag.sql
    )
 }
+register 'import' 'pts' 'import pts' import_pts
 
 function geocode_pts {
    cp $(pwd)/pts/geocode_input_pluto_pts.csv $(pwd)/python/geocode_input_pluto_pts.csv
@@ -54,7 +55,10 @@ function geocode_pts {
    rm $(pwd)/python/geocode_input_pluto_pts.csv
    mv $(pwd)/python/pluto_input_geocodes.csv $(pwd)/pts/pluto_input_geocodes.csv
 }
+register 'geocode' 'pts' 'geocode pts' pts_geocode 
+
 
 function clean_pts {
    rm -rf $(pwd)/pts
 }
+register 'clean' 'pts' 'clean pts' clean_pts 
