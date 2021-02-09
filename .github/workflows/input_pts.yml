@@ -1,14 +1,24 @@
 name: PTS processing
 on:
+  push: 
+    branches:
+      - "213-ssh"
   issues:
     types: [opened, edited]
 
 jobs:
   process_pts:
     if: >-
-      contains(github.event.issue.title, '[pts]') && ( 
-        github.event.issue.author_association == 'CONTRIBUTOR' || 
-        github.event.issue.author_association == 'MEMBER' 
+      (
+        github.ref == 'refs/heads/master' && 
+        github.event_name == 'push'
+      ) ||
+      (
+        contains(github.event.issue.title, '[pts]') && 
+        ( 
+          github.event.issue.author_association == 'CONTRIBUTOR' || 
+          github.event.issue.author_association == 'MEMBER' 
+        )
       )
     runs-on: self-hosted
     env:
@@ -37,11 +47,36 @@ jobs:
         shell: bash
         working-directory: pluto_build
         run: ./pluto import pts
-          
+
+      - uses: NYCPlanning/action-library-archive@v1.1
+        id: pluto_pts
+        with:
+          name: pluto_pts
+          path: pluto_build/templates/pluto_pts.yml
+          s3: true
+          latest: true
+          compress: true
+          output_format: pgdump
+
       - name: geocode pts
         shell: bash
-        working-directory: pluto_build/python
+        working-directory: pluto_build
         run: ./pluto geocode pts
+      
+      - uses: NYCPlanning/action-library-archive@v1.1
+        id: pluto_input_geocodes
+        with:
+          name: pluto_input_geocodes
+          path: pluto_build/templates/pluto_input_geocodes.yml
+          s3: true
+          latest: true
+          compress: true
+          output_format: pgdump
+      
+      - name: clean up pts
+        shell: bash
+        working-directory: pluto_build
+        run: ./pluto clean pts
 
       - name: Comment on Issue and Close Issue
         if: success()
