@@ -20,7 +20,7 @@ jobs:
           github.event.issue.author_association == 'MEMBER' 
         )
       )
-    runs-on: ubuntu-20.04
+    runs-on: self-hosted
     env:
       RECIPE_ENGINE: ${{ secrets.RECIPE_ENGINE }}
       AWS_S3_ENDPOINT: ${{ secrets.DO_S3_ENDPOINT }}
