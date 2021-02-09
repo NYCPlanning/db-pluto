@@ -6,9 +6,9 @@ function import_pts {
    # create temporary location
    VERSION=$(date "+%Y%m%d")
 
-   mkdir -p $(pwd)/pts &&
+   mkdir -p /tmp/pts &&
    (
-      cd $(pwd)/pts
+      cd /tmp/pts
 
       ssh_cmd get Prod_FromDOF/PTS_Propmast.gz .
       gunzip PTS_Propmast.gz
@@ -44,8 +44,8 @@ function import_pts {
 register 'import' 'pts' 'import pts' import_pts
 
 function geocode_pts {
-   cp $(pwd)/pts/geocode_input_pluto_pts.csv $(pwd)/python/geocode_input_pluto_pts.csv
-   rm -rf $(pwd)/pts/pluto_input_geocodes.csv
+   cp /tmp/pts/geocode_input_pluto_pts.csv $(pwd)/python/geocode_input_pluto_pts.csv
+   rm -rf /tmp/pts/pluto_input_geocodes.csv
    docker run --rm\
       --user $(id -u):$(id -g)\
       -v $(pwd):/project\
@@ -53,12 +53,12 @@ function geocode_pts {
       -e RECIPE_ENGINE=$RECIPE_ENGINE\
       nycplanning/docker-geosupport:latest python3 geocode.py
    rm $(pwd)/python/geocode_input_pluto_pts.csv
-   mv $(pwd)/python/pluto_input_geocodes.csv $(pwd)/pts/pluto_input_geocodes.csv
+   mv $(pwd)/python/pluto_input_geocodes.csv /tmp/pts/pluto_input_geocodes.csv
 }
-register 'geocode' 'pts' 'geocode pts' pts_geocode 
+register 'geocode' 'pts' 'geocode pts' geocode_pts 
 
 
 function clean_pts {
-   rm -rf $(pwd)/pts
+   rm -rf /tmp/pts
 }
 register 'clean' 'pts' 'clean pts' clean_pts 

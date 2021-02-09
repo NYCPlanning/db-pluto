@@ -2,7 +2,7 @@
 DIR=$(pwd)
 function cama {
     # create temporary location
-    mkdir -p $(pwd)/cama && 
+    mkdir -p /tmp/cama && 
     (
         NAME="pluto_input_cama_dof"
 
@@ -40,6 +40,6 @@ function cama {
 register 'import' 'cama' 'import cama' cama
 
 function clean_cama {
-   rm -rf $(pwd)/cama
+   rm -rf /tmp/cama
 }
 register 'clean' 'cama' 'clean cama' clean_cama 

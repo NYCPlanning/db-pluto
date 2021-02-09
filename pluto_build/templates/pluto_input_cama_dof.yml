@@ -4,7 +4,7 @@ dataset:
   acl: public-read
   source:
     url:
-      path: /pluto_build/cama/pluto_input_cama_dof.csv
+      path: /tmp/cama/pluto_input_cama_dof.csv
       subpath: ""
     options:
       - "AUTODETECT_TYPE=NO"
