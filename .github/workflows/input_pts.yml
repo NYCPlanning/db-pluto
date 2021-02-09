@@ -45,7 +45,7 @@ jobs:
 
       - name: process pts
         working-directory: pluto_build
-        run: ./pluto import pts
+        run: ./run.sh import_pts
 
       - uses: NYCPlanning/action-library-archive@v1.1
         id: pluto_pts
@@ -59,7 +59,7 @@ jobs:
 
       - name: geocode pts
         working-directory: pluto_build
-        run: ./pluto geocode pts
+        run: ./run.sh geocode_pts
       
       - uses: NYCPlanning/action-library-archive@v1.1
         id: pluto_input_geocodes
@@ -74,7 +74,7 @@ jobs:
       - name: clean up pts
         shell: bash
         working-directory: pluto_build
-        run: ./pluto clean pts
+        run: ./run.sh clean_pts
 
       - name: Comment on Issue and Close Issue
         if: success()

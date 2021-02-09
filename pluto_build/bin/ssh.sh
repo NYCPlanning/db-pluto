@@ -1,6 +1,4 @@
 #!/bin/bash
-set -e
-
 function ssh_ls {
     sftp -q -i ~/.ssh/ginger \
     $GINGER_USER@$GINGER_HOST << EOF
