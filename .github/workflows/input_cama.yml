@@ -61,6 +61,11 @@ jobs:
           compress: true
           output_format: pgdump
 
+      - name: Clean CAMA
+        shell: bash
+        working-directory: pluto_build
+        run: ./pluto clean cama
+
       - name: Comment on Issue and Close Issue
         if: success()
         uses: peter-evans/close-issue@v1

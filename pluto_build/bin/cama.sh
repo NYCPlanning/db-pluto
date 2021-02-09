@@ -32,7 +32,8 @@ function cama {
 
         # Create Outputs in preparation for data library
         psql $RECIPE_ENGINE -1 -c "\COPY ( SELECT * FROM $NAME ) TO stdout DELIMITER ',' CSV HEADER;" > pluto_input_cama_dof.csv
-
+        mc cp pluto_input_cama_dof.csv spaces/edm-recipes/tmp/pluto_input_cama_dof.csv
+        
         # Tag table
         psql $RECIPE_ENGINE -1 -v NAME=$NAME -v VERSION=$VERSION -f $DIR/sql/_tag.sql
     )
@@ -40,6 +41,7 @@ function cama {
 register 'import' 'cama' 'import cama' cama
 
 function clean_cama {
-   rm -rf /tmp/cama
+    rm -rf /tmp/cama
+    mc rm spaces/edm-recipes/tmp/pluto_input_cama_dof.csv
 }
 register 'clean' 'cama' 'clean cama' clean_cama 

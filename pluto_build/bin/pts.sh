@@ -36,6 +36,7 @@ function import_pts {
       psql $RECIPE_ENGINE -1 -c "\COPY ( 
       SELECT DISTINCT ON (boro, block, lot) boro, block, lot 
       FROM $NAME ) TO stdout DELIMITER ',' CSV HEADER;" > geocode_input_pluto_pts.csv
+      mc cp geocode_input_pluto_pts.csv spaces/edm-recipes/tmp/geocode_input_pluto_pts.csv
 
       # Tag table
       psql $RECIPE_ENGINE -1 -v NAME=$NAME -v VERSION=$VERSION -f $DIR/sql/_tag.sql
@@ -54,11 +55,14 @@ function geocode_pts {
       nycplanning/docker-geosupport:latest python3 geocode.py
    rm $(pwd)/python/geocode_input_pluto_pts.csv
    mv $(pwd)/python/pluto_input_geocodes.csv /tmp/pts/pluto_input_geocodes.csv
+   mc $(pwd)/python/pluto_input_geocodes.csv spaces/edm-recipes/tmp/pluto_input_geocodes.csv
 }
 register 'geocode' 'pts' 'geocode pts' geocode_pts 
 
 
 function clean_pts {
    rm -rf /tmp/pts
+   mc rm spaces/edm-recipes/tmp/pluto_input_geocodes.csv
+   mc rm spaces/edm-recipes/tmp/pluto_pts.csv
 }
 register 'clean' 'pts' 'clean pts' clean_pts 
