@@ -20,7 +20,7 @@ jobs:
           github.event.issue.author_association == 'MEMBER' 
         )
       )
-    runs-on: self-hosted
+    runs-on: ubuntu-20.04
     env:
       RECIPE_ENGINE: ${{ secrets.RECIPE_ENGINE }}
       AWS_S3_ENDPOINT: ${{ secrets.DO_S3_ENDPOINT }}
@@ -39,9 +39,9 @@ jobs:
         run: |
           curl -O https://dl.min.io/client/mc/release/linux-amd64/mc
           chmod +x mc
-          mv mc /usr/bin/mc
+          sudo mv mc /usr/bin/mc
           mc config host add spaces $AWS_S3_ENDPOINT $AWS_ACCESS_KEY_ID $AWS_SECRET_ACCESS_KEY --api S3v4
-          apt update && apt install -y postgresql-client-common postgresql-client unzip
+          sudo apt update && sudo apt install -y postgresql-client-common postgresql-client unzip
 
       - name: process pts
         shell: bash
