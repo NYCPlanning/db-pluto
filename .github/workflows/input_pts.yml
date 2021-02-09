@@ -10,7 +10,7 @@ jobs:
   process_pts:
     if: >-
       (
-        github.ref == 'refs/heads/master' && 
+        github.ref == 'refs/heads/213-ssh' && 
         github.event_name == 'push'
       ) ||
       (
