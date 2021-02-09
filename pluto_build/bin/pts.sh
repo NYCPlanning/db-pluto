@@ -60,4 +60,4 @@ register 'geocode' 'pts' 'geocode pts' pts_geocode
 function pts_clean {
    rm -rf $(pwd)/pts
 }
-register 'clean' 'pts' 'remove cached files' pts_geocode
+register 'clean' 'pts' 'remove cached files' pts_clean
