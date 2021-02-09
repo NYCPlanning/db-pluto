@@ -22,6 +22,7 @@ function urlparse {
 }
 
 function FGDB_export {
+  urlparse $BUILD_ENGINE
   mkdir -p output/$@.gdb &&
   (cd output/$@.gdb
     docker run \
@@ -49,6 +50,7 @@ function FGDB_export {
 # register 'export' 'gdb' 'export pluto.gdb' FGDB_export
 
 function SHP_export {
+  urlparse $BUILD_ENGINE
   mkdir -p output/$@ &&
     (cd output/$@
       ogr2ogr -progress -f "ESRI Shapefile" $@.shp \
@@ -83,9 +85,6 @@ function run {
 
 # Set Environmental variables
 set_env .env version.env
-
-# Parse URL
-urlparse $BUILD_ENGINE
 
 # Set Date
 DATE=$(date "+%Y-%m-%d")
