@@ -20,12 +20,13 @@ jobs:
           github.event.issue.author_association == 'MEMBER' 
         )
       )
-    runs-on: self-hosted
+    runs-on: ubuntu-20.04
     env:
       RECIPE_ENGINE: ${{ secrets.RECIPE_ENGINE }}
       AWS_S3_ENDPOINT: ${{ secrets.DO_S3_ENDPOINT }}
       AWS_ACCESS_KEY_ID: ${{ secrets.DO_ACCESS_KEY_ID }}
       AWS_SECRET_ACCESS_KEY: ${{ secrets.DO_SECRET_ACCESS_KEY }}
+      AWS_S3_BUCKET: edm-recipes
       SSH_PRIVATE_KEY_GINGER: ${{ secrets.SSH_PRIVATE_KEY_GINGER }}
       GINGER_USER: ${{ secrets.GINGER_USER }}
       GINGER_HOST: ${{ secrets.GINGER_HOST }}

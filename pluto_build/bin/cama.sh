@@ -2,7 +2,7 @@
 DIR=$(pwd)
 function cama {
     # create temporary location
-    mkdir -p /tmp/cama && 
+    mkdir -p $(pwd)/cama && 
     (
         NAME="pluto_input_cama_dof"
 
@@ -14,33 +14,32 @@ function cama {
         PATH_TXT=$(ls *.txt)
         BASE_TXT=$(echo $(basename $PATH_TXT) | cut -d'.' -f1)
         VERSION=$(echo $BASE_TXT | cut -d'_' -f 3)
-        mv $PATH_TXT $NAME.csv
+        mv $PATH_TXT pluto_input_cama_dof.csv
 
         # Check number of rows
-        wc -l $NAME.csv
+        wc -l pluto_input_cama_dof.csv
 
         # Check number of columns
-        awk -F'|' '{print NF; exit}' $NAME.csv
+        awk -F'|' '{print NF; exit}' pluto_input_cama_dof.csv
 
         # Data Cleaning, remove special characters
-        sed -i 's/\r$//g' $NAME.csv
-        sed -i 's/\"//g' $NAME.csv
+        sed -i 's/\r$//g' pluto_input_cama_dof.csv
+        sed -i 's/\"//g' pluto_input_cama_dof.csv
 
         # Load to psql
-        cat $NAME.csv | psql $RECIPE_ENGINE -v NAME=$NAME -v VERSION=$VERSION -f $DIR/sql/_load_cama.sql
-        rm $NAME.csv
+        cat pluto_input_cama_dof.csv | psql $RECIPE_ENGINE -v NAME=$NAME -v VERSION=$VERSION -f $DIR/sql/_load_cama.sql
+        rm pluto_input_cama_dof.csv
 
         # Create Outputs in preparation for data library
-        psql $RECIPE_ENGINE -1 -c "\COPY ( SELECT * FROM $NAME ) TO stdout DELIMITER ',' CSV HEADER;" > $NAME.csv
-        pg_dump $RECIPE_ENGINE -t $NAME -x -O -c > $NAME.sql
-        mc cp $NAME.csv spaces/edm-recipes/datasets/$NAME/$VERSION/$NAME.csv
-        mc cp $NAME.sql spaces/edm-recipes/datasets/$NAME/$VERSION/$NAME.sql
-        mc cp $NAME.csv spaces/edm-recipes/datasets/$NAME/latest/$NAME.csv
-        mc cp $NAME.sql spaces/edm-recipes/datasets/$NAME/latest/$NAME.sql
+        psql $RECIPE_ENGINE -1 -c "\COPY ( SELECT * FROM $NAME ) TO stdout DELIMITER ',' CSV HEADER;" > pluto_input_cama_dof.csv
 
         # Tag table
         psql $RECIPE_ENGINE -1 -v NAME=$NAME -v VERSION=$VERSION -f $DIR/sql/_tag.sql
     )
-    rm -rf /tmp/cama
 }
 register 'import' 'cama' 'import cama' cama
+
+function clean_cama {
+   rm -rf $(pwd)/cama
+}
+register 'clean' 'cama' 'clean cama' clean_cama 

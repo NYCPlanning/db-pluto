@@ -1,25 +1,36 @@
 name: CAMA Processing
 
 on:
+  push: 
+    branches:
+      - "213-ssh"
   issues:
     types: [opened, edited]
 
 jobs:
-  process_cama:
-    if: >- 
-      contains(github.event.issue.title, '[cama]') && ( 
-        github.event.issue.author_association == 'CONTRIBUTOR' || 
-        github.event.issue.author_association == 'MEMBER' 
+  process_pts:
+    if: >-
+      (
+        github.ref == 'refs/heads/213-ssh' && 
+        github.event_name == 'push'
+      ) ||
+      (
+        contains(github.event.issue.title, '[pts]') && 
+        ( 
+          github.event.issue.author_association == 'CONTRIBUTOR' || 
+          github.event.issue.author_association == 'MEMBER' 
+        )
       )
-    container:
-      image: nycplanning/docker-geosupport:latest
-    runs-on: self-hosted
+    runs-on: ubuntu-20.04
     env:
       RECIPE_ENGINE: ${{ secrets.RECIPE_ENGINE }}
       AWS_S3_ENDPOINT: ${{ secrets.DO_S3_ENDPOINT }}
       AWS_ACCESS_KEY_ID: ${{ secrets.DO_ACCESS_KEY_ID }}
       AWS_SECRET_ACCESS_KEY: ${{ secrets.DO_SECRET_ACCESS_KEY }}
+      AWS_S3_BUCKET: edm-recipes
       SSH_PRIVATE_KEY_GINGER: ${{ secrets.SSH_PRIVATE_KEY_GINGER }}
+      GINGER_USER: ${{ secrets.GINGER_USER }}
+      GINGER_HOST: ${{ secrets.GINGER_HOST }}
     steps:
       - uses: actions/checkout@v2
       - name: install ssh key
@@ -32,15 +43,24 @@ jobs:
         run: |
           curl -O https://dl.min.io/client/mc/release/linux-amd64/mc
           chmod +x mc
-          mv mc /usr/bin/mc
+          sudo mv mc /usr/bin/mc
           mc config host add spaces $AWS_S3_ENDPOINT $AWS_ACCESS_KEY_ID $AWS_SECRET_ACCESS_KEY --api S3v4
-          apt update && apt install -y postgresql-client-common postgresql-client unzip
 
       - name: process CAMA
         shell: bash
         working-directory: pluto_build
         run: ./pluto import cama
-                        
+      
+      - uses: NYCPlanning/action-library-archive@v1.1
+        id: cama
+        with:
+          name: pluto_input_cama_dof
+          path: pluto_build/templates/pluto_input_cama_dof.yml
+          s3: true
+          latest: true
+          compress: true
+          output_format: pgdump
+
       - name: Comment on Issue and Close Issue
         if: success()
         uses: peter-evans/close-issue@v1
