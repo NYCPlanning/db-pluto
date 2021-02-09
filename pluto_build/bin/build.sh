@@ -1,5 +1,4 @@
 #!/bin/bash
-set -e;
 
 function build_all() {
     echo "Starting to build PLUTO ..."

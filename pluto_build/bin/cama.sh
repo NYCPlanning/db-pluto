@@ -1,5 +1,4 @@
 #!/bin/bash
-set -e;
 DIR=$(pwd)
 function cama {
     # create temporary location
