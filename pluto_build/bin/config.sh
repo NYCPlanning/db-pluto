@@ -47,7 +47,7 @@ function FGDB_export {
       rm -rf $@.gdb
     )
 }
-# register 'export' 'gdb' 'export pluto.gdb' FGDB_export
+register 'export' 'gdb' 'export pluto.gdb' FGDB_export
 
 function SHP_export {
   urlparse $BUILD_ENGINE
@@ -61,7 +61,7 @@ function SHP_export {
         ls | grep -v $@.zip | xargs rm
       )
 }
-# register 'export' 'shp' 'export pluto.shp' SHP_export
+register 'export' 'shp' 'export pluto.shp' SHP_export
 
 function CSV_export {
   psql $BUILD_ENGINE  -c "\COPY (
@@ -81,7 +81,7 @@ function Upload {
 function run {
   psql $BUILD_ENGINE -f $1
 }
-# register 'run' 'sql' 'run pluto sql script' run
+register 'run' 'sql' 'run pluto sql script' run
 
 # Set Environmental variables
 set_env .env version.env
