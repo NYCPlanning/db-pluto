@@ -1,6 +1,6 @@
 #!/bin/bash
-source config.sh
-source pts.sh
+source bin/config.sh
+source bin/pts.sh
 
 case $1 in 
     import_pts) import_pts;;
