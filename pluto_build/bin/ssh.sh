@@ -5,7 +5,6 @@ function ssh_ls {
     ls $@
 EOF
 }
-# register 'ssh' 'ls' 'ls in ssh' ssh_ls
 
 
 function ssh_cmd {
@@ -14,4 +13,3 @@ function ssh_cmd {
     $@
 EOF
 }
-# register 'ssh' 'cmd' 'any commands in ssh' ssh_cmd
