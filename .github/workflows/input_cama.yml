@@ -51,6 +51,10 @@ jobs:
         working-directory: pluto_build
         run: ./pluto import cama
       
+      - name: Set Version
+        id: version
+        run: echo "::set-output name=version::$(date "+%Y%m%d")"
+
       - uses: NYCPlanning/action-library-archive@v1.1
         id: cama
         with:
@@ -60,6 +64,7 @@ jobs:
           latest: true
           compress: true
           output_format: pgdump
+          version: ${{ steps.version.outputs.version }}
 
       - name: Clean CAMA
         shell: bash

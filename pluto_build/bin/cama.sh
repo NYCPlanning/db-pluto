@@ -13,7 +13,7 @@ function cama {
         unzip cama.zip -d $(pwd)
         PATH_TXT=$(ls *.txt)
         BASE_TXT=$(echo $(basename $PATH_TXT) | cut -d'.' -f1)
-        VERSION=$(echo $BASE_TXT | cut -d'_' -f 3)
+        VERSION=$(date "+%Y%m%d")
         mv $PATH_TXT pluto_input_cama_dof.csv
 
         # Check number of rows

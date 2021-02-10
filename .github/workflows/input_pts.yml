@@ -49,6 +49,10 @@ jobs:
         working-directory: pluto_build
         run: ./pluto import pts
 
+      - name: Set Version
+        id: version
+        run: echo "::set-output name=version::$(date "+%Y%m%d")"
+        
       - uses: NYCPlanning/action-library-archive@v1.1
         id: pluto_pts
         with:
@@ -58,6 +62,7 @@ jobs:
           latest: true
           compress: true
           output_format: pgdump
+          version: ${{ steps.version.outputs.version }}
 
       - name: geocode pts
         working-directory: pluto_build
