@@ -14,18 +14,39 @@ jobs:
         github.event.issue.author_association == 'CONTRIBUTOR' ||
         github.event.issue.author_association == 'MEMBER'
       )
-    container:
-      image: nycplanning/docker-geosupport:latest
-    runs-on: self-hosted
+    runs-on: ubuntu-20.04
     env:
-      RECIPE_ENGINE: ${{ secrets.RECIPE_ENGINE }}
+      AWS_S3_ENDPOINT: ${{ secrets.DO_S3_ENDPOINT }}
+      AWS_ACCESS_KEY_ID: ${{ secrets.DO_ACCESS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.DO_SECRET_ACCESS_KEY }}
+      AWS_S3_BUCKET: edm-recipes
       API_TOKEN: ${{ secrets.API_TOKEN }}
     steps:
       - uses: actions/checkout@v2
 
+      - name: install minio ..
+        run: |
+          curl -O https://dl.min.io/client/mc/release/linux-amd64/mc
+          chmod +x mc
+          sudo mv mc /usr/bin/mc
+          mc config host add spaces $AWS_S3_ENDPOINT $AWS_ACCESS_KEY_ID $AWS_SECRET_ACCESS_KEY --api S3v4
+
       - name: get numbldgs
-        working-directory: pluto_build/python
-        run: python3 numbldgs.py
+        working-directory: pluto_build
+        run: ./pluto geocode numbldgs
+
+      - uses: NYCPlanning/action-library-archive@v1.1
+        id: pluto_input_numbldgs
+        with:
+          name: pluto_input_numbldgs
+          path: pluto_build/templates/pluto_input_numbldgs.yml
+          s3: true
+          latest: true
+          output_format: pgdump csv
+
+      - name: clean numbldgs
+        working-directory: pluto_build
+        run: ./pluto clean numbldgs
 
       - name: Comment on Issue and Close Issue
         if: success()

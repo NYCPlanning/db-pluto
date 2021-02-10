@@ -54,7 +54,6 @@ function geocode_pts {
       -e RECIPE_ENGINE=$RECIPE_ENGINE\
       nycplanning/docker-geosupport:latest python3 geocode.py
    rm $(pwd)/python/geocode_input_pluto_pts.csv
-   mv $(pwd)/python/pluto_input_geocodes.csv /tmp/pts/pluto_input_geocodes.csv
    mc cp $(pwd)/python/pluto_input_geocodes.csv spaces/edm-recipes/tmp/pluto_input_geocodes.csv
 }
 register 'geocode' 'pts' 'geocode pts' geocode_pts 
