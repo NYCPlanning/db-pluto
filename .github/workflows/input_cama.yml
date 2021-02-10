@@ -72,7 +72,7 @@ jobs:
         run: ./pluto clean cama
 
       - name: Comment on Issue and Close Issue
-        if: success()
+        if: success() && github.event_name == 'issues'
         uses: peter-evans/close-issue@v1
         with:
           issue-number: ${{ github.event.issue.number }}
