@@ -1,7 +1,7 @@
 #!/bin/bash
 source bin/config.sh
 
-## DROP all tables
+# DROP all tables
 psql $BUILD_ENGINE -c "
 DO \$\$ DECLARE
     r RECORD;
@@ -11,6 +11,13 @@ BEGIN
     END LOOP;
 END \$\$;
 "
+
+import pluto_pts &
+import pluto_input_cama_dof &
+import pluto_input_numbldgs &
+import pluto_input_geocodes &
+wait
+
 ## load data into the pluto db
 docker run --rm\
     -v $(pwd)/python:/home/python\

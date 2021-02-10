@@ -1,9 +1,6 @@
 name: CAMA Processing
 
 on:
-  push: 
-    branches:
-      - "213-ssh"
   issues:
     types: [opened, edited]
 
@@ -11,11 +8,7 @@ jobs:
   process_pts:
     if: >-
       (
-        github.ref == 'refs/heads/213-ssh' && 
-        github.event_name == 'push'
-      ) ||
-      (
-        contains(github.event.issue.title, '[pts]') && 
+        contains(github.event.issue.title, '[cama]') && 
         ( 
           github.event.issue.author_association == 'CONTRIBUTOR' || 
           github.event.issue.author_association == 'MEMBER' 
@@ -62,10 +55,6 @@ jobs:
         shell: bash
         working-directory: pluto_build
         run: ./pluto import cama
-      
-      - name: Set Version
-        id: version
-        run: echo "::set-output name=version::$(date "+%Y%m%d")"
 
       - uses: NYCPlanning/action-library-archive@v1.1
         id: cama
@@ -75,8 +64,7 @@ jobs:
           s3: true
           latest: true
           compress: true
-          output_format: pgdump
-          version: ${{ steps.version.outputs.version }}
+          output_format: pgdump csv
 
       - name: Clean CAMA
         shell: bash

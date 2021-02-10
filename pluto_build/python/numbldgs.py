@@ -1,5 +1,4 @@
 from multiprocessing import Pool, cpu_count
-from utils.exporter import exporter
 from geosupport import Geosupport, GeosupportError
 import requests
 from sqlalchemy import create_engine

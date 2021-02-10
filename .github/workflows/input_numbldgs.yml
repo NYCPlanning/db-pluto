@@ -15,7 +15,7 @@ jobs:
         github.event_name == 'push'
       ) ||
       (
-        contains(github.event.issue.title, '[pts]') && 
+        contains(github.event.issue.title, '[numbldgs]') && 
         ( 
           github.event.issue.author_association == 'CONTRIBUTOR' || 
           github.event.issue.author_association == 'MEMBER' 

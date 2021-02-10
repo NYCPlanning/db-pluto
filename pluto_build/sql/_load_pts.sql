@@ -144,7 +144,6 @@ CREATE TEMP TABLE tmp (
 
 DROP TABLE IF EXISTS :NAME CASCADE;
 SELECT 
-    :'VERSION' as v,
     boro,
     block,
     lot,

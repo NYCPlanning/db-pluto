@@ -32,6 +32,10 @@ ALTER TABLE pluto_corrections
 DROP COLUMN IF EXISTS v,
 DROP COLUMN IF EXISTS ogc_fid;
 
+UPDATE pluto_input_geocodes
+SET xcoord = ST_X(ST_TRANSFORM(wkb_geometry, 2263)),
+    ycoord = ST_Y(ST_TRANSFORM(wkb_geometry, 2263));
+
 DROP TABLE IF EXISTS pluto_input_geocodes_tmp;
 CREATE TABLE pluto_input_geocodes_tmp as (
     SELECT DISTINCT ON (borough, block, lot) * 

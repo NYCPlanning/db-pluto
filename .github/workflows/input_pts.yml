@@ -10,10 +10,6 @@ jobs:
   process_pts:
     if: >-
       (
-        github.ref == 'refs/heads/213-ssh' && 
-        github.event_name == 'push'
-      ) ||
-      (
         contains(github.event.issue.title, '[pts]') && 
         ( 
           github.event.issue.author_association == 'CONTRIBUTOR' || 
@@ -60,10 +56,6 @@ jobs:
       - name: process pts
         working-directory: pluto_build
         run: ./pluto import pts
-
-      - name: Set Version
-        id: version
-        run: echo "::set-output name=version::$(date "+%Y%m%d")"
         
       - uses: NYCPlanning/action-library-archive@v1.1
         id: pluto_pts
@@ -73,8 +65,7 @@ jobs:
           s3: true
           latest: true
           compress: true
-          output_format: pgdump
-          version: ${{ steps.version.outputs.version }}
+          output_format: pgdump csv
 
       - name: geocode pts
         working-directory: pluto_build
@@ -88,7 +79,7 @@ jobs:
           s3: true
           latest: true
           compress: true
-          output_format: pgdump
+          output_format: pgdump csv
       
       - name: clean up pts
         shell: bash

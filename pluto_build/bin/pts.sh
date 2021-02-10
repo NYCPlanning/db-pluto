@@ -27,7 +27,7 @@ function import_pts {
       awk -F'\t' '{print NF; exit}' pluto_pts.csv
 
       # Load to psql
-      cat pluto_pts.csv | psql $RECIPE_ENGINE -v NAME=$NAME -v VERSION=$VERSION -f $DIR/sql/_load_pts.sql
+      cat pluto_pts.csv | psql $RECIPE_ENGINE -v NAME=$NAME -f $DIR/sql/_load_pts.sql
       rm pluto_pts.csv
 
       # Create Outputs in preparation for data library

@@ -12,7 +12,7 @@ dataset:
       - "X_POSSIBLE_NAMES=longitude"
       - "Y_POSSIBLE_NAMES=latitude"
     geometry:
-      SRS: EPSG:2263
+      SRS: EPSG:4326
       type: POINT
 
   destination:

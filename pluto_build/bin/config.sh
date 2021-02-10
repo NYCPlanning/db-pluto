@@ -8,6 +8,15 @@ function set_env {
       fi
   done
 }
+# Set Environmental variables
+set_env .env version.env
+
+# Set Date
+DATE=$(date "+%Y-%m-%d")
+
+# Set Bucket info
+s3_endpoint=https://nyc3.digitaloceanspaces.com
+s3_bucket=edm-recipes
 
 function urlparse {
     proto="$(echo $1 | grep :// | sed -e's,^\(.*://\).*,\1,g')"
@@ -83,8 +92,18 @@ function run {
 }
 register 'run' 'sql' 'run pluto sql script' run
 
-# Set Environmental variables
-set_env .env version.env
+function get_latest_version {
+  name=$1
+  latest_version=$(curl $s3_endpoint/$s3_bucket/datasets/$1/latest/config.json |  jq -r '.dataset.version')
+}
 
-# Set Date
-DATE=$(date "+%Y-%m-%d")
+function import {
+  name=$1
+  get_latest_version $name
+  url="$s3_endpoint/$s3_bucket/datasets/$name/$latest_version/$name.sql"
+  curl -O $url
+  psql --quiet $BUILD_ENGINE -f $name.sql
+  psql -1 $BUILD_ENGINE -c "ALTER TABLE $name ADD COLUMN v text; UPDATE $name SET v = '$latest_version';"
+  rm $name.sql
+}
+register 'import' 'dataset' 'import given dataset to BUILD_ENGINE' import
