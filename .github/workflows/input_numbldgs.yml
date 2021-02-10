@@ -2,8 +2,6 @@ name: NumBldgs processing
 
 on:
   push:
-    paths: 
-      - .github/workflows/input_numbldgs.yml
   issues:
     types: [opened, edited]
 

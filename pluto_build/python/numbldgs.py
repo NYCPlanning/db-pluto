@@ -14,7 +14,7 @@ def get_bbl(inputs):
     BIN = inputs["bin"]
     try:
         geo = g["BN"](bin=BIN)
-    except GeosupportError as e1:
+    except GeosupportError:
         try:
             geo = g["BN"](bin=BIN, mode="tpad")
         except GeosupportError as e2:
