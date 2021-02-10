@@ -4,7 +4,7 @@ dataset:
   acl: public-read
   source:
     url:
-      path: s3://edm-recipes/tmp/cama/pluto_input_cama_dof.csv
+      path: s3://edm-recipes/tmp/pluto_input_cama_dof.csv
       subpath: ""
     options:
       - "AUTODETECT_TYPE=NO"
