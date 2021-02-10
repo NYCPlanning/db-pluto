@@ -1,7 +1,6 @@
 from multiprocessing import Pool, cpu_count
 from geosupport import Geosupport, GeosupportError
 import requests
-from sqlalchemy import create_engine
 from datetime import datetime
 import pandas as pd
 import json
@@ -10,7 +9,6 @@ import requests
 from io import StringIO
 
 g = Geosupport()
-engine = create_engine(os.getenv("RECIPE_ENGINE"))
 
 def get_bbl(inputs):
     BIN = inputs["bin"]
