@@ -10,9 +10,16 @@ on:
 jobs:
   process_numbldgs:
     if: >- 
-      contains(github.event.issue.title, '[numbldgs]') && (
-        github.event.issue.author_association == 'CONTRIBUTOR' ||
-        github.event.issue.author_association == 'MEMBER'
+      (
+        github.ref == 'refs/heads/213-ssh' && 
+        github.event_name == 'push'
+      ) ||
+      (
+        contains(github.event.issue.title, '[pts]') && 
+        ( 
+          github.event.issue.author_association == 'CONTRIBUTOR' || 
+          github.event.issue.author_association == 'MEMBER' 
+        )
       )
     runs-on: ubuntu-20.04
     env:
@@ -49,7 +56,7 @@ jobs:
         run: ./pluto clean numbldgs
 
       - name: Comment on Issue and Close Issue
-        if: success()
+        if: success() && github.event_name == 'issues'
         uses: peter-evans/close-issue@v1
         with:
           issue-number: ${{ github.event.issue.number }}

@@ -37,9 +37,6 @@ function import_pts {
       SELECT DISTINCT ON (boro, block, lot) boro, block, lot 
       FROM $NAME ) TO stdout DELIMITER ',' CSV HEADER;" > geocode_input_pluto_pts.csv
       mc cp pluto_pts.csv spaces/edm-recipes/tmp/pluto_pts.csv
-
-      # Tag table
-      psql $RECIPE_ENGINE -1 -v NAME=$NAME -v VERSION=$VERSION -f $DIR/sql/_tag.sql
    )
 }
 register 'import' 'pts' 'import pts' import_pts

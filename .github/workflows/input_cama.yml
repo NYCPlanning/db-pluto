@@ -22,8 +22,20 @@ jobs:
         )
       )
     runs-on: ubuntu-20.04
+    services:
+      postgres:
+        image: postgis/postgis:12-3.0-alpine
+        env:
+          POSTGRES_PASSWORD: postgres
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          - 5432:5432
     env:
-      RECIPE_ENGINE: ${{ secrets.RECIPE_ENGINE }}
+      RECIPE_ENGINE: postgresql://postgres:postgres@localhost:5432/postgres
       AWS_S3_ENDPOINT: ${{ secrets.DO_S3_ENDPOINT }}
       AWS_ACCESS_KEY_ID: ${{ secrets.DO_ACCESS_KEY_ID }}
       AWS_SECRET_ACCESS_KEY: ${{ secrets.DO_SECRET_ACCESS_KEY }}
