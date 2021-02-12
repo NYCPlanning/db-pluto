@@ -13,4 +13,3 @@ This will kick off the following data-loading procedure:
 + Dump cleaned data into a temporary postgres database
 + Export from temporary database to a temporary DigitalOcean key
 + Use data-library action to move from temporary DigitalOcean URL to data-library directory structure, and trasform to a pgdump
-+ Pull the pgdump into the build engine
