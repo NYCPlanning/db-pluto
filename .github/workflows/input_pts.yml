@@ -6,120 +6,85 @@ on:
 jobs:
   process_pts:
     if: >-
-      contains(github.event.issue.title, '[pts]') && ( 
-        github.event.issue.author_association == 'CONTRIBUTOR' || 
-        github.event.issue.author_association == 'MEMBER' 
+      (
+        contains(github.event.issue.title, '[pts]') && 
+        ( 
+          github.event.issue.author_association == 'CONTRIBUTOR' || 
+          github.event.issue.author_association == 'MEMBER' 
+        )
       )
-    container:
-      image: nycplanning/docker-geosupport:latest
-    runs-on: self-hosted
+    runs-on: ubuntu-20.04
+    services:
+      postgres:
+        image: postgis/postgis:12-3.0-alpine
+        env:
+          POSTGRES_PASSWORD: postgres
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          - 5432:5432
     env:
-      RECIPE_ENGINE: ${{ secrets.RECIPE_ENGINE }}
-      MINIO_S3_ENDPOINT: ${{ secrets.MINIO_S3_ENDPOINT }}
-      MINIO_ACCESS_KEY_ID: ${{ secrets.MINIO_ACCESS_KEY_ID }}
-      MINIO_SECRET_ACCESS_KEY: ${{ secrets.MINIO_SECRET_ACCESS_KEY }}
+      RECIPE_ENGINE: postgresql://postgres:postgres@localhost:5432/postgres
+      AWS_S3_ENDPOINT: ${{ secrets.DO_S3_ENDPOINT }}
+      AWS_ACCESS_KEY_ID: ${{ secrets.DO_ACCESS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.DO_SECRET_ACCESS_KEY }}
+      AWS_S3_BUCKET: edm-recipes
+      SSH_PRIVATE_KEY_GINGER: ${{ secrets.SSH_PRIVATE_KEY_GINGER }}
+      GINGER_USER: ${{ secrets.GINGER_USER }}
+      GINGER_HOST: ${{ secrets.GINGER_HOST }}
     steps:
       - uses: actions/checkout@v2
+      - name: install ssh key
+        run: |
+          mkdir -p ~/.ssh/
+          echo "$SSH_PRIVATE_KEY_GINGER" > ~/.ssh/ginger
+          chmod 600 ~/.ssh/ginger
+
       - name: install minio ..
         run: |
           curl -O https://dl.min.io/client/mc/release/linux-amd64/mc
           chmod +x mc
-          mv mc /usr/bin/mc
-          mc config host add minio $MINIO_S3_ENDPOINT $MINIO_ACCESS_KEY_ID $MINIO_SECRET_ACCESS_KEY --api S3v4
-          apt update
-          apt install -y postgresql-client-common postgresql-client
+          sudo mv mc /usr/bin/mc
+          mc config host add spaces $AWS_S3_ENDPOINT $AWS_ACCESS_KEY_ID $AWS_SECRET_ACCESS_KEY --api S3v4
 
       - name: process pts
-        shell: bash
-        run: |
-          # create temporary location
-          TABLE_NAME="pluto_pts"
-          DATE=$(date "+%Y/%m/%d")
+        working-directory: pluto_build
+        run: ./pluto import pts
+        
+      - uses: NYCPlanning/action-library-archive@v1.1
+        id: pluto_pts
+        with:
+          name: pluto_pts
+          path: pluto_build/templates/pluto_pts.yml
+          s3: true
+          latest: true
+          compress: true
+          output_format: pgdump csv
 
-          mkdir -p /tmp/pts && (cd /tmp/pts
-
-              mc cp minio/pts/PTS_Propmast.gz .
-              gunzip PTS_Propmast.gz
-              
-              # remove last column of pts --> empty column
-              cut -d$'\t' -f1-139 PTS_Propmast > pluto_pts.txt
-
-              # remove spaces between delimiters
-              sed -i 's/ *\t/\t/g' pluto_pts.txt
-              sed -i 's/\"//g' pluto_pts.txt
-
-              # add column names
-              sed -i 1i"PARID\tBORO\tBLOCK\tLOT\tEASE\tSUBIDENT_REUC\tRECTYPE\tAV_YEAR4\tIDENT\tSUBIDENT\tROLL_SECTION\tSECVOL\tPYMKTLAND\tPYMKTTOT\tPYACTLAND\tPYACTTOT\tPYACTEXTOT\tPYTRNLAND\tPYTRNTOT\tPYTRNEXTOT\tPYTXBTOT\tPYTXBEXTOT\tPYTAXCLASS\tTENMKTLAND\tTENMKTTOT\tTENACTLAND\tTENACTTOT\tTENACTEXTOT\tTENTRNLAND\tTENTRNTOT\tTENTRNEXTOT\tTENTXBTOT\tTENTXBEXTOT\tTENTAXCLASS\tCBNMKTLAND\tCBNMKTTOT\tCBNACTLAND\tCBNACTTOT\tCBNACTEXTOT\tCBNTRNLAND\tCBNTRNTOT\tCBNTRNEXTOT\tCBNTXBTOT\tCBNTXBEXTOT\tCBNTAXCLASS\tFINMKTLAND\tFINMKTTOT\tFINACTLAND\tFINACTTOT\tFINACTEXTOT\tFINTRNLAND\tFINTRNTOT\tFINTRNEXTOT\tFINTXBTOT\tFINTXBEXTOT\tFINTAXCLASS\tCURMKTLAND\tCURMKTTOT\tCURACTLAND\tCURACTTOT\tCURACTEXTOT\tCURTRNLAND\tCURTRNTOT\tCURTRNEXTOT\tCURTXBTOT\tCURTXBEXTOT\tCURTAXCLASS\tPERIOD\tNEWDROP\tNOAV\tVALREF\tBLDG_CLASS\tAV_OWNER\tZONING\tHOUSENUM_LO\tHOUSENUM_HI\tSTREET_NAME\tZIP_CODE\tGEOSUPPORT_RC\tSTCODE\tLOT_FRT\tLOT_DEP\tLOT_IRREG\tBLD_FRT\tBLD_DEP\tBLD_EXT\tBLD_STORY\tCORNER\tLAND_AREA\tNUM_BLDGS\tYRBUILT\tYRBUILT_RANGE\tYRBUILT_FLAG\tYRALT1\tYRALT1_RANGE\tYRALT2\tYRALT2_RANGE\tCOOP_APTS\tUNITS\tREUC_REF\tAPTNO\tCOOP_NUM\tCPB_BORO\tCPB_DIST\tAPPT_DATE\tAPPT_BORO\tAPPT_BLOCK\tAPPT_LOT\tAPPT_EASE\tCONDO_Number\tCONDO_SFX1\tCONDO_SFX2\tCONDO_SFX3\tUAF_LAND\tUAF_BLDG\tPROTEST_1\tPROTEST_2\tPROTEST_OLD\tATTORNEY_GROUP1\tATTORNEY_GROUP2\tATTORNEY_GROUP_OLD\tGROSS_SQFT\tHOTEL_AREA_GROSS\tOFFICE_AREA_GROSS\tRESIDENTIAL_AREA_GROSS\tRETAIL_AREA_GROSS\tLOFT_AREA_GROSS\tFACTORY_AREA_GROSS\tWAREHOUSE_AREA_GROSS\tSTORAGE_AREA_GROSS\tGARAGE_AREA\tOTHER_AREA_GROSS\tREUC_DESCRIPTION\tEXTRACTDT\tPYTAXFLAG\tTENTAXFLAG\tCBNTAXFLAG\tFINTAXFLAG\tCURTAXFLAG" pluto_pts.txt
-
-              # Check number of rows
-              wc -l pluto_pts.txt
-
-              # Check number of columns
-              awk -F'\t' '{print NF; exit}' pluto_pts.txt
-
-              # Create PTS
-              psql $RECIPE_ENGINE -c "CREATE SCHEMA IF NOT EXISTS $TABLE_NAME;"
-              psql $RECIPE_ENGINE -c "DROP TABLE IF EXISTS $TABLE_NAME.\"$DATE\" CASCADE;"
-              psql $RECIPE_ENGINE -c "CREATE TABLE $TABLE_NAME.\"$DATE\" (PARID text, BORO text, BLOCK text, LOT text, EASE text, SUBIDENT_REUC text, RECTYPE text, AV_YEAR4 text, IDENT text, SUBIDENT text, ROLL_SECTION text, SECVOL text, PYMKTLAND text, PYMKTTOT text, PYACTLAND text, PYACTTOT text, PYACTEXTOT text, PYTRNLAND text, PYTRNTOT text, PYTRNEXTOT text, PYTXBTOT text, PYTXBEXTOT text, PYTAXCLASS text, TENMKTLAND text, TENMKTTOT text, TENACTLAND text, TENACTTOT text, TENACTEXTOT text, TENTRNLAND text, TENTRNTOT text, TENTRNEXTOT text, TENTXBTOT text, TENTXBEXTOT text, TENTAXCLASS text, CBNMKTLAND text, CBNMKTTOT text, CBNACTLAND text, CBNACTTOT text, CBNACTEXTOT text, CBNTRNLAND text, CBNTRNTOT text, CBNTRNEXTOT text, CBNTXBTOT text, CBNTXBEXTOT text, CBNTAXCLASS text, FINMKTLAND text, FINMKTTOT text, FINACTLAND text, FINACTTOT text, FINACTEXTOT text, FINTRNLAND text, FINTRNTOT text, FINTRNEXTOT text, FINTXBTOT text, FINTXBEXTOT text, FINTAXCLASS text, CURMKTLAND text, CURMKTTOT text, CURACTLAND text, CURACTTOT text, CURACTEXTOT text, CURTRNLAND text, CURTRNTOT text, CURTRNEXTOT text, CURTXBTOT text, CURTXBEXTOT text, CURTAXCLASS text, PERIOD text, NEWDROP text, NOAV text, VALREF text, BLDG_CLASS text, AV_OWNER text, ZONING text, HOUSENUM_LO text, HOUSENUM_HI text, STREET_NAME text, ZIP_CODE text, GEOSUPPORT_RC text, STCODE text, LOT_FRT text, LOT_DEP text, LOT_IRREG text, BLD_FRT text, BLD_DEP text, BLD_EXT text, BLD_STORY text, CORNER text, LAND_AREA text, NUM_BLDGS text, YRBUILT text, YRBUILT_RANGE text, YRBUILT_FLAG text, YRALT1 text, YRALT1_RANGE text, YRALT2 text, YRALT2_RANGE text, COOP_APTS text, UNITS text, REUC_REF text, APTNO text, COOP_NUM text, CPB_BORO text, CPB_DIST text, APPT_DATE text, APPT_BORO text, APPT_BLOCK text, APPT_LOT text, APPT_EASE text, CONDO_Number text, CONDO_SFX1 text, CONDO_SFX2 text, CONDO_SFX3 text, UAF_LAND text, UAF_BLDG text, PROTEST_1 text, PROTEST_2 text, PROTEST_OLD text, ATTORNEY_GROUP1 text, ATTORNEY_GROUP2 text, ATTORNEY_GROUP_OLD text, GROSS_SQFT text, HOTEL_AREA_GROSS text, OFFICE_AREA_GROSS text, RESIDENTIAL_AREA_GROSS text, RETAIL_AREA_GROSS text, LOFT_AREA_GROSS text, FACTORY_AREA_GROSS text, WAREHOUSE_AREA_GROSS text, STORAGE_AREA_GROSS text, GARAGE_AREA text, OTHER_AREA_GROSS text, REUC_DESCRIPTION text, EXTRACTDT text, PYTAXFLAG text, TENTAXFLAG text, CBNTAXFLAG text, FINTAXFLAG text,
-              CURTAXFLAG text);"
-              psql $RECIPE_ENGINE -c "\COPY $TABLE_NAME.\"$DATE\" FROM 'pluto_pts.txt' WITH NULL AS '' DELIMITER E'\t' quote '\"' CSV HEADER;"
-              psql $RECIPE_ENGINE -c "DROP VIEW IF EXISTS $TABLE_NAME.latest;"
-              psql $RECIPE_ENGINE -c "CREATE VIEW $TABLE_NAME.latest as (
-                SELECT 
-                  '$DATE' as v,
-                  boro,
-                  block,
-                  lot,
-                  street_name,
-                  housenum_lo,
-                  housenum_hi,
-                  aptno,
-                  zip_code,
-                  bldg_class,
-                  ease,
-                  av_owner,
-                  land_area,
-                  gross_sqft,
-                  residential_area_gross,
-                  office_area_gross,
-                  retail_area_gross,
-                  garage_area,
-                  storage_area_gross,
-                  factory_area_gross,
-                  other_area_gross,
-                  num_bldgs,
-                  bld_story,
-                  coop_apts,
-                  units,
-                  lot_frt,
-                  lot_dep,
-                  bld_frt,
-                  bld_dep,
-                  bld_ext,
-                  lot_irreg,
-                  curactland,
-                  curacttot,
-                  curactextot,
-                  yrbuilt,
-                  yralt1,
-                  yralt2,
-                  condo_number,
-                  appt_boro,
-                  appt_block,
-                  appt_lot,
-                  appt_ease,
-                  appt_date,
-                  parid
-                FROM $TABLE_NAME.\"$DATE\"
-              )";
-            )
-          
       - name: geocode pts
-        working-directory: pluto_build/python
-        run: python3 geocode.py
+        working-directory: pluto_build
+        run: ./pluto geocode pts
+      
+      - uses: NYCPlanning/action-library-archive@v1.1
+        id: pluto_input_geocodes
+        with:
+          name: pluto_input_geocodes
+          path: pluto_build/templates/pluto_input_geocodes.yml
+          s3: true
+          latest: true
+          compress: true
+          output_format: pgdump csv
+      
+      - name: clean up pts
+        shell: bash
+        working-directory: pluto_build
+        run: ./pluto clean pts
 
       - name: Comment on Issue and Close Issue
-        if: success()
+        if: success() && github.event_name == 'issues'
         uses: peter-evans/close-issue@v1
         with:
           issue-number: ${{ github.event.issue.number }}

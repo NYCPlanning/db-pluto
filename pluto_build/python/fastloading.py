@@ -13,7 +13,6 @@ def ETL(table):
 if __name__ == "__main__":
     tables = [
         "pluto_corrections",
-        "pluto_input_numbldgs",
         "dcp_edesignation",
         "dcp_colp",
         "lpc_historic_districts",
@@ -32,13 +31,6 @@ if __name__ == "__main__":
         "dcp_healthcenters",
         "dsny_frequencies",
         "dpr_greenthumb",
-
-        # PTS
-        "pluto_pts",
-        "pluto_input_geocodes",
-        
-        # raw CAMA data from DOF
-        "pluto_input_cama_dof",
         
         # raw Digital Tax Map from DOF
         "dof_dtm",

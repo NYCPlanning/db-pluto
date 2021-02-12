@@ -13,3 +13,4 @@ pluto_build/output/*.csv
 __pycache__/
 !example.env
 !version.env
+pluto_build/pts/
