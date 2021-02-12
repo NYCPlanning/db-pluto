@@ -1,8 +1,5 @@
 name: PTS processing
 on:
-  push: 
-    branches:
-      - "213-ssh"
   issues:
     types: [opened, edited]
 

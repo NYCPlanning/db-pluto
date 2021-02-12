@@ -5,7 +5,7 @@ on:
     types: [opened, edited]
 
 jobs:
-  process_pts:
+  process_cama:
     if: >-
       (
         contains(github.event.issue.title, '[cama]') && 
