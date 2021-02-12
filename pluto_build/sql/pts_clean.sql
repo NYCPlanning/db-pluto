@@ -84,7 +84,7 @@ SET BORO = b.boro,
 	-- June to January current values have the Final value from the prior year.
 	-- January to May current values contain the Tentative values.
 	-- After May current values contain the Final values.
-After May 25th (the date the final roll is released)  it will contain the final values
+	-- After May 25th (the date the final roll is released)  it will contain the final values
 	CURAVL_ACT = REPLACE(curactland, '+', '')::double precision,
 	-- pyactland
 	CURAVT_ACT = REPLACE(curacttot, '+', '')::double precision,
