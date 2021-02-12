@@ -1,6 +1,4 @@
 #!/bin/bash
-set -e;
-
 declare -a commands
 declare -a actions
 declare -a hints

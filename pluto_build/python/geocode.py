@@ -1,15 +1,11 @@
 from multiprocessing import Pool, cpu_count
-from utils.exporter import exporter
 from geosupport import Geosupport, GeosupportError
-from sqlalchemy import create_engine
 from datetime import date
 import pandas as pd
 import json
 import os
 
 g = Geosupport()
-engine = create_engine(os.getenv("RECIPE_ENGINE"))
-
 
 def get_address(bbl):
     try:
@@ -160,14 +156,7 @@ def parse_output(geo):
 
 
 if __name__ == "__main__":
-    df = pd.read_sql(
-    """
-        SELECT 
-            DISTINCT ON (boro, block, lot) boro, block, lot 
-        FROM pluto_pts.latest
-    """,
-        con=engine,
-    )
+    df = pd.read_csv('geocode_input_pluto_pts.csv', dtype=str, index_col=False)
     # get the row number
     records = df.to_dict("records")
 
@@ -181,33 +170,4 @@ if __name__ == "__main__":
     del it
     print(result.head())
 
-    table_name = f'pluto_input_geocodes."{date.today().strftime("%Y/%m/%d")}"'
-    exporter(result, table_name, con=engine, sep="~", null="")
-    del result
-
-    engine.execute(
-    f"""
-        ALTER TABLE {table_name}
-            ADD wkb_geometry geometry(Geometry,4326);
-
-        UPDATE {table_name}
-        SET wkb_geometry = ST_SetSRID(ST_Point(longitude::DOUBLE PRECISION,
-                            latitude::DOUBLE PRECISION), 4326),
-            xcoord = ST_X(ST_TRANSFORM(wkb_geometry, 2263)),
-            ycoord = ST_Y(ST_TRANSFORM(wkb_geometry, 2263));
-    """
-    )
-
-    engine.execute(
-    f"""
-        DROP VIEW IF EXISTS pluto_input_geocodes.latest;
-    """)
-    
-    engine.execute(
-    f"""
-        CREATE VIEW pluto_input_geocodes.latest as (
-            SELECT '{date.today().strftime("%Y/%m/%d")}' as v, * 
-            FROM {table_name}
-        );
-    """
-    )
+    result.to_csv('pluto_input_geocodes.csv', index=False)
