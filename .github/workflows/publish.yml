@@ -3,11 +3,6 @@ on:
   release:
     types:
       - published
-  push:
-    branches:
-      - 228-publish
-    tags:
-      - "*"
 
 jobs:
   version:
