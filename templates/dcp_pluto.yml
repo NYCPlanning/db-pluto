@@ -12,13 +12,13 @@ dataset:
       - X_POSSIBLE_NAMES=longitude,Longitude
       - Y_POSSIBLE_NAMES=latitude,Latitude
     geometry:
-      SRS: 4326
+      SRS: EPSG:4326
       type: POINT
 
   destination:
     name: *name
     geometry:
-      SRS: 4326
+      SRS: EPSG:4326
       type: POINT
     options:
       - "OVERWRITE=YES"
