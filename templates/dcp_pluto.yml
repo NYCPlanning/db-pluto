@@ -5,7 +5,7 @@ dataset:
   source:
     url:
       path: https://www1.nyc.gov/assets/planning/download/zip/data-maps/open-data/nyc_pluto_{{ version }}_csv.zip
-      subpath: ''
+      subpath: pluto_{{ version }}.csv
     options:
       - "AUTODETECT_TYPE=NO"
       - "EMPTY_STRING_AS_NULL=YES"
