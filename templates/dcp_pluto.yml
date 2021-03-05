@@ -7,17 +7,19 @@ dataset:
       path: https://www1.nyc.gov/assets/planning/download/zip/data-maps/open-data/nyc_pluto_{{ version }}_csv.zip
       subpath: pluto_{{ version }}.csv
     options:
-      - "AUTODETECT_TYPE=NO"
-      - "EMPTY_STRING_AS_NULL=YES"
+      - AUTODETECT_TYPE=NO
+      - EMPTY_STRING_AS_NULL=YES
+      - X_POSSIBLE_NAMES=longitude,Longitude
+      - Y_POSSIBLE_NAMES=latitude,Latitude
     geometry:
-      SRS: null
-      type: None
+      SRS: 4326
+      type: POINT
 
   destination:
     name: *name
     geometry:
-      SRS: null
-      type: None
+      SRS: 4326
+      type: POINT
     options:
       - "OVERWRITE=YES"
       - "PRECISION=NO"
