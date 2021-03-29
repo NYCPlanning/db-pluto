@@ -25,7 +25,7 @@ def get_bbl(inputs):
 
 def get_bins():
     # https://data.cityofnewyork.us/Housing-Development/Building-Footprints/nqwf-w8eh
-    url='https://data.cityofnewyork.us/resource/d76f-2xd5.csv'
+    url='https://data.cityofnewyork.us/resource/h5ib-n2jf.csv'
     headers = {'X-App-Token':os.environ['API_TOKEN']}
     params = {
                 '$select':'bin', 
