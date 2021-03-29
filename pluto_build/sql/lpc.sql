@@ -30,7 +30,7 @@
 WITH histdistricts AS (
 	SELECT bbl, hist_dist 
 	FROM (
-		SELECT bbl,hist_dist, ROW_NUMBER()
+		SELECT bbl, hist_dist, ROW_NUMBER()
     	OVER (PARTITION BY bbl
       	ORDER BY hist_dist) AS row_number
   		FROM lpc_historic_districts
@@ -49,9 +49,13 @@ WITH landmarks AS (
       OVER (PARTITION BY bbl
         ORDER BY lm_type) AS row_number 
       FROM (
-            SELECT DISTINCT bbl,lm_type 
+            SELECT DISTINCT bbl, lm_type 
             FROM lpc_landmarks 
-            WHERE (lm_type = 'Interior Landmark' OR lm_type = 'Individual Landmark')) x ),
+            WHERE (lm_type = 'Interior Landmark' OR lm_type = 'Individual Landmark')
+            AND status = 'DESIGNATED'
+            AND most_curre = '1'
+            AND (last_actio = 'DESIGNATED' OR last_actio = 'DESIGNATED (AMENDMENT/MODIFICATION ACCEPTED)')
+            ) x ),
 maxnum AS (
   SELECT bbl, max(row_number) as maxrow_number FROM landmarks GROUP BY bbl)
 
