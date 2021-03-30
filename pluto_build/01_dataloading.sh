@@ -41,6 +41,7 @@ import dcp_zoningmapamendments &
 import dcp_zoningmapindex &
 
 # Import other
+import dcp_plutocorrections &
 import dpr_greenthumb &
 import dsny_frequencies &
 import lpc_historic_districts &

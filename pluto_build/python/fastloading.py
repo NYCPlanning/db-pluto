@@ -12,7 +12,6 @@ def ETL(table):
 
 if __name__ == "__main__":
     tables = [
-        "pluto_corrections",
         # for spatial joins
         "doitt_zipcodeboundaries",
         # FEMA 2007 and preliminary 2015 100 year flood zones
