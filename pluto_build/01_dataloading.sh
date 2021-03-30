@@ -26,6 +26,7 @@ import dcp_censusblocks &
 import dcp_schooldistricts &
 import dcp_firecompanies &
 import dcp_policeprecincts &
+import dcp_councildistricts &
 import dcp_healthareas &
 import dcp_healthcenters &
 import dof_shoreline &
@@ -40,6 +41,10 @@ import dcp_zoningmapamendments &
 import dcp_zoningmapindex &
 
 # Import other
+import dpr_greenthumb &
+import dsny_frequencies &
+import lpc_historic_districts &
+import lpc_landmarks &
 import dcp_colp &
 import dof_dtm &
 import dof_condo
