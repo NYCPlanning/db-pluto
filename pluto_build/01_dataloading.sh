@@ -19,6 +19,7 @@ import pluto_input_numbldgs &
 import pluto_input_geocodes &
 
 # Import spatial bounaries from data library
+import dcp_edesignation &
 import dcp_cdboundaries &
 import dcp_censustracts &
 import dcp_censusblocks &
