@@ -13,7 +13,6 @@ def ETL(table):
 if __name__ == "__main__":
     tables = [
         "pluto_corrections",
-        "dcp_edesignation",
         "lpc_historic_districts",
         "lpc_landmarks",
 
