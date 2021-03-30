@@ -13,12 +13,8 @@ def ETL(table):
 if __name__ == "__main__":
     tables = [
         "pluto_corrections",
-        "lpc_landmarks",
-
         # for spatial joins
         "doitt_zipcodeboundaries",
-        "dsny_frequencies",
-        
         # FEMA 2007 and preliminary 2015 100 year flood zones
         "fema_firms2007_100yr",
         "fema_pfirms2015_100yr"
