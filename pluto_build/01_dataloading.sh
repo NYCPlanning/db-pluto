@@ -23,7 +23,7 @@ import dcp_edesignation &
 import dcp_cdboundaries &
 import dcp_censustracts &
 import dcp_censusblocks &
-import dcp_schooldistricts &
+import dcp_school_districts &
 import dcp_firecompanies &
 import dcp_policeprecincts &
 import dcp_councildistricts &
