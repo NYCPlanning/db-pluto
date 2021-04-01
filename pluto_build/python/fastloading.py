@@ -12,44 +12,8 @@ def ETL(table):
 
 if __name__ == "__main__":
     tables = [
-        "pluto_corrections",
-        "dcp_edesignation",
-        "dcp_colp",
-        "lpc_historic_districts",
-        "lpc_landmarks",
-
         # for spatial joins
-        "dcp_cdboundaries",
-        "dcp_censustracts",
-        "dcp_censusblocks",
-        "dcp_school_districts",
-        "dcp_councildistricts",
         "doitt_zipcodeboundaries",
-        "dcp_firecompanies",
-        "dcp_policeprecincts",
-        "dcp_healthareas",
-        "dcp_healthcenters",
-        "dsny_frequencies",
-        "dpr_greenthumb",
-        
-        # raw Digital Tax Map from DOF
-        "dof_dtm",
-        
-        # raw NYC shoreline file from DOF
-        "dof_shoreline",
-        
-        # raw DOF condo table
-        "dof_condo",
-        
-        # DCP zoning datasets~
-        "dcp_commercialoverlay",
-        "dcp_limitedheight",
-        "dcp_zoningdistricts",
-        "dcp_specialpurpose",
-        "dcp_specialpurposesubdistricts",
-        "dcp_zoningmapamendments",
-        "dcp_zoningmapindex",
-        
         # FEMA 2007 and preliminary 2015 100 year flood zones
         "fema_firms2007_100yr",
         "fema_pfirms2015_100yr"
