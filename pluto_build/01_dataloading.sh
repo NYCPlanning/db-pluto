@@ -30,6 +30,9 @@ import dcp_councildistricts &
 import dcp_healthareas &
 import dcp_healthcenters &
 import dof_shoreline &
+import doitt_zipcodeboundaries &
+import fema_firms2007_100yr &
+import fema_pfirms2015_100yr &
 
 # Import zoning files from data library
 import dcp_commercialoverlay &
@@ -52,14 +55,7 @@ import dof_condo
 
 wait
 
-## load data into the pluto db
-docker run --rm\
-    -v $(pwd)/python:/home/python\
-    -w /home/python\
-    -e BUILD_ENGINE=$BUILD_ENGINE\
-    -e RECIPE_ENGINE=$RECIPE_ENGINE\
-    sptkl/cook:latest python3 fastloading.py
-
+## Load local CSV files
  psql $BUILD_ENGINE -c "
  DROP TABLE IF EXISTS pluto_input_research;
  CREATE TABLE pluto_input_research (
