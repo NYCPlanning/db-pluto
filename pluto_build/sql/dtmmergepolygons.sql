@@ -9,7 +9,7 @@ ALTER TABLE pluto_dtm ADD COLUMN primebbl text;
 UPDATE pluto_dtm
 SET primebbl = condo_bill
 FROM pluto_condo
-WHERE bbl=condo_base
+WHERE bbl=condo_base_bbl
 AND condo_bill IS NOT NULL;
 
 -- create merged geometries for condo records
