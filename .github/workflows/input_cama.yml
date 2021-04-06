@@ -52,6 +52,7 @@ jobs:
           mc config host add spaces $AWS_S3_ENDPOINT $AWS_ACCESS_KEY_ID $AWS_SECRET_ACCESS_KEY --api S3v4
 
       - name: process CAMA
+        id: processing
         shell: bash
         working-directory: pluto_build
         run: ./pluto import cama
@@ -61,6 +62,7 @@ jobs:
         with:
           name: pluto_input_cama_dof
           path: pluto_build/templates/pluto_input_cama_dof.yml
+          version: ${{ steps.processing.outputs.version }}
           s3: true
           latest: true
           compress: true
