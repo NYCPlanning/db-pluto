@@ -10,8 +10,8 @@ WHERE id IN (
     SELECT id
     FROM (
         SELECT id,
-        ROW_NUMBER() OVER( PARTITION BY condo_base,condo_bill
-        ORDER BY  condo_base,condo_bill ) AS row_num
+        ROW_NUMBER() OVER( PARTITION BY condo_base_bbl,condo_bill
+        ORDER BY  condo_base_bbl,condo_bill ) AS row_num
         FROM pluto_condo ) t
         WHERE t.row_num > 1 );
 
@@ -21,8 +21,8 @@ WHERE id IN (
     SELECT id 
     FROM (
         SELECT id,
-        ROW_NUMBER() OVER(PARTITION BY condo_base
-        ORDER BY condo_base) AS row_num
+        ROW_NUMBER() OVER(PARTITION BY condo_base_bbl
+        ORDER BY condo_base_bbl) AS row_num
         FROM pluto_condo) t
         WHERE t.row_num > 1)
 AND condo_bill IS NULL;
@@ -33,8 +33,8 @@ WHERE id IN (
     SELECT id 
     FROM (
         SELECT id,
-        ROW_NUMBER() OVER(PARTITION BY condo_base
-        ORDER BY condo_base) AS row_num
+        ROW_NUMBER() OVER(PARTITION BY condo_base_bbl
+        ORDER BY condo_base_bbl) AS row_num
         FROM pluto_condo) t
         WHERE t.row_num > 1)
 AND condo_bill NOT IN (SELECT DISTINCT billingbbl 
