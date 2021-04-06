@@ -43,7 +43,7 @@ We want to make PLUTO most useful and accurate for its users, so open an [issue]
 3. If you would like to update PTS, geocoded PTS and CAMA, in order to trigger data ingestion for them, include `[pts]` or `[cama]` or both (`[pts] [cama]`) to trigger a data ingestion workflow
 
 #### II. Build PLUTO on Your Own Machine
-1. make sure you have [__Docker__](https://docs.docker.com/install/), [__psql__](https://packages.debian.org/sid/postgresql-client-common) installed
+1. make sure you have [__psql__](https://packages.debian.org/sid/postgresql-client-common) installed
 2. `./01_dataloading.sh` : load all input data into build environment
 3.  `./02_build.sh` : Build PLUTO and MapPLUTO.
 4.  `./03_corrections.sh` : Apply pluto research corrections
