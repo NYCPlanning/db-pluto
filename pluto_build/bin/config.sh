@@ -94,14 +94,14 @@ register 'run' 'sql' 'run pluto sql script' run
 
 function get_latest_version {
   name=$1
-  latest_version=$(curl $s3_endpoint/$s3_bucket/datasets/$1/latest/config.json |  jq -r '.dataset.version')
+  latest_version=$(curl -s $s3_endpoint/$s3_bucket/datasets/$1/latest/config.json |  jq -r '.dataset.version')
 }
 
 function import {
   name=$1
   get_latest_version $name
   url="$s3_endpoint/$s3_bucket/datasets/$name/$latest_version/$name.sql"
-  curl -O $url
+  curl -s -O $url
   psql --quiet $BUILD_ENGINE -f $name.sql
   psql -1 $BUILD_ENGINE -c "ALTER TABLE $name ADD COLUMN v text; UPDATE $name SET v = '$latest_version';"
   rm $name.sql
