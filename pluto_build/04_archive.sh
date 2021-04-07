@@ -81,6 +81,7 @@ psql $EDM_DATA \
 # QAQC NULL ANALYSIS
 psql $EDM_DATA \
   -v VERSION=$VERSION \
+  -v VERSION_PREV=$VERSION_PREV \
   -v CONDO='TRUE' \
   -v MAPPED='FALSE'\
   -v CONDITION="WHERE right(bbl::bigint::text, 4) LIKE '75%%'" \
@@ -88,6 +89,7 @@ psql $EDM_DATA \
 
 psql $EDM_DATA \
   -v VERSION=$VERSION \
+  -v VERSION_PREV=$VERSION_PREV \
   -v CONDO='TRUE' \
   -v MAPPED='TRUE'\
   -v CONDITION="WHERE right(bbl::bigint::text, 4) LIKE '75%%' AND a.geom IS NOT NULL" \
@@ -95,6 +97,7 @@ psql $EDM_DATA \
 
 psql $EDM_DATA \
   -v VERSION=$VERSION \
+  -v VERSION_PREV=$VERSION_PREV \
   -v CONDO='FALSE' \
   -v MAPPED='FALSE'\
   -v CONDITION="" \
@@ -102,6 +105,7 @@ psql $EDM_DATA \
 
 psql $EDM_DATA \
   -v VERSION=$VERSION \
+  -v VERSION_PREV=$VERSION_PREV \
   -v CONDO='FALSE' \
   -v MAPPED='TRUE'\
   -v CONDITION="WHERE a.geom IS NOT NULL" \
