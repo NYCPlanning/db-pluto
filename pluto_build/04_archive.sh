@@ -84,7 +84,7 @@ psql $EDM_DATA \
   -v VERSION_PREV=$VERSION_PREV \
   -v CONDO='TRUE' \
   -v MAPPED='FALSE'\
-  -v CONDITION="WHERE right(bbl::bigint::text, 4) LIKE '75%%'" \
+  -v CONDITION="WHERE right(a.bbl::bigint::text, 4) LIKE '75%%'" \
   -f sql/qaqc_null.sql &
 
 psql $EDM_DATA \
@@ -92,7 +92,7 @@ psql $EDM_DATA \
   -v VERSION_PREV=$VERSION_PREV \
   -v CONDO='TRUE' \
   -v MAPPED='TRUE'\
-  -v CONDITION="WHERE right(bbl::bigint::text, 4) LIKE '75%%' AND a.geom IS NOT NULL" \
+  -v CONDITION="WHERE right(a.bbl::bigint::text, 4) LIKE '75%%' AND a.geom IS NOT NULL" \
   -f sql/qaqc_null.sql &
 
 psql $EDM_DATA \
