@@ -10,6 +10,7 @@ from io import StringIO
 
 g = Geosupport()
 
+
 def get_bbl(inputs):
     BIN = inputs["bin"]
     try:
@@ -23,19 +24,24 @@ def get_bbl(inputs):
     bbl = geo["BOROUGH BLOCK LOT (BBL)"]["BOROUGH BLOCK LOT (BBL)"]
     return {"bin": BIN, "bbl": bbl}
 
-def get_bins():
+
+def get_bins(uid):
     # https://data.cityofnewyork.us/Housing-Development/Building-Footprints/nqwf-w8eh
-    url='https://data.cityofnewyork.us/resource/h5ib-n2jf.csv'
-    headers = {'X-App-Token':os.environ['API_TOKEN']}
+    url = f'https://data.cityofnewyork.us/resource/{uid}.csv'
+    headers = {'X-App-Token': os.environ['API_TOKEN']}
     params = {
-                '$select':'bin', 
-                '$limit':50000000000000000
-            }
+        '$select': 'bin',
+        '$limit': 50000000000000000
+    }
     r = requests.get(f"{url}", headers=headers, params=params)
     return pd.read_csv(StringIO(r.text), index_col=False, dtype=str)
 
+
 if __name__ == "__main__":
-    df = get_bins()
+    metadata = requests.get(
+        "https://data.cityofnewyork.us/api/views/nqwf-w8eh").json()
+    uid = metadata["childViews"][1]
+    df = get_bins(uid)
     with Pool(processes=cpu_count()) as pool:
         it = pool.map(get_bbl, df.to_dict("records"), 100000)
     dff = pd.DataFrame(it)
