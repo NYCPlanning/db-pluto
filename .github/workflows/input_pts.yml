@@ -2,10 +2,12 @@ name: PTS processing
 on:
   issues:
     types: [opened, edited]
+  workflow_dispatch:
 
 jobs:
   process_pts:
     if: >-
+      github.event_name == 'workflow_dispatch' ||
       (
         contains(github.event.issue.title, '[pts]') && 
         ( 

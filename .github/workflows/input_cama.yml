@@ -1,12 +1,14 @@
 name: CAMA Processing
 
 on:
+  workflow_dispatch:
   issues:
     types: [opened, edited]
 
 jobs:
   process_cama:
     if: >-
+      github.event_name == 'workflow_dispatch' ||
       (
         contains(github.event.issue.title, '[cama]') && 
         ( 
