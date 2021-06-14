@@ -115,11 +115,24 @@ SET bldgarea = bldgareasum
 FROM bldgareasums b
 WHERE a.bbl=b.primebbl;
 
+-- unit fields
+WITH primesumunits AS (
+	SELECT primebbl,
+	SUM(coop_apts::integer) as unitsres,
+	SUM(units::integer) as unitstotal
+	FROM pluto_rpad_geo b
+	WHERE b.tl NOT LIKE '75%'
+	GROUP BY primebbl)
+
+UPDATE pluto_allocated a
+SET unitsres = b.unitsres,
+	unitstotal = b.unitstotal
+FROM primesumunits b
+WHERE a.bbl=b.primebbl;
+
 -- $ fields
 WITH primesums AS (
 	SELECT primebbl,
-	SUM(coop_apts::integer) as unitsres,
-	SUM(units::integer) as unitstotal,
 	SUM(curavl_act::double precision) as assessland,
 	SUM(curavt_act::double precision) as assesstot,
 	-- field no longer exists
@@ -129,9 +142,7 @@ WITH primesums AS (
 	GROUP BY primebbl)
 
 UPDATE pluto_allocated a
-SET unitsres = b.unitsres,
-	unitstotal = b.unitstotal,
-	assessland = b.assessland,
+SET assessland = b.assessland,
 	assesstot = b.assesstot,
 	-- exemptland = b.exemptland,
 	exempttot = b.exempttot
