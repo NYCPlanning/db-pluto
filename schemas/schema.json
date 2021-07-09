@@ -8,7 +8,7 @@
         "name": "borough",
         "type": "STRING",
         "description": "The borough in which the tax lot is located"
-      },
+    },
     {
         "name": "block",
         "type": "INTEGER",
