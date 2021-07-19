@@ -1,6 +1,7 @@
 #!/bin/bash
 function upload_to_bigquery {
     local dataset=${1:-dcp_mappluto}
+    local schema=${2:-$dataset}
     FILEPATH=$dataset/$VERSION/$dataset.csv
     echo https://nyc3.digitaloceanspaces.com/edm-recipes/datasets/$FILEPATH
     curl -O https://nyc3.digitaloceanspaces.com/edm-recipes/datasets/$FILEPATH
@@ -21,7 +22,7 @@ function upload_to_bigquery {
         --allow_quoted_newlines\
         $tablename \
         gs://edm-temporary/$FILEPATH \
-        ../schemas/$dataset.json
+        ../schemas/$schema.json
 }
 
 register 'bq' 'publish' 'publish to bigquery' upload_to_bigquery
