@@ -172,7 +172,7 @@
     {
         "description": "The number of buildings on the tax lot.",
         "name": "numbldgs",
-        "type": "INTEGER"
+        "type": "FLOAT"
     },
     {
         "description": "In the tallest building on the tax lot, the number of full and partial stories starting from the ground floor.",
@@ -182,12 +182,12 @@
     {
         "description": "The sum of residential units in all buildings on the tax lot.",
         "name": "unitsres",
-        "type": "INTEGER"
+        "type": "FLOAT"
     },
     {
         "description": "The sum of residential and non-residential (offices, retail sotres, etc.) units in all buildings on the tax lot.",
         "name": "unitstotal",
-        "type": "INTEGER"
+        "type": "FLOAT"
     },
     {
         "description": "The tax lot's frontage measured in feet.",
@@ -282,7 +282,7 @@
     {
         "description": "The borough the tax lot is located in.",
         "name": "borocode",
-        "type": "INTEGER"
+        "type": "FLOAT"
     },
     {
         "description": "",
