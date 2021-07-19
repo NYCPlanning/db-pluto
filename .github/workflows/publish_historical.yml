@@ -19,7 +19,6 @@ jobs:
       - uses: actions/checkout@v2
       - uses: NYCPlanning/action-library-archive@v1.1
         with:
-          name: dcp_mappluto
           path: templates/dcp_mappluto_historical.yml
           s3: true
           latest: true
