@@ -41,6 +41,7 @@ jobs:
     runs-on: ubuntu-20.04
     if: always() && github.event.inputs.bq == 'yes'
     steps:
+      - uses: actions/checkout@v2
       - name: Set up Cloud SDK
         uses: google-github-actions/setup-gcloud@master
         with:
