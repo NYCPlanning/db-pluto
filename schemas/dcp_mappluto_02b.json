@@ -12,12 +12,12 @@
     {
         "description": "The tax block in which the tax lot is located. Each tax block is unique within a borough (see BOROUGH).",
         "name": "block",
-        "type": "INTEGER"
+        "type": "FLOAT"
     },
     {
         "description": "The number of the tax lot. Each tax lot is unique within a tax block (see BLOCK).",
         "name": "lot",
-        "type": "INTEGER"
+        "type": "FLOAT"
     },
     {
         "description": "",
