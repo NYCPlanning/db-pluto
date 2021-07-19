@@ -172,7 +172,7 @@
     {
         "description": "The number of buildings on the tax lot.",
         "name": "numbldgs",
-        "type": "INTEGER"
+        "type": "FLOAT"
     },
     {
         "description": "In the tallest building on the tax lot, the number of full and partial stories starting from the ground floor.",
