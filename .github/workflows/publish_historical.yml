@@ -35,6 +35,4 @@ jobs:
           
       - name: Upload to BigQuery
         working-directory: pluto_build
-        env: 
-          VERSION: ${{ github.event.inputs.version }}
-        run: ./pluto bq publish dcp_mappluto dcp_mappluto_$VERSION.json
+        run: ./pluto bq publish_historical dcp_mappluto ${{ github.event.inputs.version }}
