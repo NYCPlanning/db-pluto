@@ -31,7 +31,7 @@ jobs:
         with:
           path: templates/dcp_mappluto_historical.yml
           s3: true
-          latest: true
+          latest: false
           compress: true
           output_format: pgdump csv shapefile
           version: ${{ github.event.inputs.version }}
