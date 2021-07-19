@@ -27,7 +27,7 @@ function upload_to_bigquery {
 
 register 'bq' 'publish' 'publish to bigquery' upload_to_bigquery
 
-function upload_to_bigquery_historical{
+function upload_to_bigquery_historical {
     local dataset=${1:-dcp_mappluto}
     local version=${2:-$dataset}
     local schemafile=dcp_mappluto_$version.json
