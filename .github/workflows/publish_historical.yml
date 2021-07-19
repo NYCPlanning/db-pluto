@@ -15,8 +15,9 @@ on:
         required: false
         default: 'yes'
 jobs:
-  publish:
-    name: publishing
+  library:
+    name: load to data library
+    if: github.event.inputs.library == 'yes'
     runs-on: ubuntu-20.04
     env:
       AWS_S3_ENDPOINT: ${{ secrets.DO_S3_ENDPOINT }}
@@ -26,7 +27,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - uses: NYCPlanning/action-library-archive@v1.1
-        if: ${{ github.event.inputs.library }} == 'yes'
+        if: github.event.inputs.library == 'yes'
         with:
           path: templates/dcp_mappluto_historical.yml
           s3: true
@@ -34,16 +35,19 @@ jobs:
           compress: true
           output_format: pgdump csv shapefile
           version: ${{ github.event.inputs.version }}
-
+  bq:
+    name: load to bigquery
+    needs: library
+    runs-on: ubuntu-20.04
+    if: always() && github.event.inputs.bq == 'yes'
+    steps:
       - name: Set up Cloud SDK
         uses: google-github-actions/setup-gcloud@master
-        if: ${{ github.event.inputs.bq }} == 'yes'
         with:
           project_id: ${{ secrets.GCP_PROJECT_ID_DATA_ENGINEERING }}
           service_account_key: ${{ secrets.GCP_GCS_BQ_SA_KEY }}
           export_default_credentials: true
           
       - name: Upload to BigQuery
-        if: ${{ github.event.inputs.bq }} == 'yes'
         working-directory: pluto_build
         run: ./pluto bq publish_historical dcp_mappluto ${{ github.event.inputs.version }}
