@@ -385,26 +385,12 @@
         "type": "STRING"
     },
     {
-        "name": "shape_leng",
-        "type": "FLOAT"
-    },
-    {
         "name": "shape_area",
         "type": "FLOAT"
     },
     {
         "description": "",
         "name": "shape_len",
-        "type": "STRING"
-    },
-    {
-        "description": "",
-        "name": "layer",
-        "type": "STRING"
-    },
-    {
-        "description": "",
-        "name": "path",
         "type": "STRING"
     }
 ]
