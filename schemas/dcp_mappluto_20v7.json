@@ -1,6 +1,6 @@
 [
     {
-        "description": "The borough in which the tax lot is located",
+        "description": "The borough in which the tax lot is located.",
         "name": "borough",
         "type": "STRING"
     },
