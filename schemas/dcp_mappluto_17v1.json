@@ -441,15 +441,5 @@
     {
         "name": "shape_area",
         "type": "FLOAT"
-    },
-    {
-        "description": "",
-        "name": "layer",
-        "type": "STRING"
-    },
-    {
-        "description": "",
-        "name": "path",
-        "type": "STRING"
     }
 ]
