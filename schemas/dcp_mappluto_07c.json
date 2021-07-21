@@ -387,15 +387,5 @@
         "description": "",
         "name": "shape_len",
         "type": "STRING"
-    },
-    {
-        "description": "",
-        "name": "layer",
-        "type": "STRING"
-    },
-    {
-        "description": "",
-        "name": "path",
-        "type": "STRING"
     }
 ]
