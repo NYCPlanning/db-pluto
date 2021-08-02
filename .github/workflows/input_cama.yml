@@ -2,20 +2,11 @@ name: CAMA Processing
 
 on:
   workflow_dispatch:
-  issues:
-    types: [opened, edited]
+  schedule:
+    - cron: 0 13 * * MON
 
 jobs:
   process_cama:
-    if: >-
-      github.event_name == 'workflow_dispatch' ||
-      (
-        contains(github.event.issue.title, '[cama]') && 
-        ( 
-          github.event.issue.author_association == 'CONTRIBUTOR' || 
-          github.event.issue.author_association == 'MEMBER' 
-        )
-      )
     runs-on: ubuntu-20.04
     services:
       postgres:
@@ -74,16 +65,3 @@ jobs:
         shell: bash
         working-directory: pluto_build
         run: ./pluto clean cama
-
-      - name: Comment on Issue and Close Issue
-        if: success() && github.event_name == 'issues'
-        uses: peter-evans/close-issue@v1
-        with:
-          issue-number: ${{ github.event.issue.number }}
-          body: |
-            ## ${{ github.event.issue.title }} Is Successfully Updated! 🎉
-            
-            ### More Info
-            for more details, check https://github.com/NYCPlanning/db-pluto/actions/runs/${{ github.run_id }}
-          
-          reactions: laugh, rocket, hooray
