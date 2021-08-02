@@ -1,4 +1,4 @@
-name: PTS processing
+name: 📁 PTS processing
 on:
   schedule:
     - cron: 0 13 * * MON

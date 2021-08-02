@@ -1,4 +1,4 @@
-name: CAMA Processing
+name: 📁 CAMA Processing
 
 on:
   workflow_dispatch:

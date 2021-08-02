@@ -1,4 +1,4 @@
-name: NumBldgs processing
+name: 📁 NumBldgs processing
 
 on:
   schedule:

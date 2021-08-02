@@ -1,4 +1,4 @@
-name: CI
+name: 🏗️ CI
 
 on:
   issue_comment:

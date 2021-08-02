@@ -1,4 +1,4 @@
-name: Publish - Historical MapPLUTO
+name: 🚀 Publish - Historical MapPLUTO
 on:
   workflow_dispatch:
     inputs:
