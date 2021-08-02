@@ -1,21 +1,12 @@
 name: NumBldgs processing
 
 on:
-  issues:
-    types: [opened, edited]
+  schedule:
+    - cron: 0 13 * * MON
   workflow_dispatch:
 
 jobs:
   process_numbldgs:
-    if: >- 
-      github.event_name == 'workflow_dispatch' ||
-      (
-        contains(github.event.issue.title, '[numbldgs]') && 
-        ( 
-          github.event.issue.author_association == 'CONTRIBUTOR' || 
-          github.event.issue.author_association == 'MEMBER' 
-        )
-      )
     runs-on: ubuntu-20.04
     env:
       AWS_S3_ENDPOINT: ${{ secrets.DO_S3_ENDPOINT }}
@@ -49,16 +40,3 @@ jobs:
       - name: clean numbldgs
         working-directory: pluto_build
         run: ./pluto clean numbldgs
-
-      - name: Comment on Issue and Close Issue
-        if: success() && github.event_name == 'issues'
-        uses: peter-evans/close-issue@v1
-        with:
-          issue-number: ${{ github.event.issue.number }}
-          body: |
-            ## ${{ github.event.issue.title }} Is Successfully Updated! 🎉
-            
-            ### More Info
-            for more details, check https://github.com/NYCPlanning/db-pluto/actions/runs/${{ github.run_id }}
-          
-          reactions: laugh, rocket, hooray
