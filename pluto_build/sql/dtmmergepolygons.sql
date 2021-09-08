@@ -7,10 +7,10 @@ ALTER TABLE pluto_dtm ADD COLUMN primebbl text;
 -- Set the prime bbl as the billing bbl for condo lots
 -- using the pluto condo table
 UPDATE pluto_dtm
-SET primebbl = condo_billing_bbl
+SET primebbl = condo_bill
 FROM pluto_condo
-WHERE bbl=condo_base_bbl
-AND condo_billing_bbl IS NOT NULL;
+WHERE bbl=condo_base
+AND condo_bill IS NOT NULL;
 
 -- create merged geometries for condo records
 DROP TABLE IF EXISTS pluto_dtm_condosmerged;
