@@ -26311,3 +26311,7 @@ bbl,field,old_value,new_value,Type,reason,version
 1019570140,cd,110,109,2,Geosupport returns incorrect CD for boundary park -- addresses are across the street,20v5
 3015350039,unitsres,6,5,2,DOB CO says 5 units,21v3
 3015350039,unitstotal,6,5,2,DOB CO says 5 units,21v3
+4049780025,cd,401,407,2,addresses on lot return different values for CD,21v3
+1008860030,cd,105,106,2,addresses on lot return different values for CD,21v3
+1008720057,cd,105,106,2,addresses on lot return different values for CD,21v3
+1008660025,cd,105,106,2,addresses on lot return different values for CD,21v3
