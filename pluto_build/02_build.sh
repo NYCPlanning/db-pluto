@@ -4,7 +4,6 @@ source bin/config.sh
 echo "Starting to build PLUTO ..."
 psql $BUILD_ENGINE -f sql/preprocessing.sql
 psql $BUILD_ENGINE -f sql/pts_clean.sql
-psql $BUILD_ENGINE -c "DROP TABLE pluto_pts;"
 psql $BUILD_ENGINE -f sql/create_rpad_geo.sql
 
 echo 'Reporting records that did not get geocoded...'
@@ -36,7 +35,6 @@ psql $BUILD_ENGINE -f sql/condono.sql
 echo 'Adding on CAMA data attributes'
 psql $BUILD_ENGINE -f sql/landuse.sql
 psql $BUILD_ENGINE -f sql/create_cama_primebbl.sql
-psql $BUILD_ENGINE -c "DROP TABLE pluto_input_cama_dof;"
 
 psql $BUILD_ENGINE -f sql/cama_bsmttype.sql
 psql $BUILD_ENGINE -f sql/cama_lottype.sql
@@ -46,7 +44,6 @@ psql $BUILD_ENGINE -f sql/cama_bldgarea_2.sql
 psql $BUILD_ENGINE -f sql/cama_bldgarea_3.sql
 psql $BUILD_ENGINE -f sql/cama_bldgarea_4.sql
 psql $BUILD_ENGINE -f sql/cama_easements.sql
-psql $BUILD_ENGINE -c "DROP TABLE pluto_input_geocodes;"
 
 echo 'Adding on data attributes from other sources'
 psql $BUILD_ENGINE -f sql/lpc.sql
@@ -83,7 +80,6 @@ psql $BUILD_ENGINE -f sql/zoning_parks.sql
 psql $BUILD_ENGINE -f sql/zoning_correctdups.sql
 psql $BUILD_ENGINE -f sql/zoning_correctgaps.sql
 psql $BUILD_ENGINE -f sql/zoning_splitzone.sql
-psql $BUILD_ENGINE -c "DROP TABLE dof_dtm;"
 psql $BUILD_ENGINE -c "VACUUM ANALYZE pluto;"
 
 echo 'Filling in FAR values'
@@ -116,10 +112,6 @@ psql $BUILD_ENGINE -c "VACUUM ANALYZE dof_shoreline_subdivide;"
 psql $BUILD_ENGINE -v ON_ERROR_STOP=1 -f sql/plutomapid_1.sql
 psql $BUILD_ENGINE -v ON_ERROR_STOP=1 -f sql/plutomapid_2.sql
 psql $BUILD_ENGINE -f sql/shorelineclip.sql
-
-# echo 'Backfilling'
-# psql $BUILD_ENGINE -v ON_ERROR_STOP=1 -f sql/backfill.sql
-# psql $BUILD_ENGINE -c "VACUUM ANALYZE pluto;"
 
 echo 'Done'
 exit 0
