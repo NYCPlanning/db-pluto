@@ -12,46 +12,48 @@ BEGIN
 END \$\$;
 "
 
-# Import PTS and CAMA from data library
-import pluto_pts &
-import pluto_input_cama_dof &
-import pluto_input_numbldgs &
-import pluto_input_geocodes &
+# import_public PTS and CAMA from data library
+import_public pluto_pts &
+import_public pluto_input_cama_dof &
+import_public pluto_input_numbldgs &
+# import_public pluto_input_geocodes &
 
-# Import spatial bounaries from data library
-import dcp_edesignation &
-import dcp_cdboundaries &
-import dcp_censustracts &
-import dcp_censusblocks &
-import dcp_school_districts &
-import dcp_firecompanies &
-import dcp_policeprecincts &
-import dcp_councildistricts &
-import dcp_healthareas &
-import dcp_healthcenters &
-import dof_shoreline &
-import doitt_zipcodeboundaries &
-import fema_firms2007_100yr &
-import fema_pfirms2015_100yr &
+# import_public spatial bounaries from data library
+import_public dcp_edesignation &
+import_public dcp_cdboundaries &
+import_public dcp_cb2010_wi &
+import_public dcp_ct2010_wi &
+import_public dcp_cb2020_wi &
+import_public dcp_ct2020_wi &
+import_public dcp_school_districts &
+import_public dcp_firecompanies &
+import_public dcp_policeprecincts &
+import_public dcp_councildistricts &
+import_public dcp_healthareas &
+import_public dcp_healthcenters &
+import_public dof_shoreline &
+import_public doitt_zipcodeboundaries &
+import_public fema_firms2007_100yr &
+import_public fema_pfirms2015_100yr &
 
-# Import zoning files from data library
-import dcp_commercialoverlay &
-import dcp_limitedheight &
-import dcp_zoningdistricts &
-import dcp_specialpurpose &
-import dcp_specialpurposesubdistricts &
-import dcp_zoningmapamendments &
-import dcp_zoningmapindex &
+# import_public zoning files from data library
+import_public dcp_commercialoverlay &
+import_public dcp_limitedheight &
+import_public dcp_zoningdistricts &
+import_public dcp_specialpurpose &
+import_public dcp_specialpurposesubdistricts &
+import_public dcp_zoningmapamendments &
+import_public dcp_zoningmapindex &
 
-# Import other
-import pluto_corrections &
-import dpr_greenthumb &
-import dsny_frequencies &
-import lpc_historic_districts &
-import lpc_landmarks &
-import dcp_colp &
-import dof_dtm &
-import dof_condo
+# import_public other
+import_public pluto_corrections &
+import_public dpr_greenthumb &
+import_public dsny_frequencies &
+import_public lpc_historic_districts &
+import_public lpc_landmarks &
+import_public dcp_colp &
+import_public dof_dtm &
+import_public dof_condo
 
 wait
 

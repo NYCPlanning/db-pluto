@@ -97,13 +97,33 @@ function get_latest_version {
   latest_version=$(curl -s $s3_endpoint/$s3_bucket/datasets/$1/latest/config.json |  jq -r '.dataset.version')
 }
 
-function import {
+function get_version {
   name=$1
-  get_latest_version $name
-  url="$s3_endpoint/$s3_bucket/datasets/$name/$latest_version/$name.sql"
-  curl -s -O $url
-  psql --quiet $BUILD_ENGINE -f $name.sql
-  psql -1 $BUILD_ENGINE -c "ALTER TABLE $name ADD COLUMN v text; UPDATE $name SET v = '$latest_version';"
-  rm $name.sql
+  version=${2:-latest}
+  url=https://nyc3.digitaloceanspaces.com/edm-recipes
+  version=$(curl -s $url/datasets/$name/$version/config.json | jq -r '.dataset.version')
+  echo -e "🔵 $name version: \e[92m\e[1m$version\e[21m\e[0m"
 }
-register 'import' 'dataset' 'import given dataset to BUILD_ENGINE' import
+
+function import_public {
+  name=$1
+  version=${2:-latest}
+  get_version $1 $2
+  target_dir=$(pwd)/.library/datasets/$name/$version
+
+  # Download sql dump for the datasets from data library
+  if [ -f $target_dir/$name.sql ]; then
+    echo "✅ $name.sql exists in cache"
+  else
+    echo "🛠 $name.sql doesn't exists in cache, downloading ..."
+    mkdir -p $target_dir && (
+      cd $target_dir
+      curl -ss -O $url/datasets/$name/$version/$name.sql
+    )
+  fi
+
+  # Loading into Database
+  psql $BUILD_ENGINE -v ON_ERROR_STOP=1 -q -f $target_dir/$name.sql
+}
+
+register 'import' 'dataset' 'import given dataset to BUILD_ENGINE' import_public
