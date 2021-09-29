@@ -16,7 +16,7 @@ END \$\$;
 import_public pluto_pts &
 import_public pluto_input_cama_dof &
 import_public pluto_input_numbldgs &
-# import_public pluto_input_geocodes &
+import_public pluto_input_geocodes &
 
 # import_public spatial bounaries from data library
 import_public dcp_edesignation &

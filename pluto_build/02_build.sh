@@ -3,11 +3,8 @@ source bin/config.sh
 
 echo "Starting to build PLUTO ..."
 psql $BUILD_ENGINE -f sql/preprocessing.sql
-psql $BUILD_ENGINE -f sql/pts_clean.sql
+psql $BUILD_ENGINE -f sql/create_pts.sql
 psql $BUILD_ENGINE -f sql/create_rpad_geo.sql
-
-echo 'Reporting records that did not get geocoded...'
-psql $BUILD_ENGINE -f sql/geocode_notgeocoded.sql
 
 echo 'Making DCP edits to RPAD...'
 psql $BUILD_ENGINE -f sql/zerovacantlots.sql
