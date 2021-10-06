@@ -3,9 +3,7 @@ CREATE TABLE validdtm AS (
 SELECT a.bbl, ST_MakeValid(a.geom) as geom 
 FROM pluto a
 WHERE ST_GeometryType(ST_MakeValid(a.geom)) = 'ST_MultiPolygon');
-
-ALTER TABLE validdtm
-SET (parallel_workers=30);
+CREATE INDEX validdtm_geom_idx ON validdtm USING GIST (geom gist_geometry_ops_2d);
 
 VACUUM ANALYZE validdtm;
 
@@ -14,9 +12,7 @@ CREATE TABLE validzones AS (
 SELECT a.zonedist, ST_MakeValid(a.geom) as geom  
 FROM dcp_zoningdistricts a
 WHERE ST_GeometryType(ST_MakeValid(a.geom)) = 'ST_MultiPolygon'); 
-
-ALTER TABLE validzones
-SET (parallel_workers=30);
+CREATE INDEX validzones_geom_idx ON validzones USING GIST (geom gist_geometry_ops_2d);
 
 VACUUM ANALYZE validzones;
 
