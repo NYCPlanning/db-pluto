@@ -3,7 +3,7 @@ DROP TABLE IF EXISTS dof_pts_propmaster;
 CREATE TABLE dof_pts_propmaster AS (
     SELECT 
         boro,
-	    block,
+	    block as tb,
 	    lot as tl,
         parid as BBL,
 	    street_name,

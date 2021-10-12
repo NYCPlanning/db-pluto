@@ -1,6 +1,9 @@
 name: 🏗️ CI - Test
 
 on:
+  push:
+    branches-ignore:
+      - main
   workflow_dispatch:
 
 jobs:
