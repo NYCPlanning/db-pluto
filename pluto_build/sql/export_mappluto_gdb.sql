@@ -5,6 +5,8 @@ SELECT
 	a.block::numeric::integer as "Block",
 	a.lot::smallint as "Lot",
 	a.cd::smallint as "CD",
+	a.bct2020 as "BCT2020",
+	a.bctcb2020 as "BCTCB2020",
 	a.ct2010 as "CT2010",
 	a.cb2010 as "CB2010",
 	a.schooldist as "SchoolDist",

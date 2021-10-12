@@ -11,15 +11,19 @@ CREATE TABLE source_data_versions as(
     union
         (SELECT 'lpc_landmarks' as schema_name, v from lpc_landmarks limit 1)
     union
-        (SELECT 'dcp_cdboundaries' as schema_name, v from dcp_cdboundaries limit 1)
+        (SELECT 'dcp_cdboundaries_wi' as schema_name, v from dcp_cdboundaries_wi limit 1)
     union
-        (SELECT 'dcp_censustracts' as schema_name, v from dcp_censustracts limit 1)
+        (SELECT 'dcp_ct2010_wi' as schema_name, v from dcp_ct2010_wi limit 1)
     union
-        (SELECT 'dcp_censusblocks' as schema_name, v from dcp_censusblocks limit 1)
+        (SELECT 'dcp_cb2010_wi' as schema_name, v from dcp_cb2010_wi limit 1)
+    union
+        (SELECT 'dcp_ct2020_wi' as schema_name, v from dcp_ct2020_wi limit 1)
+    union
+        (SELECT 'dcp_cb2020_wi' as schema_name, v from dcp_cb2020_wi limit 1)
     union
         (SELECT 'dcp_school_districts' as schema_name, v from dcp_school_districts limit 1)
     union
-        (SELECT 'dcp_councildistricts' as schema_name, v from dcp_councildistricts limit 1)
+        (SELECT 'dcp_councildistricts_wi' as schema_name, v from dcp_councildistricts_wi limit 1)
     union
         (SELECT 'doitt_zipcodeboundaries' as schema_name, v from doitt_zipcodeboundaries limit 1)
     union

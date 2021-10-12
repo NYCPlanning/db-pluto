@@ -8,51 +8,63 @@ assignees: mgraber, SPTKL, adoyle
 
 ---
 # Update version name
-- [ ] https://github.com/NYCPlanning/db-pluto/blob/master/pluto_build/version.env
+
+- [ ] <https://github.com/NYCPlanning/db-pluto/blob/master/pluto_build/version.env>
 
 # Data loading
+
 ### Rare Manual Updates
+
 - [ ] **dcp_colp** (check [here](https://www1.nyc.gov/site/planning/data-maps/open-data/dwn-colp.page))
 - [ ] **pluto_corrections** (pulling from bytes, must update when there's updates to **pluto_input_research**)
 
 ### Automated Updates
+
 #### Open data automated pull
-> Check [here](https://github.com/NYCPlanning/db-data-library/actions/workflows/open-data.yml) to see the latest run 
+
+> Check [here](https://github.com/NYCPlanning/db-data-library/actions/workflows/open-data.yml) to see the latest run
+
 - [x] **dsny_frequencies**
 - [x] **dpr_greenthumb**
-- [x] **lpc_historic_districts** 
-- [x] **lpc_landmarks** 
+- [x] **lpc_historic_districts**
+- [x] **lpc_landmarks**
 
-#### DOF Automated Pull and Number of Buildings 
+#### DOF Automated Pull and Number of Buildings
+
 - [ ] **pluto_pts** (Check [here](https://github.com/NYCPlanning/db-pluto/actions/workflows/input_pts.yml))
 - [ ] **pluto_input_geocodes** (Check [here](https://github.com/NYCPlanning/db-pluto/actions/workflows/input_pts.yml))
 - [ ] **pluto_input_cama_dof** (Check [here](https://github.com/NYCPlanning/db-pluto/actions/workflows/input_cama.yml))
 - [ ] **pluto_input_numbldgs** (Check [here](https://github.com/NYCPlanning/db-pluto/actions/workflows/input_numbldgs.yml))
 
 ### Updated with Quarterly updates (check [here](https://github.com/NYCPlanning/db-data-library/actions/workflows/quaterly-updates.yml))
-- [x] **dcp_cdboundaries** 
-- [x] **dcp_censustracts** 
-- [x] **dcp_censusblocks** 
+
+- [x] **dcp_cdboundaries_wi**
+- [x] **dcp_ct2010**
+- [x] **dcp_cb2010**
+- [x] **dcp_ct2020**
+- [x] **dcp_cb2020**
 - [x] **dcp_school_districts**  
-- [x] **dcp_councildistricts**  
+- [x] **dcp_councildistricts_wi**  
 - [x] **dcp_firecompanies**  
 - [x] **dcp_policeprecincts**
 - [x] **dcp_healthareas**  
 - [x] **dcp_healthcenters**
 
 ### Updated with Zoning Taxlots (check [here](https://github.com/NYCPlanning/db-zoningtaxlots/actions/workflows/dataloading.yml) for latest run)
-- [x] **dof_dtm** 
-- [x] **dof_shoreline** 
-- [x] **dof_condo** 
-- [x] **dcp_commercialoverlay** 
-- [x] **dcp_limitedheight** 
-- [x] **dcp_zoningdistricts** 
-- [x] **dcp_specialpurpose** 
-- [x] **dcp_specialpurposesubdistricts** 
+
+- [x] **dof_dtm**
+- [x] **dof_shoreline**
+- [x] **dof_condo**
+- [x] **dcp_commercialoverlay**
+- [x] **dcp_limitedheight**
+- [x] **dcp_zoningdistricts**
+- [x] **dcp_specialpurpose**
+- [x] **dcp_specialpurposesubdistricts**
 - [x] **dcp_zoningmapamendments**
 - [x] **dcp_edesignation**
 
 ### Never Updated (Safe to ignore)
+
 - [x] **doitt_zipcodeboundaries** (almost never updated, check [here](https://data.cityofnewyork.us/Business/Zip-Code-Boundaries/i8iw-xf4u))
 - [x] **fema_firms2007_100yr**
 - [x] **fema_pfirms2015_100yr**
