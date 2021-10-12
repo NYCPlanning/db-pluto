@@ -20,7 +20,7 @@ import_public pluto_input_geocodes &
 
 # import_public spatial bounaries from data library
 import_public dcp_edesignation &
-import_public dcp_cdboundaries &
+import_public dcp_cdboundaries_wi &
 import_public dcp_cb2010_wi &
 import_public dcp_ct2010_wi &
 import_public dcp_cb2020_wi &
@@ -28,7 +28,7 @@ import_public dcp_ct2020_wi &
 import_public dcp_school_districts &
 import_public dcp_firecompanies &
 import_public dcp_policeprecincts &
-import_public dcp_councildistricts &
+import_public dcp_councildistricts_wi &
 import_public dcp_healthareas &
 import_public dcp_healthcenters &
 import_public dof_shoreline &

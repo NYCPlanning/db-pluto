@@ -26,46 +26,14 @@ LEFT JOIN pluto_input_geocodes b
 ON a.boro||a.tb||a.tl=b.borough||lpad(b.block,5,'0')||lpad(b.lot,4,'0')
 );
 
-ALTER TABLE pluto_rpad_geo
-	RENAME communitydistrict TO cd;
 
-ALTER TABLE pluto_rpad_geo 
-	RENAME censustract2010 TO ct2010;
 
-ALTER TABLE pluto_rpad_geo 
-	RENAME censusblock2010 TO cb2010;
+ALTER TABLE pluto_rpad_geo RENAME numberofexistingstructures TO numberOfExistingStructuresOnLot;
 
-ALTER TABLE pluto_rpad_geo 
-	RENAME communityschooldistrict TO schooldist;
-
-ALTER TABLE pluto_rpad_geo 
-	RENAME citycouncildistrict TO council;
-
-ALTER TABLE pluto_rpad_geo 
-	RENAME firecompanynumber TO firecomp;
-
-ALTER TABLE pluto_rpad_geo 
-	RENAME policeprecinct TO policeprct;
-
-ALTER TABLE pluto_rpad_geo
-	RENAME numberofexistingstructures TO numberOfExistingStructuresOnLot;
-
-ALTER TABLE pluto_rpad_geo 
-	RENAME sanitationcollectionscheduling TO sanitsub;
-	
-ALTER TABLE pluto_rpad_geo 
-	RENAME taxmapnumbersectionandvolume TO taxmap;
-
-ALTER TABLE pluto_rpad_geo 
-	ADD sanitdistrict text,
-	ADD ap_datef text;
-
-UPDATE pluto_rpad_geo
-	SET sanitdistrict = sanitationdistrict;
+ALTER TABLE pluto_rpad_geo ADD ap_datef text;
 
 UPDATE pluto_rpad_geo
 	SET bbl = borough||lpad(block,5,'0')||lpad(lot,4,'0');
-    
 
 UPDATE pluto_rpad_geo
 	SET lfft = round(lfft::numeric, 2)::text,

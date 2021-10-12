@@ -12,25 +12,34 @@ WHERE a.ycoord !~ '[0-9]';
 
 UPDATE pluto a
 SET cd = b.borocd
-FROM dcp_cdboundaries b
+FROM dcp_cdboundaries_wi b
 WHERE ST_Within(a.centroid, b.geom)
 AND a.cd IS NULL
 AND a.xcoord IS NOT NULL;
 
 UPDATE pluto a
 SET ct2010 = LEFT(b.ct2010,4)||'.'||RIGHT(b.ct2010,2),
-tract2010 = LEFT(b.ct2010,4)||'.'||RIGHT(b.ct2010,2)
-FROM dcp_censustracts b
-WHERE ST_Within(a.centroid, b.geom)
-AND (a.ct2010 IS NULL OR a.ct2010::numeric = 0)
-AND a.xcoord IS NOT NULL;
+    tract2010 = LEFT(b.ct2010,4)||'.'||RIGHT(b.ct2010,2)
+FROM dcp_ct2010_wi b
+WHERE a.geom&&b.geom AND ST_Within(a.centroid, b.geom)
+AND (a.ct2010 IS NULL OR a.ct2010::numeric = 0);
 
-UPDATE pluto a
-SET cb2010 = b.cb2010
-FROM dcp_censusblocks b
-WHERE ST_Within(a.centroid, b.geom)
-AND a.cb2010 IS NULL
-AND a.xcoord IS NOT NULL;
+UPDATE pluto a SET 
+    cb2010 = coalesce(a.cb2010, b.cb2010)
+FROM dcp_cb2010_wi b
+WHERE a.geom&&b.geom AND ST_Within(a.centroid, b.geom);
+
+UPDATE pluto a SET 
+    bct2020 = coalesce(a.bct2020, b.bct2020)
+    -- ,nta2020 = coalesce(a.nta2020, b.nta2020)
+    -- ,cdta2020 = coalesce(a.cdta2020, b.cdta2020)
+FROM dcp_ct2020_wi b
+WHERE a.geom&&b.geom AND ST_Within(a.centroid, b.geom);
+
+UPDATE pluto a SET 
+    bctcb2020 = coalesce(a.bctcb2020, b.bctcb2020)
+FROM dcp_cb2020_wi b
+WHERE a.geom&&b.geom AND ST_Within(a.centroid, b.geom);
 
 UPDATE pluto a
 SET schooldist = b.schooldist
@@ -41,7 +50,7 @@ AND a.xcoord IS NOT NULL;
 
 UPDATE pluto a
 SET council = ltrim(b.coundist::text, '0')
-FROM dcp_councildistricts b
+FROM dcp_councildistricts_wi b
 WHERE ST_Within(a.centroid, b.geom)
 AND a.council IS NULL
 AND a.xcoord IS NOT NULL;

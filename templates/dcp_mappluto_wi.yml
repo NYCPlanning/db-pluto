@@ -37,11 +37,11 @@ dataset:
       - dcp_colp
       - lpc_historic_districts
       - lpc_landmarks
-      - dcp_cdboundaries
+      - dcp_cdboundaries_wi
       - dcp_censustracts
       - dcp_censusblocks
       - dcp_school_districts
-      - dcp_councildistricts
+      - dcp_councildistricts_wi
       - doitt_zipcodeboundaries
       - dcp_firecompanies
       - dcp_policeprecincts

@@ -4,6 +4,8 @@ SELECT
 	trim(block)::numeric(10,0) as block,
 	lot::numeric(5,0),
 	cd::numeric(5,0),
+	bct2020::varchar(7),
+	bctcb2020::varchar(11),
 	ct2010::varchar(7),
 	cb2010::varchar(5),
 	schooldist::varchar(3),
@@ -106,6 +108,8 @@ SELECT
 	a.block::numeric::integer as "Block",
 	a.lot::smallint as "Lot",
 	a.cd::smallint as "CD",
+	a.bct2020 as "BCT2020",
+	a.bctcb2020 as "BCTCB2020",
 	a.ct2010 as "CT2010",
 	a.cb2010 as "CB2010",
 	a.schooldist as "SchoolDist",
@@ -196,7 +200,7 @@ INTO unmapped
 FROM export_pluto a
 WHERE bbl::bigint in (
 	select bbl::bigint 
-	from pluto 
+	from pluto
 	where geom is null);
 
 ALTER TABLE unmapped ALTER COLUMN "Borough" SET NOT NULL;

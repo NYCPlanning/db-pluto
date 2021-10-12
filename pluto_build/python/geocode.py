@@ -100,35 +100,35 @@ def parse_output(geo):
         billingbbl=geo.get("Condominium Billing BBL", ""),
         bbl=geo.get("BOROUGH BLOCK LOT (BBL)", "").get(
             "BOROUGH BLOCK LOT (BBL)", ""),
-        communityDistrict=geo.get("COMMUNITY DISTRICT", {}).get(
+        cd=geo.get("COMMUNITY DISTRICT", {}).get(
             "COMMUNITY DISTRICT", ""
         ),
-        censusTract2010=geo.get("2010 Census Tract", ""),
-        censusBlock2010=geo.get("2010 Census Block", ""),
-        censusTract2020=geo.get("2020 Census Tract", ""),
-        censusBlock2020=geo.get("2020 Census Block", ""),
-        communitySchoolDistrict=geo.get("Community School District", ""),
-        cityCouncilDistrict=geo.get("City Council District", ""),
-        zipCode=geo.get("ZIP Code", ""),
-        fireCompanyNumber=geo.get("Fire Company Type", "")
+        cd2010=geo.get("2010 Census Tract", ""),
+        cb2010=geo.get("2010 Census Block", ""),
+        ct2020=geo.get("2020 Census Tract", ""),
+        cb2020=geo.get("2020 Census Block", ""),
+        schooldist=geo.get("Community School District", ""),
+        council=geo.get("City Council District", ""),
+        zipcode=geo.get("ZIP Code", ""),
+        firecomp=geo.get("Fire Company Type", "")
         + geo.get("Fire Company Number", ""),  # e.g E219
-        policePrecinct=geo.get("Police Precinct", ""),
+        policeprct=geo.get("Police Precinct", ""),
         healthCenterDistrict=geo.get("Health Center District", ""),
         healthArea=geo.get("Health Area", ""),
-        sanitationDistrict=geo.get("Sanitation District", ""),
-        sanitationCollectionScheduling=geo.get(
+        sanitdistrict=geo.get("Sanitation District", ""),
+        sanitsub=geo.get(
             "Sanitation Collection Scheduling Section and Subsection", ""
         ),
         boePreferredStreetName=geo.get("BOE Preferred Street Name", ""),
-        taxMapNumberSectionAndVolume=geo.get(
+        taxmap=geo.get(
             "Tax Map Number Section & Volume", ""),
         sanbornMapIdentifier=geo.get("SBVP (SANBORN MAP IDENTIFIER)", {}).get(
             "SBVP (SANBORN MAP IDENTIFIER)", ""
         ),
         latitude=geo.get("Latitude", ""),
         longitude=geo.get("Longitude", ""),
-        XCoord="",
-        YCoord="",
+        xcoord="",
+        ycoord="",
         grc=geo.get("Geosupport Return Code (GRC)", ""),
         grc2=geo.get("Geosupport Return Code 2 (GRC 2)", ""),
         msg=geo.get("Message", ""),

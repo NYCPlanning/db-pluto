@@ -5,6 +5,8 @@ CREATE TABLE pluto (
 	Block text,
 	Lot text,
 	CD text,
+	BCT2020 text,
+	BCTCB2020 text,
 	CT2010 text,
 	CB2010 text,
 	SchoolDist text,

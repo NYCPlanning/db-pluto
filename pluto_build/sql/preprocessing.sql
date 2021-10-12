@@ -3,13 +3,17 @@ SET xcoord = ST_X(ST_TRANSFORM(wkb_geometry, 2263)),
     ycoord = ST_Y(ST_TRANSFORM(wkb_geometry, 2263));
 
 -- change all wkb_geometry to geom
+ALTER TABLE dcp_ct2010_wi RENAME wkb_geometry to geom;
+ALTER TABLE dcp_cb2010_wi RENAME wkb_geometry to geom;
+ALTER TABLE dcp_ct2020_wi RENAME wkb_geometry to geom;
+ALTER TABLE dcp_cb2020_wi RENAME wkb_geometry to geom;
 ALTER TABLE dcp_edesignation RENAME wkb_geometry to geom;
 ALTER TABLE dcp_colp RENAME wkb_geometry to geom;
 ALTER TABLE lpc_historic_districts RENAME wkb_geometry to geom;
 ALTER TABLE lpc_landmarks RENAME wkb_geometry to geom;
-ALTER TABLE dcp_cdboundaries RENAME wkb_geometry to geom;
+ALTER TABLE dcp_cdboundaries_wi RENAME wkb_geometry to geom;
 ALTER TABLE dcp_school_districts RENAME wkb_geometry to geom;
-ALTER TABLE dcp_councildistricts RENAME wkb_geometry to geom;
+ALTER TABLE dcp_councildistricts_wi RENAME wkb_geometry to geom;
 ALTER TABLE dcp_firecompanies RENAME wkb_geometry to geom;
 ALTER TABLE dcp_policeprecincts RENAME wkb_geometry to geom;
 ALTER TABLE dcp_healthareas RENAME wkb_geometry to geom;
