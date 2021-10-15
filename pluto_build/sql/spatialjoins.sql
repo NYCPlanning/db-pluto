@@ -30,9 +30,7 @@ FROM dcp_cb2010_wi b
 WHERE a.geom&&b.geom AND ST_Within(a.centroid, b.geom);
 
 UPDATE pluto a SET 
-    bct2020 = coalesce(a.bct2020, b.bct2020)
-    -- ,nta2020 = coalesce(a.nta2020, b.nta2020)
-    -- ,cdta2020 = coalesce(a.cdta2020, b.cdta2020)
+    bct2020 = coalesce(a.bct2020, b.boroct2020)
 FROM dcp_ct2020_wi b
 WHERE a.geom&&b.geom AND ST_Within(a.centroid, b.geom);
 
