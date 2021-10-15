@@ -59,7 +59,7 @@ SET bldgclass = bldgcl,
 -- set the number of buildings on a lot
 -- if GeoClient returned a value then we use the value GeoClient returned
 	numbldgs = (CASE 
-					WHEN numberOfExistingStructuresOnLot::integer > 0 THEN numberOfExistingStructuresOnLot
+					WHEN numberOfExistingStructuresOnLot::integer > 0 THEN numberOfExistingStructuresOnLot::integer
 					ELSE bldgs
 				END),
 	appbbl = ap_boro||lpad(ap_block, 5, '0')||lpad(ap_lot, 4, '0'),
@@ -89,7 +89,7 @@ SET bldgclass = bldgcl,
 -- set the number of buildings on a lot
 -- if GeoClient returned a value then we use the value GeoClient returned
 	numbldgs = (CASE 
-					WHEN numberOfExistingStructuresOnLot::integer > 0 THEN numberOfExistingStructuresOnLot
+					WHEN numberOfExistingStructuresOnLot::integer > 0 THEN numberOfExistingStructuresOnLot::integer
 					ELSE bldgs
 				END),
 	appbbl = ap_boro||lpad(ap_block, 5, '0')||lpad(ap_lot, 4, '0'),
