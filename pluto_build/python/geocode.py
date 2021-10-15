@@ -103,7 +103,7 @@ def parse_output(geo):
         cd=geo.get("COMMUNITY DISTRICT", {}).get(
             "COMMUNITY DISTRICT", ""
         ),
-        cd2010=geo.get("2010 Census Tract", ""),
+        ct2010=geo.get("2010 Census Tract", ""),
         cb2010=geo.get("2010 Census Block", ""),
         ct2020=geo.get("2020 Census Tract", ""),
         cb2020=geo.get("2020 Census Block", ""),

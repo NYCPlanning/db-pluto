@@ -36,6 +36,7 @@ jobs:
           - dcp_mappluto
           - dcp_mappluto_wi
           - dcp_pluto
+          - dcp_mappluto_clipped
     steps:
       - uses: actions/checkout@v2
       - uses: NYCPlanning/action-library-archive@v1.1
