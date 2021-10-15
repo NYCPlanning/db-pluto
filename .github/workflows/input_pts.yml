@@ -1,5 +1,13 @@
 name: 📁 PTS processing
 on:
+  push:
+    branches:
+      - main
+      - pts/**
+    paths: 
+      - pluto_build/python/geocode.py
+      - pluto_build/bin/pts.sh
+      - pluto_build/sql/_load_pts.sql
   schedule:
     - cron: 0 13 * * MON
   workflow_dispatch:
