@@ -5,9 +5,7 @@ RENAME bbl to geo_bbl;
 UPDATE pluto_input_geocodes
 SET xcoord = ST_X(ST_TRANSFORM(geom, 2263))::integer,
     ycoord = ST_Y(ST_TRANSFORM(geom, 2263))::integer,
-    censustract2010 = (CASE 
-                       WHEN censustract2010::numeric = 0 THEN NULL
-                       ELSE censustract2010 END);
+    ct2010 = (CASE WHEN ct2010::numeric = 0 THEN NULL ELSE ct2010 END);
 
 DROP TABLE IF EXISTS pluto_rpad_geo;
 CREATE TABLE pluto_rpad_geo AS (
@@ -32,26 +30,17 @@ ALTER TABLE pluto_rpad_geo RENAME numberofexistingstructures TO numberOfExisting
 
 ALTER TABLE pluto_rpad_geo ADD ap_datef text;
 
-UPDATE pluto_rpad_geo
-	SET bbl = borough||lpad(block,5,'0')||lpad(lot,4,'0');
-
-UPDATE pluto_rpad_geo
-	SET lfft = round(lfft::numeric, 2)::text,
-		bfft = round(bfft::numeric, 2)::text,
-		bdft = round(bdft::numeric, 2)::text;
-
-UPDATE pluto_rpad_geo
-	SET ldft = round(ldft::numeric, 2)::text
-	WHERE ldft <> 'ACRE';
+UPDATE pluto_rpad_geo SET bbl = borough||lpad(block,5,'0')||lpad(lot,4,'0');
 
 -- backfill X and Y coordinates
-WITH geoms AS (
-	SELECT a.bbl,
+UPDATE pluto_rpad_geo a SET 
+	xcoord = ST_X(ST_TRANSFORM(b.geom, 2263))::integer
+	,ycoord = ST_Y(ST_TRANSFORM(b.geom, 2263))::integer
+FROM (
+	SELECT 
+		a.bbl,
 		ST_SetSRID(ST_MakePoint(a.longitude::double precision, a.latitude::double precision),4326) as geom
 	FROM pluto_rpad_geo a
-	WHERE a.longitude IS NOT NULL)
-UPDATE pluto_rpad_geo a
-SET xcoord = ST_X(ST_TRANSFORM(b.geom, 2263))::integer,
-ycoord = ST_Y(ST_TRANSFORM(b.geom, 2263))::integer
-FROM geoms b
+	WHERE a.longitude IS NOT NULL
+) b
 WHERE a.bbl = b.bbl;

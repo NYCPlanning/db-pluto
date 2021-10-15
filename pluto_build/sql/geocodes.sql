@@ -2,8 +2,8 @@
 -- might need to get fire company type
 UPDATE pluto a
 SET cd = b.cd,
-	bct2020 = (CASE b.ct2020::numeric = 0 THEN NULL ELSE a.borocode||b.ct2020 END),
-	bctcb2020 = (CASE b.ct2020::numeric = 0 THEN NULL ELSE a.borocode||b.ct2020||b.cb2020 END),
+	bct2020 = (CASE WHEN b.ct2020::numeric = 0 THEN NULL ELSE a.borocode||b.ct2020 END),
+	bctcb2020 = (CASE WHEN b.ct2020::numeric = 0 THEN NULL ELSE a.borocode||b.ct2020||b.cb2020 END),
 	ct2010 = b.ct2010,
 	tract2010 = b.ct2010,
 	cb2010 = b.cb2010,
@@ -37,8 +37,8 @@ AND bldgclass IS NULL;
 
 UPDATE pluto a
 SET cd = b.cd,
-	bct2020 = (CASE b.ct2020::numeric = 0 THEN NULL ELSE a.borocode||b.ct2020 END),
-	bctcb2020 = (CASE b.ct2020::numeric = 0 THEN NULL ELSE a.borocode||b.ct2020||b.cb2020 END),
+	bct2020 = (CASE WHEN b.ct2020::numeric = 0 THEN NULL ELSE a.borocode||b.ct2020 END),
+	bctcb2020 = (CASE WHEN b.ct2020::numeric = 0 THEN NULL ELSE a.borocode||b.ct2020||b.cb2020 END),
 	ct2010 = b.ct2010,
 	tract2010 = b.ct2010,
 	cb2010 = b.cb2010,
