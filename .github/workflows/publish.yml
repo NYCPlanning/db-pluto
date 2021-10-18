@@ -37,15 +37,27 @@ jobs:
           - dcp_mappluto_wi
           - dcp_pluto
           - dcp_mappluto_clipped
+          - pluto_corrections
     steps:
       - uses: actions/checkout@v2
       - uses: NYCPlanning/action-library-archive@v1.1
+        if: matrix.dataset != 'pluto_corrections'
         with:
           path: templates/${{ matrix.dataset }}.yml
           s3: true
           latest: true
           compress: true
           output_format: pgdump csv shapefile
+          version: ${{ needs.version.outputs.version }}
+      
+      - uses: NYCPlanning/action-library-archive@v1.1
+        if: matrix.dataset == 'pluto_corrections'
+        with:
+          path: templates/${{ matrix.dataset }}.yml
+          s3: true
+          latest: true
+          compress: true
+          output_format: pgdump csv
           version: ${{ needs.version.outputs.version }}
 
       - name: Set up Cloud SDK
