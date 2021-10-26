@@ -87,7 +87,7 @@ I4,Hospitals and Health - Staff Facilities
 I5,Hospitals and Health - Health Center/Child Center/Clinic
 I6,Hospitals and Health - Nursing Home
 I7,Hospitals and Health - Adut Care Facility
-I9,Hospitals and Health - Miscellaenous
+I9,Hospitals and Health - Miscellaneous
 J,Theatres
 J1,Theatres - Art Type (under 400 capacity
 J2,Theatres - Art Type (over 400 capacity
@@ -145,7 +145,7 @@ P5,Places of Public Assembly (Indoor) and Cultural - Community Center
 P6,"Places of Public Assembly (Indoor) and Cultural - Amusement Place, Bathhouse, Boat House"
 P7,Places of Public Assembly (Indoor) and Cultural - Museum
 P8,Places of Public Assembly (Indoor) and Cultural - Library
-P9,Places of Public Assembly (Indoor) and Cultural - Miscellaenous
+P9,Places of Public Assembly (Indoor) and Cultural - Miscellaneous
 Q,Outdoor Recreation Facilities
 Q0,Outdoor Recreation Facilities - Open Space
 Q1,Outdoor Recreation Facilities - Parks/Recreation Facilities
@@ -163,7 +163,7 @@ R1,Condominiums - Residential Unit in 2 to 10 Unit Building
 R2,Condominiums - Residential Unit in Walk-Up Building
 R3,Condominiums - Residential Unit in 1 to 3 Story Building
 R4,Condominiums - Residential Unit in Elevator Buidling
-R5,Condominiums - Miscellaenous Commercial
+R5,Condominiums - Miscellaneous Commercial
 R6,Condominiums - Residential Unit of 1 to 3 Unit Building-Orig Class 1
 R7,Condominiums - Commercial Unit of 1 to 3 Unit Building-Orig Class 1
 R8,Condominiums - Commercial Unit of 2 to 10 Unit Building
