@@ -26421,3 +26421,28 @@ bbl,field,old_value,new_value,Type,reason,version
 3007670010,yearbuilt,1910,1904,2,Researched year built,21v4
 3015350039,unitsres,6,5,2,Researched by DCP,21v4
 3015350039,unitstotal,6,5,2,Researched by DCP,21v4
+1013730003,yearbuilt,103,0,2,year built less than 1600 so set to 0,21v4
+1013730002,yearbuilt,103,0,2,year built less than 1600 so set to 0,21v4
+1013730065,yearbuilt,115,0,2,year built less than 1600 so set to 0,21v4
+1013730035,yearbuilt,115,0,2,year built less than 1600 so set to 0,21v4
+2041690018,yearbuilt,116,0,2,year built less than 1600 so set to 0,21v4
+1013730050,yearbuilt,900,0,2,year built less than 1600 so set to 0,21v4
+1012600004,yearbuilt,914,0,2,year built less than 1600 so set to 0,21v4
+1012620034,yearbuilt,920,0,2,year built less than 1600 so set to 0,21v4
+1018190002,yearbuilt,925,0,2,year built less than 1600 so set to 0,21v4
+2048490082,yearbuilt,925,0,2,year built less than 1600 so set to 0,21v4
+1018190010,yearbuilt,961,0,2,year built less than 1600 so set to 0,21v4
+1018190040,yearbuilt,965,0,2,year built less than 1600 so set to 0,21v4
+1013730030,yearbuilt,969,0,2,year built less than 1600 so set to 0,21v4
+1013730040,yearbuilt,975,0,2,year built less than 1600 so set to 0,21v4
+1013730001,yearbuilt,975,0,2,year built less than 1600 so set to 0,21v4
+4159150071,yearbuilt,1018,0,2,year built less than 1600 so set to 0,21v4
+2026330028,yearbuilt,1053,0,2,year built less than 1600 so set to 0,21v4
+1022330014,yearbuilt,1111,0,2,year built less than 1600 so set to 0,21v4
+1007990070,yearbuilt,1111,0,2,year built less than 1600 so set to 0,21v4
+4011940001,yearbuilt,1194,0,2,year built less than 1600 so set to 0,21v4
+1007607501,yearbuilt,1226,0,2,year built less than 1600 so set to 0,21v4
+4024020031,yearbuilt,1271,0,2,year built less than 1600 so set to 0,21v4
+3022217502,yearbuilt,1391,0,2,year built less than 1600 so set to 0,21v4
+1003037502,yearbuilt,1540,0,2,year built less than 1600 so set to 0,21v4
+4112180084,yearbuilt,1590,0,2,year built less than 1600 so set to 0,21v4
