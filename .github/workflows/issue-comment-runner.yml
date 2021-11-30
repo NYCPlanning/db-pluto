@@ -10,8 +10,8 @@ jobs:
       contains(github.event.issue.title, '[build]') && 
       contains(github.event.comment.body, '[build]') && 
       (
-        github.event.comment.user.login == 'mgraber' || 
-        github.event.comment.user.login == 'SPTKL' || 
+        github.event.comment.user.login == 'SashaWeinstein' || 
+        github.event.comment.user.login == 'mbh329' || 
         github.event.comment.user.login == 'AmandaDoyle'
       )
     runs-on: self-hosted
