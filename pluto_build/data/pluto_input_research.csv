@@ -26219,17 +26219,17 @@ bbl,field,old_value,new_value,Type,reason,version
 1008280053,yearalter2,1996,0,2,LPC year built,20v1
 1005250034,yearalter2,2008,0,2,LPC year built,20v1
 1011660060,yearalter2,2008,0,2,LPC year built,20v1
-4002390001,CD,402,401,2,CD correction,20v2
-4002390130,CD,402,401,2,CD correction,20v2
-4010270150,CD,401,403,2,CD correction,20v2
-3011170002,CD,307,355,2,CD correction,20v2
-1019570140,CD,110,109,2,CD correction,20v2
-4025540055,CD,405,402,2,CD correction,20v2
-4025750018,CD,405,402,2,CD correction,20v2
-2030190100,CD,203,209,2,CD correction,20v2
-4064531000,CD,407,408,2,CD correction,20v2
-3072080280,CD,315,313,2,CD correction,20v2
-3072330210,CD,315,313,2,CD correction,20v2
+4002390001,cd,402,401,2,CD correction,20v2
+4002390130,cd,402,401,2,CD correction,20v2
+4010270150,cd,401,403,2,CD correction,20v2
+3011170002,cd,307,355,2,CD correction,20v2
+1019570140,cd,110,109,2,CD correction,20v2
+4025540055,cd,405,402,2,CD correction,20v2
+4025750018,cd,405,402,2,CD correction,20v2
+2030190100,cd,203,209,2,CD correction,20v2
+4064531000,cd,407,408,2,CD correction,20v2
+3072080280,cd,315,313,2,CD correction,20v2
+3072330210,cd,315,313,2,CD correction,20v2
 ,ownername,CUNY,CITY UNIVERSITY OF NEW YORK,1,Normalized owner name,20v4
 ,ownername,NEW YORK CONVENTION CENTER DEVELOPMENT C ORPORATION,NYS CONVENTION CENTER DEVELOPMENT CORPORATION,1,Normalized owner name,20v4
 ,ownername,NEW YORK STATE URBANDEV,NYS URBAN DEVELOPMENT CORPORATION,1,Normalized owner name,20v4
@@ -26309,8 +26309,6 @@ bbl,field,old_value,new_value,Type,reason,version
 5036860056,numfloors,114,2,2,numfloors correction,20v4
 5037550011,numfloors,23,2,2,numfloors correction,20v4
 1019570140,cd,110,109,2,Geosupport returns incorrect CD for boundary park -- addresses are across the street,20v5
-3015350039,unitsres,6,5,2,DOB CO says 5 units,21v3
-3015350039,unitstotal,6,5,2,DOB CO says 5 units,21v3
 4049780025,cd,401,407,2,addresses on lot return different values for CD,21v3
 1008860030,cd,105,106,2,addresses on lot return different values for CD,21v3
 1008720057,cd,105,106,2,addresses on lot return different values for CD,21v3
@@ -26419,8 +26417,8 @@ bbl,field,old_value,new_value,Type,reason,version
 3007570044,yearbuilt,1910,1907,2,Researched year built,21v4
 3007760009,yearbuilt,1910,1903,2,Researched year built,21v4
 3007670010,yearbuilt,1910,1904,2,Researched year built,21v4
-3015350039,unitsres,6,5,2,Researched by DCP,21v4
-3015350039,unitstotal,6,5,2,Researched by DCP,21v4
+3015350039,unitsres,6,5,2,Researched by DCP DOB CO says 5 units,21v4
+3015350039,unitstotal,6,5,2,Researched by DCP DOB CO says 5 units,21v4
 1013730003,yearbuilt,103,0,2,year built less than 1600 so set to 0,21v4
 1013730002,yearbuilt,103,0,2,year built less than 1600 so set to 0,21v4
 1013730065,yearbuilt,115,0,2,year built less than 1600 so set to 0,21v4
