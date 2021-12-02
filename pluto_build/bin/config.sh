@@ -102,7 +102,7 @@ function get_version {
   version=${2:-latest}
   url=https://nyc3.digitaloceanspaces.com/edm-recipes
   version=$(curl -s $url/datasets/$name/$version/config.json | jq -r '.dataset.version')
-  echo -e "🔵 $name version: \e[92m\e[1m$version\e[21m\e[0m"
+  echo -e "🔵 $name version: $version"
 }
 
 function import_public {
@@ -124,6 +124,7 @@ function import_public {
 
   # Loading into Database
   psql $BUILD_ENGINE -v ON_ERROR_STOP=1 -q -f $target_dir/$name.sql
+  psql -1 $BUILD_ENGINE -c "ALTER TABLE $name ADD COLUMN v text; UPDATE $name SET v = '$version';"
 }
 
 register 'import' 'dataset' 'import given dataset to BUILD_ENGINE' import_public
