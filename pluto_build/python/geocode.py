@@ -42,6 +42,7 @@ def get_sname(b5sc):
 
 
 def geocode(inputs):
+    print(f"geocoding {inputs}")
     boro = inputs.pop("boro")
     block = inputs.pop("block")
     lot = inputs.pop("lot")
@@ -63,38 +64,42 @@ def geocode(inputs):
         input_sname=sname,
         numberOfExistingStructures=numberOfExistingStructures,
     )
+    geosupport_functions = ["1A", "1E", "1B"]
+    return apply_geosupport(geosupport_functions, extra, sname, hnum, boro)
+
+
+def apply_geosupport(geosupport_functions, extra, sname, hnum, boro):
+
+    geosupport_function = geosupport_functions.pop(0)
     try:
-        geo1 = g["1A"](
-            street_name=sname, house_number=hnum, borough=borough, mode="regular"
+        geo = g[geosupport_function](
+            street_name=sname, house_number=hnum, borough=boro, mode="regular"
         )
-        geo2 = g["1E"](
-            street_name=sname, house_number=hnum, borough=borough, mode="regular"
-        )
-        geo = {**geo1, **geo2}
-        geo = parse_output(geo)
+        if geosupport_function == "1A":
+            geo_extend = g["1E"](
+                street_name=sname, house_number=hnum, borough=boro, mode="extended"
+            )
+        else:
+            geo_extend = g[geosupport_function](
+                street_name=sname, house_number=hnum, borough=boro, mode="extended"
+            )
+
+        geo_full = {**geo_extend, **geo}
+        print(f"applying function of {geosupport_function}")
+        geo_parsed = parse_output(geo_full)
+        geo_parsed.update(extra)
+        return geo_parsed
+    except GeosupportError as e1:
+        if geosupport_functions:
+            return apply_geosupport(geosupport_functions, extra, sname, hnum, boro)
+        geo = parse_output(e1.result)
         geo.update(extra)
         return geo
-    except GeosupportError:
-        try:
-            geo = g["1B"](
-                street_name=sname, house_number=hnum, borough=borough, mode="regular"
-            )
-            geo = parse_output(geo)
-            geo.update(extra)
-            return geo
-        except GeosupportError as e1:
-            try:
-                geo = g["BL"](bbl=bbl)
-                geo = parse_output(geo)
-                geo.update(extra)
-                return geo
-            except GeosupportError as e2:
-                geo = parse_output(e1.result)
-                geo.update(extra)
-                return geo
 
 
 def parse_output(geo):
+    print(f"got lat of {geo['Latitude']}")
+    print(f"got lon of {geo['Longitude']}")
     return dict(
         billingbbl=geo.get("Condominium Billing BBL", ""),
         bbl=geo.get("BOROUGH BLOCK LOT (BBL)", "").get("BOROUGH BLOCK LOT (BBL)", ""),
@@ -130,15 +135,22 @@ def parse_output(geo):
 
 
 if __name__ == "__main__":
-    df = pd.read_csv("geocode_input_pluto_pts.csv", dtype=str, index_col=False)
+    df = pd.read_csv(
+        "geocode_input_pluto_pts.csv", dtype=str, index_col=False, nrows=400
+    )
     # get the row number
     records = df.to_dict("records")
 
     print("geocoding begins here ...")
     # Multiprocess
-    with Pool(processes=cpu_count()) as pool:
-        it = pool.map(geocode, records, 100000)
-
+    # with Pool(processes=cpu_count()) as pool:
+    # it = pool.map(geocode, records, 100000)
+    # it = map(geocode, records)
+    test_records = [
+        {"boro": "3", "block": "05652", "lot": "0027"},
+        {"boro": "4", "block": "06431", "lot": "0088"},
+    ]
+    it = map(geocode, test_records)
     print("geocoding finished ...")
     result = pd.DataFrame(it)
     del it
