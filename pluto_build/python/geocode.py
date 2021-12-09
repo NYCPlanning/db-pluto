@@ -22,8 +22,7 @@ def get_address(bbl):
             "5-Digit Street Code", "00000"
         )
         sname = get_sname(b5sc)
-        numberOfExistingStructures = geo.get(
-            "Number of Existing Structures on Lot", "")
+        numberOfExistingStructures = geo.get("Number of Existing Structures on Lot", "")
         hnum = address.get("Low House Number", "")
         return dict(
             sname=sname,
@@ -69,7 +68,7 @@ def geocode(inputs):
             street_name=sname, house_number=hnum, borough=borough, mode="regular"
         )
         geo2 = g["1E"](
-            street_name=sname, house_number=hnum, borough=borough, mode="extended"
+            street_name=sname, house_number=hnum, borough=borough, mode="regular"
         )
         geo = {**geo1, **geo2}
         geo = parse_output(geo)
@@ -98,11 +97,8 @@ def geocode(inputs):
 def parse_output(geo):
     return dict(
         billingbbl=geo.get("Condominium Billing BBL", ""),
-        bbl=geo.get("BOROUGH BLOCK LOT (BBL)", "").get(
-            "BOROUGH BLOCK LOT (BBL)", ""),
-        cd=geo.get("COMMUNITY DISTRICT", {}).get(
-            "COMMUNITY DISTRICT", ""
-        ),
+        bbl=geo.get("BOROUGH BLOCK LOT (BBL)", "").get("BOROUGH BLOCK LOT (BBL)", ""),
+        cd=geo.get("COMMUNITY DISTRICT", {}).get("COMMUNITY DISTRICT", ""),
         ct2010=geo.get("2010 Census Tract", ""),
         cb2010=geo.get("2010 Census Block", ""),
         ct2020=geo.get("2020 Census Tract", ""),
@@ -116,12 +112,9 @@ def parse_output(geo):
         healthCenterDistrict=geo.get("Health Center District", ""),
         healthArea=geo.get("Health Area", ""),
         sanitdistrict=geo.get("Sanitation District", ""),
-        sanitsub=geo.get(
-            "Sanitation Collection Scheduling Section and Subsection", ""
-        ),
+        sanitsub=geo.get("Sanitation Collection Scheduling Section and Subsection", ""),
         boePreferredStreetName=geo.get("BOE Preferred Street Name", ""),
-        taxmap=geo.get(
-            "Tax Map Number Section & Volume", ""),
+        taxmap=geo.get("Tax Map Number Section & Volume", ""),
         sanbornMapIdentifier=geo.get("SBVP (SANBORN MAP IDENTIFIER)", {}).get(
             "SBVP (SANBORN MAP IDENTIFIER)", ""
         ),
@@ -137,7 +130,7 @@ def parse_output(geo):
 
 
 if __name__ == "__main__":
-    df = pd.read_csv('geocode_input_pluto_pts.csv', dtype=str, index_col=False)
+    df = pd.read_csv("geocode_input_pluto_pts.csv", dtype=str, index_col=False)
     # get the row number
     records = df.to_dict("records")
 
@@ -151,4 +144,4 @@ if __name__ == "__main__":
     del it
     print(result.head())
 
-    result.to_csv('pluto_input_geocodes.csv', index=False)
+    result.to_csv("pluto_input_geocodes.csv", index=False)
