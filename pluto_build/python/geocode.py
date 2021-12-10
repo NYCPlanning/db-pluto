@@ -131,7 +131,7 @@ if __name__ == "__main__":
     # Multiprocess
     chunksize = df.shape[0] / 5
     with Pool(processes=cpu_count()) as pool:
-        it = pool.map(geocode, records, chunksize=chunksize)
+        it = pool.map(geocode, records, chunksize=100000)
 
     print("geocoding finished ...")
     result = pd.DataFrame(it)
