@@ -64,34 +64,33 @@ def geocode(inputs):
         input_sname=sname,
         numberOfExistingStructures=numberOfExistingStructures,
     )
-    geosupport_functions = ["1A", "1E", "1B"]
-    return apply_geosupport(geosupport_functions, extra, sname, hnum, boro)
+    geosupport_functions = ["1E", "1A", "BL"]
+    return apply_geosupport(geosupport_functions, extra, sname, hnum, boro, bbl)
 
 
-def apply_geosupport(geosupport_functions, extra, sname, hnum, boro):
+def apply_geosupport(geosupport_functions, extra, sname, hnum, boro, bbl):
 
     geosupport_function = geosupport_functions.pop(0)
     try:
-        geo = g[geosupport_function](
-            street_name=sname, house_number=hnum, borough=boro, mode="regular"
-        )
-        if geosupport_function == "1A":
-            geo_extend = g["1E"](
-                street_name=sname, house_number=hnum, borough=boro, mode="extended"
-            )
+        if geosupport_function == "BL":
+            geo_full = g["BL"](bbl=bbl)
         else:
+            geo = g[geosupport_function](
+                street_name=sname, house_number=hnum, borough=boro, mode="regular"
+            )
+
             geo_extend = g[geosupport_function](
                 street_name=sname, house_number=hnum, borough=boro, mode="extended"
             )
+            geo_full = {**geo_extend, **geo}
 
-        geo_full = {**geo_extend, **geo}
-        print(f"applying function of {geosupport_function}")
+        # print(f"applying function of {geosupport_function}")
         geo_parsed = parse_output(geo_full)
         geo_parsed.update(extra)
         return geo_parsed
     except GeosupportError as e1:
         if geosupport_functions:
-            return apply_geosupport(geosupport_functions, extra, sname, hnum, boro)
+            return apply_geosupport(geosupport_functions, extra, sname, hnum, boro, bbl)
         geo = parse_output(e1.result)
         geo.update(extra)
         return geo
@@ -144,7 +143,7 @@ if __name__ == "__main__":
     print("geocoding begins here ...")
     # Multiprocess
     # with Pool(processes=cpu_count()) as pool:
-    # it = pool.map(geocode, records, 100000)
+    #     it = pool.map(geocode, records, 100000)
     # it = map(geocode, records)
     test_records = [
         {"boro": "3", "block": "05652", "lot": "0027"},
