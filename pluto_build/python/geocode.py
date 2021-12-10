@@ -129,7 +129,6 @@ if __name__ == "__main__":
     print("geocoding begins here ...")
 
     # Multiprocess
-    chunksize = df.shape[0] / 5
     with Pool(processes=cpu_count()) as pool:
         it = pool.map(geocode, records, chunksize=100000)
 
