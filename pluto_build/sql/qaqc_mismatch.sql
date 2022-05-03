@@ -1,45 +1,56 @@
-DELETE FROM dcp_pluto.qaqc_mismatch 
-WHERE pair = :'VERSION'||' - '||:'VERSION_PREV' 
-AND CONDO::boolean = :CONDO
-AND MAPPED::boolean = :MAPPED;
+-- DELETE FROM qaqc_mismatch 
+-- WHERE pair = :'VERSION'||' - '||:'VERSION_PREV' 
+-- AND CONDO::boolean = :CONDO
+-- AND MAPPED::boolean = :MAPPED;
+DROP TABLE IF EXISTS qaqc_mismatch;
+-- CREATE TABLE qaqc_mismatch (
+--     -- pair varchar,
+--     -- condo varchar,
+--     -- mapped varchar,
+--     total numeric,
+--     borough numeric,
+--     block numeric,
+--     lot numeric
+--     -- cd numeric 
+-- );
 
-INSERT INTO dcp_pluto.qaqc_mismatch (
+-- INSERT INTO qaqc_mismatch (
 SELECT
-    :'VERSION'||' - '||:'VERSION_PREV' as pair, 
-	:CONDO as condo,
-    :MAPPED as mapped,
+    -- :'VERSION'||' - '||:'VERSION_PREV' as pair, 
+	-- :CONDO as condo,
+    -- :MAPPED as mapped,
     count(*) as total,
-    count(nullif(a.borough = b.borough, true)) as borough,
-    count(nullif(a.block::numeric = b.block::numeric, true)) as block,
-    count(nullif(a.lot::numeric = b.lot::numeric, true)) as lot,
-    count(nullif(a.cd::numeric = b.cd::numeric, true)) as cd,
-    count(nullif(a.ct2010 = b.ct2010, true)) as ct2010,
-    count(nullif(a.cb2010 = b.cb2010, true)) as cb2010,
-    count(nullif(a.schooldist = b.schooldist, true)) as schooldist,
-    count(nullif(a.council::numeric = b.council::numeric, true)) as council,
-    count(nullif(a.zipcode::numeric = b.zipcode::numeric, true)) as zipcode,
-    count(nullif(a.firecomp = b.firecomp, true)) as firecomp,
-    count(nullif(a.policeprct::numeric = b.policeprct::numeric, true)) as policeprct,
-    count(nullif(a.healtharea::numeric = b.healtharea::numeric, true)) as healtharea,
-    count(nullif(a.sanitboro = b.sanitboro, true)) as sanitboro,
-    count(nullif(a.sanitsub = b.sanitsub, true)) as sanitsub,
-    count(nullif(trim(a.address) = trim(b.address), true)) as address,
-    count(nullif(a.zonedist1 = b.zonedist1, true)) as zonedist1,
-    count(nullif(a.zonedist2 = b.zonedist2, true)) as zonedist2,
-    count(nullif(a.zonedist3 = b.zonedist3, true)) as zonedist3,
-    count(nullif(a.zonedist4 = b.zonedist4, true)) as zonedist4,
-    count(nullif(a.overlay1 = b.overlay1, true)) as overlay1,
-    count(nullif(a.overlay2 = b.overlay2, true)) as overlay2,
-    count(nullif(a.spdist1 = b.spdist1, true)) as spdist1,
-    count(nullif(a.spdist2 = b.spdist2, true)) as spdist2,
-    count(nullif(a.spdist3 = b.spdist3, true)) as spdist3,
-    count(nullif(a.ltdheight = b.ltdheight, true)) as ltdheight,
-    count(nullif(a.splitzone = b.splitzone, true)) as splitzone,
-    count(nullif(a.bldgclass = b.bldgclass, true)) as bldgclass,
-    count(nullif(a.landuse = b.landuse, true)) as landuse,
-    count(nullif(a.easements::numeric = b.easements::numeric, true)) as easements,
-    count(nullif(a.ownertype = b.ownertype, true)) as ownertype,
-    count(nullif(a.ownername = b.ownername, true)) as ownername,
+    count(*) FILTER (WHERE a.borough IS DISTINCT FROM b.borough) as borough,
+    count(*) FILTER (WHERE a.block::varchar IS DISTINCT FROM b.block::varchar) as block,
+    count(*) FILTER (WHERE a.lot::varchar IS DISTINCT FROM b.lot::varchar) as lot,
+    count(*) FILTER (WHERE a.cd::varchar IS DISTINCT FROM b.cd::varchar) as cd,
+    count(*) FILTER (WHERE a.ct2010::varchar IS DISTINCT FROM b.ct2010::varchar) as ct2010,
+    count(*) FILTER (WHERE a.cb2010 IS DISTINCT FROM b.cb2010) as cb2010,
+    count(*) FILTER (WHERE a.schooldist IS DISTINCT FROM b.schooldist) as schooldist,
+    count(*) FILTER (WHERE a.council::varchar IS DISTINCT FROM b.council::varchar) as council,
+    count(*) FILTER (WHERE a.zipcode::varchar IS DISTINCT FROM b.zipcode::varchar) as zipcode,
+    count(*) FILTER (WHERE a.firecomp::varchar IS DISTINCT FROM b.firecomp::varchar) as firecomp,
+    count(*) FILTER (WHERE a.policeprct::varchar IS DISTINCT FROM b.policeprct::varchar) as policeprct,
+    count(*) FILTER (WHERE a.healtharea::varchar IS DISTINCT FROM b.healtharea::varchar) as healtharea,
+    count(*) FILTER (WHERE a.sanitboro::varchar IS DISTINCT FROM b.sanitboro::varchar) as sanitboro,
+    count(*) FILTER (WHERE a.sanitsub::varchar IS DISTINCT FROM b.sanitsub::varchar) as sanitsub,
+    count(*) FILTER (WHERE trim(a.address) IS DISTINCT FROM trim(b.address)) as address,
+    count(*) FILTER (WHERE a.zonedist1 IS DISTINCT FROM b.zonedist1) as zonedist1,
+    count(*) FILTER (WHERE a.zonedist2 IS DISTINCT FROM b.zonedist2) as zonedist2,
+    count(*) FILTER (WHERE a.zonedist3 IS DISTINCT FROM b.zonedist3) as zonedist3,
+    count(*) FILTER (WHERE a.zonedist4 IS DISTINCT FROM b.zonedist4) as zonedist4,
+    count(*) FILTER (WHERE a.overlay1 IS DISTINCT FROM b.overlay1) as overlay1,
+    count(*) FILTER (WHERE a.overlay2 IS DISTINCT FROM b.overlay2) as overlay2,
+    count(*) FILTER (WHERE a.spdist1 IS DISTINCT FROM b.spdist1) as spdist1,
+    count(*) FILTER (WHERE a.spdist2 IS DISTINCT FROM b.spdist2) as spdist2,
+    count(*) FILTER (WHERE a.spdist3 IS DISTINCT FROM b.spdist3) as spdist3,
+    count(*) FILTER (WHERE a.ltdheight IS DISTINCT FROM b.ltdheight) as ltdheight,
+    count(*) FILTER (WHERE a.splitzone IS DISTINCT FROM b.splitzone) as splitzone,
+    count(*) FILTER (WHERE a.bldgclass IS DISTINCT FROM b.bldgclass) as bldgclass,
+    count(*) FILTER (WHERE a.landuse IS DISTINCT FROM b.landuse) as landuse,
+    count(*) FILTER (WHERE a.easements::numeric IS DISTINCT FROM b.easements::numeric) as easements,
+    count(*) FILTER (WHERE a.ownertype IS DISTINCT FROM b.ownertype) as ownertype,
+    count(*) FILTER (WHERE a.ownername IS DISTINCT FROM b.ownername) as ownername,
     count(nullif(abs(a.lotarea::numeric-b.lotarea::numeric) <5, true)) as lotarea,
     count(nullif(abs(a.bldgarea::numeric-b.bldgarea::numeric) <5, true)) as bldgarea,
     count(nullif(abs(a.comarea::numeric-b.comarea::numeric) <5, true)) as comarea,
@@ -96,7 +107,7 @@ SELECT
     count(nullif(a.healthcenterdistrict::numeric = b.healthcenterdistrict::numeric, true)) as healthcenterdistrict,
     count(nullif(a.firm07_flag = b.firm07_flag, true)) as firm07_flag,
     count(nullif(a.pfirm15_flag = b.pfirm15_flag, true)) as pfirm15_flag
-    FROM dcp_pluto.:"VERSION" a
-INNER JOIN dcp_pluto.:"VERSION_PREV" b
-ON (a.bbl::bigint = b.bbl::bigint)
-:CONDITION)
+    INTO qaqc_mismatch
+    FROM export_pluto a
+INNER JOIN dcp_pluto b
+ON ROUND(a.bbl::float):: bigint = ROUND(b.bbl::float)::bigint;
