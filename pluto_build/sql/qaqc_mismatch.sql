@@ -51,7 +51,8 @@ SELECT
     count(*) FILTER (WHERE a.easements::numeric IS DISTINCT FROM b.easements::numeric) as easements,
     count(*) FILTER (WHERE a.ownertype IS DISTINCT FROM b.ownertype) as ownertype,
     count(*) FILTER (WHERE a.ownername IS DISTINCT FROM b.ownername) as ownername,
-    count(nullif(abs(a.lotarea::numeric-b.lotarea::numeric) <5, true)) as lotarea,
+    count(*) FILTER (WHERE abs(a.lotarea::int - b.lotarea::int)>=5 OR 
+        ((a.lotarea IS NULL)::int + (b.lotarea IS NULL)::int) = 1) as lotarea,
     count(nullif(abs(a.bldgarea::numeric-b.bldgarea::numeric) <5, true)) as bldgarea,
     count(nullif(abs(a.comarea::numeric-b.comarea::numeric) <5, true)) as comarea,
     count(nullif(abs(a.resarea::numeric-b.resarea::numeric) <5, true)) as resarea,
@@ -61,7 +62,7 @@ SELECT
     count(nullif(abs(a.strgearea::numeric-b.strgearea::numeric) <5, true)) as strgearea,
     count(nullif(abs(a.factryarea::numeric-b.factryarea::numeric) <5, true)) as factryarea,
     count(nullif(abs(a.otherarea::numeric-b.otherarea::numeric) <5, true)) as otherarea,
-    count(nullif(a.areasource = b.areasource, true)) as areasource,
+    count(*) FILTER (WHERE a.areasource IS DISTINCT FROM b.areasource) as areasource,
     count(nullif(a.numbldgs::numeric = b.numbldgs::numeric, true)) as numbldgs,
     count(nullif(a.numfloors::numeric = b.numfloors::numeric, true)) as numfloors,
     count(nullif(a.unitsres::numeric = b.unitsres::numeric, true)) as unitsres,
