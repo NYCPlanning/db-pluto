@@ -1,20 +1,9 @@
-DELETE FROM qaqc_mismatch 
+DELETE FROM dcp_pluto.qaqc_mismatch 
 WHERE pair = :'VERSION'||' - '||:'VERSION_PREV' 
 AND CONDO::boolean = :CONDO
 AND MAPPED::boolean = :MAPPED;
-DROP TABLE IF EXISTS qaqc_mismatch;
-CREATE TABLE qaqc_mismatch (
-    -- pair varchar,
-    -- condo varchar,
-    -- mapped varchar,
-    total numeric,
-    borough numeric,
-    block numeric,
-    lot numeric
-    -- cd numeric 
-);
 
--- INSERT INTO qaqc_mismatch (
+INSERT INTO qaqc_mismatch (
 SELECT
     :'VERSION'||' - '||:'VERSION_PREV' as pair, 
 	:CONDO as condo,
