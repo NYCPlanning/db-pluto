@@ -1,24 +1,24 @@
--- DELETE FROM qaqc_mismatch 
--- WHERE pair = :'VERSION'||' - '||:'VERSION_PREV' 
--- AND CONDO::boolean = :CONDO
--- AND MAPPED::boolean = :MAPPED;
+DELETE FROM qaqc_mismatch 
+WHERE pair = :'VERSION'||' - '||:'VERSION_PREV' 
+AND CONDO::boolean = :CONDO
+AND MAPPED::boolean = :MAPPED;
 DROP TABLE IF EXISTS qaqc_mismatch;
--- CREATE TABLE qaqc_mismatch (
---     -- pair varchar,
---     -- condo varchar,
---     -- mapped varchar,
---     total numeric,
---     borough numeric,
---     block numeric,
---     lot numeric
---     -- cd numeric 
--- );
+CREATE TABLE qaqc_mismatch (
+    -- pair varchar,
+    -- condo varchar,
+    -- mapped varchar,
+    total numeric,
+    borough numeric,
+    block numeric,
+    lot numeric
+    -- cd numeric 
+);
 
 -- INSERT INTO qaqc_mismatch (
 SELECT
-    -- :'VERSION'||' - '||:'VERSION_PREV' as pair, 
-	-- :CONDO as condo,
-    -- :MAPPED as mapped,
+    :'VERSION'||' - '||:'VERSION_PREV' as pair, 
+	:CONDO as condo,
+    :MAPPED as mapped,
     count(*) as total,
     count(*) FILTER (WHERE a.borough IS DISTINCT FROM b.borough) as borough,
     count(*) FILTER (WHERE a.block::varchar IS DISTINCT FROM b.block::varchar) as block,
@@ -117,7 +117,6 @@ SELECT
     b.facilfar::double precision) as facilfar,
     count(*) FILTER (WHERE a.borocode::numeric IS DISTINCT FROM  b.borocode::numeric) 
     as borocode,
-    count(nullif(a.bbl::double precision = b.bbl::double precision, true)) as bbl,
     count(*) FILTER (WHERE a.condono::numeric IS DISTINCT FROM b.condono::numeric) as condono,
     count(*) FILTER (WHERE a.tract2010 IS DISTINCT FROM b.tract2010) as tract2010,
     count(*) FILTER (WHERE abs(a.xcoord::numeric - b.xcoord::numeric)>=1 OR 
@@ -142,7 +141,7 @@ SELECT
         IS DISTINCT FROM b.healthcenterdistrict::numeric) as healthcenterdistrict,
     count(*) FILTER (WHERE a.firm07_flag IS DISTINCT FROM b.firm07_flag) as firm07_flag,
     count(*) FILTER (WHERE a.pfirm15_flag IS DISTINCT FROM b.pfirm15_flag)  as pfirm15_flag
-    INTO qaqc_mismatch
-    FROM export_pluto a
-INNER JOIN dcp_pluto b
-ON ROUND(a.bbl::float):: bigint = ROUND(b.bbl::float)::bigint;
+    FROM dcp_pluto.:"VERSION" a
+INNER JOIN dcp_pluto.:"VERSION_PREV" b
+ON (a.bbl::bigint = b.bbl::bigint)
+:CONDITION) 
