@@ -3,7 +3,7 @@ WHERE pair = :'VERSION'||' - '||:'VERSION_PREV'
 AND CONDO::boolean = :CONDO
 AND MAPPED::boolean = :MAPPED;
 
-INSERT INTO qaqc_mismatch (
+INSERT INTO dcp_pluto.qaqc_mismatch (
 SELECT
     :'VERSION'||' - '||:'VERSION_PREV' as pair, 
 	:CONDO as condo,
