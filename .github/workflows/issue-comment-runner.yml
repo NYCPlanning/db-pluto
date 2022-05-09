@@ -12,7 +12,8 @@ jobs:
       (
         github.event.comment.user.login == 'SashaWeinstein' || 
         github.event.comment.user.login == 'mbh329' || 
-        github.event.comment.user.login == 'AmandaDoyle'
+        github.event.comment.user.login == 'AmandaDoyle' ||
+        github.event.comment.user.login == 'td928'
       )
     runs-on: self-hosted
     env:
