@@ -44,6 +44,7 @@ jobs:
         shell: bash
         run: |
           ./pluto setup init
+          sudo apt install python3-pip
           pip3 install csv2md
 
       - name: dataloading ..

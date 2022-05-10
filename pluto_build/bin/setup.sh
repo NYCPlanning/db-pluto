@@ -4,9 +4,6 @@ function setup {
 sudo apt update
 sudo apt install -y curl zip
 
-# install pip for the workflow to run correctly
-sudo apt install python3-pip
-
 curl -O https://dl.min.io/client/mc/release/linux-amd64/mc
 chmod +x mc
 sudo mv ./mc /usr/bin
