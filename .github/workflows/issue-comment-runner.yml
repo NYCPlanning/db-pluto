@@ -15,10 +15,23 @@ jobs:
         github.event.comment.user.login == 'AmandaDoyle' ||
         github.event.comment.user.login == 'td928'
       )
-    runs-on: self-hosted
+      
+    runs-on: ubuntu-20.04
+    services:
+      postgres:
+        image: postgis/postgis:12-3.0-alpine
+        env:
+          POSTGRES_PASSWORD: postgres
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          - 5432:5432
     env:
+      BUILD_ENGINE: postgresql://postgres:postgres@localhost:5432/postgres
       RECIPE_ENGINE: ${{ secrets.RECIPE_ENGINE }}
-      BUILD_ENGINE: ${{ secrets.BUILD_ENGINE }}
       EDM_DATA: ${{ secrets.EDM_DATA }}
       AWS_S3_ENDPOINT: ${{ secrets.AWS_S3_ENDPOINT }}
       AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
@@ -31,6 +44,7 @@ jobs:
         shell: bash
         run: |
           ./pluto setup init
+          sudo apt install python3-pip
           pip3 install csv2md
 
       - name: dataloading ..

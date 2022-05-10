@@ -3,7 +3,7 @@
 -- the order special purpose districts are assigned is based on which district covers the majority of the lot
 -- a district is only assigned if more than 10% of the district covers the lot
 -- OR more than a specified area of the lot if covered by the district
-DROP TABLE specialpurposeperorder;
+DROP TABLE IF EXISTS specialpurposeperorder;
 CREATE TABLE specialpurposeperorder AS (
 WITH 
 specialpurposeper AS (
