@@ -36,6 +36,7 @@ function FGDB_export {
   mkdir -p output/$@.gdb &&
   (cd output/$@.gdb
     docker run \
+      --network host\
       -v $(pwd):/data\
       --user $UID\
       --rm webmapp/gdal-docker:latest ogr2ogr -progress -f "FileGDB" $@.gdb \
