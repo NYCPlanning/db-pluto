@@ -29,6 +29,7 @@ function urlparse {
     BUILD_PORT="$(echo $hostport | sed -e 's,^.*:,:,g' -e 's,.*:\([0-9]*\).*,\1,g' -e 's,[^0-9],,g')"
     BUILD_DB="$(echo $url | grep / | cut -d/ -f2-)"
 }
+urlparse $BUILD_ENGINE
 
 function FGDB_export {
   urlparse $BUILD_ENGINE
@@ -59,16 +60,24 @@ function FGDB_export {
 register 'export' 'gdb' 'export pluto.gdb' FGDB_export
 
 function SHP_export {
-  urlparse $BUILD_ENGINE
-  mkdir -p output/$@ &&
-    (cd output/$@
-      ogr2ogr -progress -f "ESRI Shapefile" $@.shp \
-          PG:"host=$BUILD_HOST user=$BUILD_USER port=$BUILD_PORT dbname=$BUILD_DB password=$BUILD_PWD" \
-          -nlt MULTIPOLYGON $@
-        rm -f $@.zip
-        zip $@.zip *
-        ls | grep -v $@.zip | xargs rm
-      )
+  table=$1
+  geomtype=$2
+  name=${3:-$table}
+  mkdir -p $name &&(
+    cd $name
+    docker run \
+      --network host\
+      -v $(pwd):/data\
+      --user $UID\
+      --rm webmapp/gdal-docker:latest ogr2ogr -progress -f "ESRI Shapefile" $name.shp \
+        PG:"host=$BUILD_HOST user=$BUILD_USER port=$BUILD_PORT dbname=$BUILD_DB password=$BUILD_PWD" \
+        $table -nlt $geomtype
+      rm -f $name.shp.zip
+      zip -9 $name.shp.zip *
+      ls | grep -v $name.shp.zip | xargs rm
+  )
+  mv $name/$name.shp.zip $name.shp.zip
+  rm -rf $name
 }
 register 'export' 'shp' 'export pluto.shp' SHP_export
 
