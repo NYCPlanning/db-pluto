@@ -49,3 +49,14 @@ jobs:
         shell: bash
         working-directory: pluto_build
         run: ./03_corrections.sh
+
+      - name: Archive and QAQC
+        shell: bash
+        working-directory: pluto_build
+        run: ./04_archive.sh
+          
+      - name: create shapefile
+        working-directory: pluto_build
+        shell: bash
+        run: |
+          ./05_export.sh

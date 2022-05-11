@@ -38,7 +38,7 @@ function FGDB_export {
       --network host\
       -v $(pwd):/data\
       --user $UID\
-      --rm webmapp/gdal-docker:latest ogr2ogr -progress -f "FileGDB" $@.gdb \
+      --rm webmapp/gdal-docker ogr2ogr -progress -f "FileGDB" $@.gdb \
         PG:"host=$BUILD_HOST user=$BUILD_USER port=$BUILD_PORT dbname=$BUILD_DB password=$BUILD_PWD" \
         -mapFieldType Integer64=Real\
         -lco GEOMETRY_NAME=Shape\
@@ -48,7 +48,7 @@ function FGDB_export {
       --network host\
       -v $(pwd):/data\
       --user $UID\
-      --rm webmapp/gdal-docker:latest ogr2ogr -progress -f "FileGDB" $@.gdb \
+      --rm webmapp/gdal-docker ogr2ogr -progress -f "FileGDB" $@.gdb \
         PG:"host=$BUILD_HOST user=$BUILD_USER port=$BUILD_PORT dbname=$BUILD_DB password=$BUILD_PWD" \
         -mapFieldType Integer64=Real\
         -update -nlt NONE\
@@ -70,7 +70,7 @@ function SHP_export {
       --network host\
       -v $(pwd):/data\
       --user $UID\
-      --rm webmapp/gdal-docker:latest ogr2ogr -progress -f "ESRI Shapefile" $name.shp \
+      --rm webmapp/gdal-docker ogr2ogr -progress -f "ESRI Shapefile" $name.shp \
         PG:"host=$BUILD_HOST user=$BUILD_USER port=$BUILD_PORT dbname=$BUILD_DB password=$BUILD_PWD" \
         $table -nlt $geomtype
       rm -f $name.shp.zip
