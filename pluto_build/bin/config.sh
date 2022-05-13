@@ -43,6 +43,8 @@ function FGDB_export {
         -mapFieldType Integer64=Real\
         -lco GEOMETRY_NAME=Shape\
         -nln $@\
+        -nlt MULTIPOLYGON\
+        $@
     docker run \
       --network host\
       -v $(pwd):/data\
