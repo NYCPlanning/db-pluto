@@ -35,6 +35,7 @@ function FGDB_export {
   mkdir -p output/$@.gdb &&
   (cd output/$@.gdb
     docker run \
+      --network host\
       -v $(pwd):/data\
       --user $UID\
       --rm webmapp/gdal-docker:latest ogr2ogr -progress -f "FileGDB" $@.gdb \
@@ -42,15 +43,18 @@ function FGDB_export {
         -mapFieldType Integer64=Real\
         -lco GEOMETRY_NAME=Shape\
         -nln $@\
-        -nlt MULTIPOLYGON $@
+        -nlt MULTIPOLYGON\
+        $@
     docker run \
+      --network host\
       -v $(pwd):/data\
       --user $UID\
       --rm webmapp/gdal-docker:latest ogr2ogr -progress -f "FileGDB" $@.gdb \
         PG:"host=$BUILD_HOST user=$BUILD_USER port=$BUILD_PORT dbname=$BUILD_DB password=$BUILD_PWD" \
         -mapFieldType Integer64=Real\
         -update -nlt NONE\
-        -nln NOT_MAPPED_LOTS unmapped
+        -nln NOT_MAPPED_LOTS\
+        unmapped
       rm -f $@.gdb.zip
       zip -r $@.gdb.zip $@.gdb
       rm -rf $@.gdb
@@ -59,16 +63,21 @@ function FGDB_export {
 register 'export' 'gdb' 'export pluto.gdb' FGDB_export
 
 function SHP_export {
+  name=$1
   urlparse $BUILD_ENGINE
-  mkdir -p output/$@ &&
-    (cd output/$@
-      ogr2ogr -progress -f "ESRI Shapefile" $@.shp \
+  mkdir -p output/$name &&
+    (cd output/$name
+      docker run \
+        --network host\
+        -v $(pwd):/data\
+        --user $UID\
+        --rm webmapp/gdal-docker:latest ogr2ogr -progress -f "ESRI Shapefile" $name.shp \
           PG:"host=$BUILD_HOST user=$BUILD_USER port=$BUILD_PORT dbname=$BUILD_DB password=$BUILD_PWD" \
-          -nlt MULTIPOLYGON $@
-        rm -f $@.zip
-        zip $@.zip *
-        ls | grep -v $@.zip | xargs rm
-      )
+          $table
+        rm -f $name.shp.zip
+        zip -9 $name.shp.zip *
+        ls | grep -v $name.shp.zip | xargs rm
+  )
 }
 register 'export' 'shp' 'export pluto.shp' SHP_export
 
