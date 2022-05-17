@@ -62,9 +62,7 @@ function FGDB_export {
 register 'export' 'gdb' 'export pluto.gdb' FGDB_export
 
 function SHP_export {
-  table=$1
-  geomtype=$2
-  name=${3:-$table}
+  name=$1
   urlparse $BUILD_ENGINE
   mkdir -p output/$name &&
     (cd output/$name
