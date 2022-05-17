@@ -53,7 +53,8 @@ function FGDB_export {
         PG:"host=$BUILD_HOST user=$BUILD_USER port=$BUILD_PORT dbname=$BUILD_DB password=$BUILD_PWD" \
         -mapFieldType Integer64=Real\
         -update -nlt NONE\
-        -nln NOT_MAPPED_LOTS unmapped
+        -nln NOT_MAPPED_LOTS\
+        unmapped
       rm -f $@.gdb.zip
       zip -r $@.gdb.zip $@.gdb
       rm -rf $@.gdb
