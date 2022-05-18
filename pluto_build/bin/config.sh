@@ -34,14 +34,22 @@ function FGDB_export {
   urlparse $BUILD_ENGINE
   mkdir -p output/$@.gdb &&
   (cd output/$@.gdb
-    ogr2ogr -progress -f "FileGDB" $@.gdb \
+    docker run \
+      -v $(pwd):/data\
+      --user $UID\
+      --network host\
+      --rm webmapp/gdal-docker:latest ogr2ogr -progress -f "FileGDB" $@.gdb \
         PG:"host=$BUILD_HOST user=$BUILD_USER port=$BUILD_PORT dbname=$BUILD_DB password=$BUILD_PWD" \
         -mapFieldType Integer64=Real\
         -lco GEOMETRY_NAME=Shape\
         -nln $@\
         -nlt MULTIPOLYGON\
         $@
-    ogr2ogr -progress -f "FileGDB" $@.gdb \
+    docker run \
+      -v $(pwd):/data\
+      --user $UID\
+      --network host\
+      --rm webmapp/gdal-docker:latest ogr2ogr -progress -f "FileGDB" $@.gdb \
         PG:"host=$BUILD_HOST user=$BUILD_USER port=$BUILD_PORT dbname=$BUILD_DB password=$BUILD_PWD" \
         -mapFieldType Integer64=Real\
         -update -nlt NONE\
@@ -62,9 +70,9 @@ function SHP_export {
       ogr2ogr -progress -f "ESRI Shapefile" $name.shp \
           PG:"host=$BUILD_HOST user=$BUILD_USER port=$BUILD_PORT dbname=$BUILD_DB password=$BUILD_PWD" \
           $name
-        rm -f $name.shp.zip
-        zip -9 $name.shp.zip *
-        ls | grep -v $name.shp.zip | xargs rm
+      rm -f $name.shp.zip
+      zip -9 $name.shp.zip *
+      ls | grep -v $name.shp.zip | xargs rm
   )
 }
 register 'export' 'shp' 'export pluto.shp' SHP_export
