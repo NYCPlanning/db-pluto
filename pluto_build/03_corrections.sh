@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 source bin/config.sh
 
 psql $BUILD_ENGINE -f sql/corr_create.sql
