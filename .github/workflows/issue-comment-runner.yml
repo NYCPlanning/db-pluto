@@ -46,6 +46,8 @@ jobs:
           ./pluto setup init
           sudo apt install python3-pip
           pip3 install csv2md
+          sudo apt-get update
+          sudo apt-get -y install --no-install-recommends gdal-bin
 
       - name: dataloading ..
         working-directory: pluto_build
