@@ -53,11 +53,3 @@ mkdir -p output/dof &&
     zip bbl_council.zip *
     ls | grep -v bbl_council.zip | xargs rm
   )
-
-wait
-Upload latest & 
-Upload $DATE &
-Upload $VERSION &
- 
-wait
-exit 0
