@@ -8,17 +8,10 @@ services:
       args:
         # [Choice] Python version: 3, 3.8, 3.7, 3.6
         VARIANT: 3.9
-        # [Choice] Install Node.js
-        INSTALL_NODE: "false"
-        NODE_VERSION: "lts/*"
         # On Linux, you may need to update USER_UID and USER_GID below if not your local UID is not 1000.
         USER_UID: 1000
         USER_GID: 1000
-        # Geosupport Versions
-        RELEASE: 21c
-        MAJOR: 21
-        MINOR: 3
-        PATCH: 0
+
 
     volumes:
       - ..:/workspace:cached
