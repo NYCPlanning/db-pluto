@@ -3,7 +3,9 @@
 	"dockerComposeFile": "docker-compose.yml",
 	"service": "pluto",
 	"workspaceFolder": "/workspace",
-
+	"remoteEnv": {
+		"LOCAL_WORKSPACE_FOLDER": "${localWorkspaceFolder}"
+	},
 	// Configure tool-specific properties.
 	"settings": {
 		//"terminal.integrated.shell.linux": "/bin/bash",
