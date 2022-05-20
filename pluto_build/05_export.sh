@@ -8,7 +8,7 @@ mkdir -p output &&
     CSV_export pluto_corrections
     CSV_export pluto_removed_records
     zip pluto_corrections.zip *
-    ls | grep -v pluto_corrections.zip | xargs rm
+    ls | grep -v pluto_corrections.zip | xargs rm 
   )
 
 mkdir -p output &&
@@ -23,10 +23,10 @@ FGDB_export mappluto_gdb &
 FGDB_export mappluto_unclipped_gdb &
 
 # mappluto
-SHP_export mappluto &
+# SHP_export mappluto &
 
-# mappluto_unclipped
-SHP_export mappluto_unclipped &
+# # mappluto_unclipped
+# SHP_export mappluto_unclipped &
 
 # Pluto
 mkdir -p output/pluto &&
@@ -55,9 +55,9 @@ mkdir -p output/dof &&
   )
 
 wait
-Upload latest & 
-Upload $DATE &
-Upload $VERSION &
+# Upload latest & 
+# Upload $DATE &
+# Upload $VERSION &
  
 wait
 exit 0
