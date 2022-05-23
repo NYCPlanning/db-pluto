@@ -35,7 +35,7 @@ function FGDB_export {
   mkdir -p output/$@.gdb &&
   (cd output/$@.gdb
     docker run \
-      -v $(pwd):/data\
+      -v "${LOCAL_WORKSPACE_FOLDER//\\/\/}$(pwd)/data"\
       --user $UID\
       --network host\
       --rm webmapp/gdal-docker:latest ogr2ogr -progress -f "FileGDB" $@.gdb \
@@ -46,7 +46,7 @@ function FGDB_export {
         -nlt MULTIPOLYGON\
         $@
     docker run \
-      -v $(pwd):/data\
+      -v "${LOCAL_WORKSPACE_FOLDER//\\/\/}$(pwd)/data"\
       --user $UID\
       --network host\
       --rm webmapp/gdal-docker:latest ogr2ogr -progress -f "FileGDB" $@.gdb \

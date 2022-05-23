@@ -3,7 +3,6 @@
 	"dockerComposeFile": "docker-compose.yml",
 	"service": "pluto",
 	"workspaceFolder": "/workspace",
-
 	// Configure tool-specific properties.
 	"settings": {
 		//"terminal.integrated.shell.linux": "/bin/bash",
@@ -19,11 +18,10 @@
 				"password": "postgres"
 			}
 		],
-
 		// Configure properties specific to VS Code.
 		"vscode": {
 			// Set *default* container specific settings.json values on container create.
-			"settings": { 
+			"settings": {
 				"python.defaultInterpreterPath": "/usr/local/bin/python",
 				"python.linting.enabled": true,
 				"python.linting.pylintEnabled": true,
@@ -37,7 +35,6 @@
 				"python.linting.pydocstylePath": "/usr/local/py-utils/bin/pydocstyle",
 				"python.linting.pylintPath": "/usr/local/py-utils/bin/pylint"
 			},
-			
 			// Add the IDs of extensions you want installed when the container is created.
 			"extensions": [
 				"ms-python.python",
@@ -45,13 +42,16 @@
 			]
 		}
 	},
-
 	// Use 'forwardPorts' to make a list of ports inside the container available locally.
-	"forwardPorts": [5432],
-	"initializeCommand": "ssh-add $HOME/.ssh/id_rsa"
+	"forwardPorts": [
+		5432
+	],
+	"initializeCommand": "ssh-add $HOME/.ssh/id_rsa",
+	"remoteEnv": {
+		"LOCAL_WORKSPACE_FOLDER": "${localWorkspaceFolder}"
+	}
 	// Use 'postCreateCommand' to run commands after the container is created.
 	// "postCreateCommand": "pip3 install --user -r requirements.txt",
-
 	// Comment out to connect as root instead. More info: https://aka.ms/vscode-remote/containers/non-root.
 	//"remoteUser": "vscode"
 }
