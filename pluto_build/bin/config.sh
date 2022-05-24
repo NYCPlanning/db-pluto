@@ -39,6 +39,11 @@ function urlparse {
 
 function FGDB_export {
   urlparse $BUILD_ENGINE
+  echo "build host is $BUILD_HOST"
+  echo "user is $BUILD_USER"
+  echo "port is $BUILD_PORT"
+  echo "dbname  is $BUILD_DB"
+  echo "password is $BUILD_PWD"
   mkdir -p output/$@ &&
   (cd output/$@
     docker run \
@@ -49,25 +54,29 @@ function FGDB_export {
       --network $docker_network\
       --rm ubuntu echo "test from docker" > docker_test.txt
     docker run \
-      --network $docker_network\
-      --user $UID\
-      --rm webmapp/gdal-docker:latest ogr2ogr -progress -f "FileGDB" $@.gbd\
-        PG:"host=$BUILD_HOST user=$BUILD_USER port=$BUILD_PORT dbname=$BUILD_DB password=$BUILD_PWD"\
-        -mapFieldType Integer64=Real\
-        -lco GEOMETRY_NAME=Shape\
-        -nln $@\
-        -nlt MULTIPOLYGON $@
-    echo "test" > test.txt
-    docker run \
-      --user $UID\
-      --network $docker_network\
-      --rm webmapp/gdal-docker:latest ogr2ogr -progress -f "FileGDB" $@.gdb \
-        PG:"host=$BUILD_HOST user=$BUILD_USER port=$BUILD_PORT dbname=$BUILD_DB password=$BUILD_PWD" \
-        -mapFieldType Integer64=Real\
-        -nlt NONE\
-        -update\
-        -nln NOT_MAPPED_LOTS\
-        unmapped
+        --network $docker_network\
+        --rm webmapp/gdal-docker:latest ogr2ogr -f "fileGDB" $@.gdb\
+        PG:"host=localhost user=postgres port=5432 dbname=postgres password=postgres"
+    # docker run \
+    #   --network $docker_network\
+    #   --user $UID\
+    #   --rm webmapp/gdal-docker:latest ogr2ogr -progress -f "FileGDB" $@.gdb\
+    #     PG:"host=$BUILD_HOST user=$BUILD_USER port=$BUILD_PORT dbname=$BUILD_DB password=$BUILD_PWD"\
+    #     -mapFieldType Integer64=Real\
+    #     -lco GEOMETRY_NAME=Shape\
+    #     -nln $@\
+    #     -nlt MULTIPOLYGON $@
+    # echo "test" > test.txt
+    # docker run \
+    #   --user $UID\
+    #   --network $docker_network\
+    #   --rm webmapp/gdal-docker:latest ogr2ogr -progress -f "FileGDB" $@.gdb \
+    #     PG:"host=$BUILD_HOST user=$BUILD_USER port=$BUILD_PORT dbname=$BUILD_DB password=$BUILD_PWD" \
+    #     -mapFieldType Integer64=Real\
+    #     -nlt NONE\
+    #     -update\
+    #     -nln NOT_MAPPED_LOTS\
+    #     unmapped
       # rm -f $@.gdb.zip
       # zip -r $@.gdb.zip $@.gdb
       # rm -rf $@.gdb
