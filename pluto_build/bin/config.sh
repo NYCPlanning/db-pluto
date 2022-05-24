@@ -44,30 +44,30 @@ function FGDB_export {
     docker run \
       --network $docker_network\
       --rm postgres psql "host=$BUILD_HOST user=$BUILD_USER port=$BUILD_PORT dbname=$BUILD_DB password=$BUILD_PWD" \
-       --echo-all -c "select * from pluto limit 1"
+       --echo-all -c "select * from $@ limit 1"
     docker run \
       --network $docker_network\
       --rm ubuntu echo "test from docker" > docker_test.txt
     docker run \
       --network $docker_network\
       --user $UID\
-      --rm webmapp/gdal-docker:latest ogr2ogr -progress -f "FileGDB" $@.gdb\
+      --rm webmapp/gdal-docker:latest ogr2ogr -progress -f "FileGDB" $@.gbd\
         PG:"host=$BUILD_HOST user=$BUILD_USER port=$BUILD_PORT dbname=$BUILD_DB password=$BUILD_PWD"\
         -mapFieldType Integer64=Real\
         -lco GEOMETRY_NAME=Shape\
         -nln $@\
         -nlt MULTIPOLYGON $@
     echo "test" > test.txt
-    # docker run \
-    #   --user $UID\
-    #   --network $docker_network\
-    #   --rm webmapp/gdal-docker:latest ogr2ogr -progress -f "FileGDB" $@.gdb \
-    #     PG:"host=$BUILD_HOST user=$BUILD_USER port=$BUILD_PORT dbname=$BUILD_DB password=$BUILD_PWD" \
-    #     -mapFieldType Integer64=Real\
-    #     -nlt NONE\
-    #     -update\
-    #     -nln NOT_MAPPED_LOTS\
-    #     unmapped
+    docker run \
+      --user $UID\
+      --network $docker_network\
+      --rm webmapp/gdal-docker:latest ogr2ogr -progress -f "FileGDB" $@.gdb \
+        PG:"host=$BUILD_HOST user=$BUILD_USER port=$BUILD_PORT dbname=$BUILD_DB password=$BUILD_PWD" \
+        -mapFieldType Integer64=Real\
+        -nlt NONE\
+        -update\
+        -nln NOT_MAPPED_LOTS\
+        unmapped
       # rm -f $@.gdb.zip
       # zip -r $@.gdb.zip $@.gdb
       # rm -rf $@.gdb

@@ -17,7 +17,7 @@ mkdir -p output &&
   )
 
 # mappluto.gdb
-FGDB_export mappluto_gdb &
+# FGDB_export mappluto_gdb &
 
 # mappluto_unclipped.gdb
 FGDB_export mappluto_unclipped_gdb &
