@@ -62,7 +62,7 @@ jobs:
 
       - name: Set up Cloud SDK
         if: matrix.dataset == 'dcp_mappluto'
-        uses: google-github-actions/setup-gcloud@master
+        uses: google-github-actions/setup-gcloud@v0.6.0
         with:
           project_id: ${{ secrets.GCP_PROJECT_ID_DATA_ENGINEERING }}
           service_account_key: ${{ secrets.GCP_GCS_BQ_SA_KEY }}
