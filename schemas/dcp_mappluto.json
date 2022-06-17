@@ -1,8 +1,8 @@
 [
     {
-      "name": "wkt",
-      "type": "STRING",
-      "description": "Feature geometry"
+        "name": "wkt",
+        "type": "STRING",
+        "description": "Feature geometry"
     },
     {
         "name": "borough",
@@ -33,6 +33,16 @@
         "name": "cb2010",
         "type": "STRING",
         "description": "The 2010 US Census Block in which the tax lot is located. Each census block is unique within a census tract (see CT2010)."
+    },
+    {
+        "name": "BCT2020",
+        "type": "STRING",
+        "description": "Combination of borough and 2020 census tract"
+    },
+    {
+        "name": "BCTCB2020",
+        "type": "STRING",
+        "description": "Combination of borough, 2020 census tract, and 2020 census borough"
     },
     {
         "name": "schooldist",
@@ -458,5 +468,4 @@
         "name": "shape_area",
         "type": "FLOAT"
     }
-  ]
-  
+]
