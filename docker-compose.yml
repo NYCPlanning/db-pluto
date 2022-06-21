@@ -3,7 +3,7 @@ version: "3"
 services:
   pluto:
     build:
-      context: ..
+      context: .
       dockerfile: Dockerfile
       args:
         # On Linux, you may need to update USER_UID and USER_GID below if not your local UID is not 1000.
