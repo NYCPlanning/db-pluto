@@ -46,22 +46,21 @@ RUN export LATEST_COMPOSE_VERSION=$(curl -sSL "https://api.github.com/repos/dock
 #     mssql-tools && \
 #     rm -rf /var/lib/apt/lists/*
 
-# RUN sudo su \
-#     curl https://packages.microsoft.com/keys/microsoft.asc | apt-key add - \
-#     #Download appropriate package for the OS version
-#     #Debian 11
-#     curl https://packages.microsoft.com/config/debian/11/prod.list > /etc/apt/sources.list.d/mssql-release.list \
-#     exit \
-#     sudo apt-get update \ 
-#     sudo ACCEPT_EULA=Y apt-get install -y msodbcsql17 \
-#     # optional: for bcp and sqlcmd
-#     sudo ACCEPT_EULA=Y apt-get install -y mssql-tools \
-#     echo 'export PATH="$PATH:/opt/mssql-tools/bin"' >> ~/.bashrc \
-#     source ~/.bashrc \
-#     # optional: for unixODBC development headers
-#     sudo apt-get install -y unixodbc-dev \
-#     # optional: kerberos library for debian-slim distributions
-#     sudo apt-get install -y libgssapi-krb5-2
+RUN curl https://packages.microsoft.com/keys/microsoft.asc | apt-key add - && \
+    #Download appropriate package for the OS version
+    #Debian 11
+    curl https://packages.microsoft.com/config/debian/11/prod.list > /etc/apt/sources.list.d/mssql-release.list && \
+    #exit \
+    apt-get update &&\ 
+    ACCEPT_EULA=Y apt-get install -y msodbcsql17 && \
+    # optional: for bcp and sqlcmd
+    ACCEPT_EULA=Y apt-get install -y mssql-tools && \
+    echo 'export PATH="$PATH:/opt/mssql-tools/bin"' >> ~/.bashrc && \
+    . ~/.bashrc && \
+    # optional: for unixODBC development headers
+    apt-get install -y unixodbc-dev && \
+    # optional: kerberos library for debian-slim distributions
+    apt-get install -y libgssapi-krb5-2
 
 ENV FGDB_SOURCE https://raw.githubusercontent.com/Esri/file-geodatabase-api/master/FileGDB_API_1.5/FileGDB_API_1_5_64gcc51.tar.gz
 RUN curl --silent --show-error -o /usr/local/src/filgdb_api.tar.gz ${FGDB_SOURCE} && \
