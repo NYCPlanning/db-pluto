@@ -18,15 +18,6 @@ DATE=$(date "+%Y-%m-%d")
 s3_endpoint=https://nyc3.digitaloceanspaces.com
 s3_bucket=edm-recipes
 
-# Set host parameter for webmapp/gdal-docker containers
-if [ -f /.dockerenv ]; then
-    docker_network="container:db-pluto_devcontainer_pluto_1"
-    basic_docker_volume='no'
-else
-    docker_network='host'
-    basic_docker_volume='yes'
-fi
-
 function urlparse {
     proto="$(echo $1 | grep :// | sed -e's,^\(.*://\).*,\1,g')"
     url=$(echo $1 | sed -e s,$proto,,g)
@@ -40,45 +31,22 @@ function urlparse {
 }
 
 function FGDB_export {
+  name=$1
   urlparse $BUILD_ENGINE
-  echo "docker network is $docker_network"
-
-  mkdir -p output/$@ &&
-  (cd output/$@
-    if [[ "$basic_docker_volume" == "yes" ]]; then
-      docker_volume="$(pwd):/data"
-    else 
-      docker_volume="${LOCAL_WORKSPACE_FOLDER//\\/\/}$(pwd):/data"
-    fi
-    echo "docker volume is $docker_volume"
-    echo "current dir: $(pwd)"
-    docker run \
-      --network $docker_network\
-      -v $docker_volume\
-      --user $UID\
-      --rm webmapp/gdal-docker:latest ogr2ogr -progress -f "FileGDB" $@.gdb\
-        PG:"host=$BUILD_HOST user=$BUILD_USER port=$BUILD_PORT dbname=$BUILD_DB password=$BUILD_PWD"\
-        -mapFieldType Integer64=Real\
-        -lco GEOMETRY_NAME=Shape\
-        -overwrite\
-        -nln $@\
-        -nlt MULTIPOLYGON $@
-
-    # docker run \
-    #   --user $UID\
-    #   -v "${LOCAL_WORKSPACE_FOLDER//\\/\/}$(pwd):/data"\
-    #   --network $docker_network\
-    #   --rm webmapp/gdal-docker:latest ogr2ogr -progress -f "FileGDB" $@.gdb \
-    #     PG:"host=$BUILD_HOST user=$BUILD_USER port=$BUILD_PORT dbname=$BUILD_DB password=$BUILD_PWD" \
-    #     -mapFieldType Integer64=Real\
-    #     -nlt NONE\
-    #     -update\
-    #     -nln NOT_MAPPED_LOTS\
-    #     unmapped
-      rm -f $@.gdb.zip
-      zip -r $@.gdb.zip $@.gdb
-      rm -rf $@.gdb
-    )
+  mkdir -p output/$name &&
+    (cd output/$name
+      ogr2ogr -progress -f "FileGDB" $name.gdb \
+          PG:"host=$BUILD_HOST user=$BUILD_USER port=$BUILD_PORT dbname=$BUILD_DB password=$BUILD_PWD" \
+          -mapFieldType Integer64=Real\
+          -lco GEOMETRY_NAME=Shape\
+          -nln $name\
+          -nlt MULTIPOLYGON\
+          $name 
+      rm -f $name.gdb.zip
+      zip -9 $name.gdb.zip *
+      ls | grep -v $name.gdb.zip | xargs rm
+  )
+    
 }
 register 'export' 'gdb' 'export pluto.gdb' FGDB_export
 
