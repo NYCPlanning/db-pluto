@@ -22,10 +22,10 @@ FGDB_export mappluto_gdb &
 # mappluto_unclipped.gdb
 FGDB_export mappluto_unclipped_gdb &
 
-# # mappluto
+# mappluto
 SHP_export mappluto &
 
-# # mappluto_unclipped
+# mappluto_unclipped
 SHP_export mappluto_unclipped &
 
 # Pluto
