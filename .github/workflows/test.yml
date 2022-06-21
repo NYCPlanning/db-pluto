@@ -9,18 +9,6 @@ on:
 jobs:
   build:
     runs-on: ubuntu-20.04
-    services:
-      postgres:
-        image: postgis/postgis:12-3.0-alpine
-        env:
-          POSTGRES_PASSWORD: postgres
-        options: >-
-          --health-cmd pg_isready
-          --health-interval 10s
-          --health-timeout 5s
-          --health-retries 5
-        ports:
-          - 5432:5432
     env:
       BUILD_ENGINE: postgresql://postgres:postgres@localhost:5432/postgres
       EDM_DATA: ${{ secrets.EDM_DATA }}
@@ -38,7 +26,6 @@ jobs:
           sudo apt install python3-pip
           pip3 install csv2md
           sudo apt-get update
-          sudo apt-get -y install --no-install-recommends gdal-bin
 
       - name: dataloading ..
         working-directory: pluto_build
