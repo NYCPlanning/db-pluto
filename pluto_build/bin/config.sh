@@ -18,15 +18,6 @@ DATE=$(date "+%Y-%m-%d")
 s3_endpoint=https://nyc3.digitaloceanspaces.com
 s3_bucket=edm-recipes
 
-# Set host parameter for webmapp/gdal-docker containers
-if [ -f /.dockerenv ]; then
-    docker_network="container:db-pluto_devcontainer_pluto_1"
-    basic_docker_volume='no'
-else
-    docker_network='host'
-    basic_docker_volume='yes'
-fi
-
 function urlparse {
     proto="$(echo $1 | grep :// | sed -e's,^\(.*://\).*,\1,g')"
     url=$(echo $1 | sed -e s,$proto,,g)

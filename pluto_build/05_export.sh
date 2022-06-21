@@ -17,16 +17,16 @@ mkdir -p output &&
   )
 
 # mappluto.gdb
-# FGDB_export mappluto_gdb &
+FGDB_export mappluto_gdb &
 
 # mappluto_unclipped.gdb
 FGDB_export mappluto_unclipped_gdb &
 
 # # mappluto
-# SHP_export mappluto &
+SHP_export mappluto &
 
 # # mappluto_unclipped
-# SHP_export mappluto_unclipped &
+SHP_export mappluto_unclipped &
 
 # Pluto
 mkdir -p output/pluto &&
@@ -55,4 +55,3 @@ mkdir -p output/dof &&
   )
 
 wait
-
