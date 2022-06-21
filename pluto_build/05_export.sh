@@ -23,12 +23,12 @@ mkdir -p output &&
 FGDB_export mappluto_unclipped_gdb &
 
 # # mappluto
-SHP_export mappluto &
+# SHP_export mappluto &
 
 # # mappluto_unclipped
 # SHP_export mappluto_unclipped &
 
-Pluto
+# Pluto
 mkdir -p output/pluto &&
   (cd output/pluto
     rm -f pluto.zip
