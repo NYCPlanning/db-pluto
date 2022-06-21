@@ -12,7 +12,7 @@ AND numfloors NOT LIKE '%.%';
 UPDATE pluto a
 SET numfloors = NULL
 WHERE a.numfloors IS NOT NULL 
-AND a.numfloors::DECIMAL < 1;
+AND a.numfloors::numeric < 1;
 -- remove commas from lot area
 UPDATE pluto a
 SET lotarea = REPLACE(lotarea,',','')
