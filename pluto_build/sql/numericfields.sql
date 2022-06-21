@@ -8,7 +8,11 @@ UPDATE pluto a
 SET numfloors = NULL 
 WHERE a.numfloors ~ '[^0-9]'
 AND numfloors NOT LIKE '%.%';
-
+-- only allow numfloors values >= 1
+UPDATE pluto a
+SET numfloors = NULL
+WHERE a.numfloors IS NOT NULL 
+AND a.numfloors::numeric < 1;
 -- remove commas from lot area
 UPDATE pluto a
 SET lotarea = REPLACE(lotarea,',','')
