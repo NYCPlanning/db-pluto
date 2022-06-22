@@ -32,38 +32,43 @@ function urlparse {
 
 function FGDB_export {
   name=$1
-  urlparse $BUILD_ENGINE
-  mkdir -p output/$name &&
-    (cd output/$name
-      ogr2ogr -progress -f "FileGDB" $name.gdb \
-          PG:"host=$BUILD_HOST user=$BUILD_USER port=$BUILD_PORT dbname=$BUILD_DB password=$BUILD_PWD" \
-          -mapFieldType Integer64=Real\
-          -lco GEOMETRY_NAME=Shape\
-          -nln $name\
-          -nlt MULTIPOLYGON\
-          $name 
-      rm -f $name.gdb.zip
-      zip -9 $name.gdb.zip *
-      ls | grep -v $name.gdb.zip | xargs rm
-  )
-    
+  filetype="FileGDB"
+  args="-mapFieldType Integer64=Real -lco GEOMETRY_NAME=Shape -nln $name -nlt MULTIPOLYGON"
+  extension="gdb"
+
+  spatial_export "${name}" "${filetype}" "${extension}" "${args}"    
 }
 register 'export' 'gdb' 'export pluto.gdb' FGDB_export
 
 function SHP_export {
   name=$1
+  filetype="ESRI Shapefile"
+  args=""
+  extension="shp"
+
+  spatial_export "${name}" "${filetype}" "${extension}" "${args}"
+}
+
+register 'export' 'shp' 'export pluto.shp' SHP_export
+
+function spatial_export { 
+  name=$1
+  filetype=$2
+  ext=$3
+  args=$4
+
   urlparse $BUILD_ENGINE
-  mkdir -p output/$name &&
+  mkdir -p output/$name && 
     (cd output/$name
-      ogr2ogr -progress -f "ESRI Shapefile" $name.shp \
+      ogr2ogr -progress -f "$filetype" $name.$ext \
           PG:"host=$BUILD_HOST user=$BUILD_USER port=$BUILD_PORT dbname=$BUILD_DB password=$BUILD_PWD" \
+          $args \
           $name
-      rm -f $name.shp.zip
-      zip -9 $name.shp.zip *
-      ls | grep -v $name.shp.zip | xargs rm
+      rm -f $name.$ext.zip
+      zip -9 $name.$ext.zip *
+      ls | grep -v $name.$ext.zip | xargs rm
   )
 }
-register 'export' 'shp' 'export pluto.shp' SHP_export
 
 function CSV_export {
   psql $BUILD_ENGINE  -c "\COPY (
