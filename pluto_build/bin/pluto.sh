@@ -1,5 +1,4 @@
 #!/bin/bash
-source pluto_build/bin/config.sh
 max_bg_procs 5
 
 function dataloading {
