@@ -2,16 +2,7 @@
 source pluto_build/bin/config.sh
 max_bg_procs 5
 
-function init {
-    docker compose up -d
-    docker compose exec -T ./pluto_build pluto init
+function dataloading {
+    docker compose exec -T ./01_dataloading.sh
 }
-
-function pluto_execute {
-    docker compose exec -T ./pluto_build pluto $@
-}
-
-case $1 in
-    init) init ;;
-    *) pluto_execute $@ ;;
-esac
+register 'build ''dataloading' 'build dataloading' dataloading

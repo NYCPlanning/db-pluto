@@ -18,22 +18,25 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - name: install dependencies
-        working-directory: pluto_build
+      - name: start docker compose
         shell: bash
-        run: ./pluto setup init
+        run: docker compose up -d
+
+
+      - name: install dependencies
+        shell: bash
+        run: docker compose exec -T ./pluto setup init
 
       - name: dataloading ..
-        working-directory: pluto_build
         shell: bash
-        run: ./01_dataloading.sh
+        run: ./pluto_build/pluto build dataloading
       
       - name: building ...
         working-directory: pluto_build
         shell: bash
-        run: ./02_build.sh
+        run: ./pluto build build
       
       - name: apply corrections
         shell: bash
         working-directory: pluto_build
-        run: ./03_corrections.sh
+        run: ./pluto build corrections
