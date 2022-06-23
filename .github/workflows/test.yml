@@ -25,11 +25,11 @@ jobs:
 
       - name: install dependencies
         shell: bash
-        run: docker compose exec -T ./pluto setup init
+        run: docker compose exec -T pluto ./pluto_build/pluto setup init
 
       - name: dataloading ..
         shell: bash
-        run: ./pluto_build/pluto build dataloading
+        run: docker compose exec -T pluto ./pluto_build/01_dataloading.sh
       
       - name: building ...
         working-directory: pluto_build
