@@ -3,6 +3,9 @@
 function setup {
     sudo apt update
     sudo apt install -y curl zip
+    sudo apt install python3-pip
+    pip3 install csv2md
+    sudo apt-get update
 
     curl -O https://dl.min.io/client/mc/release/linux-amd64/mc
     chmod +x mc
