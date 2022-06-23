@@ -21,8 +21,7 @@ jobs:
       - name: install dependencies
         working-directory: pluto_build
         shell: bash
-        run: |
-          ./pluto setup init
+        run: ./pluto setup init
 
       - name: dataloading ..
         working-directory: pluto_build
