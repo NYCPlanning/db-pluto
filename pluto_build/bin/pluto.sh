@@ -1,4 +1,9 @@
 #!/bin/bash
+function setup {
+    docker compose exec -T pluto /src/pluto_build/00_setup.sh
+}
+register 'run' 'init' 'run init' setup
+
 function dataloading {
     docker compose exec -T pluto /src/pluto_build/01_dataloading.sh
 }
@@ -29,7 +34,8 @@ function upload {
 }
 register 'run' 'upload' 'run upload' upload
 
-case $1 in 
+case $1 in
+        setup) setup;;
     dataloading) dataloading ;;
     build) build ;;
     corrections) corrections;;
