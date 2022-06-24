@@ -22,19 +22,19 @@ jobs:
         shell: bash
         run: docker compose up -d
 
-
       - name: install dependencies
-        working-directory: pluto_build
         shell: bash
+        working-directory: pluto_build
         run: ./pluto setup init
 
       - name: dataloading ..
         shell: bash
+        working-directory: pluto_build
         run: ./pluto build dataloading
       
       - name: building ...
-        working-directory: pluto_build
         shell: bash
+        working-directory: pluto_build
         run: ./pluto build build
       
       - name: apply corrections
