@@ -99,6 +99,7 @@ psql $BUILD_ENGINE -f sql/spatialjoins.sql
 psql $BUILD_ENGINE -f sql/numericfields_geomfields.sql
 psql $BUILD_ENGINE -f sql/sanitboro.sql
 psql $BUILD_ENGINE -f sql/latlong.sql
+psql $BUILD_ENGINE -f sql/update_empty_coord.sql
 psql $BUILD_ENGINE -c "VACUUM ANALYZE pluto;"
 
 echo 'Populating PLUTO tags and version fields'
