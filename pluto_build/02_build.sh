@@ -1,6 +1,7 @@
 #!/bin/bash
 CURRENT_DIR=$(dirname "$(readlink -f "$0")")
-source $CURRENT_DIR/bin/config.sh
+cd $CURRENT_DIR
+source bin/config.sh
 
 
 echo "Starting to build PLUTO ..."

@@ -1,7 +1,8 @@
 #!/bin/bash
 
 CURRENT_DIR=$(dirname "$(readlink -f "$0")")
-source $CURRENT_DIR/bin/config.sh
+cd $CURRENT_DIR
+source bin/config.sh
 
 # DROP all tables
 psql $BUILD_ENGINE -c "
@@ -60,7 +61,7 @@ import_public dof_condo
 wait
 
 ## Load local CSV files
-psql $BUILD_ENGINE -f $CURRENT_DIR/sql/_create.sql
+psql $BUILD_ENGINE -f sql/_create.sql
 
 # Create data version table 
-psql $BUILD_ENGINE -f $CURRENT_DIR/sql/source_data_versions.sql
+psql $BUILD_ENGINE -f sql/source_data_versions.sql

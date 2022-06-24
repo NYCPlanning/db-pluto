@@ -1,6 +1,6 @@
 #!/bin/bash
 CURRENT_DIR=$(dirname "$(readlink -f "$0")")
-source $CURRENT_DIR/bin/config.sh
+source bin/config.sh
 
 psql $BUILD_ENGINE -f sql/corr_create.sql
 
