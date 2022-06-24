@@ -30,7 +30,7 @@ jobs:
 
       - name: dataloading ..
         shell: bash
-        run: docker compose exec -T pluto ./pluto_build/01_dataloading.sh
+        run: docker compose exec -T pluto /src/pluto_build/01_dataloading.sh
       
       - name: building ...
         working-directory: pluto_build

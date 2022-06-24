@@ -1,5 +1,6 @@
 #!/bin/bash
-source bin/config.sh
+CURRENT_DIR=$(dirname "$(readlink -f "$0")")
+source $CURRENT_DIR/bin/config.sh
 
 wait
 Upload latest & 
