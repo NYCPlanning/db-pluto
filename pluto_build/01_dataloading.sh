@@ -1,7 +1,8 @@
 #!/bin/bash
 
 CURRENT_DIR=$(dirname "$(readlink -f "$0")")
-source $CURRENT_DIR/bin/config.sh
+cd $CURRENT_DIR
+source bin/config.sh
 
 # DROP all tables
 psql $BUILD_ENGINE -c "
