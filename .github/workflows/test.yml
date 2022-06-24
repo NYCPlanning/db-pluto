@@ -35,9 +35,9 @@ jobs:
       - name: building ...
         working-directory: pluto_build
         shell: bash
-        run: ./pluto build build
+        run: docker compose exec -T pluto /src/pluto_build/02_build.sh
       
       - name: apply corrections
         shell: bash
         working-directory: pluto_build
-        run: ./pluto build corrections
+        run: docker compose exec -T pluto /src/pluto_build/03_corrections.sh

@@ -60,7 +60,7 @@ import_public dof_condo
 wait
 
 ## Load local CSV files
-psql $BUILD_ENGINE -f sql/_create.sql
+psql $BUILD_ENGINE -f $CURRENT_DIR/sql/_create.sql
 
 # Create data version table 
-psql $BUILD_ENGINE -f sql/source_data_versions.sql
+psql $BUILD_ENGINE -f $CURRENT_DIR/sql/source_data_versions.sql
