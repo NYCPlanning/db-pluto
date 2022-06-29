@@ -1,8 +1,8 @@
 FROM python:latest
 
-RUN curl -O https://dl.min.io/client/mc/release/linux-amd64/mc \
-    && chmod +x mc \
-    && mv ./mc /usr/bin
+# RUN curl -O https://dl.min.io/client/mc/release/linux-amd64/mc \
+#     && chmod +x mc \
+#     && mv ./mc /usr/bin
 
 FROM webmapp/gdal-docker AS gdal-docker
 
