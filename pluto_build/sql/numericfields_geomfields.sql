@@ -1,3 +1,10 @@
+UPDATE pluto a
+SET xcoord = NULL
+WHERE a.xcoord !~ '[0-9]';
+UPDATE pluto a
+SET ycoord = NULL
+WHERE a.ycoord !~ '[0-9]';
+
 -- add decimal in ct2010 where there is a suffix
 UPDATE pluto a
 SET ct2010 = LEFT(a.ct2010,4)||'.'||RIGHT(a.ct2010,2)
