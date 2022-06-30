@@ -27,30 +27,30 @@ jobs:
         working-directory: pluto_build
         run: ./pluto run init
 
-      # - name: dataloading ..
-      #   shell: bash
-      #   working-directory: pluto_build
-      #   run: ./pluto run dataloading
+      - name: dataloading ..
+        shell: bash
+        working-directory: pluto_build
+        run: ./pluto run dataloading
       
-      # - name: building ...
-      #   shell: bash
-      #   working-directory: pluto_build
-      #   run: ./pluto run build
+      - name: building ...
+        shell: bash
+        working-directory: pluto_build
+        run: ./pluto run build
       
-      # - name: apply corrections
-      #   shell: bash
-      #   working-directory: pluto_build
-      #   run: ./pluto run corrections
+      - name: apply corrections
+        shell: bash
+        working-directory: pluto_build
+        run: ./pluto run corrections
 
-      # - name: archive
-      #   shell: bash
-      #   working-directory: pluto_build
-      #   run: ./pluto run archive
+      - name: archive
+        shell: bash
+        working-directory: pluto_build
+        run: ./pluto run archive
 
-      # - name: export
-      #   shell: bash
-      #   working-directory: pluto_build
-      #   run: ./pluto run export
+      - name: export
+        shell: bash
+        working-directory: pluto_build
+        run: ./pluto run export
 
       - name: upload
         shell: bash
