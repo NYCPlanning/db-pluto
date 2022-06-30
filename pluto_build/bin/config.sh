@@ -82,9 +82,11 @@ function imports_csv {
 
 function Upload {
   echo "running upload"
-  mc cp pluto_pts.csv spaces/edm-recipes/tmp/pluto_pts.csv
-  mc rm -r --force spaces/edm-publishing/db-pluto/$@
-  mc cp -r output spaces/edm-publishing/db-pluto/$@
+  which mc
+  ls /usr/bin
+  # mc cp pluto_pts.csv spaces/edm-recipes/tmp/pluto_pts.csv
+  # mc rm -r --force spaces/edm-publishing/db-pluto/$@
+  # mc cp -r output spaces/edm-publishing/db-pluto/$@
 }
 
 function run {
