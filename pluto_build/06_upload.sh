@@ -5,10 +5,10 @@ source bin/config.sh
 
 echo "beginning of the uploading"
 
-wait
-Upload latest & 
-Upload $DATE &
-Upload $VERSION &
+# wait
+# Upload latest & 
+# Upload $DATE &
+# Upload $VERSION &
  
-wait
+# wait
 exit 0
