@@ -52,7 +52,7 @@ jobs:
       #   working-directory: pluto_build
       #   run: ./pluto run export
 
-      # - name: upload
-      #   shell: bash
-      #   working-directory: pluto_build
-      #   run: ./pluto run upload
+      - name: upload
+        shell: bash
+        working-directory: pluto_build
+        run: ./pluto run upload
