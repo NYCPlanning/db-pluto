@@ -3,6 +3,7 @@
 function setup {
     curl -O https://dl.min.io/client/mc/release/linux-amd64/mc
     chmod +x mc
+    sudo su -
     sudo mv mc /usr/bin/mc
     which mc
     whoami
