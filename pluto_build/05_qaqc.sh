@@ -21,13 +21,11 @@ function set_condition {
 }
 
 function QAQC {
-  echo "Running QAQC Mismatch"
-  echo "file = $1, mapped = $2, condo = $3"
+  echo "Running $1"
   file=$1
   mapped=$2
   condo=$3
   set_condition $mapped $condo
-  echo "condition is $condition"
   args="-v VERSION=$VERSION -v VERSION_PREV=$VERSION_PREV -v CONDO=$condo \
   -v MAPPED=$mapped "
   psql $BUILD_ENGINE -v VERSION=$VERSION -v VERSION_PREV=$VERSION_PREV -v CONDO=$condo \
@@ -37,7 +35,7 @@ function QAQC {
 
 
 # QAQC MISMATCH ANALYSIS
-for file in sql/qaqc_mismatch.sql sql/qaqc_aggregate.sql #sql/qaqc_null.sql
+for file in sql/qaqc_mismatch.sql sql/qaqc_aggregate.sql sql/qaqc_null.sql
 do
   for mapped in true false
   do
