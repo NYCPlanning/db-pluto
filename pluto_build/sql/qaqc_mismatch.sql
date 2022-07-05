@@ -97,6 +97,6 @@ SELECT
     count(nullif(a.firm07_flag = b.firm07_flag, true)) as firm07_flag,
     count(nullif(a.pfirm15_flag = b.pfirm15_flag, true)) as pfirm15_flag
     FROM archive_pluto a
-INNER JOIN pluto_previous b
+INNER JOIN previous_pluto b
 ON (a.bbl::float::bigint = b.bbl::float::bigint)
 :CONDITION)

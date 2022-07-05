@@ -1,9 +1,9 @@
-DELETE FROM dcp_pluto.qaqc_null
+DELETE FROM qaqc_null
 WHERE pair = :'VERSION'||' - '||:'VERSION_PREV' 
 AND CONDO::boolean = :CONDO
 AND MAPPED::boolean = :MAPPED;
 
-INSERT INTO dcp_pluto.qaqc_null (
+INSERT INTO qaqc_null (
 SELECT
     :'VERSION'||' - '||:'VERSION_PREV' as pair, 
 	:CONDO as condo,
@@ -97,7 +97,7 @@ SELECT
     sum(CASE WHEN a.healthcenterdistrict IS NULL AND b.healthcenterdistrict IS NOT NULL THEN 1 ELSE 0 END) as healthcenterdistrict,
     sum(CASE WHEN a.firm07_flag IS NULL AND b.firm07_flag IS NOT NULL THEN 1 ELSE 0 END) as firm07_flag,
     sum(CASE WHEN a.pfirm15_flag IS NULL AND b.pfirm15_flag IS NOT NULL THEN 1 ELSE 0 END) as pfirm15_flag
-FROM dcp_pluto.:"VERSION" a
-INNER JOIN dcp_pluto.:"VERSION_PREV" b
+FROM archive_pluto a
+INNER JOIN previous_pluto b
 ON (a.bbl::bigint = b.bbl::bigint)
 :CONDITION);
