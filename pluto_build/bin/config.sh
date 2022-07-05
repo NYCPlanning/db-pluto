@@ -136,4 +136,24 @@ function import_public {
   psql -1 $BUILD_ENGINE -c "ALTER TABLE $name ADD COLUMN v text; UPDATE $name SET v = '$version';"
 }
 
+function import_qaqc {
+  name=$1
+  DO_folder=$2
+  target_dir=$(pwd)/.library/qaqc
+  qaqc_do_url=https://nyc3.digitaloceanspaces.com/edm-publishing/db-pluto/$DO_folder/output/qaqc
+  if [ -f $target_dir/$name.sql ]; then
+    echo "✅ $name.sql exists in cache"
+  else
+    echo "🛠 $name.sql doesn't exists in cache, downloading ..."
+    echo "{$url}/{$name.sql}"
+    mkdir -p $target_dir && (
+      cd $target_dir
+      rm $name.sql
+      curl -ss -O $qaqc_do_url/$name.sql
+    )
+  fi
+  psql $BUILD_ENGINE -c "DROP TABLE $name"
+  psql $BUILD_ENGINE -v ON_ERROR_STOP=1 -q -f $target_dir/$name.sql
+}
+
 register 'import' 'dataset' 'import given dataset to BUILD_ENGINE' import_public

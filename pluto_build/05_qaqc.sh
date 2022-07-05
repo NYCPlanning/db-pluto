@@ -1,6 +1,14 @@
 #!/bin/bash
 source bin/config.sh
 
+# Download Existing QAQC from DO
+import_qaqc qaqc_expected 317-QAQC-to-DO &
+import_qaqc qaqc_aggregate 317-QAQC-to-DO &
+import_qaqc qaqc_mismatch 317-QAQC-to-DO &
+import_qaqc qaqc_null 317-QAQC-to-DO &
+
+wait
+
 # QAQC EXPECTED VALUE ANALYSIS
 psql $BUILD_ENGINE \
   -v VERSION=$VERSION \
@@ -35,7 +43,7 @@ function QAQC {
 
 
 # QAQC MISMATCH ANALYSIS
-for file in sql/qaqc_mismatch.sql sql/qaqc_aggregate.sql sql/qaqc_null.sql
+for file in sql/qaqc_aggregate.sql sql/qaqc_mismatch.sql sql/qaqc_null.sql
 do
   for mapped in true false
   do
