@@ -1,7 +1,7 @@
 #!/bin/bash
 function setup {
     echo "This is happening"
-    docker compose exec -u root -T pluto /src/pluto_build/00_setup.sh
+    docker compose exec -T pluto /src/pluto_build/00_setup.sh
 }
 register 'run' 'init' 'run init' setup
 
