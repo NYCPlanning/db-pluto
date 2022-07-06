@@ -1,9 +1,9 @@
 #!/bin/bash
-function setup {
+function first_step {
     echo "This is happening"
     docker compose exec -T pluto /src/pluto_build/00_setup.sh
 }
-register 'run' 'init' 'run init' setup
+register 'run' 'first_step' 'run first_step' first_step
 
 function dataloading {
     docker compose exec -T pluto /src/pluto_build/01_dataloading.sh
