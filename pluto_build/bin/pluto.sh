@@ -1,8 +1,8 @@
 #!/bin/bash
-function first_step {
+function do_config {
     docker compose exec -T pluto /src/pluto_build/00_setup.sh
 }
-register 'run' 'first_step' 'run first_step' first_step
+register 'run' 'do_config' 'run do_config' do_config
 
 function dataloading {
     docker compose exec -T pluto /src/pluto_build/01_dataloading.sh

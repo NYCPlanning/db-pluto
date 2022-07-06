@@ -22,10 +22,10 @@ jobs:
         shell: bash
         run: docker compose up -d
 
-      - name: install dependencies
+      - name: configure digital ocean
         shell: bash
         working-directory: pluto_build
-        run: ./pluto run first_step
+        run: ./pluto run do_config
 
       - name: dataloading ..
         shell: bash

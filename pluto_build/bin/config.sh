@@ -81,7 +81,6 @@ function imports_csv {
 }
 
 function Upload {
-  echo "running upload"
   mc rm -r --force spaces/edm-publishing/db-pluto/$@
   mc cp -r output spaces/edm-publishing/db-pluto/$@
 }
