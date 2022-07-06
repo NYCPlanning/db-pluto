@@ -1,6 +1,7 @@
 #!/bin/bash
 
 function setup {
+    echo "This is happening3"
     # curl https://dl.min.io/client/mc/release/linux-amd64/mc \
     # --create-dirs \
     # -o $HOME/minio-binaries/mc 
