@@ -6,3 +6,4 @@ FROM webmapp/gdal-docker AS gdal-docker
 RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
     && apt-get -y install --no-install-recommends postgresql-client git build-essential cmake proj-bin jq curl zip
 
+COPY --from=minio/mc:latest /usr/bin/mc /usr/bin/mc
