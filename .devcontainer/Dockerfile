@@ -2,9 +2,13 @@
 ARG VARIANT=3-bullseye
 FROM mcr.microsoft.com/vscode/devcontainers/python:${VARIANT}
 
+# COPY --from=minio/mc:latest /usr/bin/mc /usr/bin/mc
+
 FROM webmapp/gdal-docker AS gdal-docker
 
 RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
     && apt-get -y install --no-install-recommends postgresql-client git build-essential cmake proj-bin jq
 
-COPY --from=minio/mc:latest /usr/bin/mc /usr/bin/mc
+RUN curl -O https://dl.min.io/client/mc/release/linux-amd64/mc \
+    && chmod +x mc \
+    && mv ./mc /usr/bin 
