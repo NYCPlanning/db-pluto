@@ -65,8 +65,7 @@ function spatial_export {
           $args \
           $name
       rm -f $name.$ext.zip
-      zip -9 $name.$ext.zip *
-      ls | grep -v $name.$ext.zip | xargs rm -r
+      zip -m -r $name.$ext.zip *
   )
 }
 

@@ -18,22 +18,41 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - name: install dependencies
-        working-directory: pluto_build
+      - name: start docker compose
         shell: bash
-        run: ./pluto setup init
+        run: docker compose up -d
+
+      - name: configure digital ocean
+        shell: bash
+        working-directory: pluto_build
+        run: ./pluto run do_config
 
       - name: dataloading ..
-        working-directory: pluto_build
         shell: bash
-        run: ./01_dataloading.sh
+        working-directory: pluto_build
+        run: ./pluto run dataloading
       
       - name: building ...
-        working-directory: pluto_build
         shell: bash
-        run: ./02_build.sh
+        working-directory: pluto_build
+        run: ./pluto run build
       
       - name: apply corrections
         shell: bash
         working-directory: pluto_build
-        run: ./03_corrections.sh
+        run: ./pluto run corrections
+
+      - name: archive
+        shell: bash
+        working-directory: pluto_build
+        run: ./pluto run archive
+
+      - name: export
+        shell: bash
+        working-directory: pluto_build
+        run: ./pluto run export
+
+      - name: upload
+        shell: bash
+        working-directory: pluto_build
+        run: ./pluto run upload
