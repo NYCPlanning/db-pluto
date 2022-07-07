@@ -95,8 +95,8 @@ psql $BUILD_ENGINE -f sql/flood_flag.sql
 psql $BUILD_ENGINE -c "VACUUM ANALYZE pluto;"
 
 echo 'Assigning political values with spatial join'
-# clean up numeric fields
 psql $BUILD_ENGINE -f sql/spatialjoins.sql
+# clean up numeric fields
 psql $BUILD_ENGINE -f sql/numericfields_geomfields.sql
 psql $BUILD_ENGINE -f sql/sanitboro.sql
 psql $BUILD_ENGINE -f sql/latlong.sql
