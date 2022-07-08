@@ -1,6 +1,10 @@
 #!/bin/bash
 source bin/config.sh
 
+# import previous version of pluto
+import_public dcp_pluto $VERSION_PREV 
+psql $BUILD_ENGINE -c "ALTER TABLE dcp_pluto RENAME to previous_pluto"
+
 # Download Existing QAQC from DO
 import_qaqc qaqc_expected 317-QAQC-to-DO &
 import_qaqc qaqc_aggregate 317-QAQC-to-DO &
@@ -34,8 +38,6 @@ function QAQC {
   mapped=$2
   condo=$3
   set_condition $mapped $condo
-  args="-v VERSION=$VERSION -v VERSION_PREV=$VERSION_PREV -v CONDO=$condo \
-  -v MAPPED=$mapped "
   psql $BUILD_ENGINE -v VERSION=$VERSION -v VERSION_PREV=$VERSION_PREV -v CONDO=$condo \
   -v MAPPED=$mapped  -v CONDITION="$condition" -f $file
 }
