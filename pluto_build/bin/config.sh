@@ -13,7 +13,7 @@ set_env .env version.env
 
 # Set Date
 DATE=$(date "+%Y-%m-%d")
-
+branchname=$(git rev-parse --symbolic-full-name --abbrev-ref HEAD)
 # Set Bucket info
 s3_endpoint=https://nyc3.digitaloceanspaces.com
 s3_bucket=edm-recipes

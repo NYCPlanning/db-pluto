@@ -67,9 +67,9 @@ mkdir -p output/qaqc &&
   )
 
 wait
-# Upload latest & 
-# Upload $DATE &
-# Upload $VERSION &
-Upload 317-QAQC-to-DO
+Upload latest & 
+Upload $DATE &
+Upload $VERSION &
+Upload $branchname
 wait
 exit 0
