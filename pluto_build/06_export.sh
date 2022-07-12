@@ -54,10 +54,20 @@ mkdir -p output/dof &&
     ls | grep -v bbl_council.zip | xargs rm
   )
 
+mkdir -p output/qaqc && 
+  (cd output/qaqc
+    for table in qaqc_aggregate qaqc_expected qaqc_mismatch qaqc_null
+    do
+      psql $BUILD_ENGINE -c "\COPY ( 
+          SELECT * FROM ${table}
+        ) TO STDOUT DELIMITER ',' CSV HEADER;" > $table.csv
+      pg_dump -d $BUILD_ENGINE -t $table -f $table.sql  
+    done
+
+  )
+
 wait
-Upload latest & 
-Upload $DATE &
 Upload $VERSION &
- 
+Upload $branchname
 wait
 exit 0

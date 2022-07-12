@@ -1,9 +1,9 @@
-DELETE FROM dcp_pluto.qaqc_aggregate 
+DELETE FROM qaqc_aggregate
 WHERE v = :'VERSION'
 AND CONDO::boolean = :CONDO
 AND MAPPED::boolean = :MAPPED;
 
-INSERT INTO dcp_pluto.qaqc_aggregate (
+INSERT INTO qaqc_aggregate (
 SELECT  :'VERSION' as v, 
 	    :CONDO as condo,
         :MAPPED as mapped,
@@ -23,5 +23,5 @@ SELECT  :'VERSION' as v,
         sum(ExemptTot::numeric)::bigint as ExemptTot,
         sum(FIRM07_FLAG::numeric)::bigint as FIRM07_FLAG,
         sum(PFIRM15_FLAG::numeric)::bigint as PFIRM15_FLAG
-FROM dcp_pluto.:"VERSION"
+FROM archive_pluto a
 :CONDITION);

@@ -1,9 +1,9 @@
-DELETE FROM dcp_pluto.qaqc_mismatch 
+DELETE FROM qaqc_mismatch 
 WHERE pair = :'VERSION'||' - '||:'VERSION_PREV' 
 AND CONDO::boolean = :CONDO
 AND MAPPED::boolean = :MAPPED;
 
-INSERT INTO dcp_pluto.qaqc_mismatch (
+INSERT INTO qaqc_mismatch (
 SELECT
     :'VERSION'||' - '||:'VERSION_PREV' as pair, 
 	:CONDO as condo,
@@ -130,7 +130,7 @@ SELECT
         IS DISTINCT FROM b.healthcenterdistrict::numeric) as healthcenterdistrict,
     count(*) FILTER (WHERE a.firm07_flag IS DISTINCT FROM b.firm07_flag) as firm07_flag,
     count(*) FILTER (WHERE a.pfirm15_flag IS DISTINCT FROM b.pfirm15_flag)  as pfirm15_flag
-    FROM dcp_pluto.:"VERSION" a
-INNER JOIN dcp_pluto.:"VERSION_PREV" b
-ON (a.bbl::bigint = b.bbl::bigint)
-:CONDITION) 
+    FROM archive_pluto a
+INNER JOIN previous_pluto b
+ON (a.bbl::float::bigint = b.bbl::float::bigint)
+:CONDITION)
