@@ -92,8 +92,9 @@ function imports_csv {
 }
 
 function Upload {
-  mc rm -r --force spaces/edm-publishing/db-pluto/$@
-  mc cp -r output spaces/edm-publishing/db-pluto/$@
+  local target_folder=$1
+  mc cp -r output spaces/edm-publishing/db-pluto/$target_folder/$DATE
+  mc cp -r output spaces/edm-publishing/db-pluto/$target_folder/latest
 }
 
 function run {
