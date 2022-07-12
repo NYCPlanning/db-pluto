@@ -8,9 +8,9 @@ RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
     && apt-get -y install --no-install-recommends postgresql-client git build-essential cmake proj-bin jq libproj-dev
 
 # Potential GDAL Build Solution
-# RUN curl -O https://dl.min.io/client/mc/release/linux-amd64/mc \
-#     && chmod +x mc \
-#     && mv ./mc /usr/bin 
+RUN curl -O https://dl.min.io/client/mc/release/linux-amd64/mc \
+    && chmod +x mc \
+    && mv ./mc /usr/bin 
 
 ENV FGDB_SOURCE https://raw.githubusercontent.com/Esri/file-geodatabase-api/master/FileGDB_API_1.5.2/FileGDB_API-RHEL7-64gcc83.tar.gz
 RUN curl --silent --show-error -o /usr/local/src/filgdb_api.tar.gz ${FGDB_SOURCE} && \
@@ -22,7 +22,9 @@ RUN wget -O /usr/local/src/gdal-master.tar.gz ${GDAL_SOURCE}
 RUN tar -xzvf /usr/local/src/gdal-master.tar.gz -C /usr/local/src/ 
 # This step needs ENV flags to cmake .. to add FGDB support, may need addition dependency installation
 
-RUN cd /usr/local/src/gdal-3.5.1/ && mkdir build && cmake .. && cmake --build . --target install 
+RUN cd /usr/local/src/gdal-3.5.1/ && mkdir build && cd build && cmake .. && cmake --build . --target install 
+RUN ldconfig
+
 #./configure --with-python --with-geos --with-spatialite --with-pg --with-freexl --with-curl --with-libkml --with-wfs --with-odbc=/opt/microsoft/msodbcsql/lib64 --with-fgdb=/usr/local/FileGDB_API-64gcc51 --with-static-proj4 && make && make install && ldconfig
 
 # Potential Copy from gdal-docker solution
