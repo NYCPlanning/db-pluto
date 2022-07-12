@@ -3,7 +3,7 @@ source bin/config.sh
 
 # import previous version of pluto
 import_public dcp_pluto $VERSION_PREV 
-psql $BUILD_ENGINE -c "ALTER TABLE dcp_pluto RENAME to previous_pluto"
+psql $BUILD_ENGINE -c "ALTER TABLE IF EXISTS dcp_pluto RENAME to previous_pluto"
 
 # Download Existing QAQC from DO
 import_qaqc qaqc_expected 317-QAQC-to-DO &
