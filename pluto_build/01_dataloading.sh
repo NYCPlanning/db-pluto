@@ -55,6 +55,7 @@ import_public dcp_colp &
 import_public dof_dtm &
 import_public dof_condo
 
+wait
 
 ## Load local CSV files
 psql $BUILD_ENGINE -f sql/_create.sql
