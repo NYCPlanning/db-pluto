@@ -57,22 +57,22 @@ jobs:
         shell: bash
         run: ./02_build.sh
       
-      - name: apply corrections
+      - name: applying corrections ...
         shell: bash
         working-directory: pluto_build
         run: ./03_corrections.sh
       
-      - name: Archive
+      - name: archiving ...
         shell: bash
         working-directory: pluto_build
         run: ./04_archive.sh
           
-      - name: QAQC
+      - name: Creating QAQC tables ...
         shell: bash
         working-directory: pluto_build
         run: ./05_qaqc.sh
 
-      - name: create shapefile
+      - name: exporting ...
         working-directory: pluto_build
         shell: bash
         run: |
