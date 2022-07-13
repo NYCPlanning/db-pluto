@@ -22,7 +22,9 @@ RUN wget -O /usr/local/src/gdal-master.tar.gz ${GDAL_SOURCE}
 RUN tar -xzvf /usr/local/src/gdal-master.tar.gz -C /usr/local/src/ 
 # This step needs ENV flags to cmake .. to add FGDB support, may need addition dependency installation
 
-RUN cd /usr/local/src/gdal-3.5.1/ && mkdir build && cd build && cmake .. && cmake --build . --target install 
+RUN cd /usr/local/src/gdal-3.5.1/ && mkdir build && cd build && \
+    cmake -FileGDB_INCLUDE_DIR=/usr/local/FileGDB_API-RHEL7-64gcc83/include/ -FileGDB_LIBRARY=/usr/local/FileGDB_API-RHEL7-64gcc83/lib/ .. && \
+    cmake --build . --target install 
 RUN ldconfig
 
 #./configure --with-python --with-geos --with-spatialite --with-pg --with-freexl --with-curl --with-libkml --with-wfs --with-odbc=/opt/microsoft/msodbcsql/lib64 --with-fgdb=/usr/local/FileGDB_API-64gcc51 --with-static-proj4 && make && make install && ldconfig
