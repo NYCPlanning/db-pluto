@@ -146,8 +146,7 @@ function import_qaqc {
     echo "✅ $name.sql exists in cache"
   else
     echo "🛠 $name.sql doesn't exists in cache, downloading ..."
-    echo "{$url}/{$name.sql}"
-    mkdir -p $target_dir && (
+    mkdir -p $target_dir && (s
       cd $target_dir
       curl -ss -O $qaqc_do_url/$name.sql
     )
