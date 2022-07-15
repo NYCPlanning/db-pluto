@@ -97,7 +97,7 @@ SELECT
     sum(CASE WHEN a.healthcenterdistrict IS NULL AND b.healthcenterdistrict IS NOT NULL THEN 1 ELSE 0 END) as healthcenterdistrict,
     sum(CASE WHEN a.firm07_flag IS NULL AND b.firm07_flag IS NOT NULL THEN 1 ELSE 0 END) as firm07_flag,
     sum(CASE WHEN a.pfirm15_flag IS NULL AND b.pfirm15_flag IS NOT NULL THEN 1 ELSE 0 END) as pfirm15_flag
-FROM archive_pluto a
+FROM current_pluto a
 INNER JOIN previous_pluto b
 ON (a.bbl::float::bigint = b.bbl::float::bigint)
 :CONDITION);

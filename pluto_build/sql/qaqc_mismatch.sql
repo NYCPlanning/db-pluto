@@ -130,7 +130,7 @@ SELECT
         IS DISTINCT FROM b.healthcenterdistrict::numeric) as healthcenterdistrict,
     count(*) FILTER (WHERE a.firm07_flag IS DISTINCT FROM b.firm07_flag) as firm07_flag,
     count(*) FILTER (WHERE a.pfirm15_flag IS DISTINCT FROM b.pfirm15_flag)  as pfirm15_flag
-    FROM archive_pluto a
+    FROM current_pluto a
 INNER JOIN previous_pluto b
 ON (a.bbl::float::bigint = b.bbl::float::bigint)
 :CONDITION)

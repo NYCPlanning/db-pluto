@@ -23,5 +23,5 @@ SELECT  :'VERSION' as v,
         sum(ExemptTot::numeric)::bigint as ExemptTot,
         sum(FIRM07_FLAG::numeric)::bigint as FIRM07_FLAG,
         sum(PFIRM15_FLAG::numeric)::bigint as PFIRM15_FLAG
-FROM archive_pluto a
+FROM current_pluto a
 :CONDITION);
