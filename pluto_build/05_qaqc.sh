@@ -3,13 +3,20 @@ source bin/config.sh
 
 # import previous version of pluto
 import_public dcp_pluto $VERSION_PREV 
+wait
 psql $BUILD_ENGINE -c "ALTER TABLE IF EXISTS dcp_pluto RENAME to previous_pluto"
 
+#For one-off: download 22v1 
+import_public dcp_pluto '22v1'
+wait
+psql $BUILD_ENGINE -c "ALTER TABLE IF EXISTS dcp_pluto RENAME to current_pluto"
+
+
 # Download Existing QAQC from DO
-import_qaqc qaqc_expected 317-QAQC-to-DO &
-import_qaqc qaqc_aggregate 317-QAQC-to-DO &
-import_qaqc qaqc_mismatch 317-QAQC-to-DO &
-import_qaqc qaqc_null 317-QAQC-to-DO &
+import_qaqc qaqc_expected main &
+import_qaqc qaqc_aggregate main &
+import_qaqc qaqc_mismatch main &
+import_qaqc qaqc_null main &
 
 wait
 
@@ -22,11 +29,11 @@ function set_condition {
   mapped=$1 
   condo=$2
   if [ "${mapped}" = true ] && [ "${condo}" = true ] ; then
-    export condition="WHERE right(a.bbl::bigint::text, 4) LIKE '75%%' AND a.geom IS NOT NULL"
+    export condition="WHERE right(a.bbl::float::bigint::text, 4) LIKE '75%%' AND a.wkb_geometry IS NOT NULL"
   elif [ "${mapped}" = true ] && [ "${condo}" = false ] ; then
-    export condition="WHERE a.geom IS NOT NULL"
+    export condition="WHERE a.wkb_geometry IS NOT NULL"
   elif [ "${mapped}" = false ] && [ "${condo}" = true ] ; then
-    export condition="WHERE right(a.bbl::bigint::text, 4) LIKE '75%%'"
+    export condition="WHERE right(a.bbl::float::bigint::text, 4) LIKE '75%%'"
   elif [ "${mapped}" = false ] && [ "${condo}" = false ] ; then
     export condition=""
   fi
