@@ -6,10 +6,10 @@ import_public dcp_pluto $VERSION_PREV
 psql $BUILD_ENGINE -c "ALTER TABLE IF EXISTS dcp_pluto RENAME to previous_pluto"
 
 # Download Existing QAQC from DO
-import_qaqc qaqc_expected 317-QAQC-to-DO &
-import_qaqc qaqc_aggregate 317-QAQC-to-DO &
-import_qaqc qaqc_mismatch 317-QAQC-to-DO &
-import_qaqc qaqc_null 317-QAQC-to-DO &
+import_qaqc qaqc_expected main &
+import_qaqc qaqc_aggregate main &
+import_qaqc qaqc_mismatch main &
+import_qaqc qaqc_null main &
 
 wait
 
