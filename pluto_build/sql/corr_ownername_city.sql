@@ -12,6 +12,20 @@ FROM pluto a, pluto_input_research b
 WHERE a.ownername = b.old_value
 	AND a.bbl NOT IN (SELECT bbl FROM pluto_corrections WHERE field = 'ownername');
 
+INSERT INTO pluto_corrections_not_applied
+SELECT DISTINCT b.*
+FROM pluto_corrections b, pluto a
+WHERE b.bbl=a.bbl 
+	AND b.field='ownername' 
+	AND b.old_value <> a.ownername;
+
+INSERT INTO pluto_corrections_applied
+SELECT DISTINCT b.*
+FROM pluto_corrections b, pluto a
+WHERE b.bbl=a.bbl 
+	AND b.field='ownername' 
+	AND b.old_value = a.ownername;
+	
 -- Apply correction to PLUTO
 UPDATE pluto a
 SET ownername = b.new_value,
