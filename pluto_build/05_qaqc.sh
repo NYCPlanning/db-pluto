@@ -10,6 +10,7 @@ import_qaqc qaqc_expected main &
 import_qaqc qaqc_aggregate main &
 import_qaqc qaqc_mismatch main &
 import_qaqc qaqc_null main &
+#import_qaqc qaqc_outlier main &
 
 wait
 

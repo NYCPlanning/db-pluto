@@ -14,17 +14,17 @@ select :'VERSION' as v,
 from (
 	select jsonb_agg(json_build_object('bbl', a.bbl, 'unitsres',a.unitsres, 'resarea', a.resarea,
                               'res_unit_ratio', a.res_unit_ratio)) as values, 'unitsres_resarea' as field
-	from (SELECT DISTINCT bbl, unitsres, resarea, resarea::INT/unitsres::INT as res_unit_ratio
+	from (SELECT bbl, unitsres, resarea, resarea::FLOAT/unitsres::FLOAT as res_unit_ratio
           FROM archive_pluto
-          WHERE unitsres::INT>50 and resarea::INT/unitsres::INT < 300
-          AND resarea::INT != 0) a
+          WHERE unitsres::FLOAT>50 and resarea::FLOAT/unitsres::FLOAT < 300
+          AND resarea::FLOAT!= 0) a
 	union
 	select jsonb_agg(json_build_object('bbl', a.bbl, 'bldgarea',a.bldgarea, 'lotarea', a.lotarea,
                               'numfloors', a.numfloors, 'blog_lot_ratio', a.bldg_lot_ratio)) as values, 'lotarea_numfloor' as field
 	from (SELECT bbl, bldgarea, lotarea, numfloors, bldgarea::FLOAT/lotarea::FLOAT as bldg_lot_ratio
           FROM archive_pluto
           WHERE bldgarea::FLOAT/lotarea::FLOAT > numfloors::FLOAT*2
-          AND lotarea::FLOAT != 0) a 
+          AND lotarea::FLOAT != 0 AND numfloors !=0) a 
     union 
     select jsonb_agg(json_build_object('pair',m.pair, 'bbl', m.bbl,
                                        'building_area_current',m.building_area_current,
