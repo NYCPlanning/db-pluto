@@ -43,12 +43,8 @@ function QAQC {
   -v MAPPED=$mapped  -v CONDITION="$condition" -f $file
 }
 
-psql $BUILD_ENGINE \
-  -v VERSION=$VERSION -v VERSION_PREV=$VERSION_PREV \
-  -f sql/qaqc_outlier.sql 
-
 # QAQC MISMATCH ANALYSIS
-for file in sql/qaqc_aggregate.sql sql/qaqc_mismatch.sql sql/qaqc_null.sql
+for file in sql/qaqc_aggregate.sql sql/qaqc_mismatch.sql sql/qaqc_null.sql sql/qaqc_outlier.sql
 do
   for mapped in true false
   do
