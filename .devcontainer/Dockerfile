@@ -17,13 +17,16 @@ RUN curl --silent --show-error -o /usr/local/src/filgdb_api.tar.gz ${FGDB_SOURCE
     tar -xzvf /usr/local/src/filgdb_api.tar.gz -C /usr/local
 #ENV LD_LIBRARY_PATH "${LD_LIBRARY_PATH}:/usr/local/FileGDB_API-64gcc51/lib"
 
+
+
 ENV GDAL_SOURCE=http://download.osgeo.org/gdal/3.5.1/gdal-3.5.1.tar.gz
 RUN wget -O /usr/local/src/gdal-master.tar.gz ${GDAL_SOURCE} 
 RUN tar -xzvf /usr/local/src/gdal-master.tar.gz -C /usr/local/src/ 
 # This step needs ENV flags to cmake .. to add FGDB support, may need addition dependency installation
 
 RUN cd /usr/local/src/gdal-3.5.1/ && mkdir build && cd build && \
-    cmake -FileGDB_INCLUDE_DIR=/usr/local/FileGDB_API-RHEL7-64gcc83/include/ -FileGDB_LIBRARY=/usr/local/FileGDB_API-RHEL7-64gcc83/lib/ .. && \
+    cmake -FileGDB_ROOT=/usr/local/FileGDB_API-RHEL7-64gcc83/ -FileGDB_INCLUDE_DIR=/usr/local/FileGDB_API-RHEL7-64gcc83/include/ -FileGDB_LIBRARY=/usr/local/FileGDB_API-RHEL7-64gcc83/lib/ .. && \
+    cmake --build . && \
     cmake --build . --target install 
 RUN ldconfig
 
