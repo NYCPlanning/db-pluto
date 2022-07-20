@@ -20,12 +20,12 @@ select :'VERSION' as v,
 from (
 	select jsonb_agg(json_build_object('bbl', tmp.bbl, 'unitsres',tmp.unitsres, 'resarea', tmp.resarea,
                               'res_unit_ratio', tmp.res_unit_ratio)) as values, 'unitsres_resarea' as field
-	from (SELECT bbl, unitsres, resarea, resarea::INT/unitsres::INT as res_unit_ratio
+	from (SELECT bbl, unitsres, resarea, resarea::FLOAT/unitsres::FLOAT as res_unit_ratio
           FROM (SELECT a.* 
                 FROM archive_pluto a
                 :CONDITION) b
-          WHERE unitsres::INT>50 and resarea::INT/unitsres::INT < 300
-          AND resarea::INT!= 0)tmp
+          WHERE unitsres::FLOAT>50 and resarea::FLOAT/unitsres::FLOAT < 300
+          AND resarea::FLOAT!= 0)tmp
 	union
 	select jsonb_agg(json_build_object('bbl', tmp.bbl, 'bldgarea',tmp.bldgarea, 'lotarea', tmp.lotarea,
                               'numfloors', tmp.numfloors, 'blog_lot_ratio', tmp.bldg_lot_ratio)) as values, 'lotarea_numfloor' as field
