@@ -14,6 +14,20 @@ WHERE a.bbl = b.bbl
 	AND b.field = 'unitstotal'
 	AND a.bbl NOT IN (SELECT bbl FROM pluto_corrections WHERE field = 'unitstotal');
 
+INSERT INTO pluto_corrections_not_applied
+SELECT DISTINCT b.*
+FROM pluto_corrections b, pluto a
+WHERE b.bbl=a.bbl 
+	AND b.field='unitstotal' 
+	AND b.old_value <> a.unitstotal;
+
+INSERT INTO pluto_corrections_applied
+SELECT DISTINCT b.*
+FROM pluto_corrections b, pluto a
+WHERE b.bbl=a.bbl 
+	AND b.field='unitstotal' 
+	AND b.old_value = a.unitstotal;
+
 -- Apply correction to PLUTO
 UPDATE pluto a
 SET unitstotal = b.new_value,
@@ -38,6 +52,20 @@ WHERE a.bbl = b.bbl
 	AND a.unitsres=b.old_value
 	AND b.field = 'unitsres'
 	AND a.bbl NOT IN (SELECT bbl FROM pluto_corrections WHERE field = 'unitsres');
+
+INSERT INTO pluto_corrections_not_applied
+SELECT DISTINCT b.*
+FROM pluto_corrections b, pluto a
+WHERE b.bbl=a.bbl 
+	AND b.field='unitsres' 
+	AND b.old_value <> a.unitsres;
+
+INSERT INTO pluto_corrections_applied
+SELECT DISTINCT b.*
+FROM pluto_corrections b, pluto a
+WHERE b.bbl=a.bbl 
+	AND b.field='unitsres' 
+	AND b.old_value = a.unitsres;
 
 -- Apply correction to PLUTO
 UPDATE pluto a

@@ -14,6 +14,20 @@ WHERE a.bbl = b.bbl
 	AND b.field = 'cd'
 	AND a.bbl NOT IN (SELECT bbl FROM pluto_corrections WHERE field = 'cd');
 
+INSERT INTO pluto_corrections_not_applied
+SELECT DISTINCT b.*
+FROM pluto_corrections b, pluto a
+WHERE b.bbl=a.bbl 
+	AND b.field='cd'
+	AND b.old_value <> a.cd;
+
+INSERT INTO pluto_corrections_applied
+SELECT DISTINCT b.*
+FROM pluto_corrections b, pluto a
+WHERE b.bbl=a.bbl 
+	AND b.field='cd' 
+	AND b.old_value = a.cd;
+
 -- Apply correction to PLUTO
 UPDATE pluto a
 SET cd = b.new_value,
