@@ -38,10 +38,12 @@ from (
     union 
     select jsonb_agg(json_build_object('pair',m.pair, 'bbl', m.bbl,
                                        'building_area_current',m.building_area_current,
-                                       'building_area_previous',m.building_area_previous)) as values, 
+                                       'building_area_previous',m.building_area_previous,
+                                       'percent_change',m.percent_change)) as values, 
                                        'building_area_increase' as field
-    from (SELECT :'VERSION'||' - '||:'VERSION_PREV' as pair, 
-                a.bbl, a.lotarea as building_area_current, b.lotarea as building_area_previous
+    from (SELECT :'VERSION'||' - '||:'VERSION_PREV' as pair,
+                a.bbl, a.lotarea::FLOAT as building_area_current, b.lotarea::FLOAT as building_area_previous, 
+                (a.lotarea::FLOAT-b.lotarea::FLOAT)/b.lotarea::FLOAT as percent_change
           FROM (SELECT a.* 
                 FROM archive_pluto a
                 :CONDITION) a, previous_pluto b
