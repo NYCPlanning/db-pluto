@@ -10,6 +10,7 @@ import_qaqc qaqc_expected main &
 import_qaqc qaqc_aggregate main &
 import_qaqc qaqc_mismatch main &
 import_qaqc qaqc_null main &
+import_qaqc qaqc_outlier main &
 
 wait
 
@@ -42,10 +43,8 @@ function QAQC {
   -v MAPPED=$mapped  -v CONDITION="$condition" -f $file
 }
 
-
-
 # QAQC MISMATCH ANALYSIS
-for file in sql/qaqc_aggregate.sql sql/qaqc_mismatch.sql sql/qaqc_null.sql
+for file in sql/qaqc_aggregate.sql sql/qaqc_mismatch.sql sql/qaqc_null.sql sql/qaqc_outlier.sql
 do
   for mapped in true false
   do
