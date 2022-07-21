@@ -1,5 +1,4 @@
 -- -v VERSION=$VERSION
-DROP TABLE IF EXISTS qaqc_outlier;
 CREATE TABLE IF NOT EXISTS qaqc_outlier(
     v character varying,
     CONDO character varying,
