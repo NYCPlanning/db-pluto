@@ -5,7 +5,10 @@ on:
     branches-ignore:
       - main
   workflow_dispatch:
-
+    inputs:
+      run_export:
+        description: 'Run Export Step and Upload to DO'
+        type: boolean
 jobs:
   build:
     runs-on: ubuntu-20.04
@@ -49,3 +52,23 @@ jobs:
         shell: bash
         working-directory: pluto_build
         run: ./03_corrections.sh
+
+      - name: Archive
+        shell: bash
+        working-directory: pluto_build
+        run: ./04_archive.sh
+        if: ${{inputs.run_export}}
+          
+      - name: QAQC
+        shell: bash
+        working-directory: pluto_build
+        run: ./05_qaqc.sh
+        if: ${{inputs.run_export}}
+
+      - name: create shapefile
+        working-directory: pluto_build
+        shell: bash
+        run: |
+          ./06_export.sh
+        if: ${{inputs.run_export}}
+    
