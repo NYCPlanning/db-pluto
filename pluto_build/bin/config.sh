@@ -66,18 +66,16 @@ function SHP_export {
   name=$1
   urlparse $BUILD_ENGINE
   mkdir -p output/$name &&
-    (cd output/$name
-      docker run \
-        --network host\
-        -v $(pwd):/data\
-        --user $UID\
-        --rm webmapp/gdal-docker:latest ogr2ogr -progress -f "ESRI Shapefile" $name.shp \
+    (
+      cd output/$name
+      
+      ogr2ogr -progress -f "ESRI Shapefile" $name.shp \
           PG:"host=$BUILD_HOST user=$BUILD_USER port=$BUILD_PORT dbname=$BUILD_DB password=$BUILD_PWD" \
-          $table
-        rm -f $name.shp.zip
-        zip -9 $name.shp.zip *
-        ls | grep -v $name.shp.zip | xargs rm
-  )
+          $name
+      rm -f $name.shp.zip
+      zip -9 $name.shp.zip *
+      ls | grep -v $name.shp.zip | xargs rm
+    )
 }
 register 'export' 'shp' 'export pluto.shp' SHP_export
 
