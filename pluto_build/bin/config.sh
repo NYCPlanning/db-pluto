@@ -71,7 +71,7 @@ function SHP_export {
       
       ogr2ogr -progress -f "ESRI Shapefile" $name.shp \
           PG:"host=$BUILD_HOST user=$BUILD_USER port=$BUILD_PORT dbname=$BUILD_DB password=$BUILD_PWD" \
-          $table
+          $name
       rm -f $name.shp.zip
       zip -9 $name.shp.zip *
       ls | grep -v $name.shp.zip | xargs rm
