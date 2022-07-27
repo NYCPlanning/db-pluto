@@ -15,7 +15,8 @@ RUN curl -O https://dl.min.io/client/mc/release/linux-amd64/mc \
 ENV FGDB_SOURCE https://raw.githubusercontent.com/Esri/file-geodatabase-api/master/FileGDB_API_1.5.2/FileGDB_API-RHEL7-64gcc83.tar.gz
 RUN curl --silent --show-error -o /usr/local/src/filgdb_api.tar.gz ${FGDB_SOURCE} && \
     tar -xzvf /usr/local/src/filgdb_api.tar.gz -C /usr/local
-#ENV LD_LIBRARY_PATH "${LD_LIBRARY_PATH}:/usr/local/FileGDB_API-64gcc51/lib"
+RUN export LD_LIBRARY_PATH=/usr/local/lib:/usr/local/FileGDB_API-64gcc51/lib
+RUN ldconfig
 
 
 
@@ -24,10 +25,13 @@ RUN wget -O /usr/local/src/gdal-master.tar.gz ${GDAL_SOURCE}
 RUN tar -xzvf /usr/local/src/gdal-master.tar.gz -C /usr/local/src/ 
 # This step needs ENV flags to cmake .. to add FGDB support, may need addition dependency installation
 
-RUN cd /usr/local/src/gdal-3.5.1/ && mkdir build && cd build && \
-    cmake -FileGDB_ROOT=/usr/local/FileGDB_API-RHEL7-64gcc83/ -FileGDB_INCLUDE_DIR=/usr/local/FileGDB_API-RHEL7-64gcc83/include/ -FileGDB_LIBRARY=/usr/local/FileGDB_API-RHEL7-64gcc83/lib/ .. && \
-    cmake --build . && \
-    cmake --build . --target install 
+RUN cd /usr/local/src/gdal-3.5.1/ && \
+      ./configure --with-fgdb-api=/usr/local/FGDB_API-64cc51 && \
+      make && \
+      make install
+#     cmake -FileGDB_ROOT=/usr/local/FileGDB_API-RHEL7-64gcc83/ -FileGDB_INCLUDE_DIR=/usr/local/FileGDB_API-RHEL7-64gcc83/include/ -FileGDB_LIBRARY=/usr/local/FileGDB_API-RHEL7-64gcc83/lib/ .. && \
+#     cmake --build . && \
+#     cmake --build . --target install 
 RUN ldconfig
 
 #./configure --with-python --with-geos --with-spatialite --with-pg --with-freexl --with-curl --with-libkml --with-wfs --with-odbc=/opt/microsoft/msodbcsql/lib64 --with-fgdb=/usr/local/FileGDB_API-64gcc51 --with-static-proj4 && make && make install && ldconfig
