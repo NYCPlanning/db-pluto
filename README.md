@@ -6,8 +6,8 @@ Please note that we're still working on this repo as we optimize the build proce
 ### Main files: 
 Type | Shapefile | FileGDB | CSV
 -- | -- | -- | --
-Clipped | [Mappluto](https://edm-publishing.nyc3.digitaloceanspaces.com/db-pluto/main/latest/output/mappluto/mappluto.zip) | [Mappluto.gdb](https://edm-publishing.nyc3.digitaloceanspaces.com/db-pluto/main/latest/output/mappluto_gdb.gdb/mappluto_gdb.gdb.zip) | NA 
-Unclipped (Water Included) | [Mappluto_unclipped](https://edm-publishing.nyc3.digitaloceanspaces.com/db-pluto/main/latest/output/mappluto_unclipped/mappluto_unclipped.zip) | [Mappluto_unclipped.gdb](https://edm-publishing.nyc3.digitaloceanspaces.com/db-pluto/main/latest/output/mappluto_unclipped_gdb.gdb/mappluto_unclipped_gdb.gdb.zip) |  NA
+Clipped | [Mappluto](https://edm-publishing.nyc3.digitaloceanspaces.com/db-pluto/main/latest/output/mappluto/mappluto.shp.zip) | [Mappluto.gdb](https://edm-publishing.nyc3.digitaloceanspaces.com/db-pluto/main/latest/output/mappluto_gdb.gdb/mappluto_gdb.gdb.zip) | NA 
+Unclipped (Water Included) | [Mappluto_unclipped](https://edm-publishing.nyc3.digitaloceanspaces.com/db-pluto/main/latest/output/mappluto_unclipped/mappluto_unclipped.shp.zip) | [Mappluto_unclipped.gdb](https://edm-publishing.nyc3.digitaloceanspaces.com/db-pluto/main/latest/output/mappluto_unclipped_gdb.gdb/mappluto_unclipped_gdb.gdb.zip) |  NA
 No Geometry |  NA | NA  | [Pluto.csv](https://edm-publishing.nyc3.digitaloceanspaces.com/db-pluto/main/latest/output/pluto/pluto.zip)
 
 ### Additional resources:
