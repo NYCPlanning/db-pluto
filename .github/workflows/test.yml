@@ -35,6 +35,12 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
+      - name: Archive
+        shell: bash
+        working-directory: pluto_build
+        run: ./04_archive.sh
+        if: inputs.run_export
+
       - name: install dependencies
         working-directory: pluto_build
         shell: bash
