@@ -1,4 +1,4 @@
-name: 🏗️ CI - Test
+name: 🏗️ CI - Run
 
 on:
   push:
