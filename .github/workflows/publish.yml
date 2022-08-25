@@ -43,9 +43,9 @@ jobs:
       - uses: NYCPlanning/action-library-archive@v1.1
         if: matrix.dataset != 'pluto_corrections'
         with:
-          path: templates/${{ matrix.dataset }}.yml
+          name: ${{ matrix.dataset }}
           s3: true
-          latest: true
+          latest: false
           compress: true
           output_format: pgdump csv shapefile
           version: ${{ needs.version.outputs.version }}
@@ -53,9 +53,9 @@ jobs:
       - uses: NYCPlanning/action-library-archive@v1.1
         if: matrix.dataset == 'pluto_corrections'
         with:
-          path: templates/${{ matrix.dataset }}.yml
+          name: ${{ matrix.dataset }}
           s3: true
-          latest: true
+          latest: false
           compress: true
           output_format: pgdump csv
           version: ${{ needs.version.outputs.version }}
