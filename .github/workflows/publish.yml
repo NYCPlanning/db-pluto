@@ -40,12 +40,12 @@ jobs:
           - pluto_corrections
     steps:
       - uses: actions/checkout@v2
-      - uses: NYCPlanning/action-library-archive@v1.1
+      - uses: NYCPlanning/action-library-archive@v1.2-alpha
         if: matrix.dataset != 'pluto_corrections'
         with:
           name: ${{ matrix.dataset }}
           s3: true
-          latest: true
+          latest: false
           compress: true
           output_format: pgdump csv shapefile
           version: ${{ needs.version.outputs.version }}
