@@ -40,7 +40,7 @@ jobs:
           - pluto_corrections
     steps:
       - uses: actions/checkout@v2
-      - uses: NYCPlanning/action-library-archive@2.3
+      - uses: NYCPlanning/action-library-archive@v2.4
         if: matrix.dataset != 'pluto_corrections'
         with:
           name: ${{ matrix.dataset }}
@@ -50,7 +50,7 @@ jobs:
           output_format: pgdump csv shapefile
           version: ${{ needs.version.outputs.version }}
       
-      - uses: NYCPlanning/action-library-archive@2.3
+      - uses: NYCPlanning/action-library-archive@v2.4
         if: matrix.dataset == 'pluto_corrections'
         with:
           name: ${{ matrix.dataset }}
