@@ -34,10 +34,10 @@ jobs:
       matrix:
         dataset:
           - dcp_mappluto
-          # - dcp_mappluto_wi
-          # - dcp_pluto
-          # - dcp_mappluto_clipped
-          # - pluto_corrections
+          - dcp_mappluto_wi
+          - dcp_pluto
+          - dcp_mappluto_clipped
+          - pluto_corrections
     steps:
       - uses: actions/checkout@v2
       - uses: NYCPlanning/action-library-archive@v2.14
@@ -50,15 +50,15 @@ jobs:
           output_format: pgdump csv shapefile
           version: ${{ needs.version.outputs.version }}
 
-      # - uses: NYCPlanning/action-library-archive@v2.5
-      #   if: matrix.dataset == 'pluto_corrections'
-      #   with:
-      #     name: ${{ matrix.dataset }}
-      #     s3: true
-      #     latest: false
-      #     compress: true
-      #     output_format: pgdump csv
-      #     version: ${{ needs.version.outputs.version }}
+      - uses: NYCPlanning/action-library-archive@v2.5
+        if: matrix.dataset == 'pluto_corrections'
+        with:
+          name: ${{ matrix.dataset }}
+          s3: true
+          latest: false
+          compress: true
+          output_format: pgdump csv
+          version: ${{ needs.version.outputs.version }}
 
       # - name: Set up Cloud SDK
       #   if: matrix.dataset == 'dcp_mappluto'
