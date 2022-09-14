@@ -6,14 +6,14 @@ Please note that we're still working on this repo as we optimize the build proce
 ### Main files: 
 Type | Shapefile | FileGDB | CSV
 -- | -- | -- | --
-Clipped | [Mappluto](https://edm-publishing.nyc3.digitaloceanspaces.com/db-pluto/latest/output/mappluto/mappluto.zip) | [Mappluto.gdb](https://edm-publishing.nyc3.digitaloceanspaces.com/db-pluto/latest/output/mappluto_gdb.gdb/mappluto_gdb.gdb.zip) | NA 
-Unclipped (Water Included) | [Mappluto_unclipped](https://edm-publishing.nyc3.digitaloceanspaces.com/db-pluto/latest/output/mappluto_unclipped/mappluto_unclipped.zip) | [Mappluto_unclipped.gdb](https://edm-publishing.nyc3.digitaloceanspaces.com/db-pluto/latest/output/mappluto_unclipped_gdb.gdb/mappluto_unclipped_gdb.gdb.zip) |  NA
-No Geometry |  NA | NA  | [Pluto.csv](https://edm-publishing.nyc3.digitaloceanspaces.com/db-pluto/latest/output/pluto/pluto.zip)
+Clipped | [Mappluto](https://edm-publishing.nyc3.digitaloceanspaces.com/db-pluto/main/latest/output/mappluto/mappluto.shp.zip) | [Mappluto.gdb](https://edm-publishing.nyc3.digitaloceanspaces.com/db-pluto/main/latest/output/mappluto_gdb.gdb/mappluto_gdb.gdb.zip) | NA 
+Unclipped (Water Included) | [Mappluto_unclipped](https://edm-publishing.nyc3.digitaloceanspaces.com/db-pluto/main/latest/output/mappluto_unclipped/mappluto_unclipped.shp.zip) | [Mappluto_unclipped.gdb](https://edm-publishing.nyc3.digitaloceanspaces.com/db-pluto/main/latest/output/mappluto_unclipped_gdb.gdb/mappluto_unclipped_gdb.gdb.zip) |  NA
+No Geometry |  NA | NA  | [Pluto.csv](https://edm-publishing.nyc3.digitaloceanspaces.com/db-pluto/main/latest/output/pluto/pluto.zip)
 
 ### Additional resources:
-+ [DOF BBL Council export](https://edm-publishing.nyc3.digitaloceanspaces.com/db-pluto/latest/output/dof/bbl_council.zip)
-+ [PLUTO Corrections](https://edm-publishing.nyc3.digitaloceanspaces.com/db-pluto/latest/output/pluto_corrections.zip)
-+ [Source Data Versions](https://edm-publishing.nyc3.digitaloceanspaces.com/db-pluto/latest/output/source_data_versions.csv)
++ [DOF BBL Council export](https://edm-publishing.nyc3.digitaloceanspaces.com/db-pluto/main/latest/output/dof/bbl_council.zip)
++ [PLUTO Corrections](https://edm-publishing.nyc3.digitaloceanspaces.com/db-pluto/main/latest/output/pluto_corrections.zip)
++ [Source Data Versions](https://edm-publishing.nyc3.digitaloceanspaces.com/db-pluto/main/latest/output/source_data_versions.csv)
 + [QAQC Portal](https://edm-data-engineering.nycplanningdigital.com/?page=PLUTO)
 
 Please go to NYC Planning's [Bytes of the Big Apple](https://www1.nyc.gov/site/planning/data-maps/open-data.page) to download the offical versions of PLUTO and MapPLUTO

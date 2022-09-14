@@ -1,11 +1,16 @@
-name: 🏗️ CI - Test
+name: 🏗️ CI - Run
 
 on:
   push:
     branches-ignore:
       - main
   workflow_dispatch:
-
+    inputs:
+      run_export:
+        description: "Run Export Step and Upload to DO"
+        type: boolean
+        required: true
+        default: false
 jobs:
   build:
     runs-on: ubuntu-20.04
@@ -39,13 +44,32 @@ jobs:
         working-directory: pluto_build
         shell: bash
         run: ./01_dataloading.sh
-      
+
       - name: building ...
         working-directory: pluto_build
         shell: bash
         run: ./02_build.sh
-      
+
       - name: apply corrections
         shell: bash
         working-directory: pluto_build
         run: ./03_corrections.sh
+
+      - name: Archive
+        shell: bash
+        working-directory: pluto_build
+        run: ./04_archive.sh
+        if: inputs.run_export
+
+      - name: QAQC
+        shell: bash
+        working-directory: pluto_build
+        run: ./05_qaqc.sh
+        if: inputs.run_export
+
+      - name: create shapefile
+        working-directory: pluto_build
+        shell: bash
+        run: |
+          ./06_export.sh
+        if: inputs.run_export
