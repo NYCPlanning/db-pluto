@@ -6,6 +6,8 @@ title: "[build] version: {e.g. 20v4}"
 labels: ''
 assignees: mgraber, SPTKL, adoyle
 
+body:
+ - type:markdown
 ---
 # Update version name
 
