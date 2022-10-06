@@ -4,13 +4,10 @@ about: This is a build issue for PLUTO that tracks dataloading, pluto improvemen
   and additional info
 title: "[build] version: {e.g. 20v4}"
 labels: ''
-assignees: mgraber, SPTKL, adoyle
+assignees: mbh329, SashaWeinstein, td928, adoyle
 
 ---
 
-body:
- - type:markdown
- - 
 # Update version name
 
 - [ ] <https://github.com/NYCPlanning/db-pluto/blob/master/pluto_build/version.env>
