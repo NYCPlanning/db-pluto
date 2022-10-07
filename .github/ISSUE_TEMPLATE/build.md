@@ -71,8 +71,12 @@ assignees: mbh329, SashaWeinstein, td928, adoyle
 - [x] **fema_pfirms2015_100yr**
 - [x] **dcp_zoningmapindex**
 
+### Update QAQC App 
+
+- [] **update data-engineering-qaqc version_comparison_report in src/pluto/pluto.py with version of pluto build** (must be updated with every version of pluto [here] (https://github.com/NYCPlanning/data-engineering-qaqc/blob/master/src/pluto/pluto.py))
+
 # PLUTO Improvements (corrections)
 
-<!-- 
-Comments
--->
+ 
+# Comments
+
