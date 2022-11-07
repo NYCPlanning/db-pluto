@@ -27193,3 +27193,12 @@ bbl,field,old_value,new_value,Type,reason,version
 1011637503,unitsres,21560,196,2,Incorrect increse in number of units taking value from 22v2,22v3
 4024447501,unitsres,4761,69,2,Incorrect increse in number of units taking value from DOB CO,22v3
 1016177502,unitsres,2160,361,2,Incorrect increse in number of units taking value from DOB CO,22v3
+1011637503,unitstotal,12189,199,2,Incorrect increse in number of units taking value from 22v2,22v3
+4024447501,unitstotal,4766,69,2,Incorrect increse in number of units taking value from DOB CO,22v3
+1016177502,unitstotal,2162,361,2,Incorrect increse in number of units taking value from DOB CO,22v3
+4049727505,unitstotal,17502,341,2,Incorrect increse in number of units taking value from 22v2,22v3
+4049727505,unitsres,17293,132,2,Incorrect increse in number of units taking value from 22v2,22v3
+3057397501,unitstotal,77284,146,2,Incorrect increse in number of units taking value from DOB CO,22v3
+3057397501,unitsres,38364,146,2,Incorrect increse in number of units taking value from DOB CO,22v3
+1015287501,unitstotal,7569,86,2,Incorrect increse in number of units taking value from DOB CO,22v3
+1015287501,unitsres,7482,86,2,Incorrect increse in number of units taking value from DOB CO,22v3
