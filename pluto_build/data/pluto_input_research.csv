@@ -27202,3 +27202,5 @@ bbl,field,old_value,new_value,Type,reason,version
 3057397501,unitsres,38364,146,2,Incorrect increse in number of units taking value from DOB CO,22v3
 1015287501,unitstotal,7569,86,2,Incorrect increse in number of units taking value from DOB CO,22v3
 1015287501,unitsres,7482,86,2,Incorrect increse in number of units taking value from DOB CO,22v3
+1015287501,bldgarea,20734188,360570,2,Incorrect increse in building area taking value from 22v2,22v3
+4049727505,bldgarea,11782179,466988,2,Incorrect increse in building area taking value from 22v2,22v3
