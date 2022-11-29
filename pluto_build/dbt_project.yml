@@ -1,0 +1,13 @@
+name: pluto
+config-version: 2
+version: '0.1'
+
+profile: nycplanning
+
+model-paths: ["models"]
+
+models:
+  pluto:
+    staging:
+      +materialized: table
+      schema: staging

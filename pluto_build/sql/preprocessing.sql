@@ -38,10 +38,7 @@ ALTER TABLE pluto_corrections
 DROP COLUMN IF EXISTS v,
 DROP COLUMN IF EXISTS ogc_fid;
 
-DROP TABLE IF EXISTS pluto_input_geocodes_tmp;
-CREATE TABLE pluto_input_geocodes_tmp as (
+CREATE OR REPLACE TABLE pluto_input_geocodes as (
     SELECT DISTINCT ON (borough, block, lot) * 
-    FROM pluto_input_geocodes); 
-DROP TABLE IF EXISTS pluto_input_geocodes; 
-ALTER TABLE pluto_input_geocodes_tmp
-RENAME TO pluto_input_geocodes;
+    FROM pluto_input_geocodes
+);

@@ -1,0 +1,34 @@
+version: 2
+
+models:
+  - name: stg_pts
+    description: cleaned and casted table for PTS
+
+  - name: stg_cama
+    description: cleaned and casted table for CAMA
+
+  - name: stg_rpad
+    description: Convert PTS to RPAD (legacy format)
+  
+  - name: stg_geocodes
+    description: cleaned table for geocodes
+  
+  - name: stg_bbl
+    description: cleaned table for BBL
+    columns:
+      - name: boro
+      - name: tb
+        description: Tax Block
+      - name: tl
+        description: Tax Lot
+      - name: bbl
+        description: >-
+          Borough Block Lot (BBL) from stg_pts,
+          not that this field can contain letter E for easement
+      - name: billingbbl
+        description: >-
+          Billing BBL from stg_geocodes, this is coming from geosupport
+      - name: primebbl
+        description: >-
+          Prime BBL, used for calculation purposes usually. 
+          multiple lots can shared the same prime bbl (condo lots)
