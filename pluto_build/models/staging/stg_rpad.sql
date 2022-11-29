@@ -61,6 +61,7 @@ SELECT
     ap_block,
     ap_lot,
     ap_ease,
-    ap_date
+    ap_date,
+    to_char(to_date(ap_date, 'MM/DD/YY'), 'MM/DD/YYYY') AS ap_datef
 FROM pluto_rpad_rownum 
 WHERE rn = 1

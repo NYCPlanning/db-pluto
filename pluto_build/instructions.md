@@ -31,7 +31,10 @@ nycplanning:
 ```
 
 ## Example Commands
-1. `dbt run -s staging.stg_pts`
+1. `dbt run -s staging.stg_pts` to run a specific model
+2. `dbt compile` to compile sql to `target` without executing sql 
+3. `dbt docs generate` to generate documentation
+4. ` dbt docs serve --port 8000` to open docs in browser (`http://localhost:8000`)
 
 ## Execution Order
 1. you will still need to run `bash 01_dataloading.sh` to import source data
