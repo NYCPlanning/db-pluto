@@ -15,3 +15,7 @@ __pycache__/
 !version.env
 pluto_build/pts/
 pluto_build/.library/
+pluto_build/.venv/
+pluto_build/target/
+pluto_build/dbt_packages/
+pluto_build/logs/
