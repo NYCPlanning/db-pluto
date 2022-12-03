@@ -2,7 +2,13 @@
 
 ## Create local Postgres-Postgis database
 0. make sure you have docker installed
-1. `docker run -d -p 5432:5432 -e POSTGRES_PASSWORD=postgres postgis/postgis:12-3.0-alpine`
+1. ```
+docker run -d \
+  -p 5432:5432 \
+  -e POSTGRES_PASSWORD=postgres \
+  -v $(pwd)/.postgres:/var/lib/postgresql/data \
+  postgis/postgis:15-3.3-alpine
+```
 > this will create a postgres/postgis docker container locally for development purposes
 
 ## Install DBT

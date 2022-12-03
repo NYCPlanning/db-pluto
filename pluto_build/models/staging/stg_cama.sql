@@ -32,7 +32,7 @@ SELECT
     NULLIF(residconstrtype, '') AS residconstrtype,
     NULLIF(commercialconstrtype, '') AS commercialconstrtype,
     NULLIF(condomainconstrtype, '') AS condomainconstrtype,
-    NULLIF(condounitsconstrtype, '') AS condounitsconstrtype,, 
+    NULLIF(condounitsconstrtype, '') AS condounitsconstrtype,
     b.billingbbl,
     (CASE 
         WHEN b.billingbbl IS NOT NULL AND b.billingbbl <> '0000000000' 

@@ -3,8 +3,8 @@ SELECT
     a.tb,
     a.tl,
     a.bbl,
-    b.billingbbl,
-    (CASE 
+    NULLIF(b.billingbbl, '0000000000') as billingbbl,
+    (CASE
         WHEN NULLIF(b.billingbbl, '0000000000') IS NOT NULL 
         THEN b.billingbbl
         ELSE a.boro||a.tb||a.tl

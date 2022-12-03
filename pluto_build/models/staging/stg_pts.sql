@@ -41,9 +41,9 @@ SELECT
     -- pyacttot
     REPLACE(curactextot, '+', '')::double precision as CUREXT_ACT,
     -- pyactextot
-    yrbuilt,
-    yralt1,
-    yralt2,
+    NULLIF(yrbuilt::integer, 0) AS yrbuilt,
+    NULLIF(yralt1::integer, 0) AS yralt1,
+    NULLIF(yralt2::integer, 0) AS yralt2,
     condo_number,
     appt_boro as AP_BORO,
     appt_block as AP_BLOCK,

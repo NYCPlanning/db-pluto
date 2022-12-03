@@ -5,9 +5,16 @@ version: '0.1'
 profile: nycplanning
 
 model-paths: ["models"]
+target-path: ".target"
 
 models:
+  +persist_docs:
+    relation: true
+    columns: true
   pluto:
     staging:
       +materialized: table
       schema: staging
+    calculation:
+      +materialized: table
+      schema: calculation

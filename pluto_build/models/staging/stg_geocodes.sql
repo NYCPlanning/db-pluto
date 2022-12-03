@@ -14,8 +14,6 @@ WITH backfill_geom AS (
     FROM {{ source('public', 'pluto_input_geocodes') }}
 )
 SELECT
-    a.ogc_fid,
-    bbl as geo_bbl,
     borough||lpad(block,5,'0')||lpad(lot,4,'0') as bbl,
     ST_X(ST_TRANSFORM(geom, 2263))::integer as xcoord,
     ST_Y(ST_TRANSFORM(geom, 2263))::integer as ycoord,
