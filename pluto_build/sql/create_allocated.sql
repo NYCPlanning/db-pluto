@@ -130,6 +130,39 @@ SET unitsres = b.unitsres,
 FROM primesumunits b
 WHERE a.bbl=b.primebbl;
 
+-- unit fields for select condos
+-- take the unitstotal and unitsres values from the condo record with the 75 tax lot
+-- where the unit values are > 1 for the billing bbl
+-- and two or more base bbl records have a values > 1 
+
+WITH corrcondounits AS (
+	SELECT primebbl, units::integer as unitstotal, coop_apts::integer as unitsres
+	FROM pluto_rpad_geo
+	WHERE primebbl IN (
+		SELECT primebbl FROM (
+			SELECT primebbl, COUNT(*)
+			FROM pluto_rpad_geo
+			WHERE tl NOT LIKE '75%'
+			AND RIGHT(primebbl,4) LIKE '75%'
+			AND units::integer > 1
+			AND coop_apts::integer > 1
+			GROUP BY primebbl, units, coop_apts) as badbases 
+		WHERE count>1)
+	AND primebbl IN (
+		SELECT primebbl FROM (
+			SELECT primebbl	
+			FROM pluto_rpad_geo
+			WHERE tl LIKE '75%'
+			AND units::integer > 1
+			AND coop_apts::integer > 1) as badbillings)
+	AND tl LIKE '75%')
+
+UPDATE pluto_allocated a
+SET unitsres = b.unitsres,
+	unitstotal = b.unitstotal
+FROM corrcondounits b
+WHERE a.bbl=b.primebbl;
+
 -- $ fields
 WITH primesums AS (
 	SELECT primebbl,
