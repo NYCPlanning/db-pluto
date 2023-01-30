@@ -31,10 +31,22 @@ DCP merges PLUTO data with the DCP modified version of DOF’s Digital Tax Map (
 
 The PLUTO data contain one record per tax lot except for condominiums.  PLUTO data contain one record per condominium complex instead of records for each condominium unit tax lot.  A tax lot is usually a parcel of real property.  The parcel can be under water, vacant, or contain one or more buildings or structures.  The Department of Finance assigns a tax lot number to each condominium unit and a "billing" tax lot number to the Condominium Complex. A Condominium Complex is defined as one or more structures or properties under the auspices of the same condominium association.  DCP summarizes DOF's condominium unit tax lot data so that each Condominium Complex within a tax block is represented by only one record.  The Condominium Complex record is assigned the "billing" tax lot number when one exists.  When the "billing" tax lot number has not yet been assigned by DOF, the lowest tax lot number within the tax block of the Condominium Complex is assigned.
 
-**Limitations**:
+## Release versioning
+
+PLUTO now uses version numbering YEARvMAJOR.MINOR
+1. YEAR for the last two digits of the release year
+2. MAJOR version for using the latest versions of all input data
+2. MINOR version for using the latest versions of particular input data
+
+Datasets updated in minor realeases currently include:
+- Zoning datasets
+
+> For all releases, input data versions are documented in the relevant `source_data_versions.csv`
+
+### Limitations
 DCP provides PLUTO for informational purposes only. DCP does not warranty and is not liable for the completeness, accuracy, content, or fitness for any particular purpose or use of PLUTO.
 
-Lean more about PLUTO, its idiosyncrasies and limitations in [PLUTO's metadata](https://www1.nyc.gov/assets/planning/download/pdf/data-maps/open-data/plutolayout.pdf).
+Lean more about PLUTO, its idiosyncrasies and limitations in [PLUTO's Read Me and MapPLUTO metadata files](https://www.nyc.gov/site/planning/data-maps/open-data/dwn-pluto-mappluto.page).
 
 ## __How you can help__
 
