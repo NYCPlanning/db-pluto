@@ -1,6 +1,6 @@
 # PLUTO and MapPLUTO 
-![GitHub release (latest SemVer)](https://img.shields.io/github/v/release/NYCPlanning/db-pluto?label=latest%20release)
-![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/NYCPlanning/db-pluto/run.yml?branch=main&label=CI%20Run%20-%20main)
+![GitHub release (latest SemVer)](https://img.shields.io/github/v/release/NYCPlanning/db-pluto?label=latest%20release)<br/>
+![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/NYCPlanning/db-pluto/run.yml?branch=main&label=CI%20Run%20-%20main)<br/>
 ![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/NYCPlanning/db-pluto/input_cama.yml?branch=main&label=CAMA%20Processing)
 ![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/NYCPlanning/db-pluto/input_pts.yml?branch=main&label=PTS%20Processing)
 <!-- ![GitHub Workflow Status](https://img.shields.io/github/workflow/status/NYCPlanning/db-pluto/CAMA%20Processing?label=CAMA) -->
