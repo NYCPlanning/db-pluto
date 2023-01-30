@@ -51,7 +51,7 @@ import_public dcp_zoningmapamendments &
 import_public dcp_zoningmapindex &
 
 # import_public other
-import_public pluto_corrections &
+import_public pluto_corrections 22v2 &
 import_public dpr_greenthumb 20221101 &
 import_public dsny_frequencies 20221105 &
 import_public lpc_historic_districts 20220526 &
