@@ -1,9 +1,6 @@
 name: 🏗️ CI - Run
 
 on:
-  push:
-    branches-ignore:
-      - main
   workflow_dispatch:
     inputs:
       run_export:
