@@ -16,7 +16,7 @@ fi
 
 # import_public PTS and CAMA from data library
 import_public pluto_pts 20230130 &  
-import_public pluto_input_cama_dof 20221130 &
+import_public pluto_input_cama_dof 20221130 & #this process is broken otherwise all pluto datasets should be same date
 import_public pluto_input_numbldgs 20230130 &
 import_public pluto_input_geocodes 20230130 &
 
