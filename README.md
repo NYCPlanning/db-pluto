@@ -43,6 +43,7 @@ We want to make PLUTO most useful and accurate for its users, so open an [issue]
 ## __Instructions__
 
 ### Major Version
+TODO review and revise major versions instructions
 #### I. Build PLUTO Through CI
 1. just create a new push to the repo and a build will be triggered if `[build]` in included your commit message
 2. Make sure you have the correct version info and the previous version info in the `version.env` file
@@ -61,8 +62,8 @@ Please refer to the qaqc web application for cross version comparisons
 
 ### Minor Version
 #### I. Build PLUTO Through CI
-TODO
+TODO add new instructions
 #### II. Build PLUTO on Your Own Machine
-TODO
+TODO add new instructions
 #### III. QAQC
 Please refer to the qaqc web application for cross version comparisons
