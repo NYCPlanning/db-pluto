@@ -33,8 +33,8 @@ The PLUTO data contain one record per tax lot except for condominiums.  PLUTO da
 
 ## Release versioning
 
-PLUTO now uses version numbering YEARvMAJOR.MINOR
-1. YEAR for the last two digits of the release year
+PLUTO now uses version numbering YYvMAJOR.MINOR
+1. YY for the last two digits of the release year
 2. MAJOR version for using the latest versions of all input data
 2. MINOR version for using the latest versions of particular input data
 
