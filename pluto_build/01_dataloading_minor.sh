@@ -42,16 +42,16 @@ import_public fema_firms2007_100yr $FEMA_FIRPS_VERSION &
 import_public fema_pfirms2015_100yr $FEMA_FIRPS_VERSION &
 
 # import_public zoning files from data library - default to latest
-import_public dcp_commercialoverlay &
-import_public dcp_limitedheight &
-import_public dcp_zoningdistricts &
-import_public dcp_specialpurpose &
-import_public dcp_specialpurposesubdistricts &
-import_public dcp_zoningmapamendments &
-import_public dcp_zoningmapindex &
+import_public dcp_commercialoverlay 20221109 &
+import_public dcp_limitedheight 20221109 &
+import_public dcp_zoningdistricts 20221109 &
+import_public dcp_specialpurpose 20221109 &
+import_public dcp_specialpurposesubdistricts 20221109 &
+import_public dcp_zoningmapamendments 20221109 &
+import_public dcp_zoningmapindex 20190701 &
 
 # import_public other
-import_public pluto_corrections 22v2 &
+import_public pluto_corrections 21v2 &
 import_public dpr_greenthumb 20221101 &
 import_public dsny_frequencies 20221105 &
 import_public lpc_historic_districts 20220526 &
