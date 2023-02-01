@@ -1,7 +1,7 @@
 DROP TABLE IF EXISTS source_data_versions;
 CREATE TABLE source_data_versions as(
     select * from (
-        (SELECT 'pluto_corrections' as schema_name, '' as v )
+        (SELECT 'pluto_corrections' as schema_name, v from pluto_corrections limit 1)
     union
         (SELECT 'dcp_edesignation' as schema_name, v from dcp_edesignation limit 1)
     union

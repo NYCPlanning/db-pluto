@@ -3,14 +3,14 @@ name: Build
 about: This is a build issue for PLUTO that tracks dataloading, pluto improvements
   and additional info
 title: "[build] version: {e.g. 20v4}"
-labels: ''
-assignees: mbh329, SashaWeinstein, td928, adoyle
+labels: 'data: ingestion'
+assignees:
 
 ---
 
 # Update version name
 
-- [ ] <https://github.com/NYCPlanning/db-pluto/blob/master/pluto_build/version.env>
+- [ ] <https://github.com/NYCPlanning/db-pluto/blob/main/pluto_build/version.env>
 
 # Data loading
 
@@ -73,10 +73,13 @@ assignees: mbh329, SashaWeinstein, td928, adoyle
 
 ### Update QAQC App 
 
-- [] **update data-engineering-qaqc version_comparison_report in src/pluto/pluto.py with version of pluto build** (must be updated with every version of pluto [here] (https://github.com/NYCPlanning/data-engineering-qaqc/blob/master/src/pluto/pluto.py))
+~~- [ ] **update data-engineering-qaqc version_comparison_report in src/pluto/pluto.py with version of pluto build** (must be updated with every version of pluto [here] (https://github.com/NYCPlanning/data-engineering-qaqc/blob/main/src/pluto/pluto.py))~~
 
 # PLUTO Improvements (corrections)
 
+# Build CI Runs
+
+- **[INSERPT LINKS TO RELEVANT CI RUNS HERE]**
  
 # Comments
 

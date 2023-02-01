@@ -1,4 +1,11 @@
 #!/bin/bash
+# Exit when any command fails
+set -e
+# keep track of the last executed command
+trap 'last_command=$current_command; current_command=$BASH_COMMAND' DEBUG
+# echo an error message before exiting
+trap 'echo "\"${last_command}\" command filed with exit code $?."' EXIT
+
 function set_env {
   for envfile in $@
   do
@@ -60,7 +67,7 @@ function FGDB_export {
       rm -rf $@.gdb
     )
 }
-register 'export' 'gdb' 'export pluto.gdb' FGDB_export
+
 
 function SHP_export {
   name=$1
@@ -77,7 +84,7 @@ function SHP_export {
       ls | grep -v $name.shp.zip | xargs rm
     )
 }
-register 'export' 'shp' 'export pluto.shp' SHP_export
+
 
 function CSV_export {
   psql $BUILD_ENGINE  -c "\COPY (
@@ -98,7 +105,6 @@ function Upload {
 function run {
   psql $BUILD_ENGINE -f $1
 }
-register 'run' 'sql' 'run pluto sql script' run
 
 function get_latest_version {
   name=$1
@@ -144,13 +150,11 @@ function import_qaqc {
     echo "✅ $name.sql exists in cache"
   else
     echo "🛠 $name.sql doesn't exists in cache, downloading ..."
-    mkdir -p $target_dir && (s
+    mkdir -p $target_dir && (
       cd $target_dir
       curl -ss -O $qaqc_do_url/$name.sql
     )
   fi
-  psql $BUILD_ENGINE -c "DROP TABLE $name"
+  psql $BUILD_ENGINE -c "DROP TABLE IF EXISTS $name"
   psql $BUILD_ENGINE -v ON_ERROR_STOP=1 -q -f $target_dir/$name.sql
 }
-
-register 'import' 'dataset' 'import given dataset to BUILD_ENGINE' import_public

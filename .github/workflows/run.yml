@@ -1,11 +1,13 @@
 name: 🏗️ CI - Run
 
 on:
-  push:
-    branches-ignore:
-      - main
   workflow_dispatch:
     inputs:
+      minor_version:
+        description: "Run minor version build"
+        type: boolean
+        required: true
+        default: false
       run_export:
         description: "Run Export Step and Upload to DO"
         type: boolean
@@ -40,10 +42,17 @@ jobs:
         shell: bash
         run: ./pluto setup init
 
-      - name: dataloading ..
+      - name: dataloading (major) ..
         working-directory: pluto_build
         shell: bash
         run: ./01_dataloading.sh
+        if: inputs.minor_version == false
+
+      - name: dataloading (minor) ..
+        working-directory: pluto_build
+        shell: bash
+        run: ./01_dataloading_minor.sh
+        if: inputs.minor_version == true
 
       - name: building ...
         working-directory: pluto_build
