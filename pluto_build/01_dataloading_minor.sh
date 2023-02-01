@@ -24,7 +24,6 @@ import_public pluto_input_numbldgs $PLUTO_WEEKLY_DATA_VERSION &
 import_public pluto_input_geocodes $PLUTO_WEEKLY_DATA_VERSION &
 
 # import_public spatial bounaries from data library
-import_public dcp_edesignation 20221109 & 
 import_public dcp_cdboundaries_wi $GEOSUPPORT_VERSION &
 import_public dcp_cb2010_wi $GEOSUPPORT_VERSION &
 import_public dcp_ct2010_wi $GEOSUPPORT_VERSION &
@@ -42,13 +41,14 @@ import_public fema_firms2007_100yr $FEMA_FIRPS_VERSION &
 import_public fema_pfirms2015_100yr $FEMA_FIRPS_VERSION &
 
 # import_public zoning files from data library - default to latest
-import_public dcp_commercialoverlay 20221109 &
-import_public dcp_limitedheight 20221109 &
-import_public dcp_zoningdistricts 20221109 &
-import_public dcp_specialpurpose 20221109 &
-import_public dcp_specialpurposesubdistricts 20221109 &
-import_public dcp_zoningmapamendments 20221109 &
-import_public dcp_zoningmapindex 20190701 &
+import_public dcp_edesignation & 
+import_public dcp_commercialoverlay &
+import_public dcp_limitedheight &
+import_public dcp_zoningdistricts &
+import_public dcp_specialpurpose &
+import_public dcp_specialpurposesubdistricts &
+import_public dcp_zoningmapamendments &
+import_public dcp_zoningmapindex &
 
 # import_public other
 import_public pluto_corrections 21v4 &
