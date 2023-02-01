@@ -155,6 +155,6 @@ function import_qaqc {
       curl -ss -O $qaqc_do_url/$name.sql
     )
   fi
-  psql $BUILD_ENGINE -c "DROP TABLE $name"
+  psql $BUILD_ENGINE -c "DROP TABLE IF EXISTS $name"
   psql $BUILD_ENGINE -v ON_ERROR_STOP=1 -q -f $target_dir/$name.sql
 }
