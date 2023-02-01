@@ -14,8 +14,18 @@ if [[ $1 == "drop" ]]; then
     "
 fi
 
-# This shell script is for minor releases of PLUTO where all datasets remain constant except  
-# for the Zoning related data which updated monthly
+# This shell script is for minor releases of PLUTO where all datasets remain constant
+# except for DCP data that is updated monthly (e.g. E-Designations, Zoning)
+
+# import_public zoning files from data library - default to latest
+import_public dcp_edesignation & 
+import_public dcp_commercialoverlay &
+import_public dcp_limitedheight &
+import_public dcp_zoningdistricts &
+import_public dcp_specialpurpose &
+import_public dcp_specialpurposesubdistricts &
+import_public dcp_zoningmapamendments &
+import_public dcp_zoningmapindex &
 
 # import_public PTS and CAMA from data library
 import_public pluto_pts $PLUTO_WEEKLY_DATA_VERSION &  
@@ -39,16 +49,6 @@ import_public dof_shoreline $DOF_DATA_VERSION &
 import_public doitt_zipcodeboundaries 20180910 & 
 import_public fema_firms2007_100yr $FEMA_FIRPS_VERSION &
 import_public fema_pfirms2015_100yr $FEMA_FIRPS_VERSION &
-
-# import_public zoning files from data library - default to latest
-import_public dcp_edesignation & 
-import_public dcp_commercialoverlay &
-import_public dcp_limitedheight &
-import_public dcp_zoningdistricts &
-import_public dcp_specialpurpose &
-import_public dcp_specialpurposesubdistricts &
-import_public dcp_zoningmapamendments &
-import_public dcp_zoningmapindex &
 
 # import_public other
 import_public pluto_corrections 21v4 &
