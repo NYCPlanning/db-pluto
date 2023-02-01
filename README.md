@@ -38,10 +38,11 @@ PLUTO now uses version numbering YYvMAJOR.MINOR
 2. MAJOR version for using the latest versions of all input data
 2. MINOR version for using the latest versions of particular input data
 
-Datasets updated in minor realeases currently include:
-- Zoning datasets
+Datasets updated in minor realeases are intended to keep the property records in the [ZoLa portal](https://zola.planning.nyc.gov/) accurate and currently include:
+- DCP Zoning data
+- DCP E-Designation data
 
-> For all releases, input data versions are documented in the relevant `source_data_versions.csv`
+> For all releases, input data versions are documented in their `source_data_versions.csv` file.
 
 ### Limitations
 DCP provides PLUTO for informational purposes only. DCP does not warranty and is not liable for the completeness, accuracy, content, or fitness for any particular purpose or use of PLUTO.
@@ -52,14 +53,14 @@ Lean more about PLUTO, its idiosyncrasies and limitations in [PLUTO's Read Me an
 
 We want to make PLUTO most useful and accurate for its users, so open an [issue](https://github.com/NYCPlanning/db-pluto/issues) to report an error or suggest how we can improve PLUTO.
 
-## __Instructions__
+## Data Build Instructions
 
 ### Major Version (XXvX)
 TODO review and revise major versions instructions
 #### I. Build PLUTO Through CI
-1. just create a new push to the repo and a build will be triggered if `[build]` in included your commit message
-2. Make sure you have the correct version info and the previous version info in the `version.env` file
-3. If you would like to update PTS, geocoded PTS and CAMA, in order to trigger data ingestion for them, include `[pts]` or `[cama]` or both (`[pts] [cama]`) to trigger a data ingestion workflow
+1. Ensure input datasets are archived in DigitalOcean. There's an issue template in this repo to help track this.
+2. On a new branch, ensure the new and previous PLUTO versions in `version.env` are correct
+3. Run the build action using the new branch
 
 #### II. Build PLUTO on Your Own Machine
 1. make sure you have [__psql__](https://packages.debian.org/sid/postgresql-client-common) installed
@@ -69,13 +70,20 @@ TODO review and revise major versions instructions
 5.  `./04_archive.sh` : Archive output to EDM_DATA
 6.  `./05_export.sh` : Export PLUTO csv, MapPLUTO shapefile and pluto_corrections file
 
-#### III. QAQC
-Please refer to the qaqc web application for cross version comparisons
-
 ### Minor Version (XXvX.X)
 #### I. Build PLUTO Through CI
-TODO add new instructions
+1. Ensure input datasets are archived in DigitalOcean. There's an issue template in this repo to help track this.
+2. On a new branch, esnure the new and previous PLUTO versions in the `version.env` file are correct
+3. Ensure the input dataset versions in `version.env` are identical to those used the last major realease
+3. Run the build action using the new branch and the "minor version" input set to true
+
 #### II. Build PLUTO on Your Own Machine
-TODO add new instructions
-#### III. QAQC
-Please refer to the qaqc web application for cross version comparisons
+1. make sure you have [__psql__](https://packages.debian.org/sid/postgresql-client-common) installed
+2. `./01_dataloading_minor.sh` : load all input data into build environment
+3.  `./02_build.sh` : Build PLUTO and MapPLUTO.
+4.  `./03_corrections.sh` : Apply pluto research corrections
+5.  `./04_archive.sh` : Archive output to EDM_DATA
+6.  `./05_export.sh` : Export PLUTO csv, MapPLUTO shapefile and pluto_corrections file
+
+## QAQC
+Please refer to the [EDM QAQC web application](https://edm-data-engineering.nycplanningdigital.com) for cross version comparisons
