@@ -10,13 +10,17 @@ assignees:
 
 # Update version name
 
+### Major releases follow the naming convention YYvQ (where YY is the year, and Q is the Quarter) while minor releases follow the naming convention YYvQ.X (where YY is the year, Q is the quarter and X is the minor release version)
+
 - [ ] <https://github.com/NYCPlanning/db-pluto/blob/main/pluto_build/version.env>
 
 # Data loading
 
-### Rare Manual Updates
+### Manual Updates
 
-- [ ] **dcp_colp** (check [here](https://www1.nyc.gov/site/planning/data-maps/open-data/dwn-colp.page))
+#### Updated 2x a year typically in June and December
+- [ ] **dcp_colp** (check [here](https://www1.nyc.gov/site/planning/data-maps/open-data/dwn-colp.page)) 
+#### Currently updated with each new release of a major version of PLUTO - important to make sure this is up to date
 - [ ] **pluto_corrections** (pulling from bytes, must update when there's updates to **pluto_input_research**)
 
 ### Automated Updates
