@@ -2,7 +2,7 @@
 name: Build
 about: This is a build issue for PLUTO that tracks dataloading, pluto improvements
   and additional info
-title: "[build] version: {e.g. 20v4}"
+title: "[build] version: {e.g. Major: 20v4, Minor: 22v3.1}"
 labels: 'data: ingestion'
 assignees:
 
@@ -12,8 +12,29 @@ assignees:
 
 ### Major releases follow the naming convention YYvQ (where YY is the year, and Q is the Quarter) while minor releases follow the naming convention YYvQ.X (where YY is the year, Q is the quarter and X is the minor release version)
 
+### Major Release: To initiate a major release, you must change the VERSION and VERSION_PREV. All other variables can remain unchanged and will default to latest in the dataloading step. 
+
 - [ ] <https://github.com/NYCPlanning/db-pluto/blob/main/pluto_build/version.env>
 
+### Minor Release: To initiate a minor release, you must change the VERSION and VERSION_PREV. In addition, you are required to hold the following variables constant with the last major release of PLUTO (you can reference the `source_data_version` table):
+
+- [ ] <https://github.com/NYCPlanning/db-pluto/blob/main/pluto_build/version.env>
+
+- [ ] DOF_WEEKLY_DATA_VERSION
+- [ ] DOF_CAMA_DATA_VERSION
+
+- [ ] GEOSUPPORT_VERSION
+- [ ] FEMA_FIRPS_VERSION
+- [ ] DOITT_DATA_VERSION
+- [ ] DOF_DATA_VERSION
+
+- [ ] DCP_COLP_VERSION
+- [ ] DPR_GREENTHUMB_VERSION
+- [ ] DSNY_FREQUENCIES_VERSION
+- [ ] LPC_HISTORIC_DISTRICTS_VERSION
+- [ ] LPC_LANDMARKS_VESRSION
+
+- [ ] PLUTO_CORRECTIONS_VERSION
 # Data loading
 
 ### Manual Updates
@@ -55,7 +76,7 @@ assignees:
 - [x] **dcp_healthareas**  
 - [x] **dcp_healthcenters**
 
-### Updated with Zoning Taxlots (check [here](https://github.com/NYCPlanning/db-zoningtaxlots/actions/workflows/dataloading.yml) for latest run)
+### Updated with Zoning Taxlots (check [here](https://github.com/NYCPlanning/db-zoningtaxlots/actions/workflows/dataloading.yml) for latest run). Note: for a minor release of PLUTO, these will be the only datasets that will be updated.
 
 - [x] **dof_dtm**
 - [x] **dof_shoreline**
