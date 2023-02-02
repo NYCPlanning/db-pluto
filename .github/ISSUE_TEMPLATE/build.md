@@ -10,7 +10,10 @@ assignees:
 
 # Update version name
 
-### Major releases follow the naming convention YYvQ (where YY is the year, and Q is the Quarter) while minor releases follow the naming convention YYvQ.X (where YY is the year, Q is the quarter and X is the minor release version)
+# PLUTO now uses version numbering YYvMAJOR.MINOR
+1. YY for the last two digits of the release year
+2. MAJOR version for using the latest versions of all input data
+2. MINOR version for using the latest versions of particular input data
 
 ### Major Release: To initiate a major release, you must change the VERSION and VERSION_PREV. All other variables can remain unchanged and will default to latest in the dataloading step. 
 
