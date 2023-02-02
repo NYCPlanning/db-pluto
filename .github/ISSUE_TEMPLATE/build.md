@@ -2,7 +2,7 @@
 name: Build
 about: This is a build issue for PLUTO that tracks dataloading, pluto improvements
   and additional info
-title: "[build] version: {e.g. 20v4}"
+title: "[build] version: {e.g. Major: 20v4, Minor: 22v3.1}"
 labels: 'data: ingestion'
 assignees:
 
@@ -10,13 +10,41 @@ assignees:
 
 # Update version name
 
+# PLUTO now uses version numbering YYvMAJOR.MINOR
+1. YY for the last two digits of the release year
+2. MAJOR version for using the latest versions of all input data
+2. MINOR version for using the latest versions of particular input data
+
+### Major Release: To initiate a major release, you must change the VERSION and VERSION_PREV. All other variables can remain unchanged and will default to latest in the dataloading step. 
+
 - [ ] <https://github.com/NYCPlanning/db-pluto/blob/main/pluto_build/version.env>
 
+### Minor Release: To initiate a minor release, you must change the VERSION and VERSION_PREV. In addition, you are required to hold the following variables constant with the last major release of PLUTO (you can reference the `source_data_version` table):
+
+- [ ] <https://github.com/NYCPlanning/db-pluto/blob/main/pluto_build/version.env>
+
+- [ ] DOF_WEEKLY_DATA_VERSION
+- [ ] DOF_CAMA_DATA_VERSION
+
+- [ ] GEOSUPPORT_VERSION
+- [ ] FEMA_FIRPS_VERSION
+- [ ] DOITT_DATA_VERSION
+- [ ] DOF_DATA_VERSION
+
+- [ ] DCP_COLP_VERSION
+- [ ] DPR_GREENTHUMB_VERSION
+- [ ] DSNY_FREQUENCIES_VERSION
+- [ ] LPC_HISTORIC_DISTRICTS_VERSION
+- [ ] LPC_LANDMARKS_VESRSION
+
+- [ ] PLUTO_CORRECTIONS_VERSION
 # Data loading
 
-### Rare Manual Updates
+### Manual Updates
 
-- [ ] **dcp_colp** (check [here](https://www1.nyc.gov/site/planning/data-maps/open-data/dwn-colp.page))
+#### Updated 2x a year typically in June and December
+- [ ] **dcp_colp** (check [here](https://www1.nyc.gov/site/planning/data-maps/open-data/dwn-colp.page)) 
+#### Currently updated with each new release of a major version of PLUTO - important to make sure this is up to date
 - [ ] **pluto_corrections** (pulling from bytes, must update when there's updates to **pluto_input_research**)
 
 ### Automated Updates
@@ -51,7 +79,7 @@ assignees:
 - [x] **dcp_healthareas**  
 - [x] **dcp_healthcenters**
 
-### Updated with Zoning Taxlots (check [here](https://github.com/NYCPlanning/db-zoningtaxlots/actions/workflows/dataloading.yml) for latest run)
+### Updated with Zoning Taxlots (check [here](https://github.com/NYCPlanning/db-zoningtaxlots/actions/workflows/dataloading.yml) for latest run). Note: for a minor release of PLUTO, these will be the only datasets that will be updated.
 
 - [x] **dof_dtm**
 - [x] **dof_shoreline**
