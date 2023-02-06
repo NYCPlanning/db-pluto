@@ -60,7 +60,7 @@ import_public lpc_historic_districts $LPC_HISTORIC_DISTRICTS_VERSION &
 import_public lpc_landmarks $LPC_LANDMARKS_VESRSION
 
 # import pluto corrections
-import_public pluto_corrections $PLUTO_CORRECTIONS_VERSION &
+# import_public pluto_corrections $PLUTO_CORRECTIONS_VERSION &
 
 wait
 

@@ -34,9 +34,9 @@ ALTER TABLE fema_firms2007_100yr RENAME wkb_geometry to geom;
 ALTER TABLE fema_pfirms2015_100yr RENAME wkb_geometry to geom;
 ALTER TABLE doitt_zipcodeboundaries RENAME wkb_geometry to geom;
 
-ALTER TABLE pluto_corrections 
-DROP COLUMN IF EXISTS v,
-DROP COLUMN IF EXISTS ogc_fid;
+-- ALTER TABLE pluto_corrections 
+-- DROP COLUMN IF EXISTS v,
+-- DROP COLUMN IF EXISTS ogc_fid;
 
 DROP TABLE IF EXISTS pluto_input_geocodes_tmp;
 CREATE TABLE pluto_input_geocodes_tmp as (
