@@ -5,10 +5,10 @@ mkdir -p output &&
   (cd output 
     echo "version: $VERSION" > version.txt
     echo "date: $DATE" >> version.txt
-    CSV_export pluto_corrections
+    CSV_export pluto_changes
     CSV_export pluto_removed_records
-    CSV_export pluto_corrections_not_applied
-    CSV_export pluto_corrections_applied
+    CSV_export pluto_changes_not_applied
+    CSV_export pluto_changes_applied
     zip pluto_corrections.zip *
     ls | grep -v pluto_corrections.zip | xargs rm
   )
