@@ -1,5 +1,5 @@
-DROP TABLE IF EXISTS pluto_corrections;
-CREATE TABLE pluto_corrections (
+DROP TABLE IF EXISTS pluto_input_research;
+CREATE TABLE pluto_input_research (
     bbl text,
     field text,
     old_value text,
@@ -8,7 +8,7 @@ CREATE TABLE pluto_corrections (
     reason text,
     version text
 );
-\COPY pluto_corrections FROM 'data/pluto_input_research.csv' DELIMITER ',' CSV HEADER;
+\COPY pluto_input_research FROM 'data/pluto_input_research.csv' DELIMITER ',' CSV HEADER;
 
 DROP TABLE IF EXISTS pluto_input_landuse_bldgclass;
 CREATE TABLE pluto_input_landuse_bldgclass (
