@@ -37,11 +37,11 @@ jobs:
           - dcp_mappluto_wi
           - dcp_pluto
           - dcp_mappluto_clipped
-          - pluto_corrections
+          # - pluto_corrections
     steps:
       - uses: actions/checkout@v2
       - uses: NYCPlanning/action-library-archive@v1.1
-        if: matrix.dataset != 'pluto_corrections'
+        # if: matrix.dataset != 'pluto_corrections'
         with:
           name: ${{ matrix.dataset }}
           s3: true
@@ -51,7 +51,7 @@ jobs:
           version: ${{ needs.version.outputs.version }}
       
       - uses: NYCPlanning/action-library-archive@v1.1
-        if: matrix.dataset == 'pluto_corrections'
+        # if: matrix.dataset == 'pluto_corrections'
         with:
           name: ${{ matrix.dataset }}
           s3: true
