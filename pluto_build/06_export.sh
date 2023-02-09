@@ -58,7 +58,7 @@ mkdir -p output/dof &&
 
 mkdir -p output/qaqc && 
   (cd output/qaqc
-    for table in qaqc_aggregate qaqc_expected qaqc_mismatch qaqc_null qaqc_outlier qaqc_pts_condo
+    for table in qaqc_aggregate qaqc_expected qaqc_mismatch qaqc_null qaqc_outlier qaqc_pts_condo qaqc_housing_units
     do
       psql $BUILD_ENGINE -c "\COPY ( 
           SELECT * FROM ${table}
