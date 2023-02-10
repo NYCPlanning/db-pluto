@@ -1,6 +1,20 @@
 -- Record PTS records that meet the criteria of
 -- The units and coop_apts values are greater than one for the billing bbl AND
 -- Two or more unit bbl records have units and coop_apts values greater than 1
+
+-- Data Dictionary 
+
+-- primebbl - Billing BBL  
+-- bbl - Unit level BBl
+-- units - The number of units listed by Department of Finance for the property (compare to units_co in dcp_housing)
+-- coop_apts - The number of coop apartments listed for the property 
+-- job_number - The DOB job application number assigned when the applicant begins the application. This is the unique identifier for the application submitted to the Department of Buildings (DOB). 
+-- units_co - The number of units listed on the DOB issued Certificate of Occupancy 
+-- date_lastupdt - The date of the last update to the DOB record for the job filing.
+-- new_value
+-- old_value 
+
+
 CREATE TABLE IF NOT EXISTS qaqc_pts_condo(
 	primebbl text,
 	bbl text,
