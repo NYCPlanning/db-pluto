@@ -5,7 +5,7 @@
 CREATE TABLE IF NOT EXISTS qaqc_housing_units(
   bbl text,
   job_number text,
-  unitsres numeric,
+  unitsres text,
   units_co text,
   new_value text,
   old_value text
