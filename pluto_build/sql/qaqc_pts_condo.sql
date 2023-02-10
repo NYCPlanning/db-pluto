@@ -11,8 +11,8 @@
 -- job_number - The DOB job application number assigned when the applicant begins the application. This is the unique identifier for the application submitted to the Department of Buildings (DOB). 
 -- units_co - The number of units listed on the DOB issued Certificate of Occupancy 
 -- date_lastupdt - The date of the last update to the DOB record for the job filing.
--- new_value
--- old_value 
+-- new_value - The new number of units as reported by the pluto_corrections file
+-- old_value - The previous number of units as reported by the pluto_correction file
 
 
 CREATE TABLE IF NOT EXISTS qaqc_pts_condo(
