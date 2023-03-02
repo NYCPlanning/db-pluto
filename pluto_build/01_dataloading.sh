@@ -30,7 +30,7 @@ import_public dcp_ct2020_wi &
 import_public dcp_school_districts &
 import_public dcp_firecompanies &
 import_public dcp_policeprecincts &
-import_public dcp_councildistricts_wi &
+import_public dcp_councildistricts_wi $GEOSUPPORT_CITYCOUNCIL &
 import_public dcp_healthareas &
 import_public dcp_healthcenters &
 import_public dof_shoreline &
