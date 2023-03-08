@@ -1,6 +1,6 @@
 -- Take the owner name from the normalized list
 -- Insert records into pluto_input_corrections
-INSERT INTO pluto_corrections
+INSERT INTO pluto_changes_applied
 SELECT DISTINCT a.bbl, 
 	'ownername' as field, 
 	a.ownername as old_value, 
@@ -10,27 +10,27 @@ SELECT DISTINCT a.bbl,
 	b.version as version
 FROM pluto a, pluto_input_research b
 WHERE a.ownername = b.old_value
-	AND a.bbl NOT IN (SELECT bbl FROM pluto_corrections WHERE field = 'ownername');
+	AND a.bbl NOT IN (SELECT bbl FROM pluto_changes_applied WHERE field = 'ownername');
 
-INSERT INTO pluto_corrections_not_applied
+INSERT INTO pluto_changes_not_applied
 SELECT DISTINCT b.*
-FROM pluto_corrections b, pluto a
+FROM pluto_input_research b, pluto a
 WHERE b.bbl=a.bbl 
 	AND b.field='ownername' 
 	AND b.old_value <> a.ownername;
 
-INSERT INTO pluto_corrections_applied
-SELECT DISTINCT b.*
-FROM pluto_corrections b, pluto a
-WHERE b.bbl=a.bbl 
-	AND b.field='ownername' 
-	AND b.old_value = a.ownername;
+-- INSERT INTO pluto_corrections_applied
+-- SELECT DISTINCT b.*
+-- FROM pluto_corrections b, pluto a
+-- WHERE b.bbl=a.bbl 
+-- 	AND b.field='ownername' 
+-- 	AND b.old_value = a.ownername;
 	
 -- Apply correction to PLUTO
 UPDATE pluto a
 SET ownername = b.new_value,
 	dcpedited = 't'
-FROM pluto_corrections b
+FROM pluto_input_research b
 WHERE a.ownername = b.old_value
 AND b.field = 'ownername';
 

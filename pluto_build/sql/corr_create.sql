@@ -2,8 +2,8 @@
 ALTER TABLE pluto
 ADD COLUMN dcpedited text;
 
-DROP TABLE IF EXISTS pluto_corrections_not_applied;
-CREATE TABLE pluto_corrections_not_applied (LIKE pluto_corrections INCLUDING ALL);
+DROP TABLE IF EXISTS pluto_changes_not_applied;
+CREATE TABLE pluto_changes_not_applied (LIKE pluto_input_research INCLUDING ALL);
 
-DROP TABLE IF EXISTS pluto_corrections_applied;
-CREATE TABLE pluto_corrections_applied (LIKE pluto_corrections INCLUDING ALL);
+DROP TABLE IF EXISTS pluto_changes_applied;
+CREATE TABLE pluto_changes_applied (LIKE pluto_input_research INCLUDING ALL);
