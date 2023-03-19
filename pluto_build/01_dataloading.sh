@@ -1,5 +1,6 @@
 #!/bin/bash
 source bin/config.sh
+set_error_traps
 
 # DROP all tables
 if [[ $1 == "drop" ]]; then
@@ -62,5 +63,5 @@ wait
 ## Load local CSV files
 psql $BUILD_ENGINE -f sql/_create.sql
 
-# Create data version table 
+# Create data version table
 psql $BUILD_ENGINE -f sql/source_data_versions.sql
