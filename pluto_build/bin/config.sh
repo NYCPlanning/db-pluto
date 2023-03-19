@@ -119,7 +119,8 @@ function get_version {
   name=$1
   version=${2:-latest}
   url=https://nyc3.digitaloceanspaces.com/edm-recipes
-  version=$(curl -s $url/datasets/$name/$version/config.json | jq -r '.dataset.version')
+  echo -e "getting $name $version version ..."
+  version=$(curl -sS $url/datasets/$name/$version/config.json | jq -r '.dataset.version')
   echo -e "🔵 $name version: $version"
 }
 
