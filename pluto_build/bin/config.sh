@@ -137,12 +137,12 @@ function import_public {
     echo "🛠 $name.sql doesn't exists in cache, downloading ..."
     mkdir -p $target_dir && (
       cd $target_dir
-      curl -ss -O $url/datasets/$name/$version/$name.sql
+      curl -O $url/datasets/$name/$version/$name.sql
     )
   fi
 
   # Loading into Database
-  psql $BUILD_ENGINE -v ON_ERROR_STOP=1 -q -f $target_dir/$name.sql
+  psql $BUILD_ENGINE -v ON_ERROR_STOP=1 -f $target_dir/$name.sql
   psql -1 $BUILD_ENGINE -c "ALTER TABLE $name ADD COLUMN v text; UPDATE $name SET v = '$version';"
 }
 
