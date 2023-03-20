@@ -126,7 +126,7 @@ function get_version {
 
 function import_public {
   name=$1
-  version=${2:-latest}
+  # version=${2:-latest}
   get_version $1 $2
   target_dir=$(pwd)/.library/datasets/$name/$version
 
