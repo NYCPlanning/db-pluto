@@ -55,7 +55,7 @@ import_public dsny_frequencies &
 import_public lpc_historic_districts &
 import_public lpc_landmarks &
 import_public dcp_colp &
-import_public dof_dtm &
+import_public dof_dtm $DOF_DTM_VERSION &
 import_public dof_condo
 
 wait
