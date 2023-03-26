@@ -1,10 +1,14 @@
 #!/bin/bash
-# Exit when any command fails
-set -e
-# keep track of the last executed command
-trap 'last_command=$current_command; current_command=$BASH_COMMAND' DEBUG
-# echo an error message before exiting
-trap 'echo "\"${last_command}\" command filed with exit code $?."' EXIT
+function set_error_traps {
+  # Exit when any command fails
+  set -e
+  # keep track of the last executed command
+  trap 'last_command=$current_command; current_command=$BASH_COMMAND' DEBUG
+  # echo an error message before exiting
+  trap 'echo "\"${last_command}\" command filed with exit code $?."' EXIT
+}
+
+set_error_traps
 
 function set_env {
   for envfile in $@
@@ -115,13 +119,14 @@ function get_version {
   name=$1
   version=${2:-latest}
   url=https://nyc3.digitaloceanspaces.com/edm-recipes
-  version=$(curl -s $url/datasets/$name/$version/config.json | jq -r '.dataset.version')
+  echo -e "getting $name $version version ..."
+  version=$(curl -sS $url/datasets/$name/$version/config.json | jq -r '.dataset.version')
   echo -e "🔵 $name version: $version"
 }
 
 function import_public {
   name=$1
-  version=${2:-latest}
+  # version=${2:-latest}
   get_version $1 $2
   target_dir=$(pwd)/.library/datasets/$name/$version
 
@@ -132,12 +137,12 @@ function import_public {
     echo "🛠 $name.sql doesn't exists in cache, downloading ..."
     mkdir -p $target_dir && (
       cd $target_dir
-      curl -ss -O $url/datasets/$name/$version/$name.sql
+      curl -O $url/datasets/$name/$version/$name.sql
     )
   fi
 
   # Loading into Database
-  psql $BUILD_ENGINE -v ON_ERROR_STOP=1 -q -f $target_dir/$name.sql
+  psql $BUILD_ENGINE -v ON_ERROR_STOP=1 -f $target_dir/$name.sql
   psql -1 $BUILD_ENGINE -c "ALTER TABLE $name ADD COLUMN v text; UPDATE $name SET v = '$version';"
 }
 

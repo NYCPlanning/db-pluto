@@ -1,5 +1,6 @@
 #!/bin/bash
 source bin/config.sh
+set_error_traps
 
 # DROP all tables
 if [[ $1 == "drop" ]]; then
@@ -60,7 +61,7 @@ import_public dof_condo
 wait
 
 ## Load local CSV files
-psql $BUILD_ENGINE -f sql/_create.sql
+psql $BUILD_ENGINE -v ON_ERROR_STOP=1 -f sql/_create.sql
 
-# Create data version table 
-psql $BUILD_ENGINE -f sql/source_data_versions.sql
+# Create data version table
+psql $BUILD_ENGINE -v ON_ERROR_STOP=1 -f sql/source_data_versions.sql
