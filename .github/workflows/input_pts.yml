@@ -4,7 +4,7 @@ on:
     branches:
       - main
       - pts/**
-    paths: 
+    paths:
       - pluto_build/python/geocode.py
       - pluto_build/bin/pts.sh
       - pluto_build/sql/_load_pts.sql
@@ -14,7 +14,7 @@ on:
 
 jobs:
   process_pts:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     services:
       postgres:
         image: postgis/postgis:12-3.0-alpine
@@ -54,7 +54,7 @@ jobs:
       - name: process pts
         working-directory: pluto_build
         run: ./pluto import pts
-        
+
       - uses: NYCPlanning/action-library-archive@v1.1
         id: pluto_pts
         with:
@@ -68,7 +68,7 @@ jobs:
       - name: geocode pts
         working-directory: pluto_build
         run: ./pluto geocode pts
-      
+
       - uses: NYCPlanning/action-library-archive@v1.1
         id: pluto_input_geocodes
         with:
@@ -78,7 +78,7 @@ jobs:
           latest: true
           compress: true
           output_format: pgdump csv
-      
+
       - name: clean up pts
         shell: bash
         working-directory: pluto_build

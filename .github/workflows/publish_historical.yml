@@ -5,20 +5,20 @@ on:
       version:
         description: version name of the release
         required: false
-        default: '02b'
+        default: "02b"
       library:
         description: run data library load process?
         required: false
-        default: 'yes'
+        default: "yes"
       bq:
         description: run bq load process?
         required: false
-        default: 'yes'
+        default: "yes"
 jobs:
   library:
     name: load to data library
     if: github.event.inputs.library == 'yes'
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     env:
       AWS_S3_ENDPOINT: ${{ secrets.DO_S3_ENDPOINT }}
       AWS_ACCESS_KEY_ID: ${{ secrets.DO_ACCESS_KEY_ID }}
@@ -38,7 +38,7 @@ jobs:
   bq:
     name: load to bigquery
     needs: library
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     if: always() && github.event.inputs.bq == 'yes'
     steps:
       - uses: actions/checkout@v2
@@ -48,7 +48,7 @@ jobs:
           project_id: ${{ secrets.GCP_PROJECT_ID_DATA_ENGINEERING }}
           service_account_key: ${{ secrets.GCP_GCS_BQ_SA_KEY }}
           export_default_credentials: true
-          
+
       - name: Upload to BigQuery
         working-directory: pluto_build
         run: ./pluto bq publish_historical dcp_mappluto ${{ github.event.inputs.version }}
