@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-22.04
     services:
       postgres:
-        image: postgis/postgis:12-3.0-alpine
+        image: postgis/postgis:15-3.3-alpine
         env:
           POSTGRES_PASSWORD: postgres
         options: >-
