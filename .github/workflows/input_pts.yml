@@ -14,7 +14,7 @@ on:
 
 jobs:
   process_pts:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-20.04
     services:
       postgres:
         image: postgis/postgis:15-3.3-alpine
