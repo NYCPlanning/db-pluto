@@ -58,6 +58,7 @@ import_public dpr_greenthumb $DPR_GREENTHUMB_VERSION &
 import_public dsny_frequencies $DSNY_FREQUENCIES_VERSION &
 import_public lpc_historic_districts $LPC_HISTORIC_DISTRICTS_VERSION &
 import_public lpc_landmarks $LPC_LANDMARKS_VESRSION
+import_public dcp_housing $DCP_HOUSING
 
 # import pluto corrections
 # import_public pluto_corrections $PLUTO_CORRECTIONS_VERSION &
