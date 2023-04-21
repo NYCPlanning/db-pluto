@@ -1,4 +1,4 @@
-name: 📁 NumBldgs processing
+name: 📁 Number of Buildings Processing (input data for PLUTO)
 
 on:
   schedule:
