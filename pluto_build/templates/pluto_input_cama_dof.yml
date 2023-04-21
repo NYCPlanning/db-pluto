@@ -26,6 +26,9 @@ dataset:
 
   info:
     description: |
-      ### CAMA
+      ### CAMA - DOF uses the Computer-Assisted Mass Appraisal System (CAMA) for property
+      tax valuations. Assessors determine parcel market value using one of several valuation
+      methods based on the parcels tax class. Once market value is determined, the assessed
+      value is a percentage calculation of the market value.
     url: null
     dependents: []

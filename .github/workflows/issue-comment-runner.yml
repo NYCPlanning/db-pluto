@@ -15,11 +15,11 @@ jobs:
         github.event.comment.user.login == 'AmandaDoyle' ||
         github.event.comment.user.login == 'td928'
       )
-      
-    runs-on: ubuntu-20.04
+
+    runs-on: ubuntu-22.04
     services:
       postgres:
-        image: postgis/postgis:12-3.0-alpine
+        image: postgis/postgis:15-3.3-alpine
         env:
           POSTGRES_PASSWORD: postgres
         options: >-
@@ -37,7 +37,7 @@ jobs:
       AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
       AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
 
       - name: install dependencies
         working-directory: pluto_build
@@ -51,22 +51,22 @@ jobs:
         working-directory: pluto_build
         shell: bash
         run: ./01_dataloading.sh
-      
+
       - name: building ...
         working-directory: pluto_build
         shell: bash
         run: ./02_build.sh
-      
+
       - name: applying corrections ...
         shell: bash
         working-directory: pluto_build
         run: ./03_corrections.sh
-      
+
       - name: archiving ...
         shell: bash
         working-directory: pluto_build
         run: ./04_archive.sh
-          
+
       - name: Creating QAQC tables ...
         shell: bash
         working-directory: pluto_build
@@ -77,7 +77,7 @@ jobs:
         shell: bash
         run: |
           ./06_export.sh
-      
+
       - name: create report
         id: report
         shell: bash
@@ -88,22 +88,22 @@ jobs:
           report="${report//$'\n'/'%0A'}"
           report="${report//$'\r'/'%0D'}"
           echo ::set-output name=report::$report
-              
+
       - name: report results in comment
         if: success()
         uses: peter-evans/create-or-update-comment@v1
         with:
           comment-id: ${{ github.event.comment.id }}
           body: |
-            
+
             ## PLUTO Build Complete! 
-            
+
             <summary> Source Info </summary>
             <details>
-            
+
             ${{ steps.report.outputs.report }}
-            
+
             </details>
-            
+
             for more details, check https://github.com/NYCPlanning/db-pluto/actions/runs/${{ github.run_id }}
           reactions: hooray
