@@ -42,7 +42,7 @@ import_public dcp_ct2020_wi $GEOSUPPORT_VERSION &
 import_public dcp_school_districts $GEOSUPPORT_VERSION &
 import_public dcp_firecompanies $GEOSUPPORT_VERSION &
 import_public dcp_policeprecincts $GEOSUPPORT_VERSION &
-import_public dcp_councildistricts_wi $GEOSUPPORT_VERSION &
+import_public dcp_councildistricts_wi $GEOSUPPORT_CITYCOUNCIL &
 import_public dcp_healthareas $GEOSUPPORT_VERSION &
 import_public dcp_healthcenters $GEOSUPPORT_VERSION &
 import_public fema_firms2007_100yr $FEMA_FIRPS_VERSION &
