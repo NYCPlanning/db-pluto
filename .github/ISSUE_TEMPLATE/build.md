@@ -19,7 +19,7 @@ assignees:
 
 - [ ] <https://github.com/NYCPlanning/db-pluto/blob/main/pluto_build/version.env>
 
-### Minor Release: To initiate a minor release, you must change the VERSION and VERSION_PREV. In addition, you are required to hold the following variables constant with the last major release of PLUTO (you can reference the `source_data_version` table):
+### Minor Release: To initiate a minor release, you must change the VERSION and VERSION_PREV. In addition, you are required to hold the following variables constant with the last major release of PLUTO (you can reference the `source_data_version` table). This requires you to pay close attention to the previous Major build of PLUTO's source data versions and apply the correct dates to the associated variable names (you might also have to create new variable names if source data becomes out of sync):
 
 - [ ] <https://github.com/NYCPlanning/db-pluto/blob/main/pluto_build/version.env>
 
@@ -53,10 +53,10 @@ assignees:
 
 > Check [here](https://github.com/NYCPlanning/db-data-library/actions/workflows/open-data.yml) to see the latest run
 
-- [x] **dsny_frequencies**
-- [x] **dpr_greenthumb**
-- [x] **lpc_historic_districts**
-- [x] **lpc_landmarks**
+- [ ] **dsny_frequencies**
+- [ ] **dpr_greenthumb**
+- [ ] **lpc_historic_districts**
+- [ ] **lpc_landmarks**
 
 #### DOF Automated Pull and Number of Buildings
 
@@ -67,37 +67,37 @@ assignees:
 
 ### Updated with Quarterly updates (check [here](https://github.com/NYCPlanning/db-data-library/actions/workflows/quaterly-updates.yml))
 
-- [x] **dcp_cdboundaries_wi**
-- [x] **dcp_ct2010**
-- [x] **dcp_cb2010**
-- [x] **dcp_ct2020**
-- [x] **dcp_cb2020**
-- [x] **dcp_school_districts**  
-- [x] **dcp_councildistricts_wi**  
-- [x] **dcp_firecompanies**  
-- [x] **dcp_policeprecincts**
-- [x] **dcp_healthareas**  
-- [x] **dcp_healthcenters**
+- [ ] **dcp_cdboundaries_wi**
+- [ ] **dcp_ct2010**
+- [ ] **dcp_cb2010**
+- [ ] **dcp_ct2020**
+- [ ] **dcp_cb2020**
+- [ ] **dcp_school_districts**  
+- [ ] **dcp_councildistricts_wi**  
+- [ ] **dcp_firecompanies**  
+- [ ] **dcp_policeprecincts**
+- [ ] **dcp_healthareas**  
+- [ ] **dcp_healthcenters**
 
 ### Updated with Zoning Taxlots (check [here](https://github.com/NYCPlanning/db-zoningtaxlots/actions/workflows/dataloading.yml) for latest run). Note: for a minor release of PLUTO, these will be the only datasets that will be updated.
 
-- [x] **dof_dtm**
-- [x] **dof_shoreline**
-- [x] **dof_condo**
-- [x] **dcp_commercialoverlay**
-- [x] **dcp_limitedheight**
-- [x] **dcp_zoningdistricts**
-- [x] **dcp_specialpurpose**
-- [x] **dcp_specialpurposesubdistricts**
-- [x] **dcp_zoningmapamendments**
-- [x] **dcp_edesignation**
+- [ ] **dof_dtm**
+- [ ] **dof_shoreline**
+- [ ] **dof_condo**
+- [ ] **dcp_commercialoverlay**
+- [ ] **dcp_limitedheight**
+- [ ] **dcp_zoningdistricts**
+- [ ] **dcp_specialpurpose**
+- [ ] **dcp_specialpurposesubdistricts**
+- [ ] **dcp_zoningmapamendments**
+- [ ] **dcp_edesignation**
 
 ### Never Updated (Safe to ignore)
 
-- [x] **doitt_zipcodeboundaries** (almost never updated, check [here](https://data.cityofnewyork.us/Business/Zip-Code-Boundaries/i8iw-xf4u))
-- [x] **fema_firms2007_100yr**
-- [x] **fema_pfirms2015_100yr**
-- [x] **dcp_zoningmapindex**
+- [ ] **doitt_zipcodeboundaries** (almost never updated, check [here](https://data.cityofnewyork.us/Business/Zip-Code-Boundaries/i8iw-xf4u))
+- [ ] **fema_firms2007_100yr**
+- [ ] **fema_pfirms2015_100yr**
+- [ ] **dcp_zoningmapindex**
 
 ### Update QAQC App 
 
