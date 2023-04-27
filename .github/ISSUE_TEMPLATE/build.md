@@ -79,11 +79,14 @@ assignees:
 - [ ] **dcp_healthareas**  
 - [ ] **dcp_healthcenters**
 
-### Updated with Zoning Taxlots (check [here](https://github.com/NYCPlanning/db-zoningtaxlots/actions/workflows/dataloading.yml) for latest run). Note: for a minor release of PLUTO, these will be the only datasets that will be updated.
+### Updated with Zoning Taxlots (check [here](https://github.com/NYCPlanning/db-zoningtaxlots/actions/workflows/dataloading.yml) for latest run). 
 
 - [ ] **dof_dtm**
 - [ ] **dof_shoreline**
 - [ ] **dof_condo**
+
+For a Minor release of PLUTO, the following datasets will need to be updated to use the latest versions available in DigitalOcean (essentially, a PLUTO Minor version's only difference between a PLUTO Major release are these datasets):
+
 - [ ] **dcp_commercialoverlay**
 - [ ] **dcp_limitedheight**
 - [ ] **dcp_zoningdistricts**
