@@ -42,7 +42,7 @@ import_public dcp_ct2020_wi $GEOSUPPORT_VERSION &
 import_public dcp_school_districts $GEOSUPPORT_VERSION &
 import_public dcp_firecompanies $GEOSUPPORT_VERSION &
 import_public dcp_policeprecincts $GEOSUPPORT_VERSION &
-import_public dcp_councildistricts_wi $GEOSUPPORT_VERSION &
+import_public dcp_councildistricts_wi $GEOSUPPORT_CITYCOUNCIL &
 import_public dcp_healthareas $GEOSUPPORT_VERSION &
 import_public dcp_healthcenters $GEOSUPPORT_VERSION &
 import_public fema_firms2007_100yr $FEMA_FIRPS_VERSION &
@@ -51,7 +51,7 @@ import_public doitt_zipcodeboundaries $DOITT_DATA_VERSION &
 import_public dof_shoreline $DOF_DATA_VERSION & 
 
 # import other
-import_public dof_dtm $DOF_DATA_VERSION &
+import_public dof_dtm $DOF_DATA_VERSION_DTM & 
 import_public dof_condo $DOF_DATA_VERSION &
 import_public dcp_colp $DCP_COLP_VERSION &
 import_public dpr_greenthumb $DPR_GREENTHUMB_VERSION &
