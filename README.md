@@ -19,7 +19,7 @@ No Geometry |  NA | NA  | [Pluto.csv](https://edm-publishing.nyc3.digitalocean
 
 ### Additional resources:
 + [DOF BBL Council export](https://edm-publishing.nyc3.digitaloceanspaces.com/db-pluto/main/latest/output/dof/bbl_council.zip)
-+ [PLUTO Corrections](https://edm-publishing.nyc3.digitaloceanspaces.com/db-pluto/main/latest/output/pluto_corrections.zip)
++ [PLUTO Changes](https://edm-publishing.nyc3.digitaloceanspaces.com/db-pluto/main/latest/output/pluto_changes.zip)
 + [Source Data Versions](https://edm-publishing.nyc3.digitaloceanspaces.com/db-pluto/main/latest/output/source_data_versions.csv)
 + [QAQC Portal](https://edm-data-engineering.nycplanningdigital.com/?page=PLUTO)
 
