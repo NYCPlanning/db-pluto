@@ -1,0 +1,15 @@
+version: 2
+
+models:
+  - name: calc_allocated
+    columns:
+      - name: primebbl
+        tests:
+          - unique
+          - not_null
+  
+  - name: calc_areas_cama
+    description: |
+      building area related fields comming from cama
+      > **Note:** that we only take building number (bldgnum) 1
+      as the main source of building area
